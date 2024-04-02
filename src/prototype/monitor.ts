@@ -7,6 +7,8 @@ type MonitorProps = {
  * @param ???
  * @returns ???
  */
-const useMonitor = ({}: MonitorProps) => {};
+const monitor = ({}: MonitorProps) => {
+  console.log('monitor');
+};
 
-export default useMonitor;
+export default monitor;
