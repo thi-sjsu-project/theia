@@ -8,6 +8,7 @@ const Prototype = () => {
   useEffect(() => {
     // use setInterval to run monitor every second (1000ms)
     const interval = setInterval(() => monitor({}), ONE_SECOND_IN_MS);
+    // clear interval when component unmounts to prevent memory leak
     return () => clearInterval(interval);
   }, []);
 

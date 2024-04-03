@@ -1,5 +1,7 @@
+import type { Message } from 'submodules/message-schemas/schema-types';
+
 type SelectorProps = {
-  // define expected input here and it's type (number, string, etc.)
+  message: Message;
 };
 
 /**
@@ -8,7 +10,7 @@ type SelectorProps = {
  * @returns ???
  */
 const useSelector = ({}: SelectorProps) => {
-  console.log("useSelector");
+  console.log('useSelector');
 };
 
 export default useSelector;

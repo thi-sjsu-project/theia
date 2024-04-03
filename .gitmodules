@@ -1,0 +1,3 @@
+[submodule "submodules/message-schemas"]
+	path = submodules/message-schemas
+	url = https://git.tjdev.de/thi-sjsu-project/message-schemas
