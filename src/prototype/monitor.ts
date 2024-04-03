@@ -17,9 +17,11 @@ const monitor = ({widgets}: MonitorProps) => {
 
   widgets.forEach(function(widget,widgetIndex){
     widget.elements.forEach(function(element, elementIndex) {
-      const time = new Date().toISOString();
-      if(element.expiration <= time){
-        console.log("element " + element.id + " expired!")
+      if (element.expiration){
+        const time = new Date().toISOString();
+        if(element.expiration <= time){
+          console.log("element " + element.id + " expired!")
+        }
       }
     });
   });
