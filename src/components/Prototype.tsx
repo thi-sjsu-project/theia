@@ -19,13 +19,19 @@ const Prototype = () => {
 
   // demonstration of using dispatch function to update redux state
   const handleAddWidget = () => {
+
+    const expirationTime = new Date()
+    console.log(expirationTime)
+    expirationTime.setSeconds(expirationTime.getSeconds()+(Math.floor(Math.random() * 10)+5)) //set the time to expire to a time between 5 and 15 seconds
+    console.log(expirationTime)
+    
     // construct dummy widget
     const newWidget: Widget = {
       id: uuid(),
       elements: [
         {
           id: uuid(),
-          expiration: new Date().toISOString(),
+          expiration: expirationTime.toISOString(),
           modality: 'auditory',
           type: 'table',
         },
