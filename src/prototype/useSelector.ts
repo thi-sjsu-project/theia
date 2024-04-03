@@ -1,4 +1,4 @@
-import type { Message } from 'submodules/message-schemas/schema-types';
+import type { Message } from 'src/types/schema-types';
 
 type SelectorProps = {
   message: Message;
@@ -9,7 +9,7 @@ type SelectorProps = {
  * @param ???
  * @returns ???
  */
-const useSelector = ({}: SelectorProps) => {
+const useSelector = ({ message }: SelectorProps) => {
   console.log('useSelector');
 };
 

@@ -1,9 +1,10 @@
 import { combineSlices, configureStore } from '@reduxjs/toolkit';
+import { cmSlice } from './slices/cmSlice';
 
 // pass in slices to combine into combineSlices()
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.
-const rootReducer = combineSlices();
+const rootReducer = combineSlices(cmSlice);
 
 // Infer the `RootState` type from the root reducer
 type RootState = ReturnType<typeof rootReducer>;
