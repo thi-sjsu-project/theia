@@ -21,5 +21,5 @@ export type Widget = {
   elements: Element[];
   id: string;
   name?: string; // optional field...?
-  location?: number[]
+  location?: [number, number];
 };

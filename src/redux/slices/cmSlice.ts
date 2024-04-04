@@ -35,6 +35,7 @@ export const cmSlice = createSlice({
       state.grid[action.payload.location[0]][action.payload.location[1]] =
         null as any;
     },
+
     addWidget: (state, action: PayloadAction<Widget>) => {
       state.widgets.push(action.payload);
     },
@@ -44,24 +45,18 @@ export const cmSlice = createSlice({
       );
     },
 
+    // delete an element from a widget by id
     updateWidgetDelete: (state, action: PayloadAction<string>) => {
-      //remove elements from widget
-      const tempWidgets = state.widgets;
-      tempWidgets.forEach(function (widget, widgetIndex) {
-        //go through each widget
-        widget.elements.forEach(function (element, elementIndex) {
-          //go through each element
-          if (element.id === action.payload) {
-            widget.elements = widget.elements.splice(
-              elementIndex,
-              elementIndex,
-            );
-          }
-        });
+      state.widgets = state.widgets.map((widget) => {
+        return {
+          ...widget,
+          elements: widget.elements.filter(
+            (element) => element.id !== action.payload,
+          ),
+        };
       });
-
-      state.widgets = tempWidgets;
     },
+
     updateVisualComplexity: (state, action: PayloadAction<number>) => {
       state.visualComplexity = action.payload;
     },
