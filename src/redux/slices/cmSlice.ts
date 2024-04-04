@@ -77,6 +77,7 @@ export const cmSlice = createSlice({
       state.widgets.find((widget) => widget.id === id),
     getVisualComplexity: (state) => state.visualComplexity,
     getAudioComplexity: (state) => state.audioComplexity,
+    getMessages: (state) => state.messages,
   },
 });
 
@@ -96,6 +97,7 @@ export const {
   getGrid,
   getWidgets,
   getWidgetById,
+  getMessages,
   getVisualComplexity,
   getAudioComplexity,
 } = cmSlice.selectors;

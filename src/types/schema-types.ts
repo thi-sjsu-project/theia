@@ -64,7 +64,7 @@ export type AcaHeadingToBase = BaseMessage<
 
 /* utility types **********************************************************************************/
 
-export type Id = number & tags.Type<'uint64'>;
+export type Id = string;
 export type Priority = number & tags.Type<'uint32'> & tags.Maximum<10>;
 export type Range<From extends number, To extends number> = number &
   tags.Type<'float'> &

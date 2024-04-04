@@ -7,34 +7,22 @@ import {
   addWidgetToGrid,
   getWidgets,
   getGrid,
+  getMessages,
 } from 'src/redux/slices/cmSlice';
 import { ONE_SECOND_IN_MS } from 'src/utils/constants';
 import useSelector from 'src/prototype/useSelector';
 import assimilator from 'src/prototype/assimilator';
-import type { MissileToOwnshipDetected } from 'src/types/schema-types';
 import type { Widget } from 'src/types/modalities';
-
-const dummyMessage: MissileToOwnshipDetected = {
-  id: 1234,
-  priority: 10,
-  kind: 'MissileToOwnshipDetected',
-  data: {
-    missileLocation: { lat: 0, lng: 0 },
-    survivability: 0,
-    detectedByAca: undefined,
-    acaAttackWeapon: undefined,
-    choiceWeight: 0,
-  },
-};
+import generateMessage from 'src/utils/generateMessage';
 
 const Prototype = () => {
   const dispatch = useAppDispatch();
-  const { message, possibleModalities } = useSelector({
-    message: dummyMessage,
-  });
 
   const widgets = useAppSelector(getWidgets);
   const grid = useAppSelector(getGrid);
+  const messages = useAppSelector(getMessages);
+
+  console.log('messages:', messages);
 
   // demonstration of using dispatch function to update redux state
   const handleAddWidget = () => {
@@ -78,6 +66,12 @@ const Prototype = () => {
     // use setInterval to run monitor every second (1000ms)
     const interval = setInterval(() => monitor({ dispatch }), ONE_SECOND_IN_MS);
     // clear interval when component unmounts to prevent memory leak
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    // generate a message every 5 seconds
+    const interval = setInterval(() => generateMessage({ dispatch }), 5000);
     return () => clearInterval(interval);
   }, []);
 
