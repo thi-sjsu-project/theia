@@ -78,7 +78,9 @@ const Prototype = () => {
 
   return (
     <div className="bg-stone-200 h-screen flex justify-end">
-      <div className="bg-violet-300 container grid grid-cols-4"></div>
+      <div className="bg-violet-300 container grid grid-cols-4">
+        {/* grid goes here */}
+      </div>
 
       <div className="bg-red-100 w-[28rem] flex flex-col items-center gap-4">
         <div className="bg-green-200 w-full h-96 px-2 py-1">
