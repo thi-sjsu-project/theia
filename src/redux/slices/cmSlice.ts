@@ -5,6 +5,7 @@ type InitialState = {
   visualComplexity: number;
   audioComplexity: number;
   widgets: Widget[];
+
   /* ADD MORE AS NEEDED... */
 };
 
@@ -22,17 +23,26 @@ export const cmSlice = createSlice({
     addWidget: (state, action) => {
       state.widgets.push(action.payload);
     },
-    removeWidget: (state, action) => {},
+    removeWidget: (state, action) => {
+      const tempWidgets = state.widgets;
+      tempWidgets.forEach(function(widget,widgetIndex){ //go through each widget
+          if(widget.id == action.payload){
+              tempWidgets.splice(widgetIndex, widgetIndex);
+          }
+      });
+
+      state.widgets = tempWidgets;
+    },
     
     updateWidgetDelete: (state, action) => {//remove elements from widget
-      console.log("called!")
       const tempWidgets = state.widgets;
       tempWidgets.forEach(function(widget,widgetIndex){ //go through each widget
         widget.elements.forEach(function(element, elementIndex) { //go through each element
           if(element.id == action.payload){
-              console.log(tempWidgets)
               widget.elements = widget.elements.splice(elementIndex, elementIndex);
-              console.log(tempWidgets)
+              if (widget.elements.length === 0){
+                removeWidget(widget.id);
+              }
           }
           
         });
