@@ -17,7 +17,7 @@ import generateMessage from 'src/utils/generateMessage';
 import type { Message } from 'src/types/schema-types';
 import type { Widget } from 'src/types/modalities';
 import { generateModalityMeasure } from 'src/utils/restrainerConst';
-import restrainer from 'src/prototype/useRestrainer';
+import restrainer from 'src/prototype/restrainer';
 
 const Prototype = () => {
   const dispatch = useAppDispatch();
