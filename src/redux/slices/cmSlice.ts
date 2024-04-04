@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { Element, Widget} from '../../types/modalities';
+import type { Element, Widget } from '../../types/modalities';
 
 type InitialState = {
   visualComplexity: number;
@@ -22,47 +22,57 @@ export const cmSlice = createSlice({
   initialState,
   // reducers are used to update the state
   reducers: {
-    addWidgetToGrid: (state, action) => { //add a widget to the grid at the location specified in inputted widget
-      state.grid[action.payload.location[0]][action.payload.location[1]] = action.payload.id;
+    addWidgetToGrid: (state, action) => {
+      //add a widget to the grid at the location specified in inputted widget
+      state.grid[action.payload.location[0]][action.payload.location[1]] =
+        action.payload.id;
       console.log(state.grid);
     },
-    deleteWidgetFromGrid: (state, action) => { //remove a widget from the grid from the location specified in inputted widget
-      console.log(action.payload)
-      state.grid[action.payload.location[0]][action.payload.location[1]] = null as any;
+    deleteWidgetFromGrid: (state, action) => {
+      //remove a widget from the grid from the location specified in inputted widget
+      console.log(action.payload);
+      state.grid[action.payload.location[0]][action.payload.location[1]] =
+        null as any;
     },
     addWidget: (state, action) => {
       state.widgets.push(action.payload);
     },
     removeWidget: (state, action) => {
       let tempWidgets = state.widgets;
-      tempWidgets.forEach(function(widget,widgetIndex){ //go through each widget
-          if(widget.id == action.payload){
-              tempWidgets = tempWidgets.splice(widgetIndex, widgetIndex);
-          }
+      tempWidgets.forEach(function (widget, widgetIndex) {
+        //go through each widget
+        if (widget.id == action.payload) {
+          tempWidgets = tempWidgets.splice(widgetIndex, widgetIndex);
+        }
       });
 
       state.widgets = tempWidgets;
     },
-    
-    updateWidgetDelete: (state, action) => {//remove elements from widget
+
+    updateWidgetDelete: (state, action) => {
+      //remove elements from widget
       const tempWidgets = state.widgets;
-      tempWidgets.forEach(function(widget,widgetIndex){ //go through each widget
-        widget.elements.forEach(function(element, elementIndex) { //go through each element
-          if(element.id == action.payload){
-              widget.elements = widget.elements.splice(elementIndex, elementIndex);
+      tempWidgets.forEach(function (widget, widgetIndex) {
+        //go through each widget
+        widget.elements.forEach(function (element, elementIndex) {
+          //go through each element
+          if (element.id == action.payload) {
+            widget.elements = widget.elements.splice(
+              elementIndex,
+              elementIndex,
+            );
           }
-          
         });
       });
 
       state.widgets = tempWidgets;
-      
     },
     updateVisualComplexity: (state, action) => {},
     updateAudioComplexity: (state, action) => {},
   },
   // selectors are used to access parts of the state within components
   selectors: {
+    getGrid: (state) => state.grid,
     getWidgets: (state) => state.widgets,
     // find a single widget by id
     getWidgetById: (state, id: string) =>
@@ -84,6 +94,7 @@ export const {
 } = cmSlice.actions;
 
 export const {
+  getGrid,
   getWidgets,
   getWidgetById,
   getVisualComplexity,

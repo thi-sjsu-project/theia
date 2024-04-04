@@ -6,6 +6,7 @@ import {
   addWidget,
   addWidgetToGrid,
   getWidgets,
+  getGrid,
 } from 'src/redux/slices/cmSlice';
 import { ONE_SECOND_IN_MS } from 'src/utils/constants';
 import type { Widget } from 'src/types/modalities';
@@ -33,6 +34,7 @@ const Prototype = () => {
   });
 
   const widgets = useAppSelector(getWidgets);
+  const grid = useAppSelector(getGrid);
 
   // demonstration of using dispatch function to update redux state
   const handleAddWidget = () => {
@@ -58,9 +60,10 @@ const Prototype = () => {
     const { widgetToDeploy } = assimilator({
       //find if there is room for us to put the widget down (returns null if there is not room)
       possibleWidgets: [newWidget],
+      grid,
     });
 
-    if (widgetToDeploy != null) {
+    if (widgetToDeploy !== null) {
       //if we can actually place the widget
 
       //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET

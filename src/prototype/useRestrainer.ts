@@ -1,10 +1,10 @@
-import { Widget } from "src/types/modalities";
+import type { Widget } from 'src/types/modalities';
 
 type RestrainerProps = {
   // define expected input here and it's type (number, string, etc.)
   visualComplexity: number;
   audioComplexity: number;
-  widgets: {[key: string]: Widget};
+  widgets: { [key: string]: Widget };
   // add more as needed
 };
 
@@ -29,8 +29,6 @@ type ModalityMeasure = {
   range: ModalityMeasureRange;
   boundary: ModalityMeasureBoundary;
 };
-
-
 
 /**
  * @description ???

@@ -1,14 +1,9 @@
-import type { AppDispatch, RootState, AppStore } from 'src/redux/store';
-import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import type { AppDispatch } from 'src/redux/store';
 import {
-  addWidget,
-  getWidgetById,
-  getWidgets,
   removeWidget,
   updateWidgetDelete,
   deleteWidgetFromGrid,
 } from '../redux/slices/cmSlice';
-import type { Widget } from '../types/modalities';
 import store from 'src/redux/store';
 
 type MonitorProps = {
@@ -23,7 +18,6 @@ type MonitorProps = {
  */
 const monitor = ({ dispatch }: MonitorProps) => {
   const widgets = store.getState().cm.widgets;
-  console.log(store.getState().cm.grid);
 
   console.log('monitor went off!');
   widgets.forEach(function (widget, widgetIndex) {
@@ -35,7 +29,7 @@ const monitor = ({ dispatch }: MonitorProps) => {
         if (element.expiration <= time) {
           //console.log("element " + element.id + " expired! deleting...")
           if (element.onExpiration === 'delete') {
-            if (widget.elements.length == 1) {
+            if (widget.elements.length === 1) {
               dispatch(removeWidget(widget.id));
               dispatch(deleteWidgetFromGrid(widget));
             } else {
