@@ -1,13 +1,19 @@
-import { AppDispatch,  RootState, AppStore} from 'src/redux/store';
+import type { AppDispatch, RootState, AppStore } from 'src/redux/store';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
-import { addWidget, getWidgetById, getWidgets, removeWidget, updateWidgetDelete, deleteWidgetFromGrid } from '../redux/slices/cmSlice';
+import {
+  addWidget,
+  getWidgetById,
+  getWidgets,
+  removeWidget,
+  updateWidgetDelete,
+  deleteWidgetFromGrid,
+} from '../redux/slices/cmSlice';
 import type { Widget } from '../types/modalities';
-import store from "src/redux/store"
-
+import store from 'src/redux/store';
 
 type MonitorProps = {
   // define expected input here and it's type (number, string, etc.)
-  dispatch: AppDispatch
+  dispatch: AppDispatch;
 };
 
 /**
@@ -15,26 +21,27 @@ type MonitorProps = {
  * @param ???
  * @returns ???
  */
-const monitor = ({dispatch}: MonitorProps) => {
-  const widgets = store.getState().cm.widgets
+const monitor = ({ dispatch }: MonitorProps) => {
+  const widgets = store.getState().cm.widgets;
   console.log(store.getState().cm.grid);
-  
+
   console.log('monitor went off!');
-  widgets.forEach(function(widget,widgetIndex){ //go through each widget
-    widget.elements.forEach(function(element, elementIndex) { //go through each element
-      if (element.expiration){
+  widgets.forEach(function (widget, widgetIndex) {
+    //go through each widget
+    widget.elements.forEach(function (element, elementIndex) {
+      //go through each element
+      if (element.expiration) {
         const time = new Date().toISOString();
-        if(element.expiration <= time){
+        if (element.expiration <= time) {
           //console.log("element " + element.id + " expired! deleting...")
-          if(element.onExpiration === "delete"){
-            if(widget.elements.length == 1){
+          if (element.onExpiration === 'delete') {
+            if (widget.elements.length == 1) {
               dispatch(removeWidget(widget.id));
               dispatch(deleteWidgetFromGrid(widget));
             } else {
               dispatch(updateWidgetDelete(element.id));
             }
-            
-          } 
+          }
         }
       }
     });

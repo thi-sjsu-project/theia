@@ -2,11 +2,15 @@ import { useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 import monitor from 'src/prototype/monitor';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { addWidget, addWidgetToGrid, getWidgetById, getWidgets } from 'src/redux/slices/cmSlice';
+import {
+  addWidget,
+  addWidgetToGrid,
+  getWidgets,
+} from 'src/redux/slices/cmSlice';
 import { ONE_SECOND_IN_MS } from 'src/utils/constants';
 import type { Widget } from 'src/types/modalities';
 import useSelector from 'src/prototype/useSelector';
-import useAssimilator from 'src/prototype/useAssimilator';
+import assimilator from 'src/prototype/assimilator';
 import type { MissileToOwnshipDetected } from 'src/types/schema-types';
 
 const dummyMessage: MissileToOwnshipDetected = {
@@ -28,15 +32,7 @@ const Prototype = () => {
     message: dummyMessage,
   });
 
-  //console.log('message:', message, 'possibleModalities:', possibleModalities);
-
-  // demonstration of using a selector to access redux state
   const widgets = useAppSelector(getWidgets);
-  //console.log('widgets:', widgets);
-
-  // get single widget by id
-  // const oneWidget = useAppSelector((store) => getWidgetById(store, '1'));
-  // console.log('oneWidget:', oneWidget);
 
   // demonstration of using dispatch function to update redux state
   const handleAddWidget = () => {
@@ -58,15 +54,17 @@ const Prototype = () => {
         },
       ],
     };
-    
-    const {widgetToDeploy} = useAssimilator({ //find if there is room for us to put the widget down (returns null if there is not room)
+
+    const { widgetToDeploy } = assimilator({
+      //find if there is room for us to put the widget down (returns null if there is not room)
       possibleWidgets: [newWidget],
     });
-    
-    if(widgetToDeploy != null){//if we can actually place the widget
-      
+
+    if (widgetToDeploy != null) {
+      //if we can actually place the widget
+
       //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
-      
+
       // dispatch action to add new widget
       dispatch(addWidgetToGrid(widgetToDeploy));
       dispatch(addWidget(widgetToDeploy));
@@ -75,7 +73,7 @@ const Prototype = () => {
 
   useEffect(() => {
     // use setInterval to run monitor every second (1000ms)
-    const interval = setInterval(() => monitor({dispatch}), ONE_SECOND_IN_MS);
+    const interval = setInterval(() => monitor({ dispatch }), ONE_SECOND_IN_MS);
     // clear interval when component unmounts to prevent memory leak
     return () => clearInterval(interval);
   }, []);
