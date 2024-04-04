@@ -76,7 +76,7 @@ const Prototype = () => {
   }, []);
 
   return (
-    <div>
+    <div className="bg-red-100">
       List of widgets:
       <ul>
         {widgets.map((widget) => (
