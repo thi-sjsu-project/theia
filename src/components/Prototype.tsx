@@ -16,6 +16,9 @@ import assimilator from 'src/prototype/assimilator';
 import generateMessage from 'src/utils/generateMessage';
 import type { Message } from 'src/types/schema-types';
 import type { Widget } from 'src/types/modalities';
+import useRestrainer from 'src/prototype/useRestrainer';
+import { generateModalityMeasure } from 'src/utils/restrainerConst';
+import restrainer from 'src/prototype/useRestrainer';
 
 const Prototype = () => {
   const dispatch = useAppDispatch();
@@ -55,6 +58,7 @@ const Prototype = () => {
       //if we can actually place the widget
 
       //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
+      if(!restrainer({ visualComplexity:generateModalityMeasure(), audioComplexity:generateModalityMeasure() })) return;
 
       // dispatch action to add new widget
       dispatch(addWidgetToGrid(widgetToDeploy));
