@@ -9,10 +9,10 @@ import {
   getGrid,
 } from 'src/redux/slices/cmSlice';
 import { ONE_SECOND_IN_MS } from 'src/utils/constants';
-import type { Widget } from 'src/types/modalities';
 import useSelector from 'src/prototype/useSelector';
 import assimilator from 'src/prototype/assimilator';
 import type { MissileToOwnshipDetected } from 'src/types/schema-types';
+import type { Widget } from 'src/types/modalities';
 
 const dummyMessage: MissileToOwnshipDetected = {
   id: 1234,
@@ -63,7 +63,7 @@ const Prototype = () => {
       grid,
     });
 
-    if (widgetToDeploy !== null) {
+    if (widgetToDeploy) {
       //if we can actually place the widget
 
       //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
