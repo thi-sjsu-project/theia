@@ -11,7 +11,7 @@ export type Element = {
   expiration: string;
   id: string;
   modality: Modality;
-  type: 'table' | 'button' | 'text' | 'image' | 'audio';
+  type: 'table' | 'button' | 'text' | 'image' | 'audio' | 'icon';
 };
 
 export type Widget = {
