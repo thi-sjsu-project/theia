@@ -11,7 +11,7 @@ type SelectorProps = {
  * @param ???
  * @returns ???
  */
-const useSelector = ({ message }: SelectorProps) => {
+const selector = ({ message }: SelectorProps) => {
   const possibleModalities: Element[] = [];
 
   // simulation LPD
@@ -63,4 +63,4 @@ const useSelector = ({ message }: SelectorProps) => {
   };
 };
 
-export default useSelector;
+export default selector;

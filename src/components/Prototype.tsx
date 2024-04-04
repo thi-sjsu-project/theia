@@ -11,7 +11,7 @@ import {
   addMessage,
 } from 'src/redux/slices/cmSlice';
 import { ONE_SECOND_IN_MS } from 'src/utils/constants';
-import useSelector from 'src/prototype/useSelector';
+import selector from 'src/prototype/selector';
 import assimilator from 'src/prototype/assimilator';
 import generateMessage from 'src/utils/generateMessage';
 import type { Message } from 'src/types/schema-types';
@@ -26,50 +26,68 @@ const Prototype = () => {
   const grid = useAppSelector(getGrid);
   const messages = useAppSelector(getMessages);
 
-  // demonstration of using dispatch function to update redux state
-  const handleAddWidget = () => {
-    const expirationTime = new Date();
-    expirationTime.setSeconds(
-      expirationTime.getSeconds() + (Math.floor(Math.random() * 10) + 5),
-    ); //set the time to expire to a time between 5 and 15 seconds
+  // run everytime there is a new message
+  useEffect(() => {
+    if (messages.length === 0) return;
 
-    // construct dummy widget
-    const newWidget: Widget = {
-      id: uuid(),
-      elements: [
-        {
-          id: uuid(),
-          expiration: expirationTime.toISOString(),
-          onExpiration: 'delete',
-          modality: 'auditory',
-          type: 'table',
-        },
-      ],
-    };
-
-    const { widgetToDeploy } = assimilator({
-      //find if there is room for us to put the widget down (returns null if there is not room)
-      possibleWidgets: [newWidget],
-      grid,
+    console.log('useEffect...handling new message');
+    const { message, possibleModalities } = selector({
+      message: messages[messages.length - 1],
     });
 
-    if (widgetToDeploy) {
-      //if we can actually place the widget
+    // call assimilator here...
+    // PROBLEM: selector returns Element[] but assimilator expects Widget[]...
 
-      //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
-      if (
-        !restrainer({
-          visualComplexity: generateModalityMeasure(),
-          audioComplexity: generateModalityMeasure(),
-        })
-      )
-        return;
+    // consult the restrainer here...
 
-      // dispatch action to add new widget
-      dispatch(addWidgetToGrid(widgetToDeploy));
-      dispatch(addWidget(widgetToDeploy));
-    }
-  };
+    // finally decide whether to dispatch addWidget action
+  }, [messages]);
+
+  /* useEffect(() => {
+    const handleAddWidget = () => {
+      const expirationTime = new Date();
+      expirationTime.setSeconds(
+        expirationTime.getSeconds() + (Math.floor(Math.random() * 10) + 5),
+      ); //set the time to expire to a time between 5 and 15 seconds
+
+      // construct dummy widget
+      const newWidget: Widget = {
+        id: uuid(),
+        elements: [
+          {
+            id: uuid(),
+            expiration: expirationTime.toISOString(),
+            onExpiration: 'delete',
+            modality: 'auditory',
+            type: 'table',
+          },
+        ],
+      };
+
+      const { widgetToDeploy } = assimilator({
+        //find if there is room for us to put the widget down (returns null if there is not room)
+        possibleWidgets: [newWidget],
+        grid,
+      });
+
+      if (widgetToDeploy) {
+        //if we can actually place the widget
+
+        //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
+        if (
+          !restrainer({
+            visualComplexity: generateModalityMeasure(),
+            audioComplexity: generateModalityMeasure(),
+          })
+        )
+          return;
+
+        // dispatch action to add new widget
+        dispatch(addWidgetToGrid(widgetToDeploy));
+        dispatch(addWidget(widgetToDeploy));
+      }
+    };
+  }, [dispatch, grid]); */
 
   const handleNewMessage = () => {
     const newMessage: Message = generateMessage();
@@ -91,7 +109,7 @@ const Prototype = () => {
         divide-stone-500 grid grid-cols-4 w-[40rem] h-[40rem]"
         >
           {grid.map((row, rowIndex) =>
-            row.map((col, colIndex) => (
+            row.map((widget, colIndex) => (
               <div className="flex items-center justify-center">
                 {/* widget information here */}
               </div>
