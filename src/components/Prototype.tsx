@@ -24,8 +24,6 @@ const Prototype = () => {
   const grid = useAppSelector(getGrid);
   const messages = useAppSelector(getMessages);
 
-  console.log('messages:', messages);
-
   // demonstration of using dispatch function to update redux state
   const handleAddWidget = () => {
     const expirationTime = new Date();
@@ -78,11 +76,19 @@ const Prototype = () => {
 
   return (
     <div className="bg-stone-200 h-screen flex justify-end">
-      <div className="bg-violet-300 container grid grid-cols-4">
-        {/* grid goes here */}
+      <div className="bg-violet-300 w-full flex items-center justify-center">
+        <div className="bg-yellow-300 container divide-y divide-x divide-stone-300 grid grid-cols-4 w-[40rem] h-[40rem]">
+          {grid.map((row, rowIndex) =>
+            row.map((col, colIndex) => (
+              <div className="flex items-center justify-center">
+                {/* widget information here */}
+              </div>
+            )),
+          )}
+        </div>
       </div>
 
-      <div className="bg-red-100 w-[28rem] flex flex-col items-center gap-4">
+      <div className="bg-red-100 w-[40rem] flex flex-col items-center gap-4">
         <div className="bg-green-200 w-full h-96 px-2 py-1">
           <p className="text-center">List of Messages:</p>
           <ul className="overflow-y-scroll h-80">
