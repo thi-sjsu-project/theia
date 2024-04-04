@@ -8,7 +8,10 @@ export type Modality =
   | 'gustatory';
 
 export type Element = {
-  expiration: string;
+  expirationInterval?: number;
+  expiration?: string;
+  onExpiration?: 'delete' | 'escalate' | 'deescalate';
+  interacted?: boolean;
   id: string;
   modality: Modality;
   type: 'table' | 'button' | 'text' | 'image' | 'audio' | 'icon';

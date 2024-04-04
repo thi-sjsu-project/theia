@@ -16,6 +16,7 @@
     "prepare": "ts-patch install && typia patch"
   },
   "dependencies": {
+    "@redux-devtools/extension": "^3.3.0",
     "@reduxjs/toolkit": "^2.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -27,11 +27,11 @@ const Prototype = () => {
     message: dummyMessage,
   });
 
-  console.log('message:', message, 'possibleModalities:', possibleModalities);
+  //console.log('message:', message, 'possibleModalities:', possibleModalities);
 
   // demonstration of using a selector to access redux state
   const widgets = useAppSelector(getWidgets);
-  console.log('widgets:', widgets);
+  //console.log('widgets:', widgets);
 
   // get single widget by id
   // const oneWidget = useAppSelector((store) => getWidgetById(store, '1'));
@@ -40,11 +40,9 @@ const Prototype = () => {
   // demonstration of using dispatch function to update redux state
   const handleAddWidget = () => {
     const expirationTime = new Date();
-    console.log(expirationTime);
     expirationTime.setSeconds(
       expirationTime.getSeconds() + (Math.floor(Math.random() * 10) + 5),
     ); //set the time to expire to a time between 5 and 15 seconds
-    console.log(expirationTime);
 
     // construct dummy widget
     const newWidget: Widget = {
@@ -53,6 +51,7 @@ const Prototype = () => {
         {
           id: uuid(),
           expiration: expirationTime.toISOString(),
+          onExpiration: 'delete',
           modality: 'auditory',
           type: 'table',
         },
@@ -65,7 +64,7 @@ const Prototype = () => {
 
   useEffect(() => {
     // use setInterval to run monitor every second (1000ms)
-    const interval = setInterval(() => monitor({ widgets }), ONE_SECOND_IN_MS);
+    const interval = setInterval(() => monitor({dispatch}), ONE_SECOND_IN_MS);
     // clear interval when component unmounts to prevent memory leak
     return () => clearInterval(interval);
   }, []);

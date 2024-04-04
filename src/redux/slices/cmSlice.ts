@@ -23,8 +23,24 @@ export const cmSlice = createSlice({
       state.widgets.push(action.payload);
     },
     removeWidget: (state, action) => {},
-    // add/remove elements to/from widget
-    updateWidget: (state, action) => {},
+    
+    updateWidgetDelete: (state, action) => {//remove elements from widget
+      console.log("called!")
+      const tempWidgets = state.widgets;
+      tempWidgets.forEach(function(widget,widgetIndex){ //go through each widget
+        widget.elements.forEach(function(element, elementIndex) { //go through each element
+          if(element.id == action.payload){
+              console.log(tempWidgets)
+              widget.elements = widget.elements.splice(elementIndex, elementIndex);
+              console.log(tempWidgets)
+          }
+          
+        });
+      });
+
+      state.widgets = tempWidgets;
+      
+    },
     updateVisualComplexity: (state, action) => {},
     updateAudioComplexity: (state, action) => {},
   },
@@ -43,7 +59,7 @@ export const cmSlice = createSlice({
 export const {
   addWidget,
   removeWidget,
-  updateWidget,
+  updateWidgetDelete,
   updateVisualComplexity,
   updateAudioComplexity,
 } = cmSlice.actions;

@@ -1,0 +1,5 @@
+ideas:
+
+different types of elements(each element type extends element type, but have their own)
+for assimilator prototype, just make it a 4x4 grid and find a place that is open
+redux time travel
