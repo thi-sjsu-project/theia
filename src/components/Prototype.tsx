@@ -8,12 +8,14 @@ import {
   getWidgets,
   getGrid,
   getMessages,
+  addMessage,
 } from 'src/redux/slices/cmSlice';
 import { ONE_SECOND_IN_MS } from 'src/utils/constants';
 import useSelector from 'src/prototype/useSelector';
 import assimilator from 'src/prototype/assimilator';
-import type { Widget } from 'src/types/modalities';
 import generateMessage from 'src/utils/generateMessage';
+import type { Message } from 'src/types/schema-types';
+import type { Widget } from 'src/types/modalities';
 
 const Prototype = () => {
   const dispatch = useAppDispatch();
@@ -62,6 +64,11 @@ const Prototype = () => {
     }
   };
 
+  const handleNewMessage = () => {
+    const newMessage: Message = generateMessage();
+    dispatch(addMessage(newMessage));
+  };
+
   useEffect(() => {
     // use setInterval to run monitor every second (1000ms)
     const interval = setInterval(() => monitor({ dispatch }), ONE_SECOND_IN_MS);
@@ -69,30 +76,29 @@ const Prototype = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    // generate a message every 5 seconds
-    const interval = setInterval(() => generateMessage({ dispatch }), 5000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <div className="bg-red-100">
-      List of widgets:
-      <ul>
-        {widgets.map((widget) => (
-          <li key={widget.id}>
-            id: {widget.id}, Elements: [
-            {widget.elements.map((widget) => (
-              <span key={widget.id}>
-                widgetId: {widget.id}, expiration: {widget.expiration},{' '}
-                {widget.modality}, type: {widget.type}
-              </span>
+    <div className="bg-stone-200 h-screen flex justify-end">
+      <div className="bg-violet-300 container grid grid-cols-4"></div>
+
+      <div className="bg-red-100 w-[28rem] flex flex-col items-center gap-4">
+        <div className="bg-green-200 w-full h-96 px-2 py-1">
+          <p className="text-center">List of Messages:</p>
+          <ul className="overflow-y-scroll h-80">
+            {messages.map((msg) => (
+              <li key={msg.id}>{msg.kind}</li>
             ))}
-            ]
-          </li>
-        ))}
-      </ul>
-      <button onClick={handleAddWidget}>Add widget</button>
+          </ul>
+        </div>
+        <button
+          onClick={handleNewMessage}
+          className="w-40 bg-transparent hover:bg-blue-500 
+      text-blue-700 font-semibold hover:text-white py-2 
+      px-4 border border-blue-500 hover:border-transparent 
+      rounded text-sm"
+        >
+          New Message
+        </button>
+      </div>
     </div>
   );
 };

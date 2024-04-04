@@ -1,6 +1,4 @@
 import { v4 as uuid } from 'uuid';
-import { addMessage } from 'src/redux/slices/cmSlice';
-import type { AppDispatch } from 'src/redux/store';
 import type {
   Message,
   BaseMessage,
@@ -8,10 +6,6 @@ import type {
   GeoPoint,
   Weapon,
 } from 'src/types/schema-types';
-
-type PropsType = {
-  dispatch: AppDispatch;
-};
 
 const generateLocation = (): GeoPoint => {
   return {
@@ -45,8 +39,8 @@ const generateChoiceWeight = (): number => {
   return Math.random() * 2 - 1;
 };
 
-// Generates a random message and dispatches addMessage action
-const generateMessage = ({ dispatch }: PropsType): void => {
+// Generates and returns random message
+const generateMessage = (): Message => {
   const messages = [
     'RequestApprovalToAttack',
     'AcaFuelLow',
@@ -127,7 +121,7 @@ const generateMessage = ({ dispatch }: PropsType): void => {
       break;
   }
 
-  dispatch(addMessage(message as Message));
+  return message as Message;
 };
 
 export default generateMessage;
