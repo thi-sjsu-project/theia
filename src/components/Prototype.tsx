@@ -9,6 +9,7 @@ import {
   getGrid,
   getMessages,
   addMessage,
+  toggleElementInteraction,
 } from 'src/redux/slices/cmSlice';
 import { ONE_SECOND_IN_MS } from 'src/utils/constants';
 import selector from 'src/prototype/selector';
@@ -18,6 +19,9 @@ import type { Message } from 'src/types/schema-types';
 import type { Widget } from 'src/types/modalities';
 import { generateModalityMeasure } from 'src/utils/restrainerConst';
 import restrainer from 'src/prototype/restrainer';
+
+// unique id for each cell in the grid
+const IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
 const Prototype = () => {
   const dispatch = useAppDispatch();
@@ -35,59 +39,43 @@ const Prototype = () => {
       message: messages[messages.length - 1],
     });
 
+    const widget: Widget = {
+      id: uuid(),
+      elements: possibleModalities,
+    };
+
     // call assimilator here...
-    // PROBLEM: selector returns Element[] but assimilator expects Widget[]...
+    const { widgetToDeploy } = assimilator({
+      //find if there is room for us to put the widget down (returns null if there is not room)
+      possibleWidgets: [widget],
+      grid,
+    });
 
     // consult the restrainer here...
+    if (widgetToDeploy) {
+      //if we can actually place the widget
+
+      //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
+      /* if (
+        !restrainer({
+          visualComplexity: generateModalityMeasure(),
+          audioComplexity: generateModalityMeasure(),
+        })
+      )
+        return; */
+
+      // dispatch action to add new widget
+      dispatch(addWidgetToGrid(widgetToDeploy));
+      dispatch(addWidget(widgetToDeploy));
+    }
 
     // finally decide whether to dispatch addWidget action
   }, [messages]);
 
-  /* useEffect(() => {
-    const handleAddWidget = () => {
-      const expirationTime = new Date();
-      expirationTime.setSeconds(
-        expirationTime.getSeconds() + (Math.floor(Math.random() * 10) + 5),
-      ); //set the time to expire to a time between 5 and 15 seconds
-
-      // construct dummy widget
-      const newWidget: Widget = {
-        id: uuid(),
-        elements: [
-          {
-            id: uuid(),
-            expiration: expirationTime.toISOString(),
-            onExpiration: 'delete',
-            modality: 'auditory',
-            type: 'table',
-          },
-        ],
-      };
-
-      const { widgetToDeploy } = assimilator({
-        //find if there is room for us to put the widget down (returns null if there is not room)
-        possibleWidgets: [newWidget],
-        grid,
-      });
-
-      if (widgetToDeploy) {
-        //if we can actually place the widget
-
-        //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
-        if (
-          !restrainer({
-            visualComplexity: generateModalityMeasure(),
-            audioComplexity: generateModalityMeasure(),
-          })
-        )
-          return;
-
-        // dispatch action to add new widget
-        dispatch(addWidgetToGrid(widgetToDeploy));
-        dispatch(addWidget(widgetToDeploy));
-      }
-    };
-  }, [dispatch, grid]); */
+  const handleWidgetClick = (id: string) => {
+    console.log('interacted with widget:', id);
+    dispatch(toggleElementInteraction(id));
+  };
 
   const handleNewMessage = () => {
     const newMessage: Message = generateMessage();
@@ -102,28 +90,37 @@ const Prototype = () => {
   }, []);
 
   return (
-    <div className="bg-stone-200 h-screen flex justify-end">
-      <div className="bg-violet-300 w-full flex items-center justify-center">
+    <div className="h-screen flex justify-end">
+      <div className="w-full flex items-center justify-center">
         <div
-          className="bg-yellow-300 container divide-y divide-x
+          className="bg-yellow-300 border-solid border-2 border-stone-500 container divide-y divide-x
         divide-stone-500 grid grid-cols-4 w-[40rem] h-[40rem]"
         >
           {grid.map((row, rowIndex) =>
             row.map((widget, colIndex) => (
-              <div className="flex items-center justify-center">
-                {/* widget information here */}
+              <div
+                key={IDS[rowIndex * 4 + colIndex]}
+                onClick={() => handleWidgetClick(widget.id)}
+                className="hover:cursor-pointer flex w-[10rem] h-[10rem] items-center justify-center"
+              >
+                {widget && <p>{widget.elements[0].type}</p>}
               </div>
             )),
           )}
         </div>
       </div>
 
-      <div className="bg-red-100 w-[40rem] flex flex-col items-center gap-4">
+      <div className="w-[40rem] flex flex-col items-center gap-4">
         <div className="bg-green-200 w-full h-96 px-2 py-1">
           <p className="text-center">List of Messages:</p>
-          <ul className="overflow-y-scroll h-80">
+          <ul className="overflow-y-scroll divide-y divide-stone-500 h-80">
             {messages.map((msg) => (
-              <li key={msg.id}>{msg.kind}</li>
+              <li key={msg.id}>
+                <div className="flex mx-3 my-1 gap-4 justify-between">
+                  <span>{msg.kind}</span>
+                  <span>Priority: {msg.priority}</span>
+                </div>
+              </li>
             ))}
           </ul>
         </div>

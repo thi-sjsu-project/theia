@@ -9,6 +9,7 @@ type RestrainerProps = {
   // add more as needed
 };
 
+// TODO: move these to types folder
 type ModalityMeasureRange = {
   min: number;
   max: number;
@@ -38,10 +39,13 @@ export type ModalityMeasure = {
  */
 const restrainer = ({ visualComplexity }: RestrainerProps) => {
   // currently visual only
-  if (modalityMeasures.visual.boundary.max - modalityMeasures.visual.measure <= visualComplexity) {
-    console.warn("widget could not be added; will surpass boundary");
+  if (
+    modalityMeasures.visual.boundary.max - modalityMeasures.visual.measure <=
+    visualComplexity
+  ) {
+    console.warn('widget could not be added; will surpass boundary');
     return false;
-  } 
+  }
 
   modalityMeasures.visual.measure += visualComplexity;
   console.log(modalityMeasures);

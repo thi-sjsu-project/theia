@@ -14,46 +14,61 @@ type SelectorProps = {
 const selector = ({ message }: SelectorProps) => {
   const possibleModalities: Element[] = [];
 
+  const expirationTime = new Date();
+  expirationTime.setSeconds(
+    expirationTime.getSeconds() + (Math.floor(Math.random() * 10) + 5),
+  ); //set the time to expire to a time between 5 and 15 seconds
+
+  const expiration = expirationTime.toISOString();
+
+  const onExpiration = 'delete';
+
   // simulation LPD
   if (message.kind === 'RequestApprovalToAttack') {
     possibleModalities.push({
       id: uuid(),
-      expiration: new Date().toISOString(),
+      expiration,
       modality: 'visual',
       type: 'button',
+      onExpiration,
     });
   } else if (message.kind === 'MissileToOwnshipDetected') {
+    // possibleModalities.push({
+    //   id: uuid(),
+    //   expiration,
+    //   modality: 'auditory',
+    //   type: 'audio',
+    //   onExpiration,
+    // });
     possibleModalities.push({
       id: uuid(),
-      expiration: new Date().toISOString(),
-      modality: 'auditory',
-      type: 'audio',
-    });
-    possibleModalities.push({
-      id: uuid(),
-      expiration: new Date().toISOString(),
+      expiration,
       modality: 'visual',
       type: 'icon',
+      onExpiration,
     });
   } else if (message.kind === 'AcaFuelLow' || message.kind === 'AcaDefect') {
     possibleModalities.push({
       id: uuid(),
-      expiration: new Date().toISOString(),
+      expiration,
       modality: 'visual',
       type: 'table',
+      onExpiration,
     });
-    possibleModalities.push({
-      id: uuid(),
-      expiration: new Date().toISOString(),
-      modality: 'visual',
-      type: 'text',
-    });
+    // possibleModalities.push({
+    //   id: uuid(),
+    //   expiration,
+    //   modality: 'visual',
+    //   type: 'text',
+    //   onExpiration,
+    // });
   } else if (message.kind === 'AcaHeadingToBase') {
     possibleModalities.push({
       id: uuid(),
-      expiration: new Date().toISOString(),
+      expiration,
       modality: 'visual',
       type: 'text',
+      onExpiration,
     });
   }
 

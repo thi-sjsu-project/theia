@@ -19,17 +19,17 @@ type MonitorProps = {
 const monitor = ({ dispatch }: MonitorProps) => {
   const widgets = store.getState().cm.widgets;
 
-  console.log('monitor went off!');
   widgets.forEach(function (widget, widgetIndex) {
     //go through each widget
     widget.elements.forEach(function (element, elementIndex) {
       //go through each element
-      if (element.expiration) {
+      if (element.expiration && !element.interacted) {
         const time = new Date().toISOString();
         if (element.expiration <= time) {
-          //console.log("element " + element.id + " expired! deleting...")
+          console.log('element ' + element.id + ' expired! deleting...');
           if (element.onExpiration === 'delete') {
             if (widget.elements.length === 1) {
+              console.log('widget length 1');
               dispatch(removeWidget(widget.id));
               dispatch(deleteWidgetFromGrid(widget));
             } else {

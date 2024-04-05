@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Widget } from '../../types/modalities';
 import type { Message } from 'src/types/schema-types';
+import { act } from 'react-dom/test-utils';
 
 type InitialState = {
   visualComplexity: number;
@@ -28,7 +29,7 @@ export const cmSlice = createSlice({
     addWidgetToGrid: (state, action) => {
       //add a widget to the grid at the location specified in inputted widget
       state.grid[action.payload.location[0]][action.payload.location[1]] =
-        action.payload.id;
+        action.payload;
     },
     deleteWidgetFromGrid: (state, action) => {
       //remove a widget from the grid from the location specified in inputted widget
@@ -47,13 +48,55 @@ export const cmSlice = createSlice({
 
     // delete an element from a widget by id
     updateWidgetDelete: (state, action: PayloadAction<string>) => {
+      // state.widgets = state.widgets.map((widget) => {
+      //   return {
+      //     ...widget,
+      //     elements: widget.elements.filter(
+      //       (element) => element.id !== action.payload,
+      //     ),
+      //   };
+      // });
+
+      const tempWidgets = state.widgets;
+      tempWidgets.forEach(function (widget, widgetIndex) {
+        //go through each widget
+        widget.elements.forEach(function (element, elementIndex) {
+          //go through each element
+          if (element.id == action.payload) {
+            widget.elements = widget.elements.splice(
+              elementIndex,
+              elementIndex,
+            );
+          }
+        });
+      });
+
+      state.widgets = tempWidgets;
+    },
+
+    toggleElementInteraction: (state, action: PayloadAction<string>) => {
       state.widgets = state.widgets.map((widget) => {
-        return {
-          ...widget,
-          elements: widget.elements.filter(
-            (element) => element.id !== action.payload,
-          ),
-        };
+        if (widget.id === action.payload) {
+          return {
+            ...widget,
+            elements: widget.elements.map((element) => {
+              return {
+                ...element,
+                interacted: !element.interacted,
+              };
+            }),
+          };
+        }
+        return widget;
+        // return {
+        //   ...widget,
+        //   elements: widget.elements.map((element) => {
+        //     return {
+        //       ...element,
+        //       interacted: !element.interacted,
+        //     };
+        //   }),
+        // };
       });
     },
 
@@ -91,6 +134,7 @@ export const {
   updateWidgetDelete,
   updateVisualComplexity,
   updateAudioComplexity,
+  toggleElementInteraction,
 } = cmSlice.actions;
 
 export const {
