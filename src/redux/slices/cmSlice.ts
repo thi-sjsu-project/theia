@@ -48,30 +48,14 @@ export const cmSlice = createSlice({
 
     // delete an element from a widget by id
     updateWidgetDelete: (state, action: PayloadAction<string>) => {
-      // state.widgets = state.widgets.map((widget) => {
-      //   return {
-      //     ...widget,
-      //     elements: widget.elements.filter(
-      //       (element) => element.id !== action.payload,
-      //     ),
-      //   };
-      // });
-
-      const tempWidgets = state.widgets;
-      tempWidgets.forEach(function (widget, widgetIndex) {
-        //go through each widget
-        widget.elements.forEach(function (element, elementIndex) {
-          //go through each element
-          if (element.id == action.payload) {
-            widget.elements = widget.elements.splice(
-              elementIndex,
-              elementIndex,
-            );
-          }
-        });
+      state.widgets = state.widgets.map((widget) => {
+        return {
+          ...widget,
+          elements: widget.elements.filter(
+            (element) => element.id !== action.payload,
+          ),
+        };
       });
-
-      state.widgets = tempWidgets;
     },
 
     toggleElementInteraction: (state, action: PayloadAction<string>) => {
@@ -88,15 +72,6 @@ export const cmSlice = createSlice({
           };
         }
         return widget;
-        // return {
-        //   ...widget,
-        //   elements: widget.elements.map((element) => {
-        //     return {
-        //       ...element,
-        //       interacted: !element.interacted,
-        //     };
-        //   }),
-        // };
       });
     },
 
