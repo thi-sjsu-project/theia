@@ -2,12 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Widget } from '../../types/modalities';
 import type { Message } from 'src/types/schema-types';
+import { GridCell } from 'src/types/support-types';
 
 type InitialState = {
   visualComplexity: number;
   audioComplexity: number;
   widgets: Widget[];
-  grid: Widget[][];
+  grid: GridCell[][];
   messages: Message[];
   /* ADD MORE AS NEEDED... */
 };
@@ -16,7 +17,7 @@ const initialState: InitialState = {
   visualComplexity: 0,
   audioComplexity: 0,
   widgets: [],
-  grid: new Array(4).fill(null).map(() => new Array(4).fill(null)), //grid that holds ids of widgets in locations
+  grid: [], //grid that holds ids of widgets in locations
   messages: [],
 };
 
@@ -25,6 +26,19 @@ export const cmSlice = createSlice({
   initialState,
   // reducers are used to update the state
   reducers: {
+    updateGridSections: (state, action) => {
+      //given a location on the grid (top-left to bottom-right), make those pixels the given section
+
+    },
+    initializeGrid: (state) => {
+      //given a location on the grid (top-left to bottom-right), make those pixels the given section 
+      const defaultGridCell: GridCell = {
+        widgetIDs: [],
+        priority: 0,
+        type: "free"
+      };
+      state.grid = new Array(1920).fill(defaultGridCell).map(() => new Array(1080).fill(defaultGridCell))
+    },
     addWidgetToGrid: (state, action) => {
       //add a widget to the grid at the location specified in inputted widget
       state.grid[action.payload.location[0]][action.payload.location[1]] =

@@ -97,13 +97,12 @@ const Prototype = () => {
         divide-stone-500 grid grid-cols-4 w-[40rem] h-[40rem]"
         >
           {grid.map((row, rowIndex) =>
-            row.map((widget, colIndex) => (
+            row.map((cell, colIndex) => (
               <div
                 key={IDS[rowIndex * 4 + colIndex]}
-                onClick={() => handleWidgetClick(widget.id)}
                 className="hover:cursor-pointer flex w-[10rem] h-[10rem] items-center justify-center"
               >
-                {widget && <p>{widget.elements[0].type}</p>}
+                {cell && <p>{cell.widgetIDs[0]}</p>}
               </div>
             )),
           )}
