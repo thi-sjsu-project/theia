@@ -29,7 +29,7 @@ const Prototype2 = () => {
               key={IDS[rowIndex * 4 + colIndex]}
               className="hover:cursor-pointer flex w-[10rem] h-[10rem] items-center justify-center"
             >
-              {widget && <p>{widget.elements[0].type}</p>}
+              {widget && <p>{widget.widgetIDs}</p>}
             </div>
           )),
         )}

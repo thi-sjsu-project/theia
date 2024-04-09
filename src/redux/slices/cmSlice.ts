@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Widget } from '../../types/modalities';
 import type { Message } from 'src/types/schema-types';
-import { GridCell } from 'src/types/support-types';
+import type { GridCell } from 'src/types/support-types';
 
 type InitialState = {
   visualComplexity: number;
@@ -28,16 +28,17 @@ export const cmSlice = createSlice({
   reducers: {
     updateGridSections: (state, action) => {
       //given a location on the grid (top-left to bottom-right), make those pixels the given section
-
     },
     initializeGrid: (state) => {
-      //given a location on the grid (top-left to bottom-right), make those pixels the given section 
+      //given a location on the grid (top-left to bottom-right), make those pixels the given section
       const defaultGridCell: GridCell = {
         widgetIDs: [],
         priority: 0,
-        type: "free"
+        type: 'free',
       };
-      state.grid = new Array(1920).fill(defaultGridCell).map(() => new Array(1080).fill(defaultGridCell))
+      state.grid = new Array(1920)
+        .fill(defaultGridCell)
+        .map(() => new Array(1080).fill(defaultGridCell));
     },
     addWidgetToGrid: (state, action) => {
       //add a widget to the grid at the location specified in inputted widget
