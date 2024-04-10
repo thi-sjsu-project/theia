@@ -7,19 +7,14 @@
  * Integrate sockets
  * ...
  */
-import { addWidget, initializeGrid } from 'src/redux/slices/cmSlice';
+import { addWidget } from 'src/redux/slices/cmSlice';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { getGrid } from 'src/redux/slices/cmSlice';
 import type { Widget, Element } from 'src/types/modalities';
 import { useEffect } from 'react';
+import Layout from 'src/components/Layout';
 
 const Prototype2 = () => {
   const dispatch = useAppDispatch();
-  const grid = useAppSelector(getGrid);
-
-  /* useEffect(() => {
-    dispatch(initializeGrid());
-  }, []); */
 
   const topHalf: Element = {
     id: 'topHalf',
@@ -53,13 +48,7 @@ const Prototype2 = () => {
     canOverlap: false,
   };
 
-  // dispatch(addWidget(widget));
-
-  return (
-    <div className="h-screen flex items-center justify-center">
-      <div className="w-[1920px] h-[1080px] bg-stone-400"></div>
-    </div>
-  );
+  return <Layout />;
 };
 
 export default Prototype2;
