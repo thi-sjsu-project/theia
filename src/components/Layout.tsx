@@ -1,5 +1,5 @@
 import GridLayout from 'react-grid-layout';
-import type { Layout as LayoutType } from 'react-grid-layout';
+import type { Layout as LayoutType, DragOverEvent } from 'react-grid-layout';
 
 const Layout = () => {
   const layout: LayoutType[] = [
@@ -18,6 +18,8 @@ const Layout = () => {
           rowHeight={1}
           width={1920}
           margin={[0, 0]}
+          isBounded={true}
+          isResizable={false}
           compactType={null}
           allowOverlap={true}
           preventCollision={true}
