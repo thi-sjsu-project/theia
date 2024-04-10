@@ -2,14 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Widget } from '../../types/modalities';
 import type { Message } from 'src/types/schema-types';
-import type { GridCell } from 'src/types/support-types';
+import { Cell } from 'src/types/support-types';
 
 type InitialState = {
   visualComplexity: number;
   audioComplexity: number;
   widgets: Widget[];
   messages: Message[];
-  grid: GridCell[][];
+  pixelMap: Cell[][];
   /* ADD MORE AS NEEDED... */
 };
 
@@ -18,7 +18,7 @@ const initialState: InitialState = {
   audioComplexity: 0,
   widgets: [],
   messages: [],
-  grid: [],
+  pixelMap: [],
 };
 
 export const cmSlice = createSlice({
@@ -26,6 +26,17 @@ export const cmSlice = createSlice({
   initialState,
   // reducers are used to update the state
   reducers: {
+    initializeGrid: (state) => {
+      //given a location on the grid (top-left to bottom-right), make those pixels the given section
+      const defaultCell: Cell = {
+        widgetIDs: [],
+        priority: 0,
+        type: 'free',
+      };
+      state.pixelMap = new Array(1920)
+        .fill(defaultCell)
+        .map(() => new Array(1080).fill(defaultCell));
+    },
     addWidget: (state, action: PayloadAction<Widget>) => {
       state.widgets.push(action.payload);
     },

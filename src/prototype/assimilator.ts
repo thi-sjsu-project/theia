@@ -1,10 +1,10 @@
 import type { Widget } from 'src/types/modalities';
-import { GridCell } from 'src/types/support-types';
+import { Cell } from 'src/types/support-types';
 
 type AssimilatorProps = {
   // define expected input here and it's type (number, string, etc.)
   possibleWidgets: Widget[];
-  grid: GridCell[][];
+  pixelMap: Cell[][];
 };
 
 /**
@@ -12,9 +12,9 @@ type AssimilatorProps = {
  * @param ???
  * @returns ???
  */
-const assimilator = ({ possibleWidgets, grid }: AssimilatorProps) => {
+const assimilator = ({ possibleWidgets, pixelMap }: AssimilatorProps) => {
   let widgetToDeploy = null; //will return null if we cannot find a space
-  grid.forEach(function (row, rowIndex) {
+  pixelMap.forEach(function (row, rowIndex) {
     //go through each row
     row.forEach(function (cell, colIndex) {
       //go through each widget in row
