@@ -36,9 +36,14 @@ export const cmSlice = createSlice({
         priority: 0,
         type: 'free',
       };
-      state.grid = new Array(1920)
-        .fill(defaultGridCell)
-        .map(() => new Array(1080).fill(defaultGridCell));
+
+      // initialize grid with default grid cells
+      for (let i = 0; i < 500; i++) {
+        state.grid.push([]);
+        for (let j = 0; j < 500; j++) {
+          state.grid[i].push(defaultGridCell);
+        }
+      }
     },
     addWidgetToGrid: (state, action) => {
       //add a widget to the grid at the location specified in inputted widget
