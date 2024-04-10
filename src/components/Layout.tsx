@@ -2,14 +2,69 @@ import { FaLocationArrow } from 'react-icons/fa';
 import { GiDeliveryDrone } from 'react-icons/gi';
 import GridLayout from 'react-grid-layout';
 import type { Layout as LayoutType } from 'react-grid-layout';
+import { useEffect, useRef, useState } from 'react';
 
 const Layout = () => {
-  const layout: LayoutType[] = [
-    { i: 'a', x: 0, y: 0, w: 300, h: 1080, static: true },
+  const [xTravel, setXTravel] = useState(0);
+  const ownshipRef = useRef<HTMLDivElement>(null);
+
+  let yTravel = 0;
+  const move = {
+    x: 50,
+    y: 0,
+  };
+
+  const [layout, setLayout] = useState<LayoutType[]>([
+    { i: 'tinder', x: 0, y: 0, w: 300, h: 1080, static: true },
     { i: 'drone1', x: 500, y: 200, w: 50, h: 50 },
     { i: 'drone2', x: 1500, y: 300, w: 50, h: 50 },
-    { i: 'ownship', x: 800, y: 500, w: 50, h: 50 },
-  ];
+    { i: 'drone3', x: 1200, y: 700, w: 50, h: 50 },
+    { i: 'ownship', x: 400, y: 950, w: 50, h: 50, isDraggable: true },
+  ]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setLayout((prevLayout) =>
+        prevLayout.map((item) => {
+          if (item.i === 'ownship') {
+            if (item.x === 1850) {
+              move.x = 0;
+              move.y = 50;
+            } else if (item.x === 400) {
+              move.x = 0;
+              move.y = -50;
+            }
+            return { ...item, x: item.x + move.x, y: item.y + move.y };
+          }
+          return item;
+        }),
+      );
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  /* useEffect(() => {
+    const timer = setInterval(() => {
+      setLayout((prevLayout) =>
+        prevLayout.map((item) => {
+          if (item.i === 'drone1') {
+            if (item.x === 1850) {
+              move.x = 0;
+              move.y = 50;
+            } else if (item.x === 400) {
+              move.x = 0;
+              move.y = -50;
+            }
+            return { ...item, x: item.x + move.x, y: item.y + move.y };
+          }
+          return item;
+        }),
+      );
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []); */
 
   return (
     <div className="h-screen flex items-center justify-center">
@@ -27,7 +82,7 @@ const Layout = () => {
           preventCollision={true}
         >
           <div
-            key="a"
+            key="tinder"
             className="bg-blue-300 flex 
             items-center justify-center "
           >
@@ -39,7 +94,10 @@ const Layout = () => {
           <div key="drone2">
             <GiDeliveryDrone size={50} />
           </div>
-          <div key="ownship">
+          <div key="drone3">
+            <GiDeliveryDrone size={50} />
+          </div>
+          <div ref={ownshipRef} key="ownship">
             <FaLocationArrow size={50} />
           </div>
         </GridLayout>
