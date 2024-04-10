@@ -1,22 +1,22 @@
 import GridLayout from 'react-grid-layout';
-import type { Layout as LayoutType, DragOverEvent } from 'react-grid-layout';
+import type { Layout as LayoutType } from 'react-grid-layout';
 
 const Layout = () => {
   const layout: LayoutType[] = [
-    { i: 'a', x: 0, y: 0, w: 3, h: 1080, static: true },
-    { i: 'b', x: 4, y: 0, w: 3, h: 50, minW: 2, maxW: 4 },
-    { i: 'c', x: 7, y: 300, w: 1, h: 80 },
-    { i: 'd', x: 4, y: 500, w: 1, h: 80 },
+    { i: 'a', x: 0, y: 0, w: 300, h: 1080, static: true },
+    { i: 'b', x: 500, y: 0, w: 300, h: 50 },
+    { i: 'c', x: 1500, y: 300, w: 200, h: 80 },
+    { i: 'd', x: 450, y: 500, w: 250, h: 80 },
   ];
 
   return (
     <div className="h-screen flex items-center justify-center">
       <div className="bg-red-300 w-[1920px] h-[1080px] hover:cursor-pointer">
         <GridLayout
-          cols={12}
+          cols={1920}
+          width={1920}
           layout={layout}
           rowHeight={1}
-          width={1920}
           margin={[0, 0]}
           isBounded={true}
           isResizable={false}
