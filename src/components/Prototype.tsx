@@ -42,6 +42,12 @@ const Prototype = () => {
     const widget: Widget = {
       id: uuid(),
       elements: possibleModalities,
+      type: "tinder",
+      maxAmount: 1,
+      size: [50,50],
+      locationGrid: [[100,200], [150,250]],
+      useElementLocation: false,
+      canOverlap: false,
     };
 
     // call assimilator here...

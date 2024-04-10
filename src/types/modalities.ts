@@ -25,7 +25,7 @@ export type Widget = {
   type: string;
   maxAmount: number;
   size: number[];
-  locationGrid: [number, number];
+  locationGrid: [number[], number[]];
   useElementLocation: boolean;
   canOverlap: boolean;
 };
