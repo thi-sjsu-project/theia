@@ -15,11 +15,17 @@ export type Element = {
   id: string;
   modality: Modality;
   type: 'table' | 'button' | 'text' | 'image' | 'audio' | 'icon';
+  locationWidget: [number[], number[]];
+  canOverlap: boolean;
 };
 
 export type Widget = {
   elements: Element[];
   id: string;
-  name?: string; // optional field...?
-  location?: [number, number];
+  type: string;
+  maxAmount: number;
+  size: number[];
+  locationGrid: [number, number];
+  useElementLocation: boolean;
+  canOverlap: boolean;
 };
