@@ -5,3 +5,5 @@ for assimilator prototype, just make it a 4x4 grid and find a place that is open
 redux time travel
 there should be a set "control console" for controlling a drone, with similar functionalities as the ownship
 allow multiple widgets as a possible response to messages in selector
+to assimilator: make an algorithm that pre calculates the areas of space within each section that are currently free
+and update these areas when we add or remove something.

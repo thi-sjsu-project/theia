@@ -21,7 +21,7 @@ const assimilator = ({ possibleWidgets, grid }: AssimilatorProps) => {
       if (cell.widgetIDs.length === 0) {
         //found space to put the widget in
         widgetToDeploy = possibleWidgets[0]; //the widget can be deployed
-        widgetToDeploy.location = [rowIndex, colIndex]; //set the location of where it will be placed
+        //widgetToDeploy.location = [rowIndex, colIndex]; //set the location of where it will be placed
       }
     });
   });
