@@ -11,20 +11,21 @@ const Layout = () => {
 
   return (
     <div className="h-screen flex items-center justify-center">
-      <div className="bg-red-300 w-[1920px] h-[1080px]">
+      <div className="bg-red-300 w-[1920px] h-[1080px] hover:cursor-pointer">
         <GridLayout
           cols={12}
           layout={layout}
           rowHeight={1}
           width={1920}
           margin={[0, 0]}
-          autoSize={true}
           compactType={null}
+          allowOverlap={true}
+          preventCollision={true}
         >
           <div
             key="a"
             className="bg-blue-300 flex 
-            items-center justify-center"
+            items-center justify-center "
           >
             <p className="text-5xl">Tinder Box</p>
           </div>
