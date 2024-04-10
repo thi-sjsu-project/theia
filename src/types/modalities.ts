@@ -16,7 +16,7 @@ export type Element = {
   modality: Modality;
   type: 'table' | 'button' | 'text' | 'image' | 'audio' | 'icon';
   locationWidget: [number[], number[]];
-  canOverlap: boolean;
+  canOverlap?: boolean;
 };
 
 export type Widget = {
