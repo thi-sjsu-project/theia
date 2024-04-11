@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Widget } from '../../types/modalities';
 import type { Message } from 'src/types/schema-types';
-import type { Cell } from 'src/types/support-types';
+import type { Cell, Section } from 'src/types/support-types';
 
 type InitialState = {
   visualComplexity: number;
@@ -10,6 +10,7 @@ type InitialState = {
   widgets: Widget[];
   messages: Message[];
   pixelMap: Cell[][];
+  sections: Section[];
   /* ADD MORE AS NEEDED... */
 };
 
@@ -19,6 +20,7 @@ const initialState: InitialState = {
   widgets: [],
   messages: [],
   pixelMap: [],
+  sections: [],
 };
 
 export const cmSlice = createSlice({
@@ -39,6 +41,7 @@ export const cmSlice = createSlice({
     },
     addMapSection: (state, action) => {
       const section = action.payload;
+      
 
       const tempCell: Cell = {
         widgetIDs: [],
@@ -46,14 +49,12 @@ export const cmSlice = createSlice({
         type: section.type,
       };
 
-      console.log(state.pixelMap);
-      for(let col = section.x; col < section.x+section.w; col++){
+      for(let col = section.x; col < section.x+section.w; col++){ //add  the specified cell to the pixel map to create section region
         for(let row = section.y; row < section.y+section.h; row++){
           state.pixelMap[row][col] = tempCell;
         }
       }
-      console.log('done');
-      console.log(state.pixelMap);
+      state.sections.push(section); //add it to our sections as well
     },
     addWidget: (state, action: PayloadAction<Widget>) => {
       state.widgets.push(action.payload);
@@ -106,6 +107,7 @@ export const cmSlice = createSlice({
   },
   // selectors are used to access parts of the state within components
   selectors: {
+    getSections: (state) => state.sections,
     getPixelMap: (state) => state.pixelMap,
     getWidgets: (state) => state.widgets,
     // find a single widget by id
@@ -131,6 +133,7 @@ export const {
 } = cmSlice.actions;
 
 export const {
+  getSections,
   getPixelMap,
   getWidgets,
   getWidgetById,
