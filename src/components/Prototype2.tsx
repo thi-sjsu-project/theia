@@ -7,8 +7,8 @@
  * Integrate sockets
  * ...
  */
-import { initializeMap, addMapSection } from 'src/redux/slices/cmSlice';
-import { useAppDispatch} from 'src/redux/hooks';
+import { initializeMap, addMapSection, getPixelMap } from 'src/redux/slices/cmSlice';
+import { useAppDispatch, useAppSelector} from 'src/redux/hooks';
 import type { Widget, Element } from 'src/types/modalities';
 import { useEffect } from 'react';
 import Layout from 'src/components/Layout';
@@ -29,9 +29,11 @@ const Prototype2 = () => {
   useEffect(() => {
     dispatch(initializeMap());
     dispatch(addMapSection(tinderSection))
+    
   }, []);
 
-
+  const pixelMap = useAppSelector(getPixelMap)
+  console.log(pixelMap)
   const topHalf: Element = {
     id: 'topHalf',
     modality: 'visual',

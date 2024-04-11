@@ -106,6 +106,7 @@ export const cmSlice = createSlice({
   },
   // selectors are used to access parts of the state within components
   selectors: {
+    getPixelMap: (state) => state.pixelMap,
     getWidgets: (state) => state.widgets,
     // find a single widget by id
     getWidgetById: (state, id: string) =>
@@ -130,6 +131,7 @@ export const {
 } = cmSlice.actions;
 
 export const {
+  getPixelMap,
   getWidgets,
   getWidgetById,
   getMessages,
