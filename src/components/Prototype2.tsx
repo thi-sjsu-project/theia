@@ -38,30 +38,30 @@ const Prototype2 = () => {
     id: 'topHalf',
     modality: 'visual',
     type: 'text',
-    locationWidget: [
-      [10, 0],
-      [40, 24],
-    ],
+    xWidget: 10,
+    yWidget: 0,
+    w: 30,
+    h: 24
+    
   };
   const bottomHalf: Element = {
     id: 'bottomHalf',
     modality: 'visual',
     type: 'text',
-    locationWidget: [
-      [10, 25],
-      [40, 50],
-    ],
+    xWidget: 10,
+    yWidget: 25,
+    w: 30,
+    h: 25,
   };
   const widget: Widget = {
     id: 'tinder',
     elements: [topHalf, bottomHalf],
     type: 'tinder',
     maxAmount: 1,
-    size: [50, 50],
-    locationGrid: [
-      [100, 200],
-      [150, 250],
-    ],
+    x: 100,
+    y: 200,
+    w: 50,
+    h: 50,
     useElementLocation: false,
     canOverlap: false,
   };
