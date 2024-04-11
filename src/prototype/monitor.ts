@@ -2,7 +2,6 @@ import type { AppDispatch } from 'src/redux/store';
 import {
   removeWidget,
   updateWidgetDelete,
-  deleteWidgetFromGrid,
 } from '../redux/slices/cmSlice';
 import store from 'src/redux/store';
 
@@ -31,7 +30,6 @@ const monitor = ({ dispatch }: MonitorProps) => {
             if (widget.elements.length === 1) {
               console.log('widget length 1');
               dispatch(removeWidget(widget.id));
-              dispatch(deleteWidgetFromGrid(widget));
             } else {
               dispatch(updateWidgetDelete(element.id));
             }

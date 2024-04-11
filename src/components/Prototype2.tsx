@@ -7,18 +7,30 @@
  * Integrate sockets
  * ...
  */
-import { addWidget, initializeMap } from 'src/redux/slices/cmSlice';
-import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { initializeMap, addMapSection } from 'src/redux/slices/cmSlice';
+import { useAppDispatch} from 'src/redux/hooks';
 import type { Widget, Element } from 'src/types/modalities';
 import { useEffect } from 'react';
 import Layout from 'src/components/Layout';
+import type {Section} from 'src/types/support-types.ts'
 
 const Prototype2 = () => {
   const dispatch = useAppDispatch();
+  const tinderSection: Section = {
+    x: 50,
+    y: 40,
+    w: 200,
+    h: 800,
+    priority: 10,
+    type: 'tinder',
+
+  }
 
   useEffect(() => {
     dispatch(initializeMap());
+    dispatch(addMapSection(tinderSection))
   }, []);
+
 
   const topHalf: Element = {
     id: 'topHalf',
