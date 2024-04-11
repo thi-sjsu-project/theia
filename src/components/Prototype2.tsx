@@ -7,7 +7,7 @@
  * Integrate sockets
  * ...
  */
-import { addWidget } from 'src/redux/slices/cmSlice';
+import { addWidget, initializeMap } from 'src/redux/slices/cmSlice';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import type { Widget, Element } from 'src/types/modalities';
 import { useEffect } from 'react';
@@ -15,6 +15,10 @@ import Layout from 'src/components/Layout';
 
 const Prototype2 = () => {
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(initializeMap());
+  }, []);
 
   const topHalf: Element = {
     id: 'topHalf',
