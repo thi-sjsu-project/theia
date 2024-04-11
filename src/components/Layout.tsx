@@ -1,22 +1,19 @@
-import { FaLocationArrow } from 'react-icons/fa';
-import { GiDeliveryDrone } from 'react-icons/gi';
 import GridLayout from 'react-grid-layout';
 import type { Layout as LayoutType } from 'react-grid-layout';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { FaLocationArrow } from 'react-icons/fa';
+import { GiDeliveryDrone } from 'react-icons/gi';
+import { OWNSHIP_TRAJECTORY } from 'src/utils/constants';
 
 const Layout = () => {
-  const [xTravel, setXTravel] = useState(0);
-  const ownshipRef = useRef<HTMLDivElement>(null);
-  const bound  = {
-    left: 300,
-    right: 1930,
+  const bounds = {
+    left: 400,
+    right: 1920,
     top: 1080,
     bottom: 50,
-  }
-
-  let yTravel = 0;
-  const move = {
-    x: 50,
+  };
+  const droneMove = {
+    x: 10,
     y: 0,
   };
 
@@ -28,43 +25,59 @@ const Layout = () => {
     { i: 'ownship', x: 400, y: 950, w: 50, h: 50, isDraggable: true },
   ]);
 
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setLayout((prevLayout) =>
-  //       prevLayout.map((item) => {
-  //         if (item.i === 'ownship') {
-  //           if (item.x === 1850) {
-  //             move.x = 0;
-  //             move.y = 50;
-  //           } else if (item.x === 400) {
-  //             move.x = 0;
-  //             move.y = -50;
-  //           }
-  //           return { ...item, x: item.x + move.x, y: item.y + move.y };
-  //         }
-  //         return item;
-  //       }),
-  //     );
-  //   }, 1000);
+  useEffect(() => {
+    // update ownship position every 500ms (0.5s)
+    const timer = setInterval(() => {
+      setLayout((prevLayout) =>
+        prevLayout.map((item) => {
+          if (item.i === 'ownship') {
+            if (
+              item.x + OWNSHIP_TRAJECTORY.xSpeed <= OWNSHIP_TRAJECTORY.end[0] &&
+              item.y - OWNSHIP_TRAJECTORY.ySpeed >= OWNSHIP_TRAJECTORY.end[1]
+            ) {
+              // only move ownship if within defined trajectory boundss\
+              return {
+                ...item,
+                x: item.x + OWNSHIP_TRAJECTORY.xSpeed,
+                y: item.y - OWNSHIP_TRAJECTORY.ySpeed,
+              };
+            }
+            return item;
+          }
+          return item;
+        }),
+      );
+    }, 500);
 
-  //   return () => clearInterval(timer);
-  // }, []);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
+    // random drone movement every second
     const timer = setInterval(() => {
       setLayout((prevLayout) =>
         prevLayout.map((item) => {
           if (item.i.includes('drone')) {
-            move.x = Math.floor(Math.random() * 100) - 50;
-            move.y = Math.floor(Math.random() * 100) - 50;
-            if (item.x + move.x < bound.left || item.x + move.x > bound.right) {
-              move.x = -move.x;
+            droneMove.x = Math.floor(Math.random() * 20) - 10;
+            droneMove.y = Math.floor(Math.random() * 20) - 10;
+            if (
+              item.x + droneMove.x < bounds.left ||
+              item.x + droneMove.x > bounds.right
+            ) {
+              droneMove.x = -droneMove.x;
             }
-            if (item.y + move.y < bound.bottom || item.y + move.y > bound.top) {
-              move.y = -move.y;
+            if (
+              item.y + droneMove.y < bounds.bottom ||
+              item.y + droneMove.y > bounds.top
+            ) {
+              droneMove.y = -droneMove.y;
             }
 
-            return { ...item, x: item.x + move.x, y: item.y + move.y };
+            return {
+              ...item,
+              x: item.x + droneMove.x,
+              y: item.y + droneMove.y,
+            };
           }
           return item;
         }),
@@ -105,7 +118,7 @@ const Layout = () => {
           <div key="drone3">
             <GiDeliveryDrone size={50} />
           </div>
-          <div ref={ownshipRef} key="ownship">
+          <div key="ownship">
             <FaLocationArrow size={50} />
           </div>
         </GridLayout>
