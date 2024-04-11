@@ -37,7 +37,6 @@ export const cmSlice = createSlice({
       };
       state.pixelMap = new Array(1080)
         .fill(new Array(1920).fill(defaultCell))
-        console.log(state.pixelMap);
     },
     addMapSection: (state, action) => {
       const section = action.payload;

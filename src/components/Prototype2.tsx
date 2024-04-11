@@ -30,6 +30,14 @@ const Prototype2 = () => {
   useEffect(() => {
     dispatch(initializeMap());
     dispatch(addMapSection(tinderSection))
+  }, []);
+
+  const pixelMap = useAppSelector(getPixelMap)
+  const sections = useAppSelector(getSections)
+  console.log("sections")
+  console.log(sections)
+
+  useEffect(() => {
 
     
     const topHalf: Element = {
@@ -64,8 +72,7 @@ const Prototype2 = () => {
       canOverlap: false,
     };
       
-    const pixelMap = useAppSelector(getPixelMap)
-    const sections = useAppSelector(getSections)
+    
     // call assimilator here...
     const { widgetToDeploy } = assimilator({
       //find if there is room for us to put the widget down (returns null if there is not room)
@@ -73,9 +80,11 @@ const Prototype2 = () => {
       pixelMap,
       sections,
     });
-
+    console.log("widgetToDeploy "+widgetToDeploy);
     // consult the restrainer here...
     if (widgetToDeploy) {
+      console.log("did it! "+widgetToDeploy);
+      console.log(widgetToDeploy);
       //if we can actually place the widget
 
       //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
@@ -90,7 +99,7 @@ const Prototype2 = () => {
       // dispatch action to add new widget
       dispatch(addWidget(widgetToDeploy));
     }
-  }, []);
+  }, [sections]);
 
   
 
