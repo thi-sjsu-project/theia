@@ -15,7 +15,7 @@ type AssimilatorProps = {
  */
 const assimilator = ({ possibleWidgets, pixelMap, sections }: AssimilatorProps) => {
 
-  let widgetToDeploy = null; //will return null if we cannot find a space
+  let widgetToDeploy: Widget | null = null; //will return null if we cannot find a space
 
   possibleWidgets.forEach(function(widget, widgetIndex){//go through each possible widget until we find one we can place
 
@@ -37,10 +37,14 @@ const assimilator = ({ possibleWidgets, pixelMap, sections }: AssimilatorProps) 
           if (widgetsInCell.length === 0) { //this cell is empty, we may be able to start from here
             const proposedX = x;
             const proposedY = y;
+            const proposedW = 0;
+            const proposedH = 0;
 
-            for 
+            for(let width = x; width < section.x+section.w; width++){
+              if()
+            }
             //found space to put the widget in
-            widgetToDeploy = possibleWidgets[0]; //the widget can be deployed
+            widgetToDeploy = widget; //the widget can be deployed
             return {
               widgetToDeploy,
             }
