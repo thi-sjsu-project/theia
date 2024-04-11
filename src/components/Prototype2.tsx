@@ -27,16 +27,19 @@ const Prototype2 = () => {
 
   }
 
+  //first useEffect, adds the initial sections and intializes pixel map (remove initialize from this and initialize it above)
   useEffect(() => {
     dispatch(initializeMap());
     dispatch(addMapSection(tinderSection))
   }, []);
 
+  //get the pixel map and sections that were just made
   const pixelMap = useAppSelector(getPixelMap)
   const sections = useAppSelector(getSections)
   console.log("sections")
   console.log(sections)
 
+  //second useEffect, calls assimilator and adds widget to state if it can find a space
   useEffect(() => {
 
     
@@ -81,9 +84,8 @@ const Prototype2 = () => {
       sections,
     });
     console.log("widgetToDeploy "+widgetToDeploy);
-    // consult the restrainer here...
     if (widgetToDeploy) {
-      console.log("did it! "+widgetToDeploy);
+      console.log("did it! ");
       console.log(widgetToDeploy);
       //if we can actually place the widget
 

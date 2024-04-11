@@ -19,7 +19,6 @@ const assimilator = ({ possibleWidgets, pixelMap, sections }: AssimilatorProps) 
 
   possibleWidgets.forEach(function(widget, widgetIndex){//go through each possible widget until we find one we can place
 
-    console.log("length sections "+sections.length);
     //get the sections with matching types
     const matchingSections: Section[] = []; //holds matching sections
     sections.forEach(function(section, sectionIndex) { //find matching sections
@@ -28,9 +27,6 @@ const assimilator = ({ possibleWidgets, pixelMap, sections }: AssimilatorProps) 
         matchingSections.push(section); //it matches, so add it
       }
     });
-
-    console.log("matching sections"+matchingSections);
-    console.log(matchingSections);
 
     matchingSections.forEach(function (section, sectionIndex) {//go through each section that matches our widget's
       for(let x = section.x; x < section.x+section.w; x++){ //go through every x value in the section
