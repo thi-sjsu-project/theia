@@ -1,5 +1,5 @@
 import type { Widget } from 'src/types/modalities';
-import { Cell } from 'src/types/support-types';
+import type { Cell } from 'src/types/support-types';
 
 type AssimilatorProps = {
   // define expected input here and it's type (number, string, etc.)
