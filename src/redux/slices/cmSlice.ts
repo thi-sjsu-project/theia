@@ -56,7 +56,12 @@ export const cmSlice = createSlice({
       state.sections.push(section); //add it to our sections as well
     },
     addWidget: (state, action: PayloadAction<Widget>) => {
-      state.widgets.push(action.payload);
+      state.widgets.push(action.payload);//add to the widgets
+      for(let x = action.payload.x; x < action.payload.x+action.payload.w; x++){ //add the widgetID to the cells it is filling
+        for(let y = action.payload.y; y < action.payload.y+action.payload.h; y++){
+          state.pixelMap[x][y].widgetIDs.push(action.payload.id);
+        }
+      }
     },
     removeWidget: (state, action: PayloadAction<string>) => {
       state.widgets = state.widgets.filter(

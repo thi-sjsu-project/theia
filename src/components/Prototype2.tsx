@@ -7,7 +7,7 @@
  * Integrate sockets
  * ...
  */
-import { initializeMap, addMapSection, getPixelMap, getSections, addWidget } from 'src/redux/slices/cmSlice';
+import { initializeMap, addMapSection, getPixelMap, getSections, addWidget, getWidgets } from 'src/redux/slices/cmSlice';
 import { useAppDispatch, useAppSelector} from 'src/redux/hooks';
 import type { Widget, Element } from 'src/types/modalities';
 import { useEffect } from 'react';
@@ -34,7 +34,7 @@ const Prototype2 = () => {
   }, []);
 
   //get the pixel map and sections that were just made
-  const pixelMap = useAppSelector(getPixelMap)
+  let pixelMap = useAppSelector(getPixelMap)
   const sections = useAppSelector(getSections)
   console.log("sections")
   console.log(sections)
@@ -103,7 +103,11 @@ const Prototype2 = () => {
     }
   }, [sections]);
 
-  
+  const widgets = useAppSelector(getWidgets);
+  pixelMap = useAppSelector(getPixelMap)
+  console.log("final widgets and pixelMap");
+  console.log(widgets)
+  console.log(pixelMap);
 
   return <Layout />;
 };
