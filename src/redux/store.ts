@@ -11,9 +11,13 @@ type RootState = ReturnType<typeof rootReducer>;
 
 const store = configureStore({
   reducer: rootReducer,
-  // this is unnecessary, but included for demonstration purposes
-  // since default middlewares are automatically included
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      // disable serializableCheck for now (performance optimization)
+      // warning in console because an action was taking too long to complete
+      // because of the initializeGrid action. (2+ million cells being initialized)
+      serializableCheck: false,
+    }),
 });
 
 // Infer the type of `store`
