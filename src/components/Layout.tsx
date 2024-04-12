@@ -36,7 +36,7 @@ const Layout = ({ widgets }: LayoutProps) => {
         // add new widget to widgetMap
         const div = document.createElement('div');
         div.id = widgetId;
-        div.style.position = 'relative';
+        div.style.position = 'absolute';
         div.style.left = `${x}px`;
         div.style.top = `${y}px`;
         div.style.width = `${w}px`;
@@ -154,7 +154,7 @@ const Layout = ({ widgets }: LayoutProps) => {
   }, []);
 
   return (
-    <div className="bg-stone-300 w-[1920px] h-[1080px] hover:cursor-pointer">
+    <div className="absolute top-0 left-0 bg-stone-300 w-[1920px] h-[1080px] hover:cursor-pointer">
       <GridLayout
         cols={1920}
         width={1920}

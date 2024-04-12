@@ -91,6 +91,7 @@ const Prototype2 = () => {
 
     if (widgetToDeploy) {
       console.log('widget deployed:', widgetToDeploy);
+      console.log('widgets that are now deployed: ', widgets);
       //if we can actually place the widget
 
       //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
@@ -174,10 +175,10 @@ const Prototype2 = () => {
   }
 
   return (
-    <div className="h-screen flex items-center justify-center gap-10">
+    <div>
       <Layout widgets={widgets} />
 
-      <div className="w-[40rem] flex flex-col items-center gap-4">
+      <div className="absolute top-0 right-0 w-[30rem] flex flex-col gap-4">
         <div className="bg-green-200 w-full h-96 px-2 py-1">
           <p className="text-center text-5xl">List of Messages:</p>
           <ul className="overflow-y-scroll divide-y divide-stone-500 h-80">
