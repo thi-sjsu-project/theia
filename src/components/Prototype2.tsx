@@ -47,7 +47,6 @@ const Prototype2 = () => {
       'RequestApprovalToAttack',
       'MissileToOwnshipDetected',
       'AcaFuelLow',
-      
     ];
 
     const generateMessage = () => {
@@ -112,7 +111,6 @@ const Prototype2 = () => {
     // only run in the first render
     firstRender1.current = false;
 
-
     const tinderSection: Section = {
       x: 50,
       y: 40,
@@ -149,7 +147,6 @@ const Prototype2 = () => {
     console.log('dispatching addMapSection');
     dispatch(addMapSection(highWarningSection));
 
-
     const lowWarningSection: Section = {
       x: 200,
       y: 400,
@@ -175,110 +172,28 @@ const Prototype2 = () => {
     dispatch(addMapSection(messageSection));
   }
 
-  // call assimilator and add widget to state if it can find a space
-  // useEffect(() => {
-  //   console.log('running through assimilator...');
-  //   const topHalf: Element = {
-  //     id: 'topHalf',
-  //     modality: 'visual',
-  //     type: 'text',
-  //     xWidget: 10,
-  //     yWidget: 0,
-  //     w: 30,
-  //     h: 24,
-  //   };
-  //   const bottomHalf: Element = {
-  //     id: 'bottomHalf',
-  //     modality: 'visual',
-  //     type: 'text',
-  //     xWidget: 10,
-  //     yWidget: 25,
-  //     w: 30,
-  //     h: 25,
-  //   };
-  //   const widget: Widget = {
-  //     id: 'tinder',
-  //     elements: [topHalf, bottomHalf],
-  //     type: 'tinder',
-  //     maxAmount: 1,
-  //     x: 100,
-  //     y: 200,
-  //     w: 50,
-  //     h: 50,
-  //     useElementLocation: false,
-  //     canOverlap: false,
-  //   };
+  return (
+    <div className="h-screen flex items-center justify-center gap-10">
+      <Layout widgets={widgets} />
 
-  //   // call assimilator here...
-  //   const { widgetToDeploy } = assimilator({
-  //     // find if there is room for us to put the widget down (returns null if there is not room)
-  //     possibleWidgets: [widget],
-  //     pixelMap,
-  //     sections,
-  //   });
-
-  //   console.log('widgetToDeploy ' + widgetToDeploy);
-
-  //   if (widgetToDeploy) {
-  //     console.log('widget deployed:', widgetToDeploy);
-  //     //if we can actually place the widget
-
-  //     //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
-  //     /* if (
-  //       !restrainer({
-  //         visualComplexity: generateModalityMeasure(),
-  //         audioComplexity: generateModalityMeasure(),
-  //       })
-  //     )
-  //       return; */
-
-  //     // dispatch action to add new widget
-  //     dispatch(addWidget(widgetToDeploy));
-  //   }
-  // }, []);
-
-  // let coin = 0;
-  // useEffect(() => {
-  //   if (coin < listOfMsg.length) {
-  //     //get next message
-  //     const currentMessage = listOfMsg[coin];
-  //     const { message, possibleWidgets } = selector({
-  //       message: currentMessage,
-  //     });
-
-  //     console.log('running through assimilator...');
-  //     // call assimilator here...
-  //     const { widgetToDeploy } = assimilator({
-  //       // find if there is room for us to put the widget down (returns null if there is not room)
-  //       possibleWidgets: possibleWidgets,
-  //       pixelMap,
-  //       sections,
-  //     });
-
-  //     console.log('widgetToDeploy ' + widgetToDeploy);
-
-  //     if (widgetToDeploy) {
-  //       console.log('widget deployed:', widgetToDeploy);
-  //       //if we can actually place the widget
-
-  //       //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
-  //       /* if (
-  //         !restrainer({
-  //           visualComplexity: generateModalityMeasure(),
-  //           audioComplexity: generateModalityMeasure(),
-  //         })
-  //       )
-  //         return; */
-
-  //       // dispatch action to add new widget
-  //       dispatch(addWidget(widgetToDeploy));
-  //     }
-
-  //     coin++; //increment coin to next message
-  //   }
-  // }, []);
-
-  return <Layout widgets={widgets} />;
+      <div className="w-[40rem] flex flex-col items-center gap-4">
+        <div className="bg-green-200 w-full h-96 px-2 py-1">
+          <p className="text-center text-5xl">List of Messages:</p>
+          <ul className="overflow-y-scroll divide-y divide-stone-500 h-80">
+            {messages.map((msg) => (
+              <li key={msg}>
+                <div>
+                  <span className="text-3xl">
+                    {msg === 'tinder' ? 'Tinder Message' : msg}
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Prototype2;
