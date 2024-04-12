@@ -11,6 +11,6 @@ export type Section = {
   w: number;
   h: number;
   priority: number;
-  type: 'free' | 'tinder' | 'message';
+  type: 'free' | 'tinder' | 'message' | 'highWarning' | 'lowWarning' | 'request';
 
 }

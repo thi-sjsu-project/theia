@@ -45,7 +45,6 @@ const Prototype2 = () => {
       'RequestApprovalToAttack',
       'MissileToOwnshipDetected',
       'AcaFuelLow',
-      'AcaHeadingToBase',
     ];
 
     const generateMessage = () => {
@@ -103,10 +102,12 @@ const Prototype2 = () => {
     }
   }, [messages]);
 
-  // add initial section to the pixel map
+  // add initial sections to the pixel map
   if (firstRender1.current) {
     // only run in the first render
     firstRender1.current = false;
+
+
     const tinderSection: Section = {
       x: 50,
       y: 40,
@@ -118,6 +119,55 @@ const Prototype2 = () => {
 
     console.log('dispatching addMapSection');
     dispatch(addMapSection(tinderSection));
+
+    const requestSection: Section = {
+      x: 1000,
+      y: 500,
+      w: 800,
+      h: 200,
+      priority: 10,
+      type: 'request',
+    };
+
+    console.log('dispatching addMapSection');
+    dispatch(addMapSection(requestSection));
+
+    const highWarningSection: Section = {
+      x: 500,
+      y: 200,
+      w: 100,
+      h: 100,
+      priority: 10,
+      type: 'highWarning',
+    };
+
+    console.log('dispatching addMapSection');
+    dispatch(addMapSection(highWarningSection));
+
+
+    const lowWarningSection: Section = {
+      x: 200,
+      y: 400,
+      w: 100,
+      h: 100,
+      priority: 10,
+      type: 'lowWarning',
+    };
+
+    console.log('dispatching addMapSection');
+    dispatch(addMapSection(lowWarningSection));
+
+    const messageSection: Section = {
+      x: 1500,
+      y: 200,
+      w: 200,
+      h: 200,
+      priority: 10,
+      type: 'message',
+    };
+
+    console.log('dispatching addMapSection');
+    dispatch(addMapSection(messageSection));
   }
 
   // call assimilator and add widget to state if it can find a space
