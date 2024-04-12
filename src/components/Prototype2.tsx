@@ -21,6 +21,7 @@ import Layout from 'src/components/Layout';
 import type { Section } from 'src/types/support-types.ts';
 import { v4 as uuid } from 'uuid';
 import assimilator from 'src/prototype/assimilator';
+import selector from 'src/prototype/selector';
 
 const Prototype2 = () => {
   const dispatch = useAppDispatch();
@@ -109,6 +110,52 @@ const Prototype2 = () => {
 
       // dispatch action to add new widget
       dispatch(addWidget(widgetToDeploy));
+    }
+  }, []);
+
+  //run through the MS with each message type in array
+
+  const listOfMsg = ['RequestApprovalToAttack','MissileToOwnshipDetected','AcaFuelLow','AcaHeadingToBase'];
+  
+  let coin = 0;
+  useEffect(() => {
+
+    if(coin < listOfMsg.length){
+      //get next message
+      const currentMessage = listOfMsg[coin];
+      const { message, possibleWidgets } = selector({
+        message: currentMessage,
+      })
+
+      console.log('running through assimilator...');
+      // call assimilator here...
+      const { widgetToDeploy } = assimilator({
+        // find if there is room for us to put the widget down (returns null if there is not room)
+        possibleWidgets: possibleWidgets,
+        pixelMap,
+        sections,
+      });
+
+      console.log('widgetToDeploy ' + widgetToDeploy);
+
+      if (widgetToDeploy) {
+        console.log('widget deployed:', widgetToDeploy);
+        //if we can actually place the widget
+
+        //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
+        /* if (
+          !restrainer({
+            visualComplexity: generateModalityMeasure(),
+            audioComplexity: generateModalityMeasure(),
+          })
+        )
+          return; */
+
+        // dispatch action to add new widget
+        dispatch(addWidget(widgetToDeploy));
+      }
+
+      coin++; //increment coin to next message
     }
   }, []);
 

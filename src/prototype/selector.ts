@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import type { Element, Widget } from 'src/types/modalities';
 
 type SelectorProps = {
-  message: Message;
+  message: string;//Message;
 };
 
 /**
@@ -24,7 +24,7 @@ const selector = ({ message }: SelectorProps) => {
   const onExpiration = 'delete';
 
   // simulation LPD
-  if (message.kind === 'RequestApprovalToAttack') {
+  if (message === 'RequestApprovalToAttack') {
     const elements: Element[] = [{
       expirationInterval: 5,
       expiration: 'Yes',
@@ -61,7 +61,7 @@ const selector = ({ message }: SelectorProps) => {
     //  type: 'button',
     //  onExpiration,
     //});
-  } else if (message.kind === 'MissileToOwnshipDetected') {
+  } else if (message === 'MissileToOwnshipDetected') {
     // possibleModalities.push({
     //   id: uuid(),
     //   expiration,
@@ -105,7 +105,7 @@ const selector = ({ message }: SelectorProps) => {
     };
 
     possibleWidgets.push(widget);
-  } else if (message.kind === 'AcaFuelLow' || message.kind === 'AcaDefect') {
+  } else if (message === 'AcaFuelLow' || message === 'AcaDefect') {
     //possibleWidgets.push({
     //  id: uuid(),
     //  expiration,
@@ -149,7 +149,7 @@ const selector = ({ message }: SelectorProps) => {
     //   type: 'text',
     //   onExpiration,
     // });
-  } else if (message.kind === 'AcaHeadingToBase') {
+  } else if (message === 'AcaHeadingToBase') {
     //possibleWidgets.push({
     //  id: uuid(),
     //  expiration,
