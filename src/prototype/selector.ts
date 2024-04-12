@@ -33,16 +33,21 @@ const selector = ({ message }: SelectorProps) => {
       id: uuid(),
       modality: 'visual',
       type: 'button',
-      locationWidget: [[0],[0]],
+      xWidget: 0,
+      yWidget: 0, 
+      h: 5,
+      w:5, 
       canOverlap: false,
     }];
 
     const widget: Widget = {
       id: 'minimap',
       maxAmount: 1,
-      size: [10,10],
+      x: 0,
+      y: 0,
+      h: 10,
+      w: 10,
       type: 'visual',
-      locationGrid: [[0,0],[0,0]],
       useElementLocation: true,
       canOverlap: false,
       elements,
@@ -79,16 +84,21 @@ const selector = ({ message }: SelectorProps) => {
       id: uuid(),
       modality: 'visual',
       type: 'icon',
-      locationWidget: [[0],[0]],
+      xWidget: 0,
+      yWidget: 0, 
+      h: 5,
+      w:5, 
       canOverlap: false,
     }];
 
     const widget: Widget = {
       id: 'minimap',
       maxAmount: 1,
-      size: [50,50],
+      x: 0,
+      y: 0,
+      h: 10,
+      w: 10,
       type: 'visual',
-      locationGrid: [[0,0],[0,0]],
       useElementLocation: true,
       canOverlap: false,
       elements,
@@ -111,18 +121,23 @@ const selector = ({ message }: SelectorProps) => {
       id: uuid(),
       modality: 'visual',
       type: 'table',
-      locationWidget: [[0],[0]],
+      xWidget: 0,
+      yWidget: 0, 
+      h: 5,
+      w:5, 
       canOverlap: true,
     }];
 
     const widget: Widget = {
       id: 'minimap',
       maxAmount: 1,
-      size: [5,5],
+      x: 0,
+      y: 0,
+      h: 10,
+      w: 10,
       type: 'visual',
-      locationGrid: [[0,0],[0,0]],
       useElementLocation: true,
-      canOverlap: true,
+      canOverlap: false,
       elements,
     };
 
@@ -150,18 +165,23 @@ const selector = ({ message }: SelectorProps) => {
       id: uuid(),
       modality: 'visual',
       type: 'text',
-      locationWidget: [[0],[0]],
+      xWidget: 0,
+      yWidget: 0, 
+      h: 5,
+      w:5, 
       canOverlap: true,
     }];
 
     const widget: Widget = {
       id: 'minimap',
       maxAmount: 1,
-      size: [2,2],
+      x: 0,
+      y: 0,
+      h: 10,
+      w: 10,
       type: 'visual',
-      locationGrid: [[0,0],[0,0]],
       useElementLocation: true,
-      canOverlap: true,
+      canOverlap: false,
       elements,
     };
 
@@ -175,3 +195,4 @@ const selector = ({ message }: SelectorProps) => {
 };
 
 export default selector;
+
