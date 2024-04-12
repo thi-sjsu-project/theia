@@ -41,6 +41,7 @@ const Prototype2 = () => {
   useEffect(() => {
     let msgIndex = 0;
     const listOfMsg = [
+      'tinder',
       'RequestApprovalToAttack',
       'MissileToOwnshipDetected',
       'AcaFuelLow',

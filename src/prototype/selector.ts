@@ -186,6 +186,39 @@ const selector = ({ message }: SelectorProps) => {
     };
 
     possibleWidgets.push(widget);
+  } else if ( message === 'tinder'){
+    const topHalf: Element = {
+          id: 'topHalf',
+          modality: 'visual',
+          type: 'text',
+          xWidget: 10,
+          yWidget: 0,
+          w: 30,
+          h: 24,
+        };
+        const bottomHalf: Element = {
+          id: 'bottomHalf',
+          modality: 'visual',
+          type: 'text',
+          xWidget: 10,
+          yWidget: 25,
+          w: 30,
+          h: 25,
+        };
+        const widget: Widget = {
+          id: 'tinder',
+          elements: [topHalf, bottomHalf],
+          type: 'tinder',
+          maxAmount: 1,
+          x: 100,
+          y: 200,
+          w: 50,
+          h: 50,
+          useElementLocation: false,
+          canOverlap: false,
+        };
+
+        possibleWidgets.push(widget);
   }
 
   return {
