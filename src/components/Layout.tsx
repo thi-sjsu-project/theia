@@ -1,29 +1,62 @@
 import GridLayout from 'react-grid-layout';
 import type { Layout as LayoutType } from 'react-grid-layout';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FaLocationArrow } from 'react-icons/fa';
 import { GiDeliveryDrone } from 'react-icons/gi';
 import { OWNSHIP_TRAJECTORY } from 'src/utils/constants';
+import type { Widget } from 'src/types/modalities';
 
-const Layout = () => {
-  const bounds = {
-    left: 400,
-    right: 1920,
-    top: 1080,
-    bottom: 50,
-  };
-  const droneMove = {
-    x: 10,
-    y: 0,
-  };
+type LayoutProps = {
+  widgets: Widget[];
+};
+
+const Layout = ({ widgets }: LayoutProps) => {
+  const layoutRef = useRef<HTMLDivElement>(null);
 
   const [layout, setLayout] = useState<LayoutType[]>([
-    { i: 'tinder', x: 0, y: 0, w: 300, h: 1080, static: true },
+    /* { i: 'tinder', x: 0, y: 0, w: 300, h: 1080, static: true }, */
     { i: 'drone1', x: 500, y: 200, w: 50, h: 50 },
     { i: 'drone2', x: 1500, y: 300, w: 50, h: 50 },
     { i: 'drone3', x: 1200, y: 700, w: 50, h: 50 },
     { i: 'ownship', x: 400, y: 950, w: 50, h: 50, isDraggable: true },
   ]);
+
+  useEffect(() => {
+    if (widgets.length > 0) {
+      const { id: widgetId, x, y, w, h } = widgets[widgets.length - 1];
+
+      setLayout((prevLayout) => {
+        // if widgetId is in layout, return layout as is
+        if (prevLayout.some((item) => item.i === widgetId)) {
+          return prevLayout;
+        }
+
+        // add new widget to widgetMap
+        const div = document.createElement('div');
+        div.id = widgetId;
+        div.style.position = 'relative';
+        div.style.left = `${x}px`;
+        div.style.top = `${y}px`;
+        div.style.width = `${w}px`;
+        div.style.height = `${h}px`;
+        div.style.backgroundColor = 'blue';
+        div.style.zIndex = '100';
+        layoutRef.current?.appendChild(div);
+
+        // if widgetId is not in layout, add widget to layout
+        return [
+          ...prevLayout,
+          {
+            i: widgetId,
+            x,
+            y,
+            w,
+            h,
+          },
+        ];
+      });
+    }
+  }, [widgets]);
 
   useEffect(() => {
     // update ownship position every 500ms (0.5s)
@@ -35,7 +68,7 @@ const Layout = () => {
               item.x + OWNSHIP_TRAJECTORY.xSpeed <= OWNSHIP_TRAJECTORY.end[0] &&
               item.y - OWNSHIP_TRAJECTORY.ySpeed >= OWNSHIP_TRAJECTORY.end[1]
             ) {
-              // only move ownship if within defined trajectory boundss\
+              // only move ownship if within defined trajectory bounds
               return {
                 ...item,
                 x: item.x + OWNSHIP_TRAJECTORY.xSpeed,
@@ -55,11 +88,24 @@ const Layout = () => {
   useEffect(() => {
     // random drone movement every second
     const timer = setInterval(() => {
+      const bounds = {
+        left: 400,
+        right: 1920,
+        top: 1080,
+        bottom: 50,
+      };
+      const droneMove = {
+        x: 10,
+        y: 0,
+      };
+
       setLayout((prevLayout) =>
         prevLayout.map((item) => {
           if (item.i.includes('drone')) {
             droneMove.x = Math.floor(Math.random() * 20) - 10;
             droneMove.y = Math.floor(Math.random() * 20) - 10;
+
+            // only move drone if within defined bounds
             if (
               item.x + droneMove.x < bounds.left ||
               item.x + droneMove.x > bounds.right
@@ -79,6 +125,8 @@ const Layout = () => {
               y: item.y + droneMove.y,
             };
           }
+
+          // if not drone, return item without changes
           return item;
         }),
       );
@@ -101,14 +149,8 @@ const Layout = () => {
           compactType={null}
           allowOverlap={true}
           preventCollision={true}
+          innerRef={layoutRef}
         >
-          <div
-            key="tinder"
-            className="bg-blue-300 flex 
-            items-center justify-center "
-          >
-            <p className="text-5xl">Tinder Box</p>
-          </div>
           <div key="drone1">
             <GiDeliveryDrone size={50} />
           </div>

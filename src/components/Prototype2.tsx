@@ -7,42 +7,52 @@
  * Integrate sockets
  * ...
  */
-import { initializeMap, addMapSection, getPixelMap, getSections, addWidget, getWidgets } from 'src/redux/slices/cmSlice';
-import { useAppDispatch, useAppSelector} from 'src/redux/hooks';
+import {
+  addMapSection,
+  getPixelMap,
+  getSections,
+  addWidget,
+  getWidgets,
+} from 'src/redux/slices/cmSlice';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import type { Widget, Element } from 'src/types/modalities';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Layout from 'src/components/Layout';
-import type {Section} from 'src/types/support-types.ts'
+import type { Section } from 'src/types/support-types.ts';
+import { v4 as uuid } from 'uuid';
 import assimilator from 'src/prototype/assimilator';
 
 const Prototype2 = () => {
   const dispatch = useAppDispatch();
-  const tinderSection: Section = {
-    x: 50,
-    y: 40,
-    w: 200,
-    h: 800,
-    priority: 10,
-    type: 'tinder',
+  const firstRender1 = useRef(true);
+  const firstRender2 = useRef(true);
 
+  // add initial section to the pixel map
+  if (firstRender1.current) {
+    // only run in the first render
+    firstRender1.current = false;
+    const tinderSection: Section = {
+      x: 50,
+      y: 40,
+      w: 200,
+      h: 800,
+      priority: 10,
+      type: 'tinder',
+    };
+
+    console.log('dispatching addMapSection');
+    dispatch(addMapSection(tinderSection));
   }
 
-  //first useEffect, adds the initial sections and intializes pixel map (remove initialize from this and initialize it above)
+  // get the pixel map and sections that were just made
+  const pixelMap = useAppSelector(getPixelMap);
+  const sections = useAppSelector(getSections);
+
+  const widgets = useAppSelector(getWidgets);
+
+  // call assimilator and add widget to state if it can find a space
   useEffect(() => {
-    dispatch(initializeMap());
-    dispatch(addMapSection(tinderSection))
-  }, []);
-
-  //get the pixel map and sections that were just made
-  let pixelMap = useAppSelector(getPixelMap)
-  const sections = useAppSelector(getSections)
-  console.log("sections")
-  console.log(sections)
-
-  //second useEffect, calls assimilator and adds widget to state if it can find a space
-  useEffect(() => {
-
-    
+    console.log('running through assimilator...');
     const topHalf: Element = {
       id: 'topHalf',
       modality: 'visual',
@@ -50,8 +60,7 @@ const Prototype2 = () => {
       xWidget: 10,
       yWidget: 0,
       w: 30,
-      h: 24
-      
+      h: 24,
     };
     const bottomHalf: Element = {
       id: 'bottomHalf',
@@ -74,19 +83,19 @@ const Prototype2 = () => {
       useElementLocation: false,
       canOverlap: false,
     };
-      
-    
+
     // call assimilator here...
     const { widgetToDeploy } = assimilator({
-      //find if there is room for us to put the widget down (returns null if there is not room)
+      // find if there is room for us to put the widget down (returns null if there is not room)
       possibleWidgets: [widget],
       pixelMap,
       sections,
     });
-    console.log("widgetToDeploy "+widgetToDeploy);
+
+    console.log('widgetToDeploy ' + widgetToDeploy);
+
     if (widgetToDeploy) {
-      console.log("did it! ");
-      console.log(widgetToDeploy);
+      console.log('widget deployed:', widgetToDeploy);
       //if we can actually place the widget
 
       //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
@@ -101,15 +110,9 @@ const Prototype2 = () => {
       // dispatch action to add new widget
       dispatch(addWidget(widgetToDeploy));
     }
-  }, [sections]);
+  }, []);
 
-  const widgets = useAppSelector(getWidgets);
-  pixelMap = useAppSelector(getPixelMap)
-  console.log("final widgets and pixelMap");
-  console.log(widgets)
-  console.log(pixelMap);
-
-  return <Layout />;
+  return <Layout widgets={widgets} />;
 };
 
 export default Prototype2;
