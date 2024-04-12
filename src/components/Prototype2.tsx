@@ -44,9 +44,9 @@ const Prototype2 = () => {
       'tinder',
       'AcaHeadingToBase',
       'tinder',
-      'AcaHeadingToBase',
       'RequestApprovalToAttack',
       'MissileToOwnshipDetected',
+      'AcaHeadingToBase',
       'AcaFuelLow',
     ];
 
@@ -126,8 +126,8 @@ const Prototype2 = () => {
     dispatch(addMapSection(tinderSection));
 
     const requestSection: Section = {
-      x: 1000,
-      y: 500,
+      x: 50,
+      y: 850,
       w: 800,
       h: 200,
       priority: 10,
@@ -138,9 +138,9 @@ const Prototype2 = () => {
     dispatch(addMapSection(requestSection));
 
     const highWarningSection: Section = {
-      x: 500,
+      x: 800,
       y: 200,
-      w: 250,
+      w: 500,
       h: 250,
       priority: 10,
       type: 'highWarning',
@@ -150,10 +150,10 @@ const Prototype2 = () => {
     dispatch(addMapSection(highWarningSection));
 
     const lowWarningSection: Section = {
-      x: 200,
-      y: 400,
-      w: 100,
-      h: 100,
+      x: 1800,
+      y: 450,
+      w: 500,
+      h: 200,
       priority: 10,
       type: 'lowWarning',
     };
@@ -162,7 +162,7 @@ const Prototype2 = () => {
     dispatch(addMapSection(lowWarningSection));
 
     const messageSection: Section = {
-      x: 1500,
+      x: 1800,
       y: 200,
       w: 200,
       h: 200,

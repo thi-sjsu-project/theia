@@ -42,6 +42,7 @@ const Layout = ({ widgets }: LayoutProps) => {
         div.style.width = `${w}px`;
         div.style.height = `${h}px`;
         div.style.opacity = '0.5';
+        div.style.border = 'solid';
 
         let bgColor = 'red';
 
