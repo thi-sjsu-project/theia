@@ -59,7 +59,7 @@ const Prototype2 = () => {
     };
 
     // generate message every five seconds
-    const interval = setInterval(generateMessage, ONE_SECOND_IN_MS * 5);
+    const interval = setInterval(generateMessage, ONE_SECOND_IN_MS * 7);
 
     return () => clearInterval(interval);
   }, []);
