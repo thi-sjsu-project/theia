@@ -18,7 +18,7 @@ import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import type { Widget, Element } from 'src/types/modalities';
 import { useEffect, useRef, useState } from 'react';
 import Layout from 'src/components/Layout';
-import type { Section } from 'src/types/support-types.ts';
+import type { Section } from 'src/types/support-types';
 import { v4 as uuid } from 'uuid';
 import assimilator from 'src/prototype/assimilator';
 import selector from 'src/prototype/selector';
@@ -43,6 +43,7 @@ const Prototype2 = () => {
     const listOfMsg = [
       'tinder',
       'AcaHeadingToBase',
+      'tinder',
       'AcaHeadingToBase',
       'RequestApprovalToAttack',
       'MissileToOwnshipDetected',
@@ -138,8 +139,8 @@ const Prototype2 = () => {
     const highWarningSection: Section = {
       x: 500,
       y: 200,
-      w: 100,
-      h: 100,
+      w: 250,
+      h: 250,
       priority: 10,
       type: 'highWarning',
     };

@@ -16,8 +16,10 @@ const Layout = ({ widgets }: LayoutProps) => {
   const [layout, setLayout] = useState<LayoutType[]>([
     /* { i: 'tinder', x: 0, y: 0, w: 300, h: 1080, static: true }, */
     { i: 'drone1', x: 500, y: 200, w: 50, h: 50 },
-    { i: 'drone2', x: 1500, y: 500, w: 50, h: 50 },
-    { i: 'drone3', x: 1200, y: 700, w: 50, h: 50 },
+    { i: 'drone2', x: 1500, y: 550, w: 50, h: 50 },
+    { i: 'drone4', x: 1500, y: 350, w: 50, h: 50 },
+    { i: 'drone5', x: 200, y: 900, w: 50, h: 50 },
+    { i: 'drone3', x: 1150, y: 750, w: 50, h: 50 },
     { i: 'ownship', x: 400, y: 950, w: 50, h: 50, isDraggable: true },
   ]);
 
@@ -39,6 +41,7 @@ const Layout = ({ widgets }: LayoutProps) => {
         div.style.top = `${y}px`;
         div.style.width = `${w}px`;
         div.style.height = `${h}px`;
+        div.style.opacity = '0.5';
 
         let bgColor = 'red';
 
@@ -48,6 +51,10 @@ const Layout = ({ widgets }: LayoutProps) => {
 
         if (type === 'message') {
           bgColor = 'blue';
+        }
+
+        if (type === 'lowWarning') {
+          bgColor = 'orange';
         }
 
         div.style.backgroundColor = bgColor;
@@ -141,13 +148,13 @@ const Layout = ({ widgets }: LayoutProps) => {
           return item;
         }),
       );
-    }, 1000);
+    }, 1500);
 
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <div className="bg-red-300 w-[1920px] h-[1080px] hover:cursor-pointer">
+    <div className="bg-stone-300 w-[1920px] h-[1080px] hover:cursor-pointer">
       <GridLayout
         cols={1920}
         width={1920}
@@ -168,6 +175,12 @@ const Layout = ({ widgets }: LayoutProps) => {
           <GiDeliveryDrone size={50} />
         </div>
         <div key="drone3">
+          <GiDeliveryDrone size={50} />
+        </div>
+        <div key="drone4">
+          <GiDeliveryDrone size={50} />
+        </div>
+        <div key="drone5">
           <GiDeliveryDrone size={50} />
         </div>
         <div key="ownship">
