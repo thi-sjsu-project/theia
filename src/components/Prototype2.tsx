@@ -50,6 +50,13 @@ const Prototype2 = () => {
       'AcaFuelLow',
     ];
 
+    //messages and their corresponding section type (for quick reference)
+    // 'tinder',                   -> tinder
+    // 'AcaHeadingToBase',         -> message
+    // 'RequestApprovalToAttack',  -> request
+    // 'MissileToOwnshipDetected', -> highWarning
+    // 'AcaFuelLow',               -> lowWarning
+
     const generateMessage = () => {
       if (msgIndex >= listOfMsg.length) return;
 
