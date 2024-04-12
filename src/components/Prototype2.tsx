@@ -43,6 +43,7 @@ const Prototype2 = () => {
     const listOfMsg = [
       'tinder',
       'AcaHeadingToBase',
+      'AcaHeadingToBase',
       'RequestApprovalToAttack',
       'MissileToOwnshipDetected',
       'AcaFuelLow',
@@ -75,6 +76,8 @@ const Prototype2 = () => {
     const { message, possibleWidgets } = selector({
       message: currentMessage,
     });
+
+    possibleWidgets[0].id = uuid();
 
     console.log('running through assimilator...');
     const { widgetToDeploy } = assimilator({
