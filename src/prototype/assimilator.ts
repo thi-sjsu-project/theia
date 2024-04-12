@@ -61,6 +61,13 @@ const assimilator = ({ possibleWidgets, pixelMap, sections }: AssimilatorProps) 
                 coinX = (section.x+section.w); //we have reached some sort of widget that will give us enough space from the proposedX or proposedY, so go to the next cell space and test from there
               }
             }
+          } else {
+            const existingWidgetId = pixelMap[x][y].widgetIDs;
+            if (widgetToDeploy && existingWidgetId.includes(widgetToDeploy.id)) {
+              console.log(`Widget with ID ${widgetToDeploy.id} is now updated since it already existed.`)
+              return {widgetToDeploy: null}; //end the loop so the widget doesn't get placed again
+            }
+            
           }
         }
       }
