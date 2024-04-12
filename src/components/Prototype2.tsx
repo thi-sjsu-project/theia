@@ -56,16 +56,20 @@ const Prototype2 = () => {
     };
 
     // generate message every five seconds
-    const interval = setInterval(generateMessage, ONE_SECOND_IN_MS * 2);
+    const interval = setInterval(generateMessage, ONE_SECOND_IN_MS * 5);
 
     return () => clearInterval(interval);
   }, []);
 
   // run whenever messages array changes
   useEffect(() => {
+    if (messages.length === 0) return;
+
     console.log('passing message to the selector');
     // latest message in the last one in the list
     const currentMessage = messages[messages.length - 1];
+    console.log('currentMessage:', currentMessage);
+
     const { message, possibleWidgets } = selector({
       message: currentMessage,
     });
