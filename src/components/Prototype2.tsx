@@ -42,9 +42,11 @@ const Prototype2 = () => {
     let msgIndex = 0;
     const listOfMsg = [
       'tinder',
+      'AcaHeadingToBase',
       'RequestApprovalToAttack',
       'MissileToOwnshipDetected',
       'AcaFuelLow',
+      
     ];
 
     const generateMessage = () => {

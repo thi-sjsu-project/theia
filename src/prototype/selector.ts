@@ -41,7 +41,7 @@ const selector = ({ message }: SelectorProps) => {
     }];
 
     const widget: Widget = {
-      id: 'minimap',
+      id: 'request',
       maxAmount: 1,
       x: 0,
       y: 0,
@@ -92,7 +92,7 @@ const selector = ({ message }: SelectorProps) => {
     }];
 
     const widget: Widget = {
-      id: 'minimap',
+      id: 'highWarning',
       maxAmount: 1,
       x: 0,
       y: 0,
@@ -129,7 +129,7 @@ const selector = ({ message }: SelectorProps) => {
     }];
 
     const widget: Widget = {
-      id: 'minimap',
+      id: 'lowWarning',
       maxAmount: 1,
       x: 0,
       y: 0,
@@ -173,7 +173,7 @@ const selector = ({ message }: SelectorProps) => {
     }];
 
     const widget: Widget = {
-      id: 'minimap',
+      id: 'message',
       maxAmount: 1,
       x: 0,
       y: 0,

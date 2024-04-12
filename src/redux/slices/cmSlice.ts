@@ -25,7 +25,7 @@ const initialState: InitialState = {
   audioComplexity: 0,
   widgets: [],
   messages: [],
-  pixelMap: new Array(1080).fill(new Array(1920).fill(defaultCell)),
+  pixelMap: new Array(1920).fill(new Array(1080).fill(defaultCell)),
   sections: [],
 };
 
