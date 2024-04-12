@@ -25,7 +25,7 @@ export type Element = {
 export type Widget = {
   elements: Element[];
   id: string;
-  type: string;
+  type: 'tinder' | 'message' | 'highWarning' | 'lowWarning' | 'request';
   maxAmount: number;
   x: number;
   y: number;
