@@ -1,0 +1,57 @@
+{
+  "low": {},
+  "medium": {
+    "RequestApprovalToAttack": {
+      "widgets": [
+        {
+          "w": 200,
+          "h": 200,
+          "backgroundColor": "blue",
+          "useElementLocation": true,
+          "canOverlap": false,
+          "elements": [
+            {
+              "xWidget": 0,
+              "yWidget": 0,
+              "h": 20,
+              "w": 75,
+              "canOverlap": false,
+              "type": "text",
+              "content": "Approve attack?",
+              "textColor": "white"
+            },
+            {
+              "xWidget": 0,
+              "yWidget": 0,
+              "h": 20,
+              "w": 75,
+              "canOverlap": false,
+              "type": "button",
+              "content": "Approve",
+              "bgColor": "white",
+              "textColor": "black"
+            },
+            {
+              "xWidget": 0,
+              "yWidget": 0,
+              "h": 20,
+              "w": 75,
+              "canOverlap": false,
+              "type": "button",
+              "content": "Deny",
+              "bgColor": "white",
+              "textColor": "black"
+            }
+          ]
+        },
+        {},
+        {}
+      ]
+    },
+    "AcaFuelLow": {},
+    "MissileToOwnshipDetected": {},
+    "AcaDefect": {},
+    "AcaHeadingToBase": {}
+  },
+  "high": {}
+}
