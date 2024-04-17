@@ -16,14 +16,16 @@ const Layout = ({ widgets }: LayoutProps) => {
   const [layout, setLayout] = useState<LayoutType[]>([
     /* { i: 'tinder', x: 0, y: 0, w: 300, h: 1080, static: true }, */
     { i: 'drone1', x: 500, y: 200, w: 50, h: 50 },
-    { i: 'drone2', x: 1500, y: 300, w: 50, h: 50 },
-    { i: 'drone3', x: 1200, y: 700, w: 50, h: 50 },
+    { i: 'drone2', x: 1500, y: 550, w: 50, h: 50 },
+    { i: 'drone4', x: 1500, y: 350, w: 50, h: 50 },
+    { i: 'drone5', x: 200, y: 900, w: 50, h: 50 },
+    { i: 'drone3', x: 1150, y: 750, w: 50, h: 50 },
     { i: 'ownship', x: 400, y: 950, w: 50, h: 50, isDraggable: true },
   ]);
 
   useEffect(() => {
     if (widgets.length > 0) {
-      const { id: widgetId, x, y, w, h } = widgets[widgets.length - 1];
+      const { id: widgetId, type, x, y, w, h } = widgets[widgets.length - 1];
 
       setLayout((prevLayout) => {
         // if widgetId is in layout, return layout as is
@@ -34,12 +36,29 @@ const Layout = ({ widgets }: LayoutProps) => {
         // add new widget to widgetMap
         const div = document.createElement('div');
         div.id = widgetId;
-        div.style.position = 'relative';
+        div.style.position = 'absolute';
         div.style.left = `${x}px`;
         div.style.top = `${y}px`;
         div.style.width = `${w}px`;
         div.style.height = `${h}px`;
-        div.style.backgroundColor = 'blue';
+        div.style.opacity = '0.5';
+        div.style.border = 'solid';
+
+        let bgColor = 'red';
+
+        if (type === 'tinder') {
+          bgColor = 'green';
+        }
+
+        if (type === 'message') {
+          bgColor = 'blue';
+        }
+
+        if (type === 'lowWarning') {
+          bgColor = 'orange';
+        }
+
+        div.style.backgroundColor = bgColor;
         div.style.zIndex = '100';
         layoutRef.current?.appendChild(div);
 
@@ -95,15 +114,15 @@ const Layout = ({ widgets }: LayoutProps) => {
         bottom: 50,
       };
       const droneMove = {
-        x: 10,
+        x: 5,
         y: 0,
       };
 
       setLayout((prevLayout) =>
         prevLayout.map((item) => {
           if (item.i.includes('drone')) {
-            droneMove.x = Math.floor(Math.random() * 20) - 10;
-            droneMove.y = Math.floor(Math.random() * 20) - 10;
+            droneMove.x = Math.floor(Math.random() * 10) - 5;
+            droneMove.y = Math.floor(Math.random() * 10) - 5;
 
             // only move drone if within defined bounds
             if (
@@ -130,41 +149,45 @@ const Layout = ({ widgets }: LayoutProps) => {
           return item;
         }),
       );
-    }, 1000);
+    }, 1500);
 
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <div className="h-screen flex items-center justify-center">
-      <div className="bg-red-300 w-[1920px] h-[1080px] hover:cursor-pointer">
-        <GridLayout
-          cols={1920}
-          width={1920}
-          layout={layout}
-          rowHeight={1}
-          margin={[0, 0]}
-          isBounded={true}
-          isResizable={false}
-          compactType={null}
-          allowOverlap={true}
-          preventCollision={true}
-          innerRef={layoutRef}
-        >
-          <div key="drone1">
-            <GiDeliveryDrone size={50} />
-          </div>
-          <div key="drone2">
-            <GiDeliveryDrone size={50} />
-          </div>
-          <div key="drone3">
-            <GiDeliveryDrone size={50} />
-          </div>
-          <div key="ownship">
-            <FaLocationArrow size={50} />
-          </div>
-        </GridLayout>
-      </div>
+    <div className="absolute top-0 left-0 bg-stone-300 w-[1920px] h-[1080px] hover:cursor-pointer">
+      <GridLayout
+        cols={1920}
+        width={1920}
+        layout={layout}
+        rowHeight={1}
+        margin={[0, 0]}
+        isBounded={true}
+        isResizable={false}
+        compactType={null}
+        allowOverlap={true}
+        preventCollision={true}
+        innerRef={layoutRef}
+      >
+        <div key="drone1">
+          <GiDeliveryDrone size={50} />
+        </div>
+        <div key="drone2">
+          <GiDeliveryDrone size={50} />
+        </div>
+        <div key="drone3">
+          <GiDeliveryDrone size={50} />
+        </div>
+        <div key="drone4">
+          <GiDeliveryDrone size={50} />
+        </div>
+        <div key="drone5">
+          <GiDeliveryDrone size={50} />
+        </div>
+        <div key="ownship">
+          <FaLocationArrow size={50} />
+        </div>
+      </GridLayout>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import type { Element, Widget } from 'src/types/modalities';
 
 type SelectorProps = {
-  message: string;//Message;
+  message: string; //Message;
 };
 
 /**
@@ -25,28 +25,30 @@ const selector = ({ message }: SelectorProps) => {
 
   // simulation LPD
   if (message === 'RequestApprovalToAttack') {
-    const elements: Element[] = [{
-      expirationInterval: 5,
-      expiration: 'Yes',
-      onExpiration: 'escalate',
-      interacted: false,
-      id: uuid(),
-      modality: 'visual',
-      type: 'button',
-      xWidget: 0,
-      yWidget: 0, 
-      h: 5,
-      w:5, 
-      canOverlap: false,
-    }];
+    const elements: Element[] = [
+      {
+        expirationInterval: 5,
+        expiration: 'Yes',
+        onExpiration: 'escalate',
+        interacted: false,
+        id: uuid(),
+        modality: 'visual',
+        type: 'button',
+        xWidget: 0,
+        yWidget: 0,
+        h: 5,
+        w: 5,
+        canOverlap: false,
+      },
+    ];
 
     const widget: Widget = {
       id: 'request',
       maxAmount: 1,
       x: 0,
       y: 0,
-      h: 50,
-      w: 50,
+      h: 80,
+      w: 140,
       type: 'request',
       useElementLocation: true,
       canOverlap: false,
@@ -76,28 +78,30 @@ const selector = ({ message }: SelectorProps) => {
     //  type: 'icon',
     //  onExpiration,
     //});
-    const elements: Element[] = [{
-      expirationInterval: 5,
-      expiration: 'Yes',
-      onExpiration: 'escalate',
-      interacted: false,
-      id: uuid(),
-      modality: 'visual',
-      type: 'icon',
-      xWidget: 0,
-      yWidget: 0, 
-      h: 5,
-      w:5, 
-      canOverlap: false,
-    }];
+    const elements: Element[] = [
+      {
+        expirationInterval: 5,
+        expiration: 'Yes',
+        onExpiration: 'escalate',
+        interacted: false,
+        id: uuid(),
+        modality: 'visual',
+        type: 'icon',
+        xWidget: 0,
+        yWidget: 0,
+        h: 5,
+        w: 5,
+        canOverlap: false,
+      },
+    ];
 
     const widget: Widget = {
       id: 'highWarning',
       maxAmount: 1,
       x: 0,
       y: 0,
-      h: 50,
-      w: 50,
+      h: 200,
+      w: 400,
       type: 'highWarning',
       useElementLocation: true,
       canOverlap: false,
@@ -113,20 +117,22 @@ const selector = ({ message }: SelectorProps) => {
     //  type: 'table',
     //  onExpiration,
     //});
-    const elements: Element[] = [{
-      expirationInterval: 5,
-      expiration: 'Yes',
-      onExpiration: 'delete',
-      interacted: false,
-      id: uuid(),
-      modality: 'visual',
-      type: 'table',
-      xWidget: 0,
-      yWidget: 0, 
-      h: 5,
-      w:5, 
-      canOverlap: true,
-    }];
+    const elements: Element[] = [
+      {
+        expirationInterval: 5,
+        expiration: 'Yes',
+        onExpiration: 'delete',
+        interacted: false,
+        id: uuid(),
+        modality: 'visual',
+        type: 'table',
+        xWidget: 0,
+        yWidget: 0,
+        h: 5,
+        w: 5,
+        canOverlap: true,
+      },
+    ];
 
     const widget: Widget = {
       id: 'lowWarning',
@@ -157,20 +163,22 @@ const selector = ({ message }: SelectorProps) => {
     //  type: 'text',
     //  onExpiration,
     //});
-    const elements: Element[] = [{
-      expirationInterval: 5,
-      expiration: 'Yes',
-      onExpiration: 'escalate',
-      interacted: false,
-      id: uuid(),
-      modality: 'visual',
-      type: 'text',
-      xWidget: 0,
-      yWidget: 0, 
-      h: 5,
-      w:5, 
-      canOverlap: true,
-    }];
+    const elements: Element[] = [
+      {
+        expirationInterval: 5,
+        expiration: 'Yes',
+        onExpiration: 'escalate',
+        interacted: false,
+        id: uuid(),
+        modality: 'visual',
+        type: 'text',
+        xWidget: 0,
+        yWidget: 0,
+        h: 5,
+        w: 5,
+        canOverlap: true,
+      },
+    ];
 
     const widget: Widget = {
       id: 'message',
@@ -186,39 +194,39 @@ const selector = ({ message }: SelectorProps) => {
     };
 
     possibleWidgets.push(widget);
-  } else if ( message === 'tinder'){
+  } else if (message === 'tinder') {
     const topHalf: Element = {
-          id: 'topHalf',
-          modality: 'visual',
-          type: 'text',
-          xWidget: 10,
-          yWidget: 0,
-          w: 30,
-          h: 24,
-        };
-        const bottomHalf: Element = {
-          id: 'bottomHalf',
-          modality: 'visual',
-          type: 'text',
-          xWidget: 10,
-          yWidget: 25,
-          w: 30,
-          h: 25,
-        };
-        const widget: Widget = {
-          id: 'tinder',
-          elements: [topHalf, bottomHalf],
-          type: 'tinder',
-          maxAmount: 1,
-          x: 100,
-          y: 200,
-          w: 50,
-          h: 50,
-          useElementLocation: false,
-          canOverlap: false,
-        };
+      id: 'topHalf',
+      modality: 'visual',
+      type: 'text',
+      xWidget: 10,
+      yWidget: 0,
+      w: 30,
+      h: 24,
+    };
+    const bottomHalf: Element = {
+      id: 'bottomHalf',
+      modality: 'visual',
+      type: 'text',
+      xWidget: 10,
+      yWidget: 25,
+      w: 30,
+      h: 25,
+    };
+    const widget: Widget = {
+      id: uuid(),
+      elements: [topHalf, bottomHalf],
+      type: 'tinder',
+      maxAmount: 1,
+      x: 150,
+      y: 200,
+      w: 160,
+      h: 300,
+      useElementLocation: false,
+      canOverlap: false,
+    };
 
-        possibleWidgets.push(widget);
+    possibleWidgets.push(widget);
   }
 
   return {
@@ -228,4 +236,3 @@ const selector = ({ message }: SelectorProps) => {
 };
 
 export default selector;
-

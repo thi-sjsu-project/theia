@@ -18,7 +18,7 @@ import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import type { Widget, Element } from 'src/types/modalities';
 import { useEffect, useRef, useState } from 'react';
 import Layout from 'src/components/Layout';
-import type { Section } from 'src/types/support-types.ts';
+import type { Section } from 'src/types/support-types';
 import { v4 as uuid } from 'uuid';
 import assimilator from 'src/prototype/assimilator';
 import selector from 'src/prototype/selector';
@@ -43,12 +43,19 @@ const Prototype2 = () => {
     const listOfMsg = [
       'tinder',
       'AcaHeadingToBase',
-      'AcaHeadingToBase',
+      'tinder',
       'RequestApprovalToAttack',
       'MissileToOwnshipDetected',
+      'AcaHeadingToBase',
       'AcaFuelLow',
-      
     ];
+
+    //messages and their corresponding section type (for quick reference)
+    // 'tinder',                   -> tinder
+    // 'AcaHeadingToBase',         -> message
+    // 'RequestApprovalToAttack',  -> request
+    // 'MissileToOwnshipDetected', -> highWarning
+    // 'AcaFuelLow',               -> lowWarning
 
     const generateMessage = () => {
       if (msgIndex >= listOfMsg.length) return;
@@ -59,7 +66,7 @@ const Prototype2 = () => {
     };
 
     // generate message every five seconds
-    const interval = setInterval(generateMessage, ONE_SECOND_IN_MS * 5);
+    const interval = setInterval(generateMessage, ONE_SECOND_IN_MS * 10);
 
     return () => clearInterval(interval);
   }, []);
@@ -91,6 +98,7 @@ const Prototype2 = () => {
 
     if (widgetToDeploy) {
       console.log('widget deployed:', widgetToDeploy);
+      console.log('widgets that are now deployed: ', widgets);
       //if we can actually place the widget
 
       //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
@@ -112,7 +120,6 @@ const Prototype2 = () => {
     // only run in the first render
     firstRender1.current = false;
 
-
     const tinderSection: Section = {
       x: 50,
       y: 40,
@@ -126,8 +133,8 @@ const Prototype2 = () => {
     dispatch(addMapSection(tinderSection));
 
     const requestSection: Section = {
-      x: 1000,
-      y: 500,
+      x: 50,
+      y: 850,
       w: 800,
       h: 200,
       priority: 10,
@@ -138,10 +145,10 @@ const Prototype2 = () => {
     dispatch(addMapSection(requestSection));
 
     const highWarningSection: Section = {
-      x: 500,
+      x: 800,
       y: 200,
-      w: 100,
-      h: 100,
+      w: 500,
+      h: 250,
       priority: 10,
       type: 'highWarning',
     };
@@ -149,12 +156,11 @@ const Prototype2 = () => {
     console.log('dispatching addMapSection');
     dispatch(addMapSection(highWarningSection));
 
-
     const lowWarningSection: Section = {
-      x: 200,
-      y: 400,
-      w: 100,
-      h: 100,
+      x: 1800,
+      y: 450,
+      w: 500,
+      h: 200,
       priority: 10,
       type: 'lowWarning',
     };
@@ -163,7 +169,7 @@ const Prototype2 = () => {
     dispatch(addMapSection(lowWarningSection));
 
     const messageSection: Section = {
-      x: 1500,
+      x: 1800,
       y: 200,
       w: 200,
       h: 200,
@@ -175,110 +181,28 @@ const Prototype2 = () => {
     dispatch(addMapSection(messageSection));
   }
 
-  // call assimilator and add widget to state if it can find a space
-  // useEffect(() => {
-  //   console.log('running through assimilator...');
-  //   const topHalf: Element = {
-  //     id: 'topHalf',
-  //     modality: 'visual',
-  //     type: 'text',
-  //     xWidget: 10,
-  //     yWidget: 0,
-  //     w: 30,
-  //     h: 24,
-  //   };
-  //   const bottomHalf: Element = {
-  //     id: 'bottomHalf',
-  //     modality: 'visual',
-  //     type: 'text',
-  //     xWidget: 10,
-  //     yWidget: 25,
-  //     w: 30,
-  //     h: 25,
-  //   };
-  //   const widget: Widget = {
-  //     id: 'tinder',
-  //     elements: [topHalf, bottomHalf],
-  //     type: 'tinder',
-  //     maxAmount: 1,
-  //     x: 100,
-  //     y: 200,
-  //     w: 50,
-  //     h: 50,
-  //     useElementLocation: false,
-  //     canOverlap: false,
-  //   };
+  return (
+    <div>
+      <Layout widgets={widgets} />
 
-  //   // call assimilator here...
-  //   const { widgetToDeploy } = assimilator({
-  //     // find if there is room for us to put the widget down (returns null if there is not room)
-  //     possibleWidgets: [widget],
-  //     pixelMap,
-  //     sections,
-  //   });
-
-  //   console.log('widgetToDeploy ' + widgetToDeploy);
-
-  //   if (widgetToDeploy) {
-  //     console.log('widget deployed:', widgetToDeploy);
-  //     //if we can actually place the widget
-
-  //     //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
-  //     /* if (
-  //       !restrainer({
-  //         visualComplexity: generateModalityMeasure(),
-  //         audioComplexity: generateModalityMeasure(),
-  //       })
-  //     )
-  //       return; */
-
-  //     // dispatch action to add new widget
-  //     dispatch(addWidget(widgetToDeploy));
-  //   }
-  // }, []);
-
-  // let coin = 0;
-  // useEffect(() => {
-  //   if (coin < listOfMsg.length) {
-  //     //get next message
-  //     const currentMessage = listOfMsg[coin];
-  //     const { message, possibleWidgets } = selector({
-  //       message: currentMessage,
-  //     });
-
-  //     console.log('running through assimilator...');
-  //     // call assimilator here...
-  //     const { widgetToDeploy } = assimilator({
-  //       // find if there is room for us to put the widget down (returns null if there is not room)
-  //       possibleWidgets: possibleWidgets,
-  //       pixelMap,
-  //       sections,
-  //     });
-
-  //     console.log('widgetToDeploy ' + widgetToDeploy);
-
-  //     if (widgetToDeploy) {
-  //       console.log('widget deployed:', widgetToDeploy);
-  //       //if we can actually place the widget
-
-  //       //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
-  //       /* if (
-  //         !restrainer({
-  //           visualComplexity: generateModalityMeasure(),
-  //           audioComplexity: generateModalityMeasure(),
-  //         })
-  //       )
-  //         return; */
-
-  //       // dispatch action to add new widget
-  //       dispatch(addWidget(widgetToDeploy));
-  //     }
-
-  //     coin++; //increment coin to next message
-  //   }
-  // }, []);
-
-  return <Layout widgets={widgets} />;
+      <div className="absolute top-0 right-0 w-[30rem] flex flex-col gap-4">
+        <div className="bg-green-200 w-full h-96 px-2 py-1">
+          <p className="text-center text-5xl">List of Messages:</p>
+          <ul className="overflow-y-scroll divide-y divide-stone-500 h-80">
+            {messages.map((msg) => (
+              <li key={msg}>
+                <div>
+                  <span className="text-3xl">
+                    {msg === 'tinder' ? 'Tinder Message' : msg}
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Prototype2;
