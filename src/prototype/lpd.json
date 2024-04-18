@@ -1,10 +1,10 @@
 {
-  "low": { 
+  "low": {
     "MissileToOwnshipDetected": {
       "widgets": [
         {
-          "x": 100,
-          "y": 100,
+          "x": 200,
+          "y": 200,
           "w": 200,
           "h": 200,
           "bgColor": "red",
@@ -31,8 +31,8 @@
         {},
         {}
       ]
-     },   
-     "RequestApprovalToAttack": {
+    },
+    "RequestApprovalToAttack": {
       "widgets": [
         {
           "x": 100,
@@ -96,12 +96,138 @@
         {}
       ]
     },
-    "AcaFuelLow": {},
-    "AcaDefect": {},
-    "AcaHeadingToBase": {}},
+    "AcaFuelLow": {
+      "widgets": [
+        {
+          "x": 500,
+          "y": 500,
+          "w": 20,
+          "h": 20,
+          "bgColor": "green",
+          "useElementLocation": true,
+          "canOverlap": true,
+          "elements": [
+            {
+              "xWidget": 0,
+              "yWidget": 0,
+              "h": 40,
+              "w": 100,
+              "canOverlap": true,
+              "type": "text",
+              "content": "Fuel is low for this ACA. It will soon head back to the base. Do you want to send it back right now?",
+              "fontColor": "black",
+              "fontsize": 10,
+              "expirationInterval": 5,
+              "expiration": "Yes",
+              "onExpiration": "delete",
+              "interacted": false
+            },
+            {
+              "xWidget": 0,
+              "yWidget": 0,
+              "h": 20,
+              "w": 75,
+              "canOverlap": false,
+              "type": "button",
+              "content": "Yes",
+              "bgColor": "white",
+              "textColor": "black",
+              "fontsize": 10,
+              "expirationInterval": 5,
+              "expiration": "Yes",
+              "onExpiration": "delete",
+              "interacted": false
+            },
+            {
+              "xWidget": 0,
+              "yWidget": 0,
+              "h": 20,
+              "w": 75,
+              "canOverlap": false,
+              "type": "button",
+              "content": "No",
+              "bgColor": "white",
+              "textColor": "black",
+              "fontsize": 10,
+              "expirationInterval": 5,
+              "expiration": "Yes",
+              "onExpiration": "delete",
+              "interacted": false
+            }
+          ]
+        },
+        {},
+        {}
+      ]
+    },
+    "AcaDefect": {
+      "widgets": [
+        {
+          "x": 500,
+          "y": 500,
+          "w": 20,
+          "h": 200,
+          "bgColor": "red",
+          "useElementLocation": true,
+          "canOverlap": false,
+          "elements": [
+            {
+              "xWidget": 0,
+              "yWidget": 0,
+              "h": 40,
+              "w": 100,
+              "canOverlap": false,
+              "type": "text",
+              "content": "Missile incoming!",
+              "fontColor": "black",
+              "fontsize": 20,
+              "expirationInterval": 5,
+              "expiration": "Yes",
+              "onExpiration": "escalate",
+              "interacted": false
+            }
+          ]
+        },
+        {},
+        {}
+      ]
+    }
+  },
+  "AcaHeadingToBase": {
+    "widgets": [
+      {
+        "x": 500,
+        "y": 500,
+        "w": 20,
+        "h": 200,
+        "bgColor": "red",
+        "useElementLocation": true,
+        "canOverlap": false,
+        "elements": [
+          {
+            "xWidget": 0,
+            "yWidget": 0,
+            "h": 40,
+            "w": 100,
+            "canOverlap": false,
+            "type": "text",
+            "content": "Missile incoming!",
+            "fontColor": "black",
+            "fontsize": 20,
+            "expirationInterval": 5,
+            "expiration": "Yes",
+            "onExpiration": "escalate",
+            "interacted": false
+          }
+        ]
+      },
+      {},
+      {}
+    ]
+  },
   "medium": {
     "MissileToOwnshipDetected": {
-    "widgets": [
+      "widgets": [
         {
           "x": 100,
           "y": 100,
@@ -131,7 +257,7 @@
         {},
         {}
       ]
-     },
+    },
     "RequestApprovalToAttack": {
       "widgets": [
         {
@@ -265,7 +391,8 @@
       ]
     },
     "AcaFuelLow": {},
-    "MissileToOwnshipDetected": {"widgets": [
+    "MissileToOwnshipDetected": {
+      "widgets": [
         {
           "x": 100,
           "y": 100,
@@ -295,7 +422,7 @@
         {},
         {}
       ]
-     },
+    },
     "AcaDefect": {},
     "AcaHeadingToBase": {}
   }
