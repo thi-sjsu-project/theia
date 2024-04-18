@@ -1,12 +1,145 @@
 {
-  "low": {},
+  "low": { 
+    "MissileToOwnshipDetected": {
+      "widgets": [
+        {
+          "x": 100,
+          "y": 100,
+          "w": 200,
+          "h": 200,
+          "bgColor": "red",
+          "useElementLocation": true,
+          "canOverlap": false,
+          "elements": [
+            {
+              "xWidget": 0,
+              "yWidget": 0,
+              "h": 40,
+              "w": 75,
+              "canOverlap": false,
+              "type": "text",
+              "content": "There is a missile incoming! You might want to change your direction of flight immediately! ",
+              "fontColor": "black",
+              "fontsize": 20,
+              "expirationInterval": 5,
+              "expiration": "Yes",
+              "onExpiration": "escalate",
+              "interacted": false
+            }
+          ]
+        },
+        {},
+        {}
+      ]
+     },   
+     "RequestApprovalToAttack": {
+      "widgets": [
+        {
+          "x": 100,
+          "y": 100,
+          "w": 200,
+          "h": 200,
+          "bgColor": "blue",
+          "useElementLocation": true,
+          "canOverlap": false,
+          "elements": [
+            {
+              "xWidget": 0,
+              "yWidget": 0,
+              "h": 20,
+              "w": 75,
+              "canOverlap": false,
+              "type": "text",
+              "content": "One ACA detected a possible target. Do you want to Approve attack?",
+              "fontColor": "white",
+              "fontsize": 10,
+              "expirationInterval": 5,
+              "expiration": "Yes",
+              "onExpiration": "escalate",
+              "interacted": false
+            },
+            {
+              "xWidget": 0,
+              "yWidget": 0,
+              "h": 20,
+              "w": 75,
+              "canOverlap": false,
+              "type": "button",
+              "content": "Approve",
+              "bgColor": "white",
+              "textColor": "black",
+              "fontsize": 10,
+              "expirationInterval": 5,
+              "expiration": "Yes",
+              "onExpiration": "escalate",
+              "interacted": false
+            },
+            {
+              "xWidget": 0,
+              "yWidget": 0,
+              "h": 20,
+              "w": 75,
+              "canOverlap": false,
+              "type": "button",
+              "content": "Deny",
+              "bgColor": "white",
+              "textColor": "black",
+              "fontsize": 10,
+              "expirationInterval": 5,
+              "expiration": "Yes",
+              "onExpiration": "escalate",
+              "interacted": false
+            }
+          ]
+        },
+        {},
+        {}
+      ]
+    },
+    "AcaFuelLow": {},
+    "AcaDefect": {},
+    "AcaHeadingToBase": {}},
   "medium": {
+    "MissileToOwnshipDetected": {
+    "widgets": [
+        {
+          "x": 100,
+          "y": 100,
+          "w": 200,
+          "h": 200,
+          "bgColor": "red",
+          "useElementLocation": true,
+          "canOverlap": false,
+          "elements": [
+            {
+              "xWidget": 0,
+              "yWidget": 0,
+              "h": 40,
+              "w": 100,
+              "canOverlap": false,
+              "type": "text",
+              "content": "Missile incoming!",
+              "fontColor": "black",
+              "fontsize": 20,
+              "expirationInterval": 5,
+              "expiration": "Yes",
+              "onExpiration": "escalate",
+              "interacted": false
+            }
+          ]
+        },
+        {},
+        {}
+      ]
+     },
     "RequestApprovalToAttack": {
       "widgets": [
         {
+          "x": 100,
+          "y": 100,
           "w": 200,
           "h": 200,
-          "backgroundColor": "blue",
+          "bgColor": "blue",
           "useElementLocation": true,
           "canOverlap": false,
           "elements": [
@@ -18,7 +151,12 @@
               "canOverlap": false,
               "type": "text",
               "content": "Approve attack?",
-              "textColor": "white"
+              "fontColor": "white",
+              "fontsize": 10,
+              "expirationInterval": 5,
+              "expiration": "Yes",
+              "onExpiration": "escalate",
+              "interacted": false
             },
             {
               "xWidget": 0,
@@ -29,7 +167,12 @@
               "type": "button",
               "content": "Approve",
               "bgColor": "white",
-              "textColor": "black"
+              "textColor": "black",
+              "fontsize": 10,
+              "expirationInterval": 5,
+              "expiration": "Yes",
+              "onExpiration": "escalate",
+              "interacted": false
             },
             {
               "xWidget": 0,
@@ -40,7 +183,12 @@
               "type": "button",
               "content": "Deny",
               "bgColor": "white",
-              "textColor": "black"
+              "textColor": "black",
+              "fontsize": 10,
+              "expirationInterval": 5,
+              "expiration": "Yes",
+              "onExpiration": "escalate",
+              "interacted": false
             }
           ]
         },
@@ -49,9 +197,106 @@
       ]
     },
     "AcaFuelLow": {},
-    "MissileToOwnshipDetected": {},
     "AcaDefect": {},
     "AcaHeadingToBase": {}
   },
-  "high": {}
+  "high": {
+    "RequestApprovalToAttack": {
+      "widgets": [
+        {
+          "x": 100,
+          "y": 100,
+          "w": 200,
+          "h": 200,
+          "bgColor": "blue",
+          "useElementLocation": true,
+          "canOverlap": false,
+          "elements": [
+            {
+              "xWidget": 0,
+              "yWidget": 0,
+              "h": 20,
+              "w": 75,
+              "canOverlap": false,
+              "type": "text",
+              "content": "Approve attack?",
+              "fontColor": "white",
+              "fontsize": 10,
+              "expirationInterval": 5,
+              "expiration": "Yes",
+              "onExpiration": "escalate",
+              "interacted": false
+            },
+            {
+              "xWidget": 0,
+              "yWidget": 0,
+              "h": 20,
+              "w": 75,
+              "canOverlap": false,
+              "type": "button",
+              "content": "Approve",
+              "bgColor": "white",
+              "textColor": "black",
+              "fontsize": 10,
+              "expirationInterval": 5,
+              "expiration": "Yes",
+              "onExpiration": "escalate",
+              "interacted": false
+            },
+            {
+              "xWidget": 0,
+              "yWidget": 0,
+              "h": 20,
+              "w": 75,
+              "canOverlap": false,
+              "type": "button",
+              "content": "Deny",
+              "bgColor": "white",
+              "textColor": "black",
+              "expirationInterval": 5,
+              "expiration": "Yes",
+              "onExpiration": "escalate",
+              "interacted": false
+            }
+          ]
+        },
+        {},
+        {}
+      ]
+    },
+    "AcaFuelLow": {},
+    "MissileToOwnshipDetected": {"widgets": [
+        {
+          "x": 100,
+          "y": 100,
+          "w": 200,
+          "h": 200,
+          "bgColor": "red",
+          "useElementLocation": true,
+          "canOverlap": false,
+          "elements": [
+            {
+              "xWidget": 0,
+              "yWidget": 0,
+              "h": 40,
+              "w": 100,
+              "canOverlap": false,
+              "type": "text",
+              "content": "Missile incoming!",
+              "fontColor": "black",
+              "fontsize": 20,
+              "expirationInterval": 5,
+              "expiration": "Yes",
+              "onExpiration": "escalate",
+              "interacted": false
+            }
+          ]
+        },
+        {},
+        {}
+      ]
+     },
+    "AcaDefect": {},
+    "AcaHeadingToBase": {}
+  }
 }
