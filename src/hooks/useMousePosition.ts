@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 
-type MousePosition = {
-  x: number | undefined;
-  y: number | undefined;
+export type Position = {
+  x: number;
+  y: number;
 };
 
-const initialState: MousePosition = {
-  x: undefined,
-  y: undefined,
+const initialState: Position = {
+  x: 0,
+  y: 0,
 };
 
 export function useMousePosition() {
-  const [mousePosition, setMousePosition] = useState<MousePosition>({
+  const [mousePosition, setMousePosition] = useState<Position>({
     ...initialState,
   });
 

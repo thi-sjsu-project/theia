@@ -201,21 +201,12 @@ const selector = ({ message }: SelectorProps) => {
       type: 'text',
       xWidget: 10,
       yWidget: 0,
-      w: 30,
-      h: 24,
-    };
-    const bottomHalf: Element = {
-      id: 'bottomHalf',
-      modality: 'visual',
-      type: 'text',
-      xWidget: 10,
-      yWidget: 25,
-      w: 30,
-      h: 25,
+      w: 100,
+      h: 100,
     };
     const widget: Widget = {
       id: uuid(),
-      elements: [topHalf, bottomHalf],
+      elements: [topHalf],
       type: 'tinder',
       maxAmount: 1,
       x: 150,
