@@ -9,6 +9,7 @@ import selector from 'src/prototype/selector';
 import assimilator from 'src/prototype/assimilator';
 import { v4 as uuid } from 'uuid';
 import { findWidgetsInGaze } from 'src/hooks/findWidgetsInGaze';
+import { useKeyDown } from 'src/hooks/useKeyDown';
 
 const Prototype3 = () => {
   const [messages, setMessages] = useState<string[]>([]);
@@ -22,6 +23,7 @@ const Prototype3 = () => {
   const sections = useAppSelector(getSections);
   const widgets = useAppSelector(getWidgets);
   const mousePosition = useMousePosition();
+  const keyDown = useKeyDown();
 
   
   
