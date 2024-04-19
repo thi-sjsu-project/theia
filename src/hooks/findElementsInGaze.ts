@@ -19,7 +19,7 @@ function elemLocToPixLoc(eX: number, eY:number, wX:number, wY:number){
 }
 
 
-export function findWidgetsInGaze(mousePosition: Position, dispatch: AppDispatch, widgets: Widget[], radius: number, inCirclePercentageThresh: number, elementPercentageThesh: number) {
+export function findElementsInGaze(mousePosition: Position, dispatch: AppDispatch, widgets: Widget[], radius: number, inCirclePercentageThresh: number, elementPercentageThesh: number) {
 
 
     

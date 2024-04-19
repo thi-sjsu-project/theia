@@ -8,7 +8,7 @@ import { ONE_SECOND_IN_MS } from 'src/utils/constants';
 import selector from 'src/prototype/selector';
 import assimilator from 'src/prototype/assimilator';
 import { v4 as uuid } from 'uuid';
-import { findWidgetsInGaze } from 'src/hooks/findWidgetsInGaze';
+import { findElementsInGaze } from 'src/hooks/findElementsInGaze';
 import { useKeyDown } from 'src/hooks/useKeyDown';
 
 const Prototype3 = () => {
@@ -28,7 +28,7 @@ const Prototype3 = () => {
   
   
   useEffect(() => {
-    const elementsInGaze = findWidgetsInGaze(mousePosition, dispatch, widgets, 50, .1, .1);
+    const elementsInGaze = findElementsInGaze(mousePosition, dispatch, widgets, 50, .1, .1);
     if(elementsInGaze.length > 0){
       console.log('elements in gaze:',elementsInGaze);
     }
