@@ -29,8 +29,8 @@ const initialState: InitialState = {
   sections: [],
 };
 
-export const cmSlice = createSlice({
-  name: 'cm',
+export const minimapSlice = createSlice({
+  name: 'minimap',
   initialState,
   // reducers are used to update the state
   reducers: {
@@ -149,7 +149,7 @@ export const {
   updateVisualComplexity,
   updateAudioComplexity,
   toggleElementInteraction,
-} = cmSlice.actions;
+} = minimapSlice.actions;
 
 export const {
   getSections,
@@ -159,4 +159,4 @@ export const {
   getMessages,
   getVisualComplexity,
   getAudioComplexity,
-} = cmSlice.selectors;
+} = minimapSlice.selectors;

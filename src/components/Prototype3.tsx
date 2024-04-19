@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Layout from './Layout';
 import { useAppSelector } from 'src/redux/hooks';
-import { getSections, getWidgets } from 'src/redux/slices/cmSlice';
+import { getSections, getWidgets } from 'src/redux/slices/minimapSlice';
 
 const Prototype3 = () => {
   const [messages, setMessages] = useState<string[]>([]);
