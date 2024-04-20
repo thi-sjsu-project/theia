@@ -6,6 +6,8 @@ export type BaseWidget = {
   w: number;
   h: number;
   canOverlap: boolean;
+  useElementLocation: boolean;
+  maxAmount: number; // what does this refer to?
 };
 
 export type MessageWidget = BaseWidget & {
