@@ -16,7 +16,7 @@ export type BaseElement<TType extends string, TData extends object> = {
   interacted?: boolean;
   canOverlap?: boolean;
 
-  typeProperties: TData;
+  typeData: TData;
 };
 
 export type TableElement = BaseElement<
