@@ -22,7 +22,10 @@ export type BaseElement<TType extends string, TData extends object> = {
 export type TableElement = BaseElement<
   'table',
   {
-    // additional properties here
+    // example additional properties
+    rows: number;
+    cols: number;
+    data: string[][];
   }
 >;
 
