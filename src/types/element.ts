@@ -1,11 +1,12 @@
 import type { Modality } from 'src/types/modality';
 
-export type BaseElement = {
+export type BaseElement<TType extends string, TData extends object> = {
   id: string;
+  type: TType;
   modality: Modality;
+
   h: number;
   w: number;
-
   xWidget: number;
   yWidget: number;
 
@@ -14,37 +15,56 @@ export type BaseElement = {
   onExpiration?: 'delete' | 'escalate' | 'deescalate';
   interacted?: boolean;
   canOverlap?: boolean;
+
+  typeProperties: TData;
 };
 
-export type TableElement = BaseElement & {
-  type: 'table';
-  /** additional properties here */
-};
+export type TableElement = BaseElement<
+  'table',
+  {
+    // additional properties here
+  }
+>;
 
-export type ButtonElement = BaseElement & {
-  type: 'button';
-  /** additional properties here */
-};
+export type ButtonElement = BaseElement<
+  'button',
+  {
+    // example additional properties
+    onClick: () => void;
+  }
+>;
 
-export type TextElement = BaseElement & {
-  type: 'text';
-  /** additional properties here */
-};
+export type TextElement = BaseElement<
+  'text',
+  {
+    // additional properties here
+    text: string;
+  }
+>;
 
-export type ImageElement = BaseElement & {
-  type: 'image';
-  /** additional properties here */
-};
+export type ImageElement = BaseElement<
+  'image',
+  {
+    // additional properties here
+    src: string;
+  }
+>;
 
-export type AudioElement = BaseElement & {
-  type: 'audio';
-  /** additional properties here */
-};
+export type AudioElement = BaseElement<
+  'audio',
+  {
+    // additional properties here
+    intensity: number;
+    frequency: number;
+  }
+>;
 
-export type IconElement = BaseElement & {
-  type: 'icon';
-  /** additional properties here */
-};
+export type IconElement = BaseElement<
+  'icon',
+  {
+    // additional properties here
+  }
+>;
 
 export type Element =
   | TableElement
