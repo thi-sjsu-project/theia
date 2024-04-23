@@ -1,8 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import Layout from './Layout';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { addMapSection, addWidget, getPixelMap, getSections, getWidgets } from 'src/redux/slices/minimapSlice';
-import { useMousePosition } from "src/hooks/useMousePosition"
+import {
+  addMapSection,
+  addWidget,
+  getPixelMap,
+  getSections,
+  getWidgets,
+} from 'src/redux/slices/minimapSlice';
+import { useMousePosition } from 'src/hooks/useMousePosition';
 import type { Section } from 'src/types/support-types';
 import { ONE_SECOND_IN_MS } from 'src/utils/constants';
 import selector from 'src/prototype/selector';
@@ -10,6 +16,8 @@ import assimilator from 'src/prototype/assimilator';
 import { v4 as uuid } from 'uuid';
 import { findElementsInGaze } from 'src/hooks/findElementsInGaze';
 import { useKeyDown } from 'src/hooks/useKeyDown';
+import useWorldSim from 'src/hooks/useWorldSim';
+import type { Message } from 'src/types/schema-types';
 
 const Prototype3 = () => {
   const [messages, setMessages] = useState<string[]>([]);
@@ -17,7 +25,6 @@ const Prototype3 = () => {
 
   const dispatch = useAppDispatch();
 
-  
   // get the pixel map and sections that were just made
   const pixelMap = useAppSelector(getPixelMap);
   const sections = useAppSelector(getSections);
@@ -25,15 +32,25 @@ const Prototype3 = () => {
   const mousePosition = useMousePosition();
   const keyDown = useKeyDown();
 
-  
-  
+  const onNewMessage = (newMessage: Message) => {
+    console.log('new message:', newMessage);
+  };
+
+  useWorldSim({ onNewMessage });
+
   useEffect(() => {
-    const elementsInGaze = findElementsInGaze(mousePosition, dispatch, widgets, 50, .1, .1);
-    if(elementsInGaze.length > 0){
-      console.log('elements in gaze:',elementsInGaze);
+    const elementsInGaze = findElementsInGaze(
+      mousePosition,
+      dispatch,
+      widgets,
+      50,
+      0.1,
+      0.1,
+    );
+    if (elementsInGaze.length > 0) {
+      console.log('elements in gaze:', elementsInGaze);
     }
   }, [mousePosition]);
-  
 
   const firstRender1 = useRef(true);
   const firstRender2 = useRef(true);
