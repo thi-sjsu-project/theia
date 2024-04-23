@@ -18,6 +18,7 @@ import { findElementsInGaze } from 'src/hooks/findElementsInGaze';
 import { useKeyDown } from 'src/hooks/useKeyDown';
 import useWorldSim from 'src/hooks/useWorldSim';
 import type { Message } from 'src/types/schema-types';
+import { useMouseButtonDown } from 'src/hooks/useMouseButtonDown';
 
 const Prototype3 = () => {
   const [messages, setMessages] = useState<string[]>([]);
@@ -31,9 +32,10 @@ const Prototype3 = () => {
   const widgets = useAppSelector(getWidgets);
   const mousePosition = useMousePosition();
   const keyDown = useKeyDown();
+  const mouseButtonDown = useMouseButtonDown();
 
   const { messages: worldSimMessages } = useWorldSim();
-  console.log('worldSimMessages:', worldSimMessages);
+  //console.log('worldSimMessages:', worldSimMessages);
 
   useEffect(() => {
     const elementsInGaze = findElementsInGaze(
