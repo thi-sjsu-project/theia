@@ -10,6 +10,7 @@ import assimilator from 'src/prototype/assimilator';
 import { v4 as uuid } from 'uuid';
 import { findElementsInGaze } from 'src/hooks/findElementsInGaze';
 import { useKeyDown } from 'src/hooks/useKeyDown';
+import type { ElementInGaze } from 'src/hooks/findElementsInGaze'
 
 const Prototype3 = () => {
   const [messages, setMessages] = useState<string[]>([]);
@@ -25,12 +26,13 @@ const Prototype3 = () => {
   const mousePosition = useMousePosition();
   const keyDown = useKeyDown();
 
-  
+  let currentElementsInGaze: ElementInGaze[];
   
   useEffect(() => {
     const elementsInGaze = findElementsInGaze(mousePosition, dispatch, widgets, 50, .1, .1);
     if(elementsInGaze.length > 0){
       console.log('elements in gaze:',elementsInGaze);
+      currentElementsInGaze = elementsInGaze;
     }
   }, [mousePosition]);
   

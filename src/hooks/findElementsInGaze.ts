@@ -5,7 +5,7 @@ import type { AppDispatch } from 'src/redux/store';
 import type { Widget } from 'src/types/modalities';
 
 
-type ElementInGaze = {
+export type ElementInGaze = {
     id: string;
     widgetId: string;
 }
