@@ -7,3 +7,5 @@ there should be a set "control console" for controlling a drone, with similar fu
 allow multiple widgets as a possible response to messages in selector
 to assimilator: make an algorithm that pre calculates the areas of space within each section that are currently free
 and update these areas when we add or remove something.
+memory system, make sure we can store memory of how things have interacted. something like when a button was last pressed, 
+why it was pressed, in response to what, etc. every single thing should connect and be traceable

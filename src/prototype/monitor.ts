@@ -1,8 +1,5 @@
 import type { AppDispatch } from 'src/redux/store';
-import {
-  removeWidget,
-  updateWidgetDelete,
-} from '../redux/slices/cmSlice';
+import { removeWidget, updateWidgetDelete } from '../redux/slices/minimapSlice';
 import store from 'src/redux/store';
 
 type MonitorProps = {
@@ -16,7 +13,7 @@ type MonitorProps = {
  * @returns ???
  */
 const monitor = ({ dispatch }: MonitorProps) => {
-  const widgets = store.getState().cm.widgets;
+  const widgets = store.getState().minimap.widgets;
 
   widgets.forEach(function (widget, widgetIndex) {
     //go through each widget
