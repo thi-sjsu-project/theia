@@ -32,11 +32,8 @@ const Prototype3 = () => {
   const mousePosition = useMousePosition();
   const keyDown = useKeyDown();
 
-  const onNewMessage = (newMessage: Message) => {
-    console.log('new message:', newMessage);
-  };
-
-  useWorldSim({ onNewMessage });
+  const { messages: worldSimMessages } = useWorldSim();
+  console.log('worldSimMessages:', worldSimMessages);
 
   useEffect(() => {
     const elementsInGaze = findElementsInGaze(

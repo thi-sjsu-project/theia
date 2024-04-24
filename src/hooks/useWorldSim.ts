@@ -1,11 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Message } from 'src/types/schema-types';
 
-type PropsType = {
-  onNewMessage: (message: Message) => void;
-};
-
-const useWorldSim = ({ onNewMessage }: PropsType) => {
+const useWorldSim = () => {
+  const [messages, setMessages] = useState<Message[]>([]);
   const socket = useRef<WebSocket | null>();
 
   useEffect(() => {
@@ -18,7 +15,7 @@ const useWorldSim = ({ onNewMessage }: PropsType) => {
     socket.current.addEventListener('message', (event) => {
       // console.log('\x1b[34mmessage received:\x1b[0m', event.data);
       const message = JSON.parse(event.data);
-      onNewMessage(message);
+      setMessages((prevMessages) => [...prevMessages, message]);
     });
 
     socket.current.addEventListener('close', (event) => {
@@ -29,6 +26,8 @@ const useWorldSim = ({ onNewMessage }: PropsType) => {
       socket.current?.close();
     };
   }, []);
+
+  return { messages };
 };
 
 export default useWorldSim;
