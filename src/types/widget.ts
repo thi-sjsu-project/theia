@@ -1,9 +1,16 @@
 import type { Element } from 'src/types/element';
 
-type WidgetType = 'message' | 'highWarning' | 'lowWarning' | 'request';
+type WidgetType =
+  | 'message'
+  | 'highWarning'
+  | 'lowWarning'
+  | 'request'
+  | 'vehicle';
 
+// TODO: make id type uuid
+// TODO: style CSS type??
 export type Widget = {
-  element: Element[];
+  elements: Element[];
   id: string;
   type: WidgetType;
 
@@ -11,6 +18,8 @@ export type Widget = {
   y: number;
   w: number;
   h: number;
+
+  styles: {};
 
   canOverlap: boolean;
   useElementLocation: boolean;

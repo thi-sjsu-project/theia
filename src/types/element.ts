@@ -1,8 +1,8 @@
 import type { Modality } from 'src/types/modality';
 
-export type BaseElement<TType extends string, TData extends object> = {
+// TODO: Make ID type UUID
+export type BaseElement = {
   id: string;
-  type: TType;
   modality: Modality;
 
   h: number;
@@ -15,59 +15,40 @@ export type BaseElement<TType extends string, TData extends object> = {
   onExpiration?: 'delete' | 'escalate' | 'deescalate';
   interacted?: boolean;
   canOverlap?: boolean;
-
-  typeData: TData;
 };
 
-export type TableElement = BaseElement<
-  'table',
-  {
-    // example additional properties
-    rows: number;
-    cols: number;
-    data: string[][];
-  }
->;
+export type IconElement = BaseElement & {
+  type: 'icon';
+  src: string;
+};
 
-export type ButtonElement = BaseElement<
-  'button',
-  {
-    // example additional properties
-    onClick: () => void;
-  }
->;
+export type TableElement = BaseElement & {
+  type: 'table';
+  rows: number;
+  cols: number;
+  data: string[][];
+};
 
-export type TextElement = BaseElement<
-  'text',
-  {
-    // additional properties here
-    text: string;
-  }
->;
+export type ButtonElement = BaseElement & {
+  type: 'button';
+  onClick: () => void;
+};
 
-export type ImageElement = BaseElement<
-  'image',
-  {
-    // additional properties here
-    src: string;
-  }
->;
+export type TextElement = BaseElement & {
+  type: 'text';
+  text: string;
+};
 
-export type AudioElement = BaseElement<
-  'audio',
-  {
-    // additional properties here
-    intensity: number;
-    frequency: number;
-  }
->;
+export type ImageElement = BaseElement & {
+  type: 'image';
+  src: string;
+};
 
-export type IconElement = BaseElement<
-  'icon',
-  {
-    // additional properties here
-  }
->;
+export type AudioElement = BaseElement & {
+  type: 'audio';
+  intensity: number;
+  frequency: number;
+};
 
 export type Element =
   | TableElement

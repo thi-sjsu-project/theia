@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import Layout from './Layout';
+import Minimap from './Minimap';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import {
   addMapSection,
@@ -161,7 +161,7 @@ const Prototype3 = () => {
 
   return (
     <div>
-      <Layout widgets={widgets} />
+      <Minimap widgets={widgets} />
     </div>
   );
 };

@@ -1,29 +1,95 @@
 import GridLayout from 'react-grid-layout';
 import type { Layout as LayoutType } from 'react-grid-layout';
-import { useEffect, useRef, useState } from 'react';
+import { createElement, useEffect, useRef, useState } from 'react';
 import { FaLocationArrow } from 'react-icons/fa';
 import { GiDeliveryDrone } from 'react-icons/gi';
 import { OWNSHIP_TRAJECTORY } from 'src/utils/constants';
-import type { Widget } from 'src/types/modalities';
+import type { Widget as WidgetType } from 'src/types/widget';
+import type { Element, IconElement } from 'src/types/element';
+import { v4 as uuid } from 'uuid';
+import ownshipLogo from 'src/icons/currentPosition.svg';
+import Widget from 'src/components/Widget';
+import ElementComponent from 'src/components/Element';
+import droneLogo from 'src/icons/drone.svg';
 
 type LayoutProps = {
-  widgets: Widget[];
+  widgets: WidgetType[];
 };
 
-const Layout = ({ widgets }: LayoutProps) => {
-  const layoutRef = useRef<HTMLDivElement>(null);
+const ownshipElement: IconElement = {
+  id: uuid(),
+  modality: 'visual',
+  type: 'icon',
+  src: ownshipLogo,
 
-  const [layout, setLayout] = useState<LayoutType[]>([
-    /* { i: 'tinder', x: 0, y: 0, w: 300, h: 1080, static: true }, */
-    { i: 'drone1', x: 500, y: 200, w: 50, h: 50 },
-    { i: 'drone2', x: 1500, y: 550, w: 50, h: 50 },
-    { i: 'drone4', x: 1500, y: 350, w: 50, h: 50 },
-    { i: 'drone5', x: 200, y: 900, w: 50, h: 50 },
-    { i: 'drone3', x: 1150, y: 750, w: 50, h: 50 },
-    { i: 'ownship', x: 400, y: 950, w: 50, h: 50, isDraggable: true },
-  ]);
+  h: 50,
+  w: 50,
 
-  useEffect(() => {
+  xWidget: 0,
+  yWidget: 0,
+};
+
+const ownshipWidget: WidgetType = {
+  id: uuid(),
+
+  x: 0,
+  y: 0,
+  w: 50,
+  h: 50,
+
+  type: 'vehicle',
+  elements: [ownshipElement],
+
+  styles: {},
+
+  canOverlap: false,
+  useElementLocation: false,
+  maxElements: 1,
+};
+
+const droneElement1: IconElement = {
+  id: uuid(),
+  modality: 'visual',
+  type: 'icon',
+  src: droneLogo,
+
+  h: 50,
+  w: 50,
+
+  xWidget: 0,
+  yWidget: 0,
+};
+
+const droneWidget1: WidgetType = {
+  elements: [droneElement1],
+  id: uuid(),
+  type: 'vehicle',
+
+  x: 500,
+  y: 200,
+  w: 50,
+  h: 50,
+
+  styles: {},
+
+  canOverlap: false,
+  useElementLocation: false,
+  maxElements: 5,
+};
+
+const Minimap = ({ widgets }: LayoutProps) => {
+  // const layoutRef = useRef<HTMLDivElement>(null);
+
+  // const [layout, setLayout] = useState<LayoutType[]>([
+  //   { i: 'drone1', x: 500, y: 200, w: 50, h: 50 },
+  //   { i: 'drone2', x: 1500, y: 550, w: 50, h: 50 },
+  //   { i: 'drone4', x: 1500, y: 350, w: 50, h: 50 },
+  //   { i: 'drone5', x: 200, y: 900, w: 50, h: 50 },
+  //   { i: 'drone3', x: 1150, y: 750, w: 50, h: 50 },
+  //   { i: 'ownship', x: 400, y: 950, w: 50, h: 50, isDraggable: true },
+  // ]);
+
+  /* useEffect(() => {
     if (widgets.length > 0) {
       const { id: widgetId, type, x, y, w, h } = widgets[widgets.length - 1];
 
@@ -75,9 +141,9 @@ const Layout = ({ widgets }: LayoutProps) => {
         ];
       });
     }
-  }, [widgets]);
+  }, [widgets]); */
 
-  useEffect(() => {
+  /* useEffect(() => {
     // update ownship position every 500ms (0.5s)
     const timer = setInterval(() => {
       setLayout((prevLayout) =>
@@ -102,9 +168,9 @@ const Layout = ({ widgets }: LayoutProps) => {
     }, 500);
 
     return () => clearInterval(timer);
-  }, []);
+  }, []); */
 
-  useEffect(() => {
+  /* useEffect(() => {
     // random drone movement every second
     const timer = setInterval(() => {
       const bounds = {
@@ -152,44 +218,23 @@ const Layout = ({ widgets }: LayoutProps) => {
     }, 1500);
 
     return () => clearInterval(timer);
-  }, []);
+  }, []); */
 
   return (
     <div className="absolute top-0 left-0 bg-stone-300 w-[1920px] h-[1080px] hover:cursor-pointer">
-      <GridLayout
-        cols={1920}
-        width={1920}
-        layout={layout}
-        rowHeight={1}
-        margin={[0, 0]}
-        isBounded={true}
-        isResizable={false}
-        compactType={null}
-        allowOverlap={true}
-        preventCollision={true}
-        innerRef={layoutRef}
-      >
-        <div key="drone1">
-          <GiDeliveryDrone size={50} />
-        </div>
-        <div key="drone2">
-          <GiDeliveryDrone size={50} />
-        </div>
-        <div key="drone3">
-          <GiDeliveryDrone size={50} />
-        </div>
-        <div key="drone4">
-          <GiDeliveryDrone size={50} />
-        </div>
-        <div key="drone5">
-          <GiDeliveryDrone size={50} />
-        </div>
-        <div key="ownship">
-          <FaLocationArrow size={50} />
-        </div>
-      </GridLayout>
+      <Widget widget={ownshipWidget}>
+        {ownshipWidget.elements.map((element) => (
+          <ElementComponent key={element.id} element={element} />
+        ))}
+      </Widget>
+
+      <Widget widget={droneWidget1}>
+        {droneWidget1.elements.map((element) => (
+          <ElementComponent key={element.id} element={element} />
+        ))}
+      </Widget>
     </div>
   );
 };
 
-export default Layout;
+export default Minimap;
