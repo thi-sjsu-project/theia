@@ -10,7 +10,6 @@ import {
 } from 'src/redux/slices/minimapSlice';
 import { useMousePosition } from 'src/hooks/useMousePosition';
 import type { Section } from 'src/types/support-types';
-import { ONE_SECOND_IN_MS } from 'src/utils/constants';
 import selector from 'src/prototype/selector';
 import assimilator from 'src/prototype/assimilator';
 import { v4 as uuid } from 'uuid';
@@ -20,8 +19,9 @@ import useWorldSim from 'src/hooks/useWorldSim';
 import type { Message } from 'src/types/schema-types';
 
 const Prototype3 = () => {
-  const [messages, setMessages] = useState<string[]>([]);
-  //console.log('messages:', messages);
+  const { messages, stressLevel } = useWorldSim();
+  console.log('worldSimMessages:', messages);
+  console.log('stressLevel:', stressLevel);
 
   const dispatch = useAppDispatch();
 
@@ -31,9 +31,6 @@ const Prototype3 = () => {
   const widgets = useAppSelector(getWidgets);
   const mousePosition = useMousePosition();
   const keyDown = useKeyDown();
-
-  const { messages: worldSimMessages } = useWorldSim();
-  console.log('worldSimMessages:', worldSimMessages);
 
   useEffect(() => {
     const elementsInGaze = findElementsInGaze(
@@ -52,38 +49,7 @@ const Prototype3 = () => {
   const firstRender1 = useRef(true);
   const firstRender2 = useRef(true);
 
-  // generate messages every five seconds and udpate local state
-  useEffect(() => {
-    let msgIndex = 0;
-    const listOfMsg = [
-      'tinder',
-      'AcaHeadingToBase',
-      'RequestApprovalToAttack',
-      'MissileToOwnshipDetected',
-    ];
-
-    //messages and their corresponding section type (for quick reference)
-    // 'tinder',                   -> tinder
-    // 'AcaHeadingToBase',         -> message
-    // 'RequestApprovalToAttack',  -> request
-    // 'MissileToOwnshipDetected', -> highWarning
-    // 'AcaFuelLow',               -> lowWarning
-
-    const generateMessage = () => {
-      if (msgIndex >= listOfMsg.length) return;
-
-      const message = listOfMsg[msgIndex];
-      setMessages((prevMessages) => [...prevMessages, message]);
-      msgIndex++;
-    };
-
-    // generate message every five seconds
-    const interval = setInterval(generateMessage, ONE_SECOND_IN_MS * 10);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  // run whenever messages array changes
+  // run whenever there is a new message
   useEffect(() => {
     if (messages.length === 0) return;
 
@@ -93,7 +59,7 @@ const Prototype3 = () => {
     //console.log('currentMessage:', currentMessage);
 
     const { message, possibleWidgets } = selector({
-      message: currentMessage,
+      message: currentMessage.kind,
     });
 
     possibleWidgets[0].id = uuid();
@@ -196,23 +162,6 @@ const Prototype3 = () => {
   return (
     <div>
       <Layout widgets={widgets} />
-
-      <div className="absolute top-0 right-0 w-[30rem] flex flex-col gap-4">
-        <div className="bg-green-200 w-full h-96 px-2 py-1">
-          <p className="text-center text-5xl">List of Messages:</p>
-          <ul className="overflow-y-scroll divide-y divide-stone-500 h-80">
-            {messages.map((msg) => (
-              <li key={msg}>
-                <div>
-                  <span className="text-3xl">
-                    {msg === 'tinder' ? 'Tinder Message' : msg}
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
     </div>
   );
 };

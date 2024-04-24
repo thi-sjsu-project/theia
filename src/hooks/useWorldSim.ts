@@ -1,8 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Message } from 'src/types/schema-types';
 
+type IncomingMessage = {
+  message: Message;
+  stressLevel: number;
+};
+
 const useWorldSim = () => {
   const [messages, setMessages] = useState<Message[]>([]);
+  const [stressLevel, setStressLevel] = useState<number>(0);
   const socket = useRef<WebSocket | null>();
 
   useEffect(() => {
@@ -14,8 +20,9 @@ const useWorldSim = () => {
 
     socket.current.addEventListener('message', (event) => {
       // console.log('\x1b[34mmessage received:\x1b[0m', event.data);
-      const message = JSON.parse(event.data);
+      const { message, stressLevel }: IncomingMessage = JSON.parse(event.data);
       setMessages((prevMessages) => [...prevMessages, message]);
+      setStressLevel(stressLevel);
     });
 
     socket.current.addEventListener('close', (event) => {
@@ -27,7 +34,7 @@ const useWorldSim = () => {
     };
   }, []);
 
-  return { messages };
+  return { messages, stressLevel };
 };
 
 export default useWorldSim;
