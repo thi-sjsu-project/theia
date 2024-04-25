@@ -55,8 +55,8 @@ const assimilator = ({ possibleWidgets, sections, widgets }: AssimilatorProps) =
       });
 
       
-      for(let x = section.x; x < section.x+section.w; x++){ //go through every x value in the section
-        for(let y = section.y; y < section.y+section.h; y++){ //go through every y value in the section
+      for(let x = section.x; x < section.x+section.w-widget.w; x++){ //go through every x value in the section that could possibly house the widget (we subtract the size of the wdiget to ensure it doesn't get placed semi-outside of the section)
+        for(let y = section.y; y < section.y+section.h-widget.y; y++){ //go through every y value in the section that could possibly house the widget (we subtract the size of the wdiget to ensure it doesn't get placed semi-outside of the section)
           const proposedX = x; //the current x and y values that are proposed to be used as the top-left coordinates (can probably remove and change into x and y if we don't find more use for them later)
           const proposedY = y;
 
@@ -79,6 +79,7 @@ const assimilator = ({ possibleWidgets, sections, widgets }: AssimilatorProps) =
             }
           }
         }
+        
       }
     });
   });
