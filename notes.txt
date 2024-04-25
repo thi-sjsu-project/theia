@@ -9,3 +9,4 @@ to assimilator: make an algorithm that pre calculates the areas of space within 
 and update these areas when we add or remove something.
 memory system, make sure we can store memory of how things have interacted. something like when a button was last pressed, 
 why it was pressed, in response to what, etc. every single thing should connect and be traceable
+widgets should have either 1 or any number of there own existance

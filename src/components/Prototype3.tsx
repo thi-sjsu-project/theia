@@ -70,7 +70,7 @@ const Prototype3 = () => {
     possibleWidgets[0].id = uuid();
 
     //console.log('running through assimilator...');
-    const { widgetToDeploy, sectionID } = assimilator({
+    const { widgetToDeploy, sectionID, action } = assimilator({
       // find if there is room for us to put the widget down (returns null if there is not room)
       possibleWidgets: possibleWidgets,
       sections,
@@ -78,8 +78,16 @@ const Prototype3 = () => {
     });
 
     //console.log('widgetToDeploy ' + widgetToDeploy);
-
-    if (widgetToDeploy) {
+    if(action != "newWidget"){ //we should do something other than 
+      switch(action){
+        case "updateWidget":
+          console.log("widget already exists, updating");
+          break;
+        case "none":
+          console.log("proposed widgets could not be placed");
+          break;
+      }
+    } else if (widgetToDeploy) {
       //console.log('widget deployed:', widgetToDeploy);
       //console.log('widgets that are now deployed: ', widgets);
       //if we can actually place the widget
