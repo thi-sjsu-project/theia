@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Widget } from '../../types/modalities';
 import type { Message } from 'src/types/schema-types';
-import type { Cell, Section } from 'src/types/support-types';
+import type { Cell, LinkedSectionWidget, Section } from 'src/types/support-types';
 
 const defaultCell: Cell = {
   widgetIDs: [],
@@ -85,6 +85,14 @@ export const minimapSlice = createSlice({
       );
     },
 
+    addWidgetToSection: (state, action: PayloadAction<LinkedSectionWidget>) => {
+      state.sections.forEach(function(section, sectionIndex){
+        if(section.id == action.payload.sectionID){
+          section.widgetIDs.push(action.payload.widgetID)
+        }
+      });
+    },
+
     // delete an element from a widget by id
     updateWidgetDelete: (state, action: PayloadAction<string>) => {
       state.widgets = state.widgets.map((widget) => {
@@ -145,6 +153,7 @@ export const {
   addMessage,
   addWidget,
   removeWidget,
+  addWidgetToSection,
   updateWidgetDelete,
   updateVisualComplexity,
   updateAudioComplexity,

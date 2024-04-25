@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import {
   addMapSection,
   addWidget,
+  addWidgetToSection,
   getPixelMap,
   getSections,
   getWidgets,
@@ -59,6 +60,7 @@ const Prototype3 = () => {
     let msgIndex = 0;
     const listOfMsg = [
       'tinder',
+      'tinder',
       'AcaHeadingToBase',
       'RequestApprovalToAttack',
       'MissileToOwnshipDetected',
@@ -101,11 +103,12 @@ const Prototype3 = () => {
     possibleWidgets[0].id = uuid();
 
     //console.log('running through assimilator...');
-    const { widgetToDeploy } = assimilator({
+    const { widgetToDeploy, sectionID } = assimilator({
       // find if there is room for us to put the widget down (returns null if there is not room)
       possibleWidgets: possibleWidgets,
       pixelMap,
       sections,
+      widgets,
     });
 
     //console.log('widgetToDeploy ' + widgetToDeploy);
@@ -126,6 +129,7 @@ const Prototype3 = () => {
 
       // dispatch action to add new widget
       dispatch(addWidget(widgetToDeploy));
+      dispatch(addWidgetToSection(sectionID));
     }
   }, [messages]);
 
@@ -135,60 +139,70 @@ const Prototype3 = () => {
     firstRender1.current = false;
 
     const tinderSection: Section = {
+      id:uuid(),
       x: 50,
       y: 40,
       w: 200,
       h: 800,
       priority: 10,
       type: 'tinder',
+      widgetIDs: [],
     };
 
     //console.log('dispatching addMapSection');
     dispatch(addMapSection(tinderSection));
 
     const requestSection: Section = {
+      id:uuid(),
       x: 50,
       y: 850,
       w: 800,
       h: 200,
       priority: 10,
       type: 'request',
+      widgetIDs: [],
     };
 
     //console.log('dispatching addMapSection');
     dispatch(addMapSection(requestSection));
 
     const highWarningSection: Section = {
+      id:uuid(),
       x: 800,
       y: 200,
       w: 500,
       h: 250,
       priority: 10,
       type: 'highWarning',
+      widgetIDs: [],
     };
 
     //console.log('dispatching addMapSection');
     dispatch(addMapSection(highWarningSection));
 
     const lowWarningSection: Section = {
+      id:uuid(),
       x: 1800,
       y: 450,
       w: 500,
       h: 200,
       priority: 10,
       type: 'lowWarning',
+      widgetIDs: [],
     };
 
     //console.log('dispatching addMapSection');
     dispatch(addMapSection(lowWarningSection));
 
     const messageSection: Section = {
+      id:uuid(),
       x: 1800,
       y: 200,
       w: 200,
       h: 200,
       priority: 10,
       type: 'message',
+      widgetIDs: [],
     };
 
     //console.log('dispatching addMapSection');
