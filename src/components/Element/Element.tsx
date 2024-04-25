@@ -2,11 +2,10 @@ import type { Element as ElementType } from 'src/types/element';
 
 type ElementProps = {
   element: ElementType;
+  styleClass?: string;
 };
 
-const Element = ({ element }: ElementProps) => {
-  const className = `h-[${element.h}px] w-[${element.w}px]`;
-
+const Element = ({ element, styleClass }: ElementProps) => {
   const renderElement = () => {
     switch (element.type) {
       case 'table':
@@ -31,7 +30,7 @@ const Element = ({ element }: ElementProps) => {
   };
 
   return (
-    <div id={element.id} className={className}>
+    <div id={element.id} className={styleClass}>
       {renderElement()}
     </div>
   );

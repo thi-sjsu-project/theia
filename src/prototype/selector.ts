@@ -50,8 +50,8 @@ const selector = ({ message }: SelectorProps) => {
         modality: 'visual',
         xWidget: 0,
         yWidget: 0,
-        h: 30,
-        w: 50,
+        h: 50,
+        w: 80,
         text: 'Approve',
       } satisfies ButtonElement);
       break;
@@ -63,8 +63,8 @@ const selector = ({ message }: SelectorProps) => {
         modality: 'visual',
         xWidget: 0,
         yWidget: 0,
-        h: 50,
-        w: 50,
+        h: 80,
+        w: 80,
         src: '',
         tag: 'warning',
       } satisfies IconElement);
@@ -78,7 +78,7 @@ const selector = ({ message }: SelectorProps) => {
         xWidget: 0,
         yWidget: 0,
         h: 30,
-        w: 50,
+        w: 200,
         text: 'Aircraft heading to base',
       });
       break;

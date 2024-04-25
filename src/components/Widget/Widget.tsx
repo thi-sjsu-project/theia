@@ -1,29 +1,24 @@
 import type { Widget as WidgetType } from 'src/types/widget';
-import Element from 'src/components/Element/Element';
+import TinderWidget from './TinderWidget';
+import VehicleWidget from './VehicleWidget';
 
 type WidgetProps = {
   widget: WidgetType;
 };
 
 const Widget = ({ widget }: WidgetProps) => {
-  const className = `h-[${widget.h}px] w-[${widget.w}px]
-  absolute border-2 border-black`;
+  const renderWidget = () => {
+    switch (widget.type) {
+      case 'vehicle':
+        return <VehicleWidget widget={widget} />;
+      case 'tinder':
+        return <TinderWidget widget={widget} />;
+      default:
+        return <div>Unknown Widget</div>;
+    }
+  };
 
-  return (
-    <div
-      key={widget.id}
-      id={widget.id}
-      className={className}
-      style={{
-        top: widget.y,
-        left: widget.x,
-      }}
-    >
-      {widget.elements.map((element) => (
-        <Element key={element.id} element={element} />
-      ))}
-    </div>
-  );
+  return <>{renderWidget()}</>;
 };
 
 export default Widget;
