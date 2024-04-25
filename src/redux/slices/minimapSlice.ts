@@ -2,20 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Widget } from '../../types/modalities';
 import type { Message } from 'src/types/schema-types';
-import type { Cell, LinkedSectionWidget, Section } from 'src/types/support-types';
+import type { LinkedSectionWidget, Section } from 'src/types/support-types';
 
-const defaultCell: Cell = {
-  widgetIDs: [],
-  priority: 0,
-  type: 'free',
-};
 
 type InitialState = {
   visualComplexity: number;
   audioComplexity: number;
   widgets: Widget[];
   messages: Message[];
-  pixelMap: Cell[][];
   sections: Section[];
   /* ADD MORE AS NEEDED... */
 };
@@ -25,7 +19,6 @@ const initialState: InitialState = {
   audioComplexity: 0,
   widgets: [],
   messages: [],
-  pixelMap: new Array(1920).fill(new Array(1080).fill(defaultCell)),
   sections: [],
 };
 
@@ -34,50 +27,11 @@ export const minimapSlice = createSlice({
   initialState,
   // reducers are used to update the state
   reducers: {
-    /* initializeMap: (state) => {
-      //given a location on the grid (top-left to bottom-right), make those pixels the given section
-      const defaultCell: Cell = {
-        widgetIDs: [],
-        priority: 0,
-        type: 'free',
-      };
-      state.pixelMap = new Array(1080)
-        .fill(new Array(1920).fill(defaultCell))
-        console.log(state.pixelMap);
-    }, */
     addMapSection: (state, action) => {
-      const section = action.payload;
-
-      const tempCell: Cell = {
-        widgetIDs: [],
-        priority: section.priority,
-        type: section.type,
-      };
-
-      for (let col = section.x; col < section.x + section.w; col++) {
-        //add  the specified cell to the pixel map to create section region
-        for (let row = section.y; row < section.y + section.h; row++) {
-          state.pixelMap[row][col] = tempCell;
-        }
-      }
-      state.sections.push(section); //add it to our sections as well
+      state.sections.push(action.payload); //add it to our sections as well
     },
     addWidget: (state, action: PayloadAction<Widget>) => {
       state.widgets.push(action.payload); //add to the widgets
-      for (
-        let x = action.payload.x;
-        x < action.payload.x + action.payload.w;
-        x++
-      ) {
-        //add the widgetID to the cells it is filling
-        for (
-          let y = action.payload.y;
-          y < action.payload.y + action.payload.h;
-          y++
-        ) {
-          state.pixelMap[x][y].widgetIDs.push(action.payload.id);
-        }
-      }
     },
     removeWidget: (state, action: PayloadAction<string>) => {
       state.widgets = state.widgets.filter(
@@ -136,7 +90,6 @@ export const minimapSlice = createSlice({
   // selectors are used to access parts of the state within components
   selectors: {
     getSections: (state) => state.sections,
-    getPixelMap: (state) => state.pixelMap,
     getWidgets: (state) => state.widgets,
     // find a single widget by id
     getWidgetById: (state, id: string) =>
@@ -162,7 +115,6 @@ export const {
 
 export const {
   getSections,
-  getPixelMap,
   getWidgets,
   getWidgetById,
   getMessages,

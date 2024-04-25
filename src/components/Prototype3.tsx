@@ -5,7 +5,6 @@ import {
   addMapSection,
   addWidget,
   addWidgetToSection,
-  getPixelMap,
   getSections,
   getWidgets,
 } from 'src/redux/slices/minimapSlice';
@@ -27,8 +26,7 @@ const Prototype3 = () => {
 
   const dispatch = useAppDispatch();
 
-  // get the pixel map and sections that were just made
-  const pixelMap = useAppSelector(getPixelMap);
+  // get the sections that were just made
   const sections = useAppSelector(getSections);
   const widgets = useAppSelector(getWidgets);
   const mousePosition = useMousePosition();
@@ -106,7 +104,6 @@ const Prototype3 = () => {
     const { widgetToDeploy, sectionID } = assimilator({
       // find if there is room for us to put the widget down (returns null if there is not room)
       possibleWidgets: possibleWidgets,
-      pixelMap,
       sections,
       widgets,
     });

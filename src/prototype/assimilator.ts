@@ -1,5 +1,5 @@
 import type { Widget } from 'src/types/modalities';
-import type { Cell, Section, LinkedSectionWidget } from 'src/types/support-types';
+import type { Section, LinkedSectionWidget } from 'src/types/support-types';
 
 
 function doesOverlap(x1:number,y1:number,w1:number,h1:number,x2:number,y2:number,w2:number,h2:number){
@@ -16,7 +16,6 @@ function doesOverlap(x1:number,y1:number,w1:number,h1:number,x2:number,y2:number
 type AssimilatorProps = {
   // define expected input here and it's type (number, string, etc.)
   possibleWidgets: Widget[];
-  pixelMap: Cell[][];
   sections: Section[];
   widgets: Widget[];
 };
@@ -26,7 +25,7 @@ type AssimilatorProps = {
  * @param ???
  * @returns ???
  */
-const assimilator = ({ possibleWidgets, pixelMap, sections, widgets }: AssimilatorProps) => {
+const assimilator = ({ possibleWidgets, sections, widgets }: AssimilatorProps) => {
 
   let widgetToDeploy: Widget | null = null; //will return null if we cannot find a space
   let sectionID: LinkedSectionWidget = {widgetID:'none', sectionID:'none'};
