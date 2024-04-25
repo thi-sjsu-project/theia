@@ -29,11 +29,7 @@ const Element = ({ element, styleClass }: ElementProps) => {
     }
   };
 
-  return (
-    <div id={element.id} className={styleClass}>
-      {renderElement()}
-    </div>
-  );
+  return <div id={element.id}>{renderElement()}</div>;
 };
 
 export default Element;

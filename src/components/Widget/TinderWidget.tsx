@@ -9,11 +9,6 @@ const TinderWidget = ({ widget }: TinderWidgetProps) => {
   const className =
     'absolute border-2 border-black p-2 flex flex-col gap-2 items-center';
 
-  /** Tinder Widget "controls" the look of its Elements
-   * It enforces a certain layout and style
-   */
-  const elementStyle = `w-full h-[50px] border-2 border-black`;
-
   return (
     <div
       key={widget.id}
@@ -27,7 +22,10 @@ const TinderWidget = ({ widget }: TinderWidgetProps) => {
       }}
     >
       {widget.elements.map((element) => (
-        <Element key={element.id} element={element} styleClass={elementStyle} />
+        // TinderWidget enforces a certain layout and style for its Elements
+        <div className="w-full min-h-[50px] border-2 border-black">
+          <Element key={element.id} element={element} />
+        </div>
       ))}
     </div>
   );
