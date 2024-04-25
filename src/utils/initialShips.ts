@@ -29,6 +29,7 @@ const ownshipElement: IconElement = {
   modality: 'visual',
   id: uuid(),
   src: OWNSHIP_LOGO,
+  tag: 'ownship',
 
   h: 50,
   w: 50,
@@ -37,7 +38,7 @@ const ownshipElement: IconElement = {
   yWidget: 0,
 };
 
-const ownship: Widget = {
+export const ownship: Widget = {
   id: uuid(),
 
   x: 400,
@@ -58,6 +59,7 @@ const droneElement: IconElement = {
   modality: 'visual',
   type: 'icon',
   src: DRONE_LOGO,
+  tag: 'drone',
 
   h: 50,
   w: 50,
@@ -66,11 +68,12 @@ const droneElement: IconElement = {
   yWidget: 0,
 };
 
-export const initialShips = [
-  ownship,
+export const drones = [
   createDroneWidget(500, 200, 50, 50),
   createDroneWidget(1500, 550, 50, 50),
   createDroneWidget(1500, 350, 50, 50),
   createDroneWidget(200, 900, 50, 50),
   createDroneWidget(1150, 750, 50, 50),
 ];
+
+export const initialShips = [ownship, ...drones];

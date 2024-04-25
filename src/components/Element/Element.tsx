@@ -14,13 +14,17 @@ const Element = ({ element }: ElementProps) => {
       case 'button':
         return <div>Button</div>;
       case 'text':
-        return <div>Text</div>;
+        return <div>{element.text}</div>;
       case 'image':
         return <div>Image</div>;
       case 'audio':
         return <div>Audio</div>;
       case 'icon':
-        return <img src={element.src} alt={element.type} />;
+        return element.src ? (
+          <img src={element.src} alt={element.type} />
+        ) : (
+          <div>Icon</div>
+        );
       default:
         return <div>Unknown Element</div>;
     }

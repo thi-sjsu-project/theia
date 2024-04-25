@@ -4,7 +4,7 @@ import type { Widget } from 'src/types/widget';
 import type { Message } from 'src/types/schema-types';
 import type { LinkedSectionWidget, Section } from 'src/types/support-types';
 import { initialSections } from 'src/redux/utils/initialSections';
-import { initialShips } from 'src/redux/utils/initialShips';
+import { ownship, drones, initialShips } from 'src/utils/initialShips';
 
 type InitialState = {
   visualComplexity: number;
@@ -30,9 +30,17 @@ export const minimapSlice = createSlice({
     addMapSection: (state, action) => {
       state.sections.push(action.payload); //add it to our sections as well
     },
+
     addWidget: (state, action: PayloadAction<Widget>) => {
       state.widgets.push(action.payload); //add to the widgets
     },
+
+    updateWidget: (state, action: PayloadAction<Widget>) => {
+      state.widgets = state.widgets.map((widget) =>
+        widget.id === action.payload.id ? action.payload : widget,
+      );
+    },
+
     removeWidget: (state, action: PayloadAction<string>) => {
       state.widgets = state.widgets.filter(
         (widget) => widget.id !== action.payload,
@@ -97,6 +105,12 @@ export const minimapSlice = createSlice({
     getVisualComplexity: (state) => state.visualComplexity,
     getAudioComplexity: (state) => state.audioComplexity,
     getMessages: (state) => state.messages,
+    getOwnship: (state) =>
+      state.widgets.find((widget) => widget.id === ownship.id),
+    getDrones: (state) =>
+      state.widgets.filter((widget) =>
+        drones.map((drone) => drone.id).includes(widget.id),
+      ),
   },
 });
 
@@ -105,6 +119,7 @@ export const {
   addMapSection,
   addMessage,
   addWidget,
+  updateWidget,
   removeWidget,
   addWidgetToSection,
   updateWidgetDelete,
@@ -118,6 +133,8 @@ export const {
   getWidgets,
   getWidgetById,
   getMessages,
+  getOwnship,
+  getDrones,
   getVisualComplexity,
   getAudioComplexity,
 } = minimapSlice.selectors;
