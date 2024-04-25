@@ -50,9 +50,6 @@ const Prototype3 = () => {
     }
   }, [mousePosition]);
 
-  const firstRender1 = useRef(true);
-  const firstRender2 = useRef(true);
-
   // generate messages every five seconds and udpate local state
   useEffect(() => {
     let msgIndex = 0;
@@ -129,82 +126,6 @@ const Prototype3 = () => {
       dispatch(addWidgetToSection(sectionID));
     }
   }, [messages]);
-
-  // add initial sections to the pixel map
-  if (firstRender1.current) {
-    // only run in the first render
-    firstRender1.current = false;
-
-    const tinderSection: Section = {
-      id:uuid(),
-      x: 50,
-      y: 40,
-      w: 200,
-      h: 800,
-      priority: 10,
-      type: 'tinder',
-      widgetIDs: [],
-    };
-
-    //console.log('dispatching addMapSection');
-    dispatch(addMapSection(tinderSection));
-
-    const requestSection: Section = {
-      id:uuid(),
-      x: 50,
-      y: 850,
-      w: 800,
-      h: 200,
-      priority: 10,
-      type: 'request',
-      widgetIDs: [],
-    };
-
-    //console.log('dispatching addMapSection');
-    dispatch(addMapSection(requestSection));
-
-    const highWarningSection: Section = {
-      id:uuid(),
-      x: 800,
-      y: 200,
-      w: 500,
-      h: 250,
-      priority: 10,
-      type: 'highWarning',
-      widgetIDs: [],
-    };
-
-    //console.log('dispatching addMapSection');
-    dispatch(addMapSection(highWarningSection));
-
-    const lowWarningSection: Section = {
-      id:uuid(),
-      x: 1800,
-      y: 450,
-      w: 500,
-      h: 200,
-      priority: 10,
-      type: 'lowWarning',
-      widgetIDs: [],
-    };
-
-    //console.log('dispatching addMapSection');
-    dispatch(addMapSection(lowWarningSection));
-
-    const messageSection: Section = {
-      id:uuid(),
-      x: 1800,
-      y: 200,
-      w: 200,
-      h: 200,
-      priority: 10,
-      type: 'message',
-      widgetIDs: [],
-    };
-
-    //console.log('dispatching addMapSection');
-    dispatch(addMapSection(messageSection));
-  }
 
   return (
     <div>

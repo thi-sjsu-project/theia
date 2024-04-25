@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Widget } from '../../types/modalities';
 import type { Message } from 'src/types/schema-types';
 import type { LinkedSectionWidget, Section } from 'src/types/support-types';
-
+import { initialSections } from 'src/redux/utils/initialSections';
 
 type InitialState = {
   visualComplexity: number;
@@ -19,7 +19,7 @@ const initialState: InitialState = {
   audioComplexity: 0,
   widgets: [],
   messages: [],
-  sections: [],
+  sections: initialSections,
 };
 
 export const minimapSlice = createSlice({
@@ -40,9 +40,9 @@ export const minimapSlice = createSlice({
     },
 
     addWidgetToSection: (state, action: PayloadAction<LinkedSectionWidget>) => {
-      state.sections.forEach(function(section, sectionIndex){
-        if(section.id == action.payload.sectionID){
-          section.widgetIDs.push(action.payload.widgetID)
+      state.sections.forEach(function (section, sectionIndex) {
+        if (section.id === action.payload.sectionID) {
+          section.widgetIDs.push(action.payload.widgetID);
         }
       });
     },
