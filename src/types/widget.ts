@@ -1,6 +1,11 @@
 import type { Element } from 'src/types/element';
 
-type WidgetType = 'message' | 'highWarning' | 'lowWarning' | 'request';
+type WidgetType =
+  | 'tinder'
+  | 'message'
+  | 'highWarning'
+  | 'lowWarning'
+  | 'request';
 
 export type Widget = {
   element: Element[];
