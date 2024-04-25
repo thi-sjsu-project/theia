@@ -4,7 +4,7 @@ type ElementProps = {
   element: ElementType;
 };
 
-const ElementComponent = ({ element }: ElementProps) => {
+const Element = ({ element }: ElementProps) => {
   const className = `h-[${element.h}px] w-[${element.w}px]`;
 
   switch (element.type) {
@@ -19,4 +19,4 @@ const ElementComponent = ({ element }: ElementProps) => {
   }
 };
 
-export default ElementComponent;
+export default Element;
