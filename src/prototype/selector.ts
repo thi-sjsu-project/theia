@@ -1,6 +1,7 @@
 import type { Message } from 'src/types/schema-types';
 import { v4 as uuid } from 'uuid';
-import type { Element, Widget } from 'src/types/modalities';
+import type { Widget } from 'src/types/widget';
+import type { Element } from 'src/types/element';
 
 type SelectorProps = {
   message: string; //Message;
@@ -44,7 +45,6 @@ const selector = ({ message }: SelectorProps) => {
 
     const widget: Widget = {
       id: 'request',
-      maxAmount: 1,
       x: 0,
       y: 0,
       h: 80,
@@ -53,6 +53,7 @@ const selector = ({ message }: SelectorProps) => {
       useElementLocation: true,
       canOverlap: false,
       elements,
+      maxAmount: 1,
     };
 
     possibleWidgets.push(widget);
@@ -92,6 +93,7 @@ const selector = ({ message }: SelectorProps) => {
         h: 5,
         w: 5,
         canOverlap: false,
+        src: '',
       },
     ];
 
@@ -131,6 +133,9 @@ const selector = ({ message }: SelectorProps) => {
         h: 5,
         w: 5,
         canOverlap: true,
+        rows: 3,
+        cols: 3,
+        data: [],
       },
     ];
 
@@ -177,6 +182,7 @@ const selector = ({ message }: SelectorProps) => {
         h: 5,
         w: 5,
         canOverlap: true,
+        text: `Aircraft heading to base`,
       },
     ];
 
@@ -203,6 +209,7 @@ const selector = ({ message }: SelectorProps) => {
       yWidget: 0,
       w: 100,
       h: 100,
+      text: 'Swipe right to launch missile',
     };
     const widget: Widget = {
       id: uuid(),

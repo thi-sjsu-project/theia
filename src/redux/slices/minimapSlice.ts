@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { Widget } from 'src/types/modalities';
+import type { Widget } from 'src/types/widget';
 import type { Message } from 'src/types/schema-types';
 import type { LinkedSectionWidget, Section } from 'src/types/support-types';
 import { initialSections } from 'src/redux/utils/initialSections';
+import { initialShips } from 'src/redux/utils/initialShips';
 
 type InitialState = {
   visualComplexity: number;
@@ -11,13 +12,12 @@ type InitialState = {
   widgets: Widget[];
   messages: Message[];
   sections: Section[];
-  /* ADD MORE AS NEEDED... */
 };
 
 const initialState: InitialState = {
   visualComplexity: 0,
   audioComplexity: 0,
-  widgets: [],
+  widgets: initialShips,
   messages: [],
   sections: initialSections,
 };

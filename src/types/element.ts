@@ -27,7 +27,7 @@ export type ButtonElement = BaseElement & {
   type: 'button';
 
   // example additional properties
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 export type TextElement = BaseElement & {
@@ -54,7 +54,7 @@ export type AudioElement = BaseElement & {
 
 export type IconElement = BaseElement & {
   type: 'icon';
-
+  src: string;
   // additional properties here
 };
 

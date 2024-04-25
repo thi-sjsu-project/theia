@@ -49,7 +49,7 @@ const Prototype3 = () => {
       0.1,
     );
     dispatch(setElementsInGaze(elementsInGaze));
-    console.log('elements in gaze: ', elemsInGaze);
+    // console.log('elements in gaze: ', elemsInGaze);
   }, [mousePosition]);
 
   const { messages } = useGenerateMessages();

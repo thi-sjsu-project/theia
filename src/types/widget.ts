@@ -1,6 +1,7 @@
 import type { Element } from 'src/types/element';
 
 type WidgetType =
+  | 'vehicle'
   | 'tinder'
   | 'message'
   | 'highWarning'
@@ -8,7 +9,7 @@ type WidgetType =
   | 'request';
 
 export type Widget = {
-  element: Element[];
+  elements: Element[];
   id: string;
   type: WidgetType;
 
@@ -19,7 +20,7 @@ export type Widget = {
 
   canOverlap: boolean;
   useElementLocation: boolean;
-  maxElements: number;
+  maxAmount: number;
 };
 
 /* export type BaseWidget<TType extends string, TData extends object> = {
