@@ -80,6 +80,10 @@ const useMoveShips = () => {
     }, 1500);
 
     return () => clearInterval(timer);
+
+    // dependencies omitted because drones array is changing too frequently
+    // some warning/issue of selector returning different values despite same parameters
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, []);
 };
 
