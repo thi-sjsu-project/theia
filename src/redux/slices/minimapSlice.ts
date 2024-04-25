@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { Widget } from '../../types/modalities';
+import type { Widget } from 'src/types/modalities';
 import type { Message } from 'src/types/schema-types';
 import type { LinkedSectionWidget, Section } from 'src/types/support-types';
 import { initialSections } from 'src/redux/utils/initialSections';

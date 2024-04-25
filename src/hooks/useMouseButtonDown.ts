@@ -15,19 +15,19 @@ export function useMouseButtonDown() {
 
   useEffect(() => {
     function handleMouseButtonDown(ev: MouseEvent) {
-        if(ev.button===0 || ev.button===1 || ev.button===2){
-            setMouseButtDown(ev.button);
-            console.log("Mouse button pressed: " + ev.button);
-        }
+      if (ev.button === 0 || ev.button === 1 || ev.button === 2) {
+        setMouseButtDown(ev.button);
+        console.log('Mouse button pressed: ' + ev.button);
+      }
     }
 
     document.addEventListener('mouseup', handleMouseButtonDown);
 
     // Don't forget to clean up
     return () => {
-        document.removeEventListener('mouseup', handleMouseButtonDown);
-    }
-  });
+      document.removeEventListener('mouseup', handleMouseButtonDown);
+    };
+  }, []);
 
   return mouseButtDown;
 }
