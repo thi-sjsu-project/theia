@@ -5,6 +5,14 @@ export type Cell = {
   color?: string;
 };
 
+export type SectionType =
+  | 'free'
+  | 'tinder'
+  | 'message'
+  | 'highWarning'
+  | 'lowWarning'
+  | 'request';
+
 export type Section = {
   x: number;
   y: number;

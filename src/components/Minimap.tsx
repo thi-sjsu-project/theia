@@ -67,9 +67,6 @@ const createDroneWidget = (x: number, y: number, w: number, h: number): WidgetTy
   canOverlap: false,
   useElementLocation: false,
   maxElements: 5,
-  style: {
-    backgroundColor: 'red',
-  },
 });
 
 const initialDroneWidgets = [

@@ -17,11 +17,13 @@ import { findElementsInGaze } from 'src/hooks/findElementsInGaze';
 import { useKeyDown } from 'src/hooks/useKeyDown';
 import useWorldSim from 'src/hooks/useWorldSim';
 import type { Message } from 'src/types/schema-types';
+import initialLPD from 'src/prototype/init_lpd';
 
 const Prototype3 = () => {
   const { messages, stressLevel } = useWorldSim();
   console.log('worldSimMessages:', messages);
   console.log('stressLevel:', stressLevel);
+  console.log('initialLPD', initialLPD)
 
   const dispatch = useAppDispatch();
 

@@ -1,7 +1,7 @@
 import type { Element } from 'src/types/element';
 import type { Properties } from 'csstype';
 
-type WidgetType =
+export type WidgetType =
   | 'message'
   | 'highWarning'
   | 'lowWarning'
