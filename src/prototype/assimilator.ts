@@ -1,4 +1,4 @@
-import type { Widget } from 'src/types/modalities';
+import type { Widget } from 'src/types/widget';
 import type { Section, LinkedSectionWidget } from 'src/types/support-types';
 
 
@@ -41,18 +41,18 @@ const assimilator = ({ possibleWidgets, sections, widgets }: AssimilatorProps) =
       }
     });
 
+    
     matchingSections.forEach(function (section, sectionIndex) {//go through each section that matches our widget's
       
+      //get the widgets in this section
       const matchingWidgets: Widget[] = [];
       section.widgetIDs.forEach(function(widgetID, widgetIDIndex){//get the widgets in this section
         widgets.forEach(function(deployedWidget, deployedWidgetIndex){
-          if(deployedWidget.id === widgetID){
+          if(deployedWidget.id === widgetID && deployedWidget.canOverlap === false){ //if the widget is in this section AND it cannot be opverlapped. if it can be overlapped then we can just place on top of it so we don't need to check.
             matchingWidgets.push(deployedWidget);
           }
         });
       });
-
-      console.log(matchingWidgets)
       
       for(let x = section.x; x < section.x+section.w; x++){ //go through every x value in the section
         for(let y = section.y; y < section.y+section.h; y++){ //go through every y value in the section
