@@ -20,6 +20,10 @@ import type { Message } from 'src/types/schema-types';
 import { useMouseButtonDown } from 'src/hooks/useMouseButtonDown';
 import { ONE_SECOND_IN_MS } from 'src/utils/constants';
 import useGenerateMessages from 'src/hooks/useGenerateMessages';
+import {
+  getElementsInGaze,
+  setElementsInGaze,
+} from 'src/redux/slices/gazeSlice';
 
 const Prototype3 = () => {
   // const { messages, stressLevel } = useWorldSim();
@@ -31,6 +35,7 @@ const Prototype3 = () => {
   // get the sections that were just made
   const sections = useAppSelector(getSections);
   const widgets = useAppSelector(getWidgets);
+  const elemsInGaze = useAppSelector(getElementsInGaze);
   const mousePosition = useMousePosition();
   const keyDown = useKeyDown();
   const mouseButtonDown = useMouseButtonDown();
@@ -44,13 +49,9 @@ const Prototype3 = () => {
       0.1,
       0.1,
     );
-    if (elementsInGaze.length > 0) {
-      console.log('elements in gaze:', elementsInGaze);
-    }
+    dispatch(setElementsInGaze(elementsInGaze));
+    console.log('elements in gaze: ', elemsInGaze);
   }, [mousePosition]);
-
-  const firstRender1 = useRef(true);
-  const firstRender2 = useRef(true);
 
   const { messages } = useGenerateMessages();
 
@@ -98,82 +99,6 @@ const Prototype3 = () => {
       dispatch(addWidgetToSection(sectionID));
     }
   }, [messages]);
-
-  // add initial sections to the pixel map
-  if (firstRender1.current) {
-    // only run in the first render
-    firstRender1.current = false;
-
-    const tinderSection: Section = {
-      id: uuid(),
-      x: 50,
-      y: 40,
-      w: 200,
-      h: 800,
-      priority: 10,
-      type: 'tinder',
-      widgetIDs: [],
-    };
-
-    //console.log('dispatching addMapSection');
-    dispatch(addMapSection(tinderSection));
-
-    const requestSection: Section = {
-      id: uuid(),
-      x: 50,
-      y: 850,
-      w: 800,
-      h: 200,
-      priority: 10,
-      type: 'request',
-      widgetIDs: [],
-    };
-
-    //console.log('dispatching addMapSection');
-    dispatch(addMapSection(requestSection));
-
-    const highWarningSection: Section = {
-      id: uuid(),
-      x: 800,
-      y: 200,
-      w: 500,
-      h: 250,
-      priority: 10,
-      type: 'highWarning',
-      widgetIDs: [],
-    };
-
-    //console.log('dispatching addMapSection');
-    dispatch(addMapSection(highWarningSection));
-
-    const lowWarningSection: Section = {
-      id: uuid(),
-      x: 1800,
-      y: 450,
-      w: 500,
-      h: 200,
-      priority: 10,
-      type: 'lowWarning',
-      widgetIDs: [],
-    };
-
-    //console.log('dispatching addMapSection');
-    dispatch(addMapSection(lowWarningSection));
-
-    const messageSection: Section = {
-      id: uuid(),
-      x: 1800,
-      y: 200,
-      w: 200,
-      h: 200,
-      priority: 10,
-      type: 'message',
-      widgetIDs: [],
-    };
-
-    //console.log('dispatching addMapSection');
-    dispatch(addMapSection(messageSection));
-  }
 
   return (
     <div>
