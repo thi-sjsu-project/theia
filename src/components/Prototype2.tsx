@@ -17,7 +17,7 @@ import {
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import type { Widget, Element } from 'src/types/modalities';
 import { useEffect, useRef, useState } from 'react';
-import Layout from 'src/components/Layout';
+import Layout from 'src/components/Minimap';
 import type { Section } from 'src/types/support-types';
 import { v4 as uuid } from 'uuid';
 import assimilator from 'src/prototype/assimilator';

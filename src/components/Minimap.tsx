@@ -6,11 +6,11 @@ import { GiDeliveryDrone } from 'react-icons/gi';
 import { OWNSHIP_TRAJECTORY } from 'src/utils/constants';
 import type { Widget } from 'src/types/modalities';
 
-type LayoutProps = {
+type MinimapProps = {
   widgets: Widget[];
 };
 
-const Layout = ({ widgets }: LayoutProps) => {
+const Minimap = ({ widgets }: MinimapProps) => {
   const layoutRef = useRef<HTMLDivElement>(null);
 
   const [layout, setLayout] = useState<LayoutType[]>([
@@ -192,4 +192,4 @@ const Layout = ({ widgets }: LayoutProps) => {
   );
 };
 
-export default Layout;
+export default Minimap;

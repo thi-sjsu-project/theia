@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import Layout from './Layout';
+import Minimap from 'src/components/Minimap';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import {
-  addMapSection,
   addWidget,
   addWidgetToSection,
   getSections,
@@ -102,7 +101,7 @@ const Prototype3 = () => {
 
   return (
     <div>
-      <Layout widgets={widgets} />
+      <Minimap widgets={widgets} />
 
       <div className="absolute top-0 right-0 w-[30rem] flex flex-col gap-4">
         <div className="bg-green-200 w-full h-96 px-2 py-1">
