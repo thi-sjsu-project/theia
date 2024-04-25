@@ -2,10 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import Minimap from 'src/components/Minimap';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import {
+  addElementToWidget,
   addWidget,
   addWidgetToSection,
   getSections,
   getWidgets,
+  updateWidget,
 } from 'src/redux/slices/minimapSlice';
 import { useMousePosition } from 'src/hooks/useMousePosition';
 import type { Section } from 'src/types/support-types';
@@ -67,7 +69,7 @@ const Prototype3 = () => {
       message: currentMessage,
     });
 
-    possibleWidgets[0].id = uuid();
+    // possibleWidgets[0].id = uuid();
 
     //console.log('running through assimilator...');
     const { widgetToDeploy, sectionID, action } = assimilator({
@@ -78,13 +80,25 @@ const Prototype3 = () => {
     });
 
     //console.log('widgetToDeploy ' + widgetToDeploy);
-    if(action != "newWidget"){ //we should do something other than 
-      switch(action){
-        case "updateWidget":
-          console.log("widget already exists, updating");
+    if (action !== 'newWidget') {
+      //we should do something other than
+      switch (action) {
+        case 'updateWidget':
+          console.log('widget already exists, updating');
+          // only have one widget in possibleWidgets right now, this is why this works
+          // furthermore, only have one element in the widget
+          // so we can just do possibleWidgets[0]...
+          // eventually, maybe assimilator returns the widget that needs to be updated
+          // assimilator should also say if to add a new element or remove one, etc. -- JAGJIT
+          dispatch(
+            addElementToWidget(
+              possibleWidgets[0].id,
+              possibleWidgets[0].elements[0],
+            ),
+          );
           break;
-        case "none":
-          console.log("proposed widgets could not be placed");
+        case 'none':
+          console.log('proposed widgets could not be placed');
           break;
       }
     } else if (widgetToDeploy) {

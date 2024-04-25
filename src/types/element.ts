@@ -25,9 +25,8 @@ export type TableElement = BaseElement & {
 
 export type ButtonElement = BaseElement & {
   type: 'button';
-
-  // example additional properties
   onClick?: () => void;
+  text: string;
 };
 
 export type TextElement = BaseElement & {

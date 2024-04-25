@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Widget } from 'src/types/widget';
 import type { Message } from 'src/types/schema-types';
+import type { Element } from 'src/types/element';
 import type { LinkedSectionWidget, Section } from 'src/types/support-types';
 import { initialSections } from 'src/redux/utils/initialSections';
 import { ownship, drones, initialShips } from 'src/utils/initialShips';
@@ -45,6 +46,25 @@ export const minimapSlice = createSlice({
       state.widgets = state.widgets.filter(
         (widget) => widget.id !== action.payload,
       );
+    },
+
+    addElementToWidget: {
+      prepare(widgetId: string, element: Element) {
+        return { payload: { widgetId, element } };
+      },
+
+      reducer(
+        state,
+        action: PayloadAction<{ widgetId: string; element: Element }>,
+      ) {
+        state.widgets = state.widgets.map((widget) => {
+          if (widget.id === action.payload.widgetId) {
+            widget.elements.push(action.payload.element);
+            return widget;
+          }
+          return widget;
+        });
+      },
     },
 
     addWidgetToSection: (state, action: PayloadAction<LinkedSectionWidget>) => {
@@ -121,6 +141,7 @@ export const {
   addWidget,
   updateWidget,
   removeWidget,
+  addElementToWidget,
   addWidgetToSection,
   updateWidgetDelete,
   updateVisualComplexity,

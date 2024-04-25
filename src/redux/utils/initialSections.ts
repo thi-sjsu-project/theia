@@ -5,7 +5,7 @@ const tinderSection: Section = {
   id: uuid(),
   x: 50,
   y: 40,
-  w: 200,
+  w: 300,
   h: 800,
   priority: 10,
   type: 'tinder',

@@ -7,7 +7,7 @@ type WidgetProps = {
 
 const Widget = ({ widget }: WidgetProps) => {
   const className = `h-[${widget.h}px] w-[${widget.w}px]
-  absolute`;
+  absolute border-2 border-black`;
 
   return (
     <div

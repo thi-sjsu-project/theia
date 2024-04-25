@@ -8,11 +8,9 @@ const useGenerateMessages = () => {
   useEffect(() => {
     let msgIndex = 0;
     const listOfMsg = [
-      'tinder',
-      'tinder',
+      'MissileToOwnshipDetected',
       'AcaHeadingToBase',
       'RequestApprovalToAttack',
-      'MissileToOwnshipDetected',
     ];
 
     //messages and their corresponding section type (for quick reference)
@@ -31,7 +29,7 @@ const useGenerateMessages = () => {
     };
 
     // generate message every five seconds
-    const interval = setInterval(generateMessage, ONE_SECOND_IN_MS * 10);
+    const interval = setInterval(generateMessage, ONE_SECOND_IN_MS * 3);
 
     return () => clearInterval(interval);
   }, []);

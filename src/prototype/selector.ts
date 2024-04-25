@@ -1,7 +1,8 @@
 import type { Message } from 'src/types/schema-types';
 import { v4 as uuid } from 'uuid';
 import type { Widget } from 'src/types/widget';
-import type { Element } from 'src/types/element';
+import type { Element, ButtonElement, IconElement } from 'src/types/element';
+// import DANGER_LOGO from 'src/icons/danger.svg';
 
 type SelectorProps = {
   message: string; //Message;
@@ -24,8 +25,74 @@ const selector = ({ message }: SelectorProps) => {
 
   const onExpiration = 'delete';
 
+  // Only doing a single widget for Demo3
+  const widget: Widget = {
+    // static ID for Demo3
+    id: 'tinder',
+    type: 'tinder',
+    elements: [],
+    x: 50,
+    y: 40,
+    w: 250,
+    h: 700,
+    canOverlap: false,
+    useElementLocation: false,
+    maxAmount: 1,
+  };
+
+  let elements: Element[] = [];
+
+  switch (message) {
+    case 'RequestApprovalToAttack':
+      elements.push({
+        id: uuid(),
+        type: 'button',
+        modality: 'visual',
+        xWidget: 0,
+        yWidget: 0,
+        h: 30,
+        w: 50,
+        text: 'Approve',
+      } satisfies ButtonElement);
+      break;
+
+    case 'MissileToOwnshipDetected':
+      elements.push({
+        id: uuid(),
+        type: 'icon',
+        modality: 'visual',
+        xWidget: 0,
+        yWidget: 0,
+        h: 50,
+        w: 50,
+        src: '',
+        tag: 'warning',
+      } satisfies IconElement);
+      break;
+
+    case 'AcaHeadingToBase':
+      elements.push({
+        id: uuid(),
+        type: 'text',
+        modality: 'visual',
+        xWidget: 0,
+        yWidget: 0,
+        h: 30,
+        w: 50,
+        text: 'Aircraft heading to base',
+      });
+      break;
+  }
+
+  widget.elements = elements;
+
+  return {
+    message,
+    possibleWidgets: [widget],
+  };
+
   // simulation LPD
-  if (message === 'RequestApprovalToAttack') {
+  /* if (message === 'RequestApprovalToAttack') {
     const elements: Element[] = [
       {
         expirationInterval: 5,
@@ -225,12 +292,7 @@ const selector = ({ message }: SelectorProps) => {
     };
 
     possibleWidgets.push(widget);
-  }
-
-  return {
-    message,
-    possibleWidgets,
-  };
+  } */
 };
 
 export default selector;

@@ -18,7 +18,7 @@ export type Widget = {
   w: number;
   h: number;
 
-  padding: number;
+  padding?: number;
 
   canOverlap: boolean;
   useElementLocation: boolean;
