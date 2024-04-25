@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Prototype3 from './components/Prototype3';
 
 const App = () => {
-  return <Prototype3 />;
+  return <Prototype2 />;
 };
 
 export default App;

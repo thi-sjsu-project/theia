@@ -53,6 +53,13 @@ const selector = ({ message }: SelectorProps) => {
       useElementLocation: true,
       canOverlap: false,
       elements,
+      style: {
+        backgroundColor: 'red',
+        position: 'absolute',
+        opacity: 0.5,
+        border: 'solid',
+        zIndex: 100,
+      },
     };
 
     possibleWidgets.push(widget);
@@ -106,6 +113,13 @@ const selector = ({ message }: SelectorProps) => {
       useElementLocation: true,
       canOverlap: false,
       elements,
+      style: {
+        backgroundColor: 'red',
+        position: 'absolute',
+        opacity: 0.5,
+        border: 'solid',
+        zIndex: 100,
+      },
     };
 
     possibleWidgets.push(widget);
@@ -145,6 +159,13 @@ const selector = ({ message }: SelectorProps) => {
       useElementLocation: true,
       canOverlap: false,
       elements,
+      style: {
+        backgroundColor: 'red',
+        position: 'absolute',
+        opacity: 0.5,
+        border: 'solid',
+        zIndex: 100,
+      },
     };
 
     possibleWidgets.push(widget);
@@ -191,6 +212,13 @@ const selector = ({ message }: SelectorProps) => {
       useElementLocation: true,
       canOverlap: false,
       elements,
+      style: {
+        backgroundColor: 'red',
+        position: 'absolute',
+        opacity: 0.5,
+        border: 'solid',
+        zIndex: 100,
+      },
     };
 
     possibleWidgets.push(widget);
@@ -215,6 +243,13 @@ const selector = ({ message }: SelectorProps) => {
       h: 300,
       useElementLocation: false,
       canOverlap: false,
+      style: {
+        backgroundColor: 'red',
+        position: 'absolute',
+        opacity: 0.5,
+        border: 'solid',
+        zIndex: 100,
+      },
     };
 
     possibleWidgets.push(widget);

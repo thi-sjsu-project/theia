@@ -25,7 +25,7 @@ const Layout = ({ widgets }: LayoutProps) => {
 
   useEffect(() => {
     if (widgets.length > 0) {
-      const { id: widgetId, type, x, y, w, h } = widgets[widgets.length - 1];
+      const { id: widgetId, type, x, y, w, h, style } = widgets[widgets.length - 1];
 
       setLayout((prevLayout) => {
         // if widgetId is in layout, return layout as is
@@ -36,30 +36,39 @@ const Layout = ({ widgets }: LayoutProps) => {
         // add new widget to widgetMap
         const div = document.createElement('div');
         div.id = widgetId;
-        div.style.position = 'absolute';
+        // div.style.position = 'absolute';
         div.style.left = `${x}px`;
         div.style.top = `${y}px`;
         div.style.width = `${w}px`;
         div.style.height = `${h}px`;
-        div.style.opacity = '0.5';
-        div.style.border = 'solid';
+        // div.style.opacity = '0.5';
+        // div.style.border = 'solid';
 
-        let bgColor = 'red';
+        // let bgColor = 'red';
 
-        if (type === 'tinder') {
-          bgColor = 'green';
-        }
+        // if (type === 'tinder') {
+        //   bgColor = 'green';
+        // }
 
-        if (type === 'message') {
-          bgColor = 'blue';
-        }
+        // if (type === 'message') {
+        //   bgColor = 'blue';
+        // }
 
-        if (type === 'lowWarning') {
-          bgColor = 'orange';
-        }
+        // if (type === 'lowWarning') {
+        //   bgColor = 'orange';
+        // }
 
-        div.style.backgroundColor = bgColor;
-        div.style.zIndex = '100';
+        // div.style.backgroundColor = bgColor;
+        // div.style.zIndex = '100';
+
+        // For each property in style, set the div style property
+        for (const property in style as any) {
+          // Have to use "keyof typeof style" because of the way style is typed or else ts7053 error
+          // Null check because style can be undefined
+          console.log(`${property}: ${style! [property as keyof typeof style]}`);
+          div.style[property as keyof typeof style] = style! [property as keyof typeof style];
+        };
+        console.log(div.style);
         layoutRef.current?.appendChild(div);
 
         // if widgetId is not in layout, add widget to layout
