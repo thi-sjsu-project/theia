@@ -10,7 +10,6 @@ import {
 } from 'src/redux/slices/minimapSlice';
 import { useMousePosition } from 'src/hooks/useMousePosition';
 import type { Section } from 'src/types/support-types';
-import { ONE_SECOND_IN_MS } from 'src/utils/constants';
 import selector from 'src/prototype/selector';
 import assimilator from 'src/prototype/assimilator';
 import { v4 as uuid } from 'uuid';
@@ -19,10 +18,13 @@ import { useKeyDown } from 'src/hooks/useKeyDown';
 import useWorldSim from 'src/hooks/useWorldSim';
 import type { Message } from 'src/types/schema-types';
 import { useMouseButtonDown } from 'src/hooks/useMouseButtonDown';
+import { ONE_SECOND_IN_MS } from 'src/utils/constants';
+import useGenerateMessages from 'src/hooks/useGenerateMessages';
 
 const Prototype3 = () => {
-  const [messages, setMessages] = useState<string[]>([]);
-  //console.log('messages:', messages);
+  // const { messages, stressLevel } = useWorldSim();
+  // console.log('worldSimMessages:', messages);
+  // console.log('stressLevel:', stressLevel);
 
   const dispatch = useAppDispatch();
 
@@ -32,9 +34,6 @@ const Prototype3 = () => {
   const mousePosition = useMousePosition();
   const keyDown = useKeyDown();
   const mouseButtonDown = useMouseButtonDown();
-
-  const { messages: worldSimMessages } = useWorldSim();
-  //console.log('worldSimMessages:', worldSimMessages);
 
   useEffect(() => {
     const elementsInGaze = findElementsInGaze(
@@ -53,37 +52,7 @@ const Prototype3 = () => {
   const firstRender1 = useRef(true);
   const firstRender2 = useRef(true);
 
-  // generate messages every five seconds and udpate local state
-  useEffect(() => {
-    let msgIndex = 0;
-    const listOfMsg = [
-      'tinder',
-      'tinder',
-      'AcaHeadingToBase',
-      'RequestApprovalToAttack',
-      'MissileToOwnshipDetected',
-    ];
-
-    //messages and their corresponding section type (for quick reference)
-    // 'tinder',                   -> tinder
-    // 'AcaHeadingToBase',         -> message
-    // 'RequestApprovalToAttack',  -> request
-    // 'MissileToOwnshipDetected', -> highWarning
-    // 'AcaFuelLow',               -> lowWarning
-
-    const generateMessage = () => {
-      if (msgIndex >= listOfMsg.length) return;
-
-      const message = listOfMsg[msgIndex];
-      setMessages((prevMessages) => [...prevMessages, message]);
-      msgIndex++;
-    };
-
-    // generate message every five seconds
-    const interval = setInterval(generateMessage, ONE_SECOND_IN_MS * 10);
-
-    return () => clearInterval(interval);
-  }, []);
+  const { messages } = useGenerateMessages();
 
   // run whenever messages array changes
   useEffect(() => {
@@ -136,7 +105,7 @@ const Prototype3 = () => {
     firstRender1.current = false;
 
     const tinderSection: Section = {
-      id:uuid(),
+      id: uuid(),
       x: 50,
       y: 40,
       w: 200,
@@ -150,7 +119,7 @@ const Prototype3 = () => {
     dispatch(addMapSection(tinderSection));
 
     const requestSection: Section = {
-      id:uuid(),
+      id: uuid(),
       x: 50,
       y: 850,
       w: 800,
@@ -164,7 +133,7 @@ const Prototype3 = () => {
     dispatch(addMapSection(requestSection));
 
     const highWarningSection: Section = {
-      id:uuid(),
+      id: uuid(),
       x: 800,
       y: 200,
       w: 500,
@@ -178,7 +147,7 @@ const Prototype3 = () => {
     dispatch(addMapSection(highWarningSection));
 
     const lowWarningSection: Section = {
-      id:uuid(),
+      id: uuid(),
       x: 1800,
       y: 450,
       w: 500,
@@ -192,7 +161,7 @@ const Prototype3 = () => {
     dispatch(addMapSection(lowWarningSection));
 
     const messageSection: Section = {
-      id:uuid(),
+      id: uuid(),
       x: 1800,
       y: 200,
       w: 200,
