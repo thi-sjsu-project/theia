@@ -1,10 +1,11 @@
 import { combineSlices, configureStore } from '@reduxjs/toolkit';
-import { cmSlice } from './slices/cmSlice';
+import { minimapSlice } from './slices/minimapSlice';
+import { gazeSlice } from './slices/gazeSlice';
 
 // pass in slices to combine into combineSlices()
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.
-const rootReducer = combineSlices(cmSlice);
+const rootReducer = combineSlices(minimapSlice, gazeSlice);
 
 // Infer the `RootState` type from the root reducer
 type RootState = ReturnType<typeof rootReducer>;
