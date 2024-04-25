@@ -8,7 +8,7 @@ type WidgetType =
   | 'request';
 
 export type Widget = {
-  element: Element[];
+  elements: Element[];
   id: string;
   type: WidgetType;
 
@@ -16,6 +16,8 @@ export type Widget = {
   y: number;
   w: number;
   h: number;
+
+  padding: number;
 
   canOverlap: boolean;
   useElementLocation: boolean;

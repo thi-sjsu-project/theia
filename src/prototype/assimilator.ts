@@ -1,4 +1,4 @@
-import type { Widget } from 'src/types/widget';
+import type { Widget } from 'src/types/modalities';
 import type { Section, LinkedSectionWidget } from 'src/types/support-types';
 
 
@@ -53,6 +53,7 @@ const assimilator = ({ possibleWidgets, sections, widgets }: AssimilatorProps) =
           }
         });
       });
+
       
       for(let x = section.x; x < section.x+section.w; x++){ //go through every x value in the section
         for(let y = section.y; y < section.y+section.h; y++){ //go through every y value in the section
@@ -62,12 +63,12 @@ const assimilator = ({ possibleWidgets, sections, widgets }: AssimilatorProps) =
           let doesNotOverlap:boolean = true;
 
           matchingWidgets.forEach(function(deployedWidget, deployedWidgetIndex){
-            if (doesNotOverlap == true && doesOverlap(proposedX,proposedY,widget.w,widget.h, deployedWidget.x, deployedWidget.y, deployedWidget.w, deployedWidget.h) == true){
+            if (doesNotOverlap == true && doesOverlap(proposedX,proposedY,widget.w,widget.h, deployedWidget.x, deployedWidget.y, deployedWidget.w, deployedWidget.h) == true){ //it did overlap, so set it to false
               doesNotOverlap = false;
             }
           });
 
-          if (doesNotOverlap == true){
+          if (doesNotOverlap == true){ //no overlap, deploy widget
             widget.x = proposedX; //set widget's top-left coordinates
             widget.y = proposedY;
             widgetToDeploy = widget; //the widget can be deployed
