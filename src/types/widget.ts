@@ -1,4 +1,5 @@
 import type { Element } from 'src/types/element';
+import type { Properties } from 'csstype';
 
 type WidgetType =
   | 'message'
@@ -19,11 +20,10 @@ export type Widget = {
   w: number;
   h: number;
 
-  styles: {};
-
   canOverlap: boolean;
   useElementLocation: boolean;
   maxElements: number;
+  style?: Properties;
 };
 
 /* export type BaseWidget<TType extends string, TData extends object> = {

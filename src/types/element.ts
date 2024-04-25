@@ -1,4 +1,5 @@
 import type { Modality } from 'src/types/modality';
+import type { Properties } from 'csstype';
 
 // TODO: Make ID type UUID
 export type BaseElement = {
@@ -15,6 +16,7 @@ export type BaseElement = {
   onExpiration?: 'delete' | 'escalate' | 'deescalate';
   interacted?: boolean;
   canOverlap?: boolean;
+  style?: Properties;
 };
 
 export type IconElement = BaseElement & {

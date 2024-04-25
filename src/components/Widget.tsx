@@ -9,6 +9,7 @@ type WidgetProps = {
 const Widget = ({ widget, children }: WidgetProps) => {
   const className = `h-[${widget.h}px] w-[${widget.w}px]
   absolute`;
+  const style = widget.style;
 
   return (
     <div
@@ -18,6 +19,7 @@ const Widget = ({ widget, children }: WidgetProps) => {
       style={{
         top: widget.y,
         left: widget.x,
+        ...style,
       }}
     >
       {children}
