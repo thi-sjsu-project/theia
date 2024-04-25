@@ -1,11 +1,17 @@
 import type { Message } from 'src/types/schema-types';
 import { v4 as uuid } from 'uuid';
 import type { Widget } from 'src/types/widget';
-import type { Element, ButtonElement, IconElement } from 'src/types/element';
+import type {
+  Element,
+  ButtonElement,
+  IconElement,
+  TextElement,
+  TableElement,
+} from 'src/types/element';
 // import DANGER_LOGO from 'src/icons/danger.svg';
 
 type SelectorProps = {
-  message: string; //Message;
+  message: Message; //Message;
 };
 
 /**
@@ -42,7 +48,7 @@ const selector = ({ message }: SelectorProps) => {
 
   let elements: Element[] = [];
 
-  switch (message) {
+  switch (message.kind) {
     case 'RequestApprovalToAttack':
       elements.push({
         id: uuid(),
@@ -80,7 +86,45 @@ const selector = ({ message }: SelectorProps) => {
         h: 30,
         w: 200,
         text: 'Aircraft heading to base',
-      });
+      } satisfies TextElement);
+      break;
+
+    case 'AcaFuelLow':
+      elements.push({
+        id: uuid(),
+        type: 'table',
+        modality: 'visual',
+        xWidget: 0,
+        yWidget: 0,
+        h: 50,
+        w: 200,
+        rows: 3,
+        cols: 3,
+        data: [
+          ['Fuel', 'Low'],
+          ['Speed', 'High'],
+          ['Altitude', 'Low'],
+        ],
+      } satisfies TableElement);
+      break;
+
+    case 'AcaDefect':
+      elements.push({
+        id: uuid(),
+        type: 'table',
+        modality: 'visual',
+        xWidget: 0,
+        yWidget: 0,
+        h: 50,
+        w: 200,
+        rows: 3,
+        cols: 3,
+        data: [
+          ['Defect', 'Engine'],
+          ['Speed', 'High'],
+          ['Altitude', 'Low'],
+        ],
+      } satisfies TableElement);
       break;
   }
 

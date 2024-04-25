@@ -27,9 +27,7 @@ import {
 } from 'src/redux/slices/gazeSlice';
 
 const Prototype3 = () => {
-  // const { messages, stressLevel } = useWorldSim();
-  // console.log('worldSimMessages:', messages);
-  // console.log('stressLevel:', stressLevel);
+  const { messages, stressLevel } = useWorldSim();
 
   const dispatch = useAppDispatch();
 
@@ -53,8 +51,6 @@ const Prototype3 = () => {
     dispatch(setElementsInGaze(elementsInGaze));
     // console.log('elements in gaze: ', elemsInGaze);
   }, [mousePosition]);
-
-  const { messages } = useGenerateMessages();
 
   // run whenever messages array changes
   useEffect(() => {
@@ -125,22 +121,20 @@ const Prototype3 = () => {
     <div>
       <Minimap widgets={widgets} />
 
-      <div className="absolute top-0 right-0 w-[30rem] flex flex-col gap-4">
+      {/* <div className="absolute top-0 right-0 w-[30rem] flex flex-col gap-4">
         <div className="bg-green-200 w-full h-96 px-2 py-1">
           <p className="text-center text-5xl">List of Messages:</p>
           <ul className="overflow-y-scroll divide-y divide-stone-500 h-80">
-            {messages.map((msg) => (
-              <li key={msg}>
+            {messages.map((msg, index) => (
+              <li key={`${msg}-${index}`}>
                 <div>
-                  <span className="text-3xl">
-                    {msg === 'tinder' ? 'Tinder Message' : msg}
-                  </span>
+                  <span className="text-3xl">{msg.kind}</span>
                 </div>
               </li>
             ))}
           </ul>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

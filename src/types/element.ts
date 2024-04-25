@@ -9,6 +9,8 @@ export type BaseElement = {
   xWidget: number;
   yWidget: number;
 
+  priority?: number;
+
   expirationInterval?: number;
   expiration?: string;
   onExpiration?: 'delete' | 'escalate' | 'deescalate';

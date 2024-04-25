@@ -11,6 +11,9 @@ const useGenerateMessages = () => {
       'MissileToOwnshipDetected',
       'AcaHeadingToBase',
       'RequestApprovalToAttack',
+      'AcaFuelLow',
+      'MissileToOwnshipDetected',
+      'AcaDefect',
     ];
 
     //messages and their corresponding section type (for quick reference)
