@@ -19,6 +19,7 @@ import { useKeyDown } from 'src/hooks/useKeyDown';
 import useWorldSim from 'src/hooks/useWorldSim';
 import type { Message } from 'src/types/schema-types';
 import { useMouseButtonDown } from 'src/hooks/useMouseButtonDown';
+import { getElementsInGaze, setElementsInGaze } from 'src/redux/slices/gazeSlice';
 
 const Prototype3 = () => {
   const [messages, setMessages] = useState<string[]>([]);
@@ -29,6 +30,7 @@ const Prototype3 = () => {
   // get the sections that were just made
   const sections = useAppSelector(getSections);
   const widgets = useAppSelector(getWidgets);
+  const elemsInGaze = useAppSelector(getElementsInGaze);
   const mousePosition = useMousePosition();
   const keyDown = useKeyDown();
   const mouseButtonDown = useMouseButtonDown();
@@ -45,9 +47,8 @@ const Prototype3 = () => {
       0.1,
       0.1,
     );
-    if (elementsInGaze.length > 0) {
-      console.log('elements in gaze:', elementsInGaze);
-    }
+    dispatch(setElementsInGaze(elementsInGaze));
+    console.log('elements in gaze: ', elemsInGaze);
   }, [mousePosition]);
 
   const firstRender1 = useRef(true);

@@ -3,12 +3,9 @@ import { useMousePosition } from 'src/hooks/useMousePosition';
 import type { Position } from 'src/hooks/useMousePosition';
 import type { AppDispatch } from 'src/redux/store';
 import type { Widget } from 'src/types/modalities';
+import type { ElementInGaze } from 'src/redux/slices/gazeSlice'
 
 
-export type ElementInGaze = {
-    id: string;
-    widgetId: string;
-}
 //turn element pixel locations into full locations within screen
 function elemLocToPixLoc(eX: number, eY:number, wX:number, wY:number){
     const position: Position = {
@@ -85,7 +82,8 @@ export function findElementsInGaze(mousePosition: Position, dispatch: AppDispatc
                 //console.log("percent of circle filled by elem: "+ percentOfCircleFilledByElem);
 
                 if(percentOfElemInCircle > elementPercentageThesh || percentOfCircleFilledByElem > inCirclePercentageThresh){
-                    elemsInGaze.push({id: element.id, widgetId: widget.id});
+                    const time = new Date().toISOString();
+                    elemsInGaze.push({id: element.id, widgetId: widget.id, timeEnteredGaze:time});
                 }
 
                 
