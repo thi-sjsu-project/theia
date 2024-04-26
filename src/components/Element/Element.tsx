@@ -25,13 +25,25 @@ const Element = ({ element, styleClass, children }: ElementProps) => {
       case 'table':
         return (
           <TableElement element={element}>
-            {/* Nested children here if wanted.. */}
+            <span>Priority: {element.priority}</span>
           </TableElement>
         );
       case 'button':
-        return <div>Button</div>;
+        return (
+          <div>
+            <span className="text-xl">{element.text}</span>
+            <br></br>
+            Priority: {10 - element.priority!}
+          </div>
+        );
       case 'text':
-        return <div>{element.text}</div>;
+        return (
+          <div>
+            <span className="text-xl">{element.text}</span>
+            <br></br>
+            Priority: {10 - element.priority!}
+          </div>
+        );
       case 'image':
         return <div>Image</div>;
       case 'audio':

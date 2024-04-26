@@ -58,7 +58,7 @@ const selector = ({ message }: SelectorProps) => {
         yWidget: 0,
         h: 50,
         w: 80,
-        text: 'Approve',
+        text: 'RequestApprovalToAttack',
         priority: message.priority,
       } satisfies ButtonElement);
       break;
