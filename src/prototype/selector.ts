@@ -8,7 +8,6 @@ import type {
   TextElement,
   TableElement,
 } from 'src/types/element';
-// import DANGER_LOGO from 'src/icons/danger.svg';
 
 type SelectorProps = {
   message: Message; //Message;
@@ -39,8 +38,8 @@ const selector = ({ message }: SelectorProps) => {
     elements: [],
     x: 50,
     y: 40,
-    w: 250,
-    h: 700,
+    w: 300,
+    h: 800,
     canOverlap: false,
     useElementLocation: false,
     maxAmount: 1,

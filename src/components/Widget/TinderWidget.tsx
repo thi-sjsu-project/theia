@@ -30,7 +30,7 @@ const TinderWidget = ({ widget }: TinderWidgetProps) => {
         // TinderWidget enforces a certain layout and style for its Elements
         <div
           key={element.id}
-          className="w-full min-h-[50px] border-2 border-black 
+          className="w-full min-h-[75px] border-2 border-black 
           flex items-center justify-center"
         >
           <Element element={element}>
