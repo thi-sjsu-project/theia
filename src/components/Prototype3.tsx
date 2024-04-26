@@ -49,7 +49,9 @@ const Prototype3 = () => {
       0.1,
     );
     dispatch(setElementsInGaze(elementsInGaze));
-    console.log('elements in gaze: ', elemsInGaze);
+    if (elementsInGaze.length > 0) {
+      console.log('elements in gaze: ', elemsInGaze);
+    }
   }, [mousePosition]);
 
   // run whenever messages array changes

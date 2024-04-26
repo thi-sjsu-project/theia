@@ -33,7 +33,7 @@ const Element = ({ element, styleClass, children }: ElementProps) => {
           <div>
             <span className="text-xl">{element.text}</span>
             <br></br>
-            Priority: {10 - element.priority!}
+            Priority: {element.priority!}
           </div>
         );
       case 'text':
@@ -41,7 +41,7 @@ const Element = ({ element, styleClass, children }: ElementProps) => {
           <div>
             <span className="text-xl">{element.text}</span>
             <br></br>
-            Priority: {10 - element.priority!}
+            Priority: {element.priority!}
           </div>
         );
       case 'image':
