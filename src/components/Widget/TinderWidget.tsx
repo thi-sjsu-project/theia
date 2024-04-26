@@ -9,6 +9,11 @@ const TinderWidget = ({ widget }: TinderWidgetProps) => {
   const className =
     'absolute border-2 border-black p-2 flex flex-col gap-2 items-center';
 
+  // Sort elements by priority
+  const sortedElementsByPriority = [...widget.elements].sort(
+    (a, b) => a.priority! - b.priority!,
+  );
+
   return (
     <div
       key={widget.id}
@@ -21,10 +26,16 @@ const TinderWidget = ({ widget }: TinderWidgetProps) => {
         left: widget.x,
       }}
     >
-      {widget.elements.map((element) => (
+      {sortedElementsByPriority.map((element) => (
         // TinderWidget enforces a certain layout and style for its Elements
-        <div className="w-full min-h-[50px] border-2 border-black">
-          <Element key={element.id} element={element} />
+        <div
+          key={element.id}
+          className="w-full min-h-[50px] border-2 border-black 
+          flex items-center justify-center"
+        >
+          <Element element={element}>
+            {/* Nested children here if wanted.. */}
+          </Element>
         </div>
       ))}
     </div>

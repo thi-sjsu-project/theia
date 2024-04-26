@@ -21,7 +21,9 @@ const VehicleWidget = ({ widget }: VehicleWidgetProps) => {
         left: widget.x,
       }}
     >
-      <Element key={widget.id} element={widget.elements[0]} />
+      <Element key={widget.id} element={widget.elements[0]}>
+        {/* Nested children here if wanted */}
+      </Element>
     </div>
   );
 };

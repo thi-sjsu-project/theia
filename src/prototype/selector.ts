@@ -59,6 +59,7 @@ const selector = ({ message }: SelectorProps) => {
         h: 50,
         w: 80,
         text: 'Approve',
+        priority: message.priority,
       } satisfies ButtonElement);
       break;
 
@@ -73,6 +74,7 @@ const selector = ({ message }: SelectorProps) => {
         w: 80,
         src: '',
         tag: 'warning',
+        priority: message.priority,
       } satisfies IconElement);
       break;
 
@@ -86,6 +88,7 @@ const selector = ({ message }: SelectorProps) => {
         h: 30,
         w: 200,
         text: 'Aircraft heading to base',
+        priority: message.priority,
       } satisfies TextElement);
       break;
 
@@ -98,13 +101,13 @@ const selector = ({ message }: SelectorProps) => {
         yWidget: 0,
         h: 50,
         w: 200,
-        rows: 3,
-        cols: 3,
-        data: [
+        rows: 2,
+        cols: 2,
+        tableData: [
           ['Fuel', 'Low'],
-          ['Speed', 'High'],
           ['Altitude', 'Low'],
         ],
+        priority: message.priority,
       } satisfies TableElement);
       break;
 
@@ -117,13 +120,13 @@ const selector = ({ message }: SelectorProps) => {
         yWidget: 0,
         h: 50,
         w: 200,
-        rows: 3,
-        cols: 3,
-        data: [
+        rows: 2,
+        cols: 2,
+        tableData: [
           ['Defect', 'Engine'],
-          ['Speed', 'High'],
           ['Altitude', 'Low'],
         ],
+        priority: message.priority,
       } satisfies TableElement);
       break;
   }

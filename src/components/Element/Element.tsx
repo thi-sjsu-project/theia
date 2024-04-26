@@ -1,15 +1,33 @@
+import type { ReactNode, MouseEvent } from 'react';
 import type { Element as ElementType } from 'src/types/element';
+import TableElement from './TableElement';
 
 type ElementProps = {
   element: ElementType;
+  // for parent to possibly fine-tune the style of the Element
   styleClass?: string;
+  // optional children for nested elements that Tom mentioned.
+  children?: ReactNode;
+  // and more props to perhaps control position of the children
 };
 
-const Element = ({ element, styleClass }: ElementProps) => {
+const Element = ({ element, styleClass, children }: ElementProps) => {
+  const handleClick = (e: MouseEvent<HTMLDivElement>) => {
+    // toggle collapse here...
+  };
+
   const renderElement = () => {
+    if (element.collapsed) {
+      // return a common collpased look?
+    }
+
     switch (element.type) {
       case 'table':
-        return <div>Table</div>;
+        return (
+          <TableElement element={element}>
+            {/* Nested children here if wanted.. */}
+          </TableElement>
+        );
       case 'button':
         return <div>Button</div>;
       case 'text':
@@ -29,7 +47,12 @@ const Element = ({ element, styleClass }: ElementProps) => {
     }
   };
 
-  return <div id={element.id}>{renderElement()}</div>;
+  return (
+    <div onClick={handleClick} id={element.id}>
+      {renderElement()}
+      {children}
+    </div>
+  );
 };
 
 export default Element;

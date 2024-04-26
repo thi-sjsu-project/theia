@@ -10,6 +10,10 @@ export type BaseElement = {
   yWidget: number;
 
   priority?: number;
+  collapsed?: boolean;
+
+  // could this be made more strict?
+  messageData?: string;
 
   expirationInterval?: number;
   expiration?: string;
@@ -22,7 +26,7 @@ export type TableElement = BaseElement & {
   type: 'table';
   rows: number;
   cols: number;
-  data: string[][];
+  tableData: string[][];
 };
 
 export type ButtonElement = BaseElement & {
