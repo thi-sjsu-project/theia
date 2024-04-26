@@ -8,6 +8,7 @@ import type {
   TextElement,
   TableElement,
 } from 'src/types/element';
+import DANGER_ICON from 'src/icons/danger.svg';
 
 type SelectorProps = {
   message: Message; //Message;
@@ -71,7 +72,7 @@ const selector = ({ message }: SelectorProps) => {
         yWidget: 0,
         h: 80,
         w: 80,
-        src: '',
+        src: DANGER_ICON,
         tag: 'warning',
         priority: message.priority,
       } satisfies IconElement);
