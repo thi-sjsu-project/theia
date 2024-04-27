@@ -1,8 +1,8 @@
 import 'src/App.css';
-import Prototype3 from 'src/components/Prototype3';
+import Prototype from 'src/components/Prototype';
 
 const App = () => {
-  return <Prototype3 />;
+  return <Prototype />;
 };
 
 export default App;

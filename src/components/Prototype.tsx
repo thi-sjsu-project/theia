@@ -26,7 +26,7 @@ import {
   setElementsInGaze,
 } from 'src/redux/slices/gazeSlice';
 
-const Prototype3 = () => {
+const Prototype = () => {
   const { messages, stressLevel } = useWorldSim();
 
   const dispatch = useAppDispatch();
@@ -141,4 +141,4 @@ const Prototype3 = () => {
   );
 };
 
-export default Prototype3;
+export default Prototype;
