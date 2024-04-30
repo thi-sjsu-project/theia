@@ -1,11 +1,31 @@
-import type { SectionType } from "src/types/support-types";
-import type { Widget, WidgetType } from "src/types/widget";
+// Namespace import since we export all the types from these files
+import type * as Element from "src/types/element";
+import type * as Widget from "src/types/widget";
 
-// Functions to create widgets, elements, and sections
-// Widget creation functions with parameters
-export const createWidget = (
+import type { Properties } from "csstype";
+import type { Modality } from "src/types/modality";
+import type { Section, SectionType } from "src/types/support-types";
+
+// Functions to create sections, widgets, and elements
+const generateSection = (
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  priority: number,
+  type: SectionType,
+): Section => ({
+  x,
+  y,
+  w,
+  h,
+  priority,
+  type,
+});
+
+const generateWidget = (
   id: string,
-  type: WidgetType,
+  type: Widget.WidgetType,
   x: number,
   y: number,
   w: number,
@@ -13,9 +33,9 @@ export const createWidget = (
   canOverlap: boolean,
   useElementLocation: boolean,
   maxElements: number,
-  elements: Element[],
-  style?: object,
-): Widget => ({
+  elements: Element.Element[],
+  style?: Properties,
+): Widget.Widget => ({
   id,
   type,
   x,
@@ -26,24 +46,23 @@ export const createWidget = (
   useElementLocation,
   maxElements,
   style,
-  elements: [],
+  elements,
 });
 
-// Element creation functions with parameters
-export const createElement = (
+const generateBaseElement = (
   id: string,
-  modality: string,
+  modality: Modality,
   h: number,
   w: number,
   xWidget: number,
   yWidget: number,
   expirationInterval?: number,
   expiration?: string,
-  onExpiration?: "delete" | "escalate" | "deescalate",
+  onExpiration?: 'delete' | 'escalate' | 'deescalate',
   interacted?: boolean,
   canOverlap?: boolean,
-  style?: object
-) => ({
+  style?: Properties,
+): Element.BaseElement => ({
   id,
   modality,
   h,
@@ -58,23 +77,77 @@ export const createElement = (
   style,
 });
 
-// Section creation functions with parameters
-export const createSection = (
-  id: string,
-  x: number,
-  y: number,
-  w: number,
-  h: number,
-  priority: number,
-  type: SectionType
-) => ({
-  id,
-  x,
-  y,
-  w,
-  h,
-  priority,
-  type
+// Element creation for each Element type
+const generateIconElement = (
+  baseElement: Element.BaseElement,
+  src: string,
+): Element.IconElement => ({
+  ...baseElement,
+  type: 'icon',
+  src,
 });
 
-// Pass in a message and return a widget
+const generateTableElement = (
+  baseElement: Element.BaseElement,
+  rows: number,
+  cols: number,
+  data: string[][],
+): Element.TableElement => ({
+  ...baseElement,
+  type: 'table',
+  rows,
+  cols,
+  data,
+});
+
+const generateButtonElement = (
+  baseElement: Element.BaseElement,
+  onClick: () => void,
+): Element.ButtonElement => ({
+  ...baseElement,
+  type: 'button',
+  onClick,
+});
+
+const generateTextElement = (
+  baseElement: Element.BaseElement,
+  text: string,
+): Element.TextElement => ({
+  ...baseElement,
+  type: 'text',
+  text,
+});
+
+const generateImageElement = (
+  baseElement: Element.BaseElement,
+  src: string,
+): Element.ImageElement => ({
+  ...baseElement,
+  type: 'image',
+  src,
+});
+
+const generateAudioElement = (
+  baseElement: Element.BaseElement,
+  intensity: number,
+  frequency: number,
+): Element.AudioElement => ({
+  ...baseElement,
+  type: 'audio',
+  intensity,
+  frequency,
+});
+
+const lpdHelper = {
+  generateWidget,
+  generateSection,
+  generateBaseElement,
+  generateIconElement,
+  generateTableElement,
+  generateButtonElement,
+  generateTextElement,
+  generateImageElement,
+  generateAudioElement,
+};
+
+export default lpdHelper;

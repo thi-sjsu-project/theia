@@ -8,8 +8,6 @@ export type WidgetType =
   | 'request'
   | 'vehicle';
 
-// TODO: make id type uuid
-// TODO: style CSS type??
 export type Widget = {
   elements: Element[];
   id: string;

@@ -1,7 +1,6 @@
 import type { Modality } from 'src/types/modality';
 import type { Properties } from 'csstype';
 
-// TODO: Make ID type UUID
 export type BaseElement = {
   id: string;
   modality: Modality;
