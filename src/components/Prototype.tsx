@@ -38,13 +38,14 @@ const Prototype = () => {
   const mousePosition = useMousePosition();
   const keyDown = useKeyDown();
   const mouseButtonDown = useMouseButtonDown();
+  const r:number = 50; //radius of gaze
 
   useEffect(() => {
     const elementsInGaze = findElementsInGaze(
       mousePosition,
       dispatch,
       widgets,
-      50,
+      r,
       0.1,
       0.1,
     );
@@ -120,8 +121,9 @@ const Prototype = () => {
   }, [messages]);
 
   return (
-    <div>
+    <div className="cursor-none">
       <Minimap widgets={widgets} />
+      <div className={`absolute rounded-full ring-4 ring-black`} style={{width: r*2, height: r*2, top: mousePosition.y-r, left:mousePosition.x-r}}></div>
 
       {/* <div className="absolute top-0 right-0 w-[30rem] flex flex-col gap-4">
         <div className="bg-green-200 w-full h-96 px-2 py-1">
