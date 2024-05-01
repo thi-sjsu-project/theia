@@ -25,6 +25,8 @@ export type Widget = {
   maxAmount: number;
 };
 
+export type WidgetMap = { [key: string]: Widget };
+
 /* export type BaseWidget<TType extends string, TData extends object> = {
   id: string;
   x: number;

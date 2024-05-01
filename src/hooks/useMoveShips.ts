@@ -38,7 +38,7 @@ const useMoveShips = () => {
   useEffect(() => {
     if (!drones) return;
 
-    // random drone movement every second
+    // random drone movement every 1500ms (1.5s)
     const timer = setInterval(() => {
       const bounds = {
         left: 400,
@@ -54,6 +54,8 @@ const useMoveShips = () => {
       drones.forEach((drone) => {
         droneMove.x = Math.floor(Math.random() * 10) - 5;
         droneMove.y = Math.floor(Math.random() * 10) - 5;
+
+        if (!drone) return;
 
         // only move drone if within defined bounds
         if (
