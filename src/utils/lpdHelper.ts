@@ -8,19 +8,23 @@ import type { Section, SectionType } from "src/types/support-types";
 
 // Functions to create sections, widgets, and elements
 const generateSection = (
+  id: string,
   x: number,
   y: number,
   w: number,
   h: number,
   priority: number,
   type: SectionType,
+  widgetIDs: string[],
 ): Section => ({
+  id,
   x,
   y,
   w,
   h,
   priority,
   type,
+  widgetIDs,
 });
 
 const generateWidget = (
@@ -32,7 +36,7 @@ const generateWidget = (
   h: number,
   canOverlap: boolean,
   useElementLocation: boolean,
-  maxElements: number,
+  maxAmount: number,
   elements: Element.Element[],
   style?: Properties,
 ): Widget.Widget => ({
@@ -44,7 +48,7 @@ const generateWidget = (
   h,
   canOverlap,
   useElementLocation,
-  maxElements,
+  maxAmount,
   style,
   elements,
 });
@@ -91,22 +95,24 @@ const generateTableElement = (
   baseElement: Element.BaseElement,
   rows: number,
   cols: number,
-  data: string[][],
+  tableData: string[][],
 ): Element.TableElement => ({
   ...baseElement,
   type: 'table',
   rows,
   cols,
-  data,
+  tableData,
 });
 
 const generateButtonElement = (
   baseElement: Element.BaseElement,
   onClick: () => void,
+  text: string,
 ): Element.ButtonElement => ({
   ...baseElement,
   type: 'button',
   onClick,
+  text,
 });
 
 const generateTextElement = (
