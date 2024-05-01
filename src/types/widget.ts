@@ -18,9 +18,11 @@ export type Widget = {
   w: number;
   h: number;
 
+  padding?: number;
+
   canOverlap: boolean;
   useElementLocation: boolean;
-  maxElements: number;
+  maxAmount: number;
   style?: Properties;
 };
 

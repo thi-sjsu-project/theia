@@ -1,9 +1,17 @@
 import type { Message } from 'src/types/schema-types';
 import { v4 as uuid } from 'uuid';
-import type { Element, Widget } from 'src/types/modalities';
+import type { Widget } from 'src/types/widget';
+import type {
+  Element,
+  ButtonElement,
+  IconElement,
+  TextElement,
+  TableElement,
+} from 'src/types/element';
+import DANGER_ICON from 'src/icons/danger.svg';
 
 type SelectorProps = {
-  message: string; //Message;
+  message: Message; //Message;
 };
 
 /**
@@ -23,8 +31,115 @@ const selector = ({ message }: SelectorProps) => {
 
   const onExpiration = 'delete';
 
+  // Only doing a single widget for Demo3
+  const widget: Widget = {
+    // static ID for Demo3
+    id: 'tinder',
+    type: 'tinder',
+    elements: [],
+    x: 50,
+    y: 40,
+    w: 300,
+    h: 800,
+    canOverlap: false,
+    useElementLocation: false,
+    maxAmount: 1,
+  };
+
+  let elements: Element[] = [];
+
+  switch (message.kind) {
+    case 'RequestApprovalToAttack':
+      elements.push({
+        id: uuid(),
+        type: 'button',
+        modality: 'visual',
+        xWidget: 0,
+        yWidget: 0,
+        h: 50,
+        w: 80,
+        text: 'RequestApprovalToAttack',
+        priority: message.priority,
+      } satisfies ButtonElement);
+      break;
+
+    case 'MissileToOwnshipDetected':
+      elements.push({
+        id: uuid(),
+        type: 'icon',
+        modality: 'visual',
+        xWidget: 0,
+        yWidget: 0,
+        h: 80,
+        w: 80,
+        src: DANGER_ICON,
+        tag: 'warning',
+        priority: message.priority,
+      } satisfies IconElement);
+      break;
+
+    case 'AcaHeadingToBase':
+      elements.push({
+        id: uuid(),
+        type: 'text',
+        modality: 'visual',
+        xWidget: 0,
+        yWidget: 0,
+        h: 30,
+        w: 200,
+        text: 'Aircraft heading to base',
+        priority: message.priority,
+      } satisfies TextElement);
+      break;
+
+    case 'AcaFuelLow':
+      elements.push({
+        id: uuid(),
+        type: 'table',
+        modality: 'visual',
+        xWidget: 0,
+        yWidget: 0,
+        h: 50,
+        w: 200,
+        rows: 2,
+        cols: 2,
+        tableData: [
+          ['Fuel', 'Low'],
+          ['Altitude', 'Low'],
+        ],
+        priority: message.priority,
+      } satisfies TableElement);
+      break;
+
+    case 'AcaDefect':
+      elements.push({
+        id: uuid(),
+        type: 'table',
+        modality: 'visual',
+        xWidget: 0,
+        yWidget: 0,
+        h: 50,
+        w: 200,
+        rows: 2,
+        cols: 2,
+        tableData: [
+          ['Defect', 'Engine'],
+          ['Altitude', 'Low'],
+        ],
+        priority: message.priority,
+      } satisfies TableElement);
+      break;
+  }
+
+  widget.elements = elements;
+
+  return {
+    message,
+    possibleWidgets: [widget],
+  };
+
   // simulation LPD
-  if (message === 'RequestApprovalToAttack') {
+  /* if (message === 'RequestApprovalToAttack') {
     const elements: Element[] = [
       {
         expirationInterval: 5,
@@ -44,7 +159,6 @@ const selector = ({ message }: SelectorProps) => {
 
     const widget: Widget = {
       id: 'request',
-      maxAmount: 1,
       x: 0,
       y: 0,
       h: 80,
@@ -53,13 +167,7 @@ const selector = ({ message }: SelectorProps) => {
       useElementLocation: true,
       canOverlap: false,
       elements,
-      style: {
-        backgroundColor: 'red',
-        position: 'absolute',
-        opacity: 0.5,
-        border: 'solid',
-        zIndex: 100,
-      },
+      maxAmount: 1,
     };
 
     possibleWidgets.push(widget);
@@ -99,6 +207,7 @@ const selector = ({ message }: SelectorProps) => {
         h: 5,
         w: 5,
         canOverlap: false,
+        src: '',
       },
     ];
 
@@ -145,6 +254,9 @@ const selector = ({ message }: SelectorProps) => {
         h: 5,
         w: 5,
         canOverlap: true,
+        rows: 3,
+        cols: 3,
+        data: [],
       },
     ];
 
@@ -198,6 +310,7 @@ const selector = ({ message }: SelectorProps) => {
         h: 5,
         w: 5,
         canOverlap: true,
+        text: `Aircraft heading to base`,
       },
     ];
 
@@ -231,6 +344,7 @@ const selector = ({ message }: SelectorProps) => {
       yWidget: 0,
       w: 100,
       h: 100,
+      text: 'Swipe right to launch missile',
     };
     const widget: Widget = {
       id: uuid(),
@@ -253,12 +367,7 @@ const selector = ({ message }: SelectorProps) => {
     };
 
     possibleWidgets.push(widget);
-  }
-
-  return {
-    message,
-    possibleWidgets,
-  };
+  } */
 };
 
 export default selector;

@@ -14,11 +14,18 @@ export type SectionType =
   | 'request';
 
 export type Section = {
+  id: string;
   x: number;
   y: number;
   w: number;
   h: number;
   priority: number;
   type: 'free' | 'tinder' | 'message' | 'highWarning' | 'lowWarning' | 'request';
+  widgetIDs: string[];
 
+}
+
+export type LinkedSectionWidget = {
+  widgetID: string;
+  sectionID: string;
 }

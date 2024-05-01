@@ -2,6 +2,11 @@ import type { tags } from 'typia';
 
 /* messages ***************************************************************************************/
 
+export type SimToCmMessage = {
+  message?: Message;
+  stressLevel?: Range<0, 1>;
+};
+
 export type Message =
   | RequestApprovalToAttack
   | AcaFuelLow
@@ -10,7 +15,7 @@ export type Message =
   | AcaHeadingToBase;
 
 export type BaseMessage<TKind extends string, TData extends object> = {
-  id: Id;
+  id: MessageId;
   priority: Priority;
   kind: TKind;
   data: TData;
@@ -64,7 +69,8 @@ export type AcaHeadingToBase = BaseMessage<
 
 /* utility types **********************************************************************************/
 
-export type Id = string;
+export type Id = number & tags.Type<'uint64'>;
+export type MessageId = string & tags.Format<'uuid'>;
 export type Priority = number & tags.Type<'uint32'> & tags.Maximum<10>;
 export type Range<From extends number, To extends number> = number &
   tags.Type<'float'> &
