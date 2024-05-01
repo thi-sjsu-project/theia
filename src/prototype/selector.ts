@@ -7,8 +7,11 @@ import type {
   IconElement,
   TextElement,
   TableElement,
+  RequestApprovalElement,
+  MissileIncomingElement,
 } from 'src/types/element';
 import DANGER_ICON from 'src/icons/danger.svg';
+import DRONE_ICON from 'src/icons/drone.svg';
 
 type SelectorProps = {
   message: Message; //Message;
@@ -34,8 +37,9 @@ const selector = ({ message }: SelectorProps) => {
   // Only doing a single widget for Demo3
   const widget: Widget = {
     // static ID for Demo3
-    id: 'tinder',
-    type: 'tinder',
+    id: 'list',
+    sectionType: 'tinder',
+    type: 'list',
     elements: [],
     x: 50,
     y: 40,
@@ -52,30 +56,70 @@ const selector = ({ message }: SelectorProps) => {
     case 'RequestApprovalToAttack':
       elements.push({
         id: uuid(),
-        type: 'button',
+        type: 'request-approval',
         modality: 'visual',
+        h: 100,
+        w: 200,
         xWidget: 0,
         yWidget: 0,
-        h: 50,
-        w: 80,
-        text: 'RequestApprovalToAttack',
+        message,
+        collapsed: true,
         priority: message.priority,
-      } satisfies ButtonElement);
+        icon: {
+          id: uuid(),
+          modality: 'visual',
+          type: 'icon',
+          h: 30,
+          w: 30,
+          xWidget: 0,
+          yWidget: 0,
+          src: DRONE_ICON,
+        },
+        leftButton: {
+          id: uuid(),
+          modality: 'visual',
+          h: 30,
+          w: 80,
+          xWidget: 0,
+          yWidget: 0,
+          text: 'Deny',
+          type: 'button',
+        },
+        rightButton: {
+          id: uuid(),
+          modality: 'visual',
+          h: 30,
+          w: 80,
+          xWidget: 0,
+          yWidget: 0,
+          text: 'Approve',
+          type: 'button',
+        },
+      } satisfies RequestApprovalElement);
       break;
 
     case 'MissileToOwnshipDetected':
       elements.push({
         id: uuid(),
-        type: 'icon',
+        type: 'missile-incoming',
         modality: 'visual',
         xWidget: 0,
         yWidget: 0,
         h: 80,
         w: 80,
-        src: DANGER_ICON,
-        tag: 'warning',
+        message,
         priority: message.priority,
-      } satisfies IconElement);
+        icon: {
+          id: uuid(),
+          modality: 'visual',
+          type: 'icon',
+          src: DANGER_ICON,
+          h: 30,
+          w: 30,
+          xWidget: 0,
+          yWidget: 0,
+        },
+      } satisfies MissileIncomingElement);
       break;
 
     case 'AcaHeadingToBase':

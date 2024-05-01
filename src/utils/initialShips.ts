@@ -2,16 +2,17 @@ import { v4 as uuid } from 'uuid';
 import type { IconElement } from 'src/types/element';
 import OWNSHIP_LOGO from 'src/icons/currentPosition.svg';
 import DRONE_LOGO from 'src/icons/drone.svg';
-import type { Widget, WidgetMap } from 'src/types/widget';
+import type { Widget, VehicleWidget, WidgetMap } from 'src/types/widget';
 
 const createDroneWidget = (
   x: number,
   y: number,
   w: number,
   h: number,
-): Widget => ({
+): VehicleWidget => ({
   elements: [droneElement],
   id: uuid(),
+  sectionType: 'free',
   type: 'vehicle',
 
   x,
@@ -38,7 +39,7 @@ const ownshipElement: IconElement = {
   yWidget: 0,
 };
 
-export const ownship: Widget = {
+export const ownship: VehicleWidget = {
   id: uuid(),
 
   x: 400,
@@ -46,6 +47,7 @@ export const ownship: Widget = {
   w: 50,
   h: 50,
 
+  sectionType: 'free',
   type: 'vehicle',
   elements: [ownshipElement],
 
