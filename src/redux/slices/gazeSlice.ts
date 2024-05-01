@@ -51,27 +51,31 @@ export const gazeSlice = createSlice({
 
     },
     addKeyDown: (state, action:PayloadAction<GazeAndKey>) => {
-
-      state = { //add the key press
-        ...state, 
-        gazesAndKeys: [
-          ...state.gazesAndKeys, 
-          {elemsInGaze: action.payload.elemsInGaze, 
-            keyPress: action.payload.keyPress
-          }
-        ]
-      }
+      state.gazesAndKeys.push(action.payload)
+      // state = { //add the key press
+      //   ...state, 
+      //   gazesAndKeys: [
+      //     ...state.gazesAndKeys, 
+      //     {elemsInGaze: action.payload.elemsInGaze, 
+      //       keyPress: action.payload.keyPress
+      //     }
+      //   ]
+      // }
     },
     removeKeyDown: (state, action:PayloadAction<string>) => {
       state.gazesAndKeys.map(function(gazeAndKey, gazeAndKeyIndex){
         if(action.payload === gazeAndKey.keyPress){ //we found the key that was released
-          state = { //remove the key
-            ...state,
-            gazesAndKeys: [
-              ...state.gazesAndKeys.slice(0, gazeAndKeyIndex),
-              ...state.gazesAndKeys.slice(gazeAndKeyIndex+1)
-            ]
-          }
+          state.gazesAndKeys = [
+            ...state.gazesAndKeys.slice(0, gazeAndKeyIndex),
+            ...state.gazesAndKeys.slice(gazeAndKeyIndex+1)
+          ]
+          // state = { //remove the key
+          //   ...state,
+          //   gazesAndKeys: [
+          //     ...state.gazesAndKeys.slice(0, gazeAndKeyIndex),
+          //     ...state.gazesAndKeys.slice(gazeAndKeyIndex+1)
+          //   ]
+          // }
         }
       });
       

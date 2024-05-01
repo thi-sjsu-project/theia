@@ -71,8 +71,8 @@ const Prototype = () => {
 
   //on key or mouse press, log the press and what elements are in the gaze to state
   useEffect(() => {
-    console.log("down");
     dispatch(addKeyDown({elemsInGaze: elemsInGaze, keyPress: keyDown.toString()}));
+    console.log(gazesAndKeys)
   }, [keyDown])
   useEffect(() => {
     dispatch(addKeyDown({elemsInGaze: elemsInGaze, keyPress: mouseButtonDown.toString()}));
@@ -80,7 +80,6 @@ const Prototype = () => {
 
   //on key or mouse release, delete the press that was logged to state
   useEffect(() => {
-    console.log("up");
     dispatch(removeKeyDown(keyUp.toString()))
   }, [keyUp])
   useEffect(() => {
