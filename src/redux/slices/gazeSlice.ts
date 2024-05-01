@@ -51,7 +51,7 @@ export const gazeSlice = createSlice({
 
     },
     addKeyDown: (state, action:PayloadAction<GazeAndKey>) => {
-      state.gazesAndKeys.push(action.payload)
+      state.gazesAndKeys.push(action.payload);
       // state = { //add the key press
       //   ...state, 
       //   gazesAndKeys: [
@@ -64,6 +64,7 @@ export const gazeSlice = createSlice({
     },
     removeKeyDown: (state, action:PayloadAction<string>) => {
       state.gazesAndKeys.map(function(gazeAndKey, gazeAndKeyIndex){
+        console.log('equality toAdd: '+action.payload+' inStorage: '+gazeAndKey.keyPress)
         if(action.payload === gazeAndKey.keyPress){ //we found the key that was released
           state.gazesAndKeys = [
             ...state.gazesAndKeys.slice(0, gazeAndKeyIndex),
