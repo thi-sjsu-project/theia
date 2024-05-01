@@ -10,24 +10,24 @@ const initialState: Position = {
   y: 0,
 };
 
-export function useMouseButtonDown() {
-  const [mouseButtDown, setMouseButtDown] = useState<Number>(-1);
+export function useMouseButtonUp() {
+  const [mouseButtUp, setMouseButtUp] = useState<string>('-1');
 
   useEffect(() => {
-    function handleMouseButtonDown(ev: MouseEvent) {
+    function handleMouseButtonUp(ev: MouseEvent) {
       if (ev.button === 0 || ev.button === 1 || ev.button === 2) {
-        setMouseButtDown(ev.button);
+        setMouseButtUp(ev.button.toString());
         console.log('Mouse button pressed: ' + ev.button);
       }
     }
 
-    document.addEventListener('mousedown', handleMouseButtonDown);
+    document.addEventListener('mouseup', handleMouseButtonUp);
 
     // Don't forget to clean up
     return () => {
-      document.removeEventListener('mousedown', handleMouseButtonDown);
+      document.removeEventListener('mouseup', handleMouseButtonUp);
     };
   }, []);
 
-  return mouseButtDown;
+  return mouseButtUp;
 }
