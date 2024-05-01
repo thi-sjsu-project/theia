@@ -76,21 +76,26 @@ const Prototype = () => {
     }
   }, [keyDown])
   useEffect(() => {
-    dispatch(addKeyDown({elemsInGaze: elemsInGaze, keyPress: mouseButtonDown.toString()}));
+    if(mouseButtonDown != ''){
+      dispatch(addKeyDown({elemsInGaze: elemsInGaze, keyPress: mouseButtonDown.toString()}));
+    }
   }, [mouseButtonDown])
 
-  //on key or mouse release, delete the press that was logged to state
+  //on key or mouse release, delete the press that was logged to state and ensure the key/mouse is reset so we can accept the same key/mouse again
   useEffect(() => {
     console.log(keyUp)
     if(keyUp != ''){
-      console.log('up')
       dispatch(removeKeyDown(keyUp.toString()));
       document.dispatchEvent(new KeyboardEvent('keyup', {'key': '_'}));
       document.dispatchEvent(new KeyboardEvent('keydown', {'key': '_'}));
     }
   }, [keyUp])
   useEffect(() => {
-    dispatch(removeKeyDown(mouseButtonUp.toString()))
+    if(mouseButtonUp != ''){
+      dispatch(removeKeyDown(mouseButtonUp.toString()))
+      document.dispatchEvent(new KeyboardEvent('mouseup', {'key': '_'}));
+      document.dispatchEvent(new KeyboardEvent('mousedown', {'key': '_'}));
+    }
   }, [mouseButtonUp])
 
   // run whenever messages array changes
