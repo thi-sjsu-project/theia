@@ -38,7 +38,7 @@ type AssimilatorProps = {
 const assimilator = ({
   possibleWidgets,
   sections,
-  widgets,
+  widgets: deployedWidgets,
 }: AssimilatorProps) => {
   let widgetToDeploy: Widget | null = null; //will return null if we cannot find a space
   let sectionID: LinkedSectionWidget = { widgetID: 'none', sectionID: 'none' };
@@ -46,7 +46,7 @@ const assimilator = ({
 
   possibleWidgets.forEach((widget, widgetIndex) => {
     // go through each possible widget until we find one we can place
-    if (widgets[widget.id]) {
+    if (deployedWidgets[widget.id]) {
       // check if the widget already exists on the screen
       sectionID = { widgetID: widget.id, sectionID: 'none' };
       action = 'updateWidget';
@@ -74,8 +74,8 @@ const assimilator = ({
         //get the widgets in this section
         const matchingWidgets: Widget[] = [];
         section.widgetIDs.forEach(function (widgetID, widgetIDIndex) {
-          Object.keys(widgets).forEach((widgetId) => {
-            const deployedWidget = widgets[widgetId];
+          Object.keys(deployedWidgets).forEach((widgetId) => {
+            const deployedWidget = deployedWidgets[widgetId];
 
             if (
               deployedWidget.id === widgetID &&
