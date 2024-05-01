@@ -38,7 +38,7 @@ type AssimilatorProps = {
 const assimilator = ({
   possibleWidgets,
   sections,
-  widgets: deployedWidgets,
+  widgets: deployedWidgets, // re-name for clarity
 }: AssimilatorProps) => {
   let widgetToDeploy: Widget | null = null; //will return null if we cannot find a space
   let sectionID: LinkedSectionWidget = { widgetID: 'none', sectionID: 'none' };
