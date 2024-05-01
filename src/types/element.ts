@@ -10,7 +10,6 @@ export type BaseElement = {
   xWidget: number;
   yWidget: number;
 
-  priority?: number;
   collapsed?: boolean;
 
   // could this be made more strict?

@@ -60,6 +60,8 @@ const generateBaseElement = (
   w: number,
   xWidget: number,
   yWidget: number,
+  collapsed?: boolean,
+  messageData?: string,
   expirationInterval?: number,
   expiration?: string,
   onExpiration?: 'delete' | 'escalate' | 'deescalate',
@@ -73,6 +75,8 @@ const generateBaseElement = (
   w,
   xWidget,
   yWidget,
+  collapsed,
+  messageData,
   expirationInterval,
   expiration,
   onExpiration,
@@ -85,10 +89,12 @@ const generateBaseElement = (
 const generateIconElement = (
   baseElement: Element.BaseElement,
   src: string,
+  tag?: 'ownship' | 'drone' | 'target' | 'enemy' | 'warning' | 'message',
 ): Element.IconElement => ({
   ...baseElement,
   type: 'icon',
   src,
+  tag,
 });
 
 const generateTableElement = (
@@ -106,13 +112,13 @@ const generateTableElement = (
 
 const generateButtonElement = (
   baseElement: Element.BaseElement,
-  onClick: () => void,
   text: string,
+  onClick?: () => void,
 ): Element.ButtonElement => ({
   ...baseElement,
   type: 'button',
-  onClick,
   text,
+  onClick,
 });
 
 const generateTextElement = (
