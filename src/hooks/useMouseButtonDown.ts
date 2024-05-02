@@ -17,11 +17,11 @@ export function useMouseButtonDown() {
       }
     }
 
-    document.addEventListener('mouseup', handleMouseButtonDown);
+    document.addEventListener('mousedown', handleMouseButtonDown);
 
     // Don't forget to clean up
     return () => {
-      document.removeEventListener('mouseup', handleMouseButtonDown);
+      document.removeEventListener('mousedown', handleMouseButtonDown);
     };
   }, []);
 

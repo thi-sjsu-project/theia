@@ -22,9 +22,15 @@ import { useMouseButtonDown } from 'src/hooks/useMouseButtonDown';
 import { ONE_SECOND_IN_MS } from 'src/utils/constants';
 import useGenerateMessages from 'src/hooks/useGenerateMessages';
 import {
+  addKeyDown,
   getElementsInGaze,
+  getGazesAndKeys,
+  removeKeyDown,
   setElementsInGaze,
 } from 'src/redux/slices/gazeSlice';
+import type { ElementInGaze } from 'src/redux/slices/gazeSlice';
+import { useKeyUp } from 'src/hooks/useKeyUp';
+import { useMouseButtonUp } from 'src/hooks/useMouseButtonUp';
 
 const Prototype = () => {
   const { messages, stressLevel } = useWorldSim();
@@ -34,12 +40,16 @@ const Prototype = () => {
   // get the sections that were just made
   const sections = useAppSelector(getSections);
   const widgets = useAppSelector(getWidgets);
-  const elemsInGaze = useAppSelector(getElementsInGaze);
+  const gazesAndKeys = useAppSelector(getGazesAndKeys);
+  const elemsInGaze:ElementInGaze[] = useAppSelector(getElementsInGaze);
   const mousePosition = useMousePosition();
   const keyDown = useKeyDown();
+  const keyUp = useKeyUp();
   const mouseButtonDown = useMouseButtonDown();
+  const mouseButtonUp = useMouseButtonUp();
   const r:number = 50; //radius of gaze
 
+  //on mouse position move, check for elements in gaze
   useEffect(() => {
     const elementsInGaze = findElementsInGaze(
       mousePosition,
@@ -54,6 +64,39 @@ const Prototype = () => {
       console.log('elements in gaze: ', elemsInGaze);
     }
   }, [mousePosition]);
+
+  useEffect(() => {
+   console.log("gazesAndKeys", gazesAndKeys);
+  }, [gazesAndKeys])
+
+  //on key or mouse press, log the press and what elements are in the gaze to state
+  useEffect(() => {
+    if(keyDown != ''){
+      dispatch(addKeyDown({elemsInGaze: elemsInGaze, keyPress: keyDown.toString()}));
+    }
+  }, [keyDown])
+  useEffect(() => {
+    if(mouseButtonDown != ''){
+      dispatch(addKeyDown({elemsInGaze: elemsInGaze, keyPress: mouseButtonDown.toString()}));
+    }
+  }, [mouseButtonDown])
+
+  //on key or mouse release, delete the press that was logged to state and ensure the key/mouse is reset so we can accept the same key/mouse again
+  useEffect(() => {
+    console.log(keyUp)
+    if(keyUp != ''){
+      dispatch(removeKeyDown(keyUp.toString()));
+      document.dispatchEvent(new KeyboardEvent('keyup', {'key': '_'}));
+      document.dispatchEvent(new KeyboardEvent('keydown', {'key': '_'}));
+    }
+  }, [keyUp])
+  useEffect(() => {
+    if(mouseButtonUp != ''){
+      dispatch(removeKeyDown(mouseButtonUp.toString()))
+      document.dispatchEvent(new KeyboardEvent('mouseup', {'key': '_'}));
+      document.dispatchEvent(new KeyboardEvent('mousedown', {'key': '_'}));
+    }
+  }, [mouseButtonUp])
 
   // run whenever messages array changes
   useEffect(() => {
