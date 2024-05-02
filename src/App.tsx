@@ -1,6 +1,5 @@
 import 'src/App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Prototype from 'src/components/Prototype';
 import Minimap from 'src/pages/Minimap';
 import LeftScreen from 'src/pages/LeftScreen';
 import RightScreen from 'src/pages/RightScreen';

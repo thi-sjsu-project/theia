@@ -14,6 +14,7 @@ function elemLocToPixLoc(eX: number, eY: number, wX: number, wY: number) {
   return position;
 }
 
+// TODO: turn into a hook. So it can access the redux store
 export function findElementsInGaze(
   mousePosition: Position,
   dispatch: AppDispatch,
