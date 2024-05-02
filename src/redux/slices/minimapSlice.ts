@@ -5,6 +5,7 @@ import type { Message } from 'src/types/schema-types';
 import type { Element } from 'src/types/element';
 import type { LinkedSectionWidget, Section } from 'src/types/support-types';
 import selector from 'src/prototype/selector';
+import { ownship, drones } from 'src/utils/initialShips';
 
 type InitialState = {
   visualComplexity: number;
