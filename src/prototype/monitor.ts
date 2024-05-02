@@ -2,6 +2,7 @@ import type { AppDispatch } from 'src/redux/store';
 import {
   removeWidget,
   deleteElementFromWidget,
+  updateElementExpiration,
 } from 'src/redux/slices/minimapSlice';
 import store from 'src/redux/store';
 
@@ -21,11 +22,34 @@ const monitor = ({ dispatch }: MonitorProps) => {
   const elementsInGaze = store.getState().gaze.elementsInGaze;
   const gazesAndKeys = store.getState().gaze.gazesAndKeys;
 
-  const time = new Date().toISOString();
-  //detect and handle interactions with elements
-  elementsInGaze.forEach(function(elementsInGaze, elementInGazeIndex){
-    if(time - elementsInGaze.timeEnteredGaze)
+
+  /*
+  *
+  *detect and handle interactions with elements
+  *
+  */
+
+  //detect interactions via gaze
+  const timeSomeMsAgo = new Date();
+  timeSomeMsAgo.setMilliseconds(
+    timeSomeMsAgo.getMilliseconds()-100, //<- 100 should be in constants file, but just testing now
+  );//set timeSomeMsAgo to the time it was 100 ms ago
+  elementsInGaze.forEach(function(elementInGaze, elementInGazeIndex){
+    if(timeSomeMsAgo.toISOString() <= elementInGaze.timeEnteredGaze){ //has been in gaze for at least 100 ms
+      dispatch(updateElementExpiration(elementInGaze.widgetId, elementInGaze.id)); //update the time until expiration
+      console.log('interacted with element '+elementInGaze.id+' using gaze');
+    }
   });
+
+  //detect interactions via key press
+  gazesAndKeys.forEach(function(gazeAndKey, gazeAndKeyIndex){
+    gazeAndKey.elemsInGaze.forEach(function(elementInGaze, elementInGazeIndex){
+      dispatch(updateElementExpiration(elementInGaze.widgetId, elementInGaze.id)); //update the time until expiration
+      console.log('interacted with element '+elementInGaze.id+' using '+gazeAndKey.keyPress);
+    });
+  });
+
+
 
 
   Object.keys(widgets).forEach((widgetId) => { //update widgets and elements that haven't been interacted with

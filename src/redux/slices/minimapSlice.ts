@@ -66,6 +66,41 @@ export const minimapSlice = createSlice({
       });
     },
 
+    updateElementExpiration: { //update the time until window of interaction expires
+      prepare(widgetId: string, elementId: string) {
+        return {
+          payload: {widgetId, elementId}
+        };
+      },
+      reducer: (
+        state,
+        action: PayloadAction<{ widgetId: string; elementId: string}>,
+      ) => {
+        const {widgetId, elementId} = action.payload;
+        const widget = state.widgets[widgetId];
+
+        // if widget exists
+        if (widget) {
+          const tempElements = state.widgets[widgetId].elements;
+          tempElements.forEach(function(element, elementIndex){
+            if(element.id === elementId && element.expirationInterval){
+              const newExpiration = new Date()
+              newExpiration.setSeconds(
+                newExpiration.getSeconds()+element.expirationInterval
+              );
+              tempElements[elementIndex].expiration = newExpiration.toISOString();
+            }
+          });
+          state.widgets[widgetId] = {
+            ...widget,
+            elements: tempElements
+          };
+        } else {
+          console.error(`Widget with id ${widgetId} not found`);
+        }
+      }
+    },
+    
     deleteElementFromWidget: {
       prepare(widgetId: string, elementId: string) {
         return {
@@ -171,6 +206,7 @@ export const {
   removeWidget,
   addElementToWidget,
   addWidgetToSection,
+  updateElementExpiration,
   deleteElementFromWidget,
   updateVisualComplexity,
   updateAudioComplexity,

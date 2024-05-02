@@ -164,7 +164,19 @@ const Root = () => {
       widgets,
     });
 
-    //console.log('widgetToDeploy ' + widgetToDeploy);
+    
+    /*
+    
+    IMPORTANT
+    must query restrainer before commiting to adding an element or widget
+    
+    */
+    /*
+    
+    IMPORTANT
+    must assign element expiration time here before adding to state
+    
+    */
     if (action !== 'newWidget') {
       //we should do something other than
       switch (action) {
