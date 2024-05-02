@@ -14,11 +14,7 @@ import mediumLPD from "./lpd/stress/mediumLPD";
 import highLPD from "./lpd/stress/highLPD";
 import initialLPD from "./lpd/initialLPD";
 
-const stressLevelLPDFunctions: any = {
-  "low": lowLPD,
-  "medium": mediumLPD,
-  "high": highLPD,
-}
+const stressLevelLPDFunctions = [lowLPD, mediumLPD, highLPD];
 
 type SelectorProps = {
   message?: Message;
@@ -32,8 +28,10 @@ type SelectorProps = {
  */
 const selector = ({ message, stressLevel }: SelectorProps = {}) => {
   // Call the LPD function that corresponds to the stress level from the message
-  if (message && stressLevel) {
-    return stressLevelLPDFunctions[stressLevel](message);
+  if (message && stressLevel ) {
+    // Transform range of stress levels from 0-1 to 0-2 only returning integers
+    stressLevel = Math.floor(stressLevel * 3);
+    return stressLevelLPDFunctions[0](message);
   } else {
     // If no message is provided, return the initial LPD
     return initialLPD;

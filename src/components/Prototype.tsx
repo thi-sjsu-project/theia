@@ -115,6 +115,7 @@ const Prototype = () => {
           return; */
 
       // dispatch action to add new widget
+      console.log('Deploying widget:', widgetToDeploy);
       dispatch(addWidget(widgetToDeploy));
       dispatch(addWidgetToSection(sectionID));
     }

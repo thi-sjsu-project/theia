@@ -5,7 +5,7 @@ import lpdHelper from "src/utils/lpdHelper";
 const requestApprovalToAttackMessageLow = () => {
     return {
         sections: [],
-        widgets: [lpdHelper.generateWidget(
+        possibleWidgets: [lpdHelper.generateWidget(
             'request',
             'request',
             100,
@@ -23,7 +23,7 @@ const requestApprovalToAttackMessageLow = () => {
 const acaFuelLowMessageLow = () => {
     return {
         sections: [],
-        widgets: [lpdHelper.generateWidget(
+        possibleWidgets: [lpdHelper.generateWidget(
             'message',
             'message',
             500,
@@ -41,8 +41,8 @@ const acaFuelLowMessageLow = () => {
 const missileToOwnshipDetectedMessageLow = () => {
     return {
         sections: [],
-        widgets: [lpdHelper.generateWidget(
-            'highWarning',
+        possibleWidgets: [lpdHelper.generateWidget(
+            'missileDetected',
             'highWarning',
             100,
             100,
@@ -51,7 +51,34 @@ const missileToOwnshipDetectedMessageLow = () => {
             false,
             true,
             1,
-            [],
+            [
+                lpdHelper.generateTextElement(
+                    lpdHelper.generateBaseElement(
+                        'textElement',
+                        'visual',
+                        100,
+                        100,
+                        0,
+                        0,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        {
+                            fontSize: '20px',
+                            fontWeight: 'bold',
+                            color: 'black',
+                            border: 'solid',
+                            borderColor: 'black',
+                            // borderColor: '#16fd22',
+                        },
+                    ),
+                    'Missile Detected!',
+                ),
+            ],
         )],
     };
 }
@@ -59,7 +86,7 @@ const missileToOwnshipDetectedMessageLow = () => {
 const acaDefectMessageLow = () => {
     return {
         sections: [],
-        widgets: [lpdHelper.generateWidget(
+        possibleWidgets: [lpdHelper.generateWidget(
             'highWarning',
             'highWarning',
             500,
@@ -77,7 +104,7 @@ const acaDefectMessageLow = () => {
 const acaHeadingToBaseMessageLow = () => {
     return {
         sections: [],
-        widgets: [lpdHelper.generateWidget(
+        possibleWidgets: [lpdHelper.generateWidget(
             'message',
             'message',
             500,
