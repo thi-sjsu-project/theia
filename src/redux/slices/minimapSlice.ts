@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { Widget } from 'src/types/widget';
+import type { Widget, WidgetMap } from 'src/types/widget';
 import type { Message } from 'src/types/schema-types';
 import type { Element } from 'src/types/element';
 import type { LinkedSectionWidget, Section } from 'src/types/support-types';
@@ -9,7 +9,7 @@ import selector from 'src/prototype/selector';
 type InitialState = {
   visualComplexity: number;
   audioComplexity: number;
-  widgets: Widget[];
+  widgets: WidgetMap;
   messages: Message[];
   sections: Section[];
 };
@@ -25,26 +25,21 @@ const initialState: InitialState = {
 export const minimapSlice = createSlice({
   name: 'minimap',
   initialState,
-  // reducers are used to update the state
   reducers: {
     addMapSection: (state, action) => {
       state.sections.push(action.payload); //add it to our sections as well
     },
 
     addWidget: (state, action: PayloadAction<Widget>) => {
-      state.widgets.push(action.payload); //add to the widgets
+      state.widgets[action.payload.id] = action.payload;
     },
 
     updateWidget: (state, action: PayloadAction<Widget>) => {
-      state.widgets = state.widgets.map((widget) =>
-        widget.id === action.payload.id ? action.payload : widget,
-      );
+      state.widgets[action.payload.id] = action.payload;
     },
 
     removeWidget: (state, action: PayloadAction<string>) => {
-      state.widgets = state.widgets.filter(
-        (widget) => widget.id !== action.payload,
-      );
+      delete state.widgets[action.payload];
     },
 
     addElementToWidget: {
@@ -56,13 +51,9 @@ export const minimapSlice = createSlice({
         state,
         action: PayloadAction<{ widgetId: string; element: Element }>,
       ) {
-        state.widgets = state.widgets.map((widget) => {
-          if (widget.id === action.payload.widgetId) {
-            widget.elements.push(action.payload.element);
-            return widget;
-          }
-          return widget;
-        });
+        state.widgets[action.payload.widgetId].elements.push(
+          action.payload.element,
+        );
       },
     },
 
@@ -74,33 +65,70 @@ export const minimapSlice = createSlice({
       });
     },
 
-    // delete an element from a widget by id
-    updateWidgetDelete: (state, action: PayloadAction<string>) => {
-      state.widgets = state.widgets.map((widget) => {
+    deleteElementFromWidget: {
+      prepare(widgetId: string, elementId: string) {
         return {
-          ...widget,
-          elements: widget.elements.filter(
-            (element) => element.id !== action.payload,
-          ),
+          payload: { widgetId, elementId },
         };
-      });
+      },
+
+      reducer: (
+        state,
+        action: PayloadAction<{ widgetId: string; elementId: string }>,
+      ) => {
+        const { widgetId, elementId } = action.payload;
+
+        const widget = state.widgets[widgetId];
+
+        // if widget exists
+        if (widget) {
+          state.widgets[widgetId] = {
+            ...widget,
+            elements: widget.elements.filter(
+              (element) => element.id !== elementId,
+            ),
+          };
+        } else {
+          console.error(`Widget with id ${widgetId} not found`);
+        }
+      },
     },
 
-    toggleElementInteraction: (state, action: PayloadAction<string>) => {
-      state.widgets = state.widgets.map((widget) => {
-        if (widget.id === action.payload) {
-          return {
+    toggleElementInteraction: {
+      // prepare is called before the reducer (allows us to pass in multiple arguments to reducer)
+      prepare(widgetId: string, elementId: string) {
+        return {
+          payload: { widgetId, elementId },
+        };
+      },
+
+      reducer: (
+        state,
+        action: PayloadAction<{ widgetId: string; elementId: string }>,
+      ) => {
+        const { widgetId, elementId } = action.payload;
+
+        // get the widget by id
+        const widget = state.widgets[widgetId];
+
+        if (widget) {
+          // if widget exists, map over elements and toggle interacted by id
+          state.widgets[widgetId] = {
             ...widget,
             elements: widget.elements.map((element) => {
-              return {
-                ...element,
-                interacted: !element.interacted,
-              };
+              if (element.id === elementId) {
+                return {
+                  ...element,
+                  interacted: !element.interacted,
+                };
+              }
+              return element;
             }),
           };
+        } else {
+          console.error(`Widget with id ${widgetId} not found`);
         }
-        return widget;
-      });
+      },
     },
 
     updateVisualComplexity: (state, action: PayloadAction<number>) => {
@@ -120,23 +148,15 @@ export const minimapSlice = createSlice({
     getWidgets: (state) => state.widgets,
     // find a single widget by id
     getWidgetById: (state, id: string) =>
-      state.widgets.find((widget) => widget.id === id),
+      state.widgets[id] ? state.widgets[id] : null,
     getVisualComplexity: (state) => state.visualComplexity,
     getAudioComplexity: (state) => state.audioComplexity,
     getMessages: (state) => state.messages,
     getOwnship: (state) =>
-      state.widgets.find(
-        (widget) =>
-          widget.type === 'vehicle' &&
-          widget.elements[0].type === 'icon' &&
-          widget.elements[0].tag === 'ownship',
-      ),
+      state.widgets[ownship.id] ? state.widgets[ownship.id] : null,
     getDrones: (state) =>
-      state.widgets.filter(
-        (widget) =>
-          widget.type === 'vehicle' &&
-          widget.elements[0].type === 'icon' &&
-          widget.elements[0].tag === 'drone',
+      drones.map((drone) =>
+        state.widgets[drone.id] ? state.widgets[drone.id] : null,
       ),
   },
 });
@@ -150,7 +170,7 @@ export const {
   removeWidget,
   addElementToWidget,
   addWidgetToSection,
-  updateWidgetDelete,
+  deleteElementFromWidget,
   updateVisualComplexity,
   updateAudioComplexity,
   toggleElementInteraction,

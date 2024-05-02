@@ -1,4 +1,4 @@
-import type { Widget } from 'src/types/widget';
+import type { Widget, WidgetMap } from 'src/types/widget';
 import type { Section, LinkedSectionWidget } from 'src/types/support-types';
 
 function doesOverlap(
@@ -27,7 +27,7 @@ type AssimilatorProps = {
   // define expected input here and it's type (number, string, etc.)
   possibleWidgets: Widget[];
   sections: Section[];
-  widgets: Widget[];
+  widgets: WidgetMap;
 };
 
 /**
@@ -38,21 +38,19 @@ type AssimilatorProps = {
 const assimilator = ({
   possibleWidgets,
   sections,
-  widgets,
+  widgets: deployedWidgets, // re-name for clarity
 }: AssimilatorProps) => {
   let widgetToDeploy: Widget | null = null; //will return null if we cannot find a space
   let sectionID: LinkedSectionWidget = { widgetID: 'none', sectionID: 'none' };
   let action: string = 'none';
 
-  possibleWidgets.forEach(function (widget, widgetIndex) {
-    //go through each possible widget until we find one we can place
-
-    const deployedWidgetIds = widgets.map((w) => w.id);
-    if (deployedWidgetIds.includes(widget.id)) {
-      //check if the widget already exists on the screen
-      //update the widget
+  possibleWidgets.forEach((widget, widgetIndex) => {
+    // go through each possible widget until we find one we can place
+    if (deployedWidgets[widget.id]) {
+      // check if the widget already exists on the screen
       sectionID = { widgetID: widget.id, sectionID: 'none' };
       action = 'updateWidget';
+
       return {
         widgetToDeploy,
         sectionID,
@@ -76,13 +74,14 @@ const assimilator = ({
         //get the widgets in this section
         const matchingWidgets: Widget[] = [];
         section.widgetIDs.forEach(function (widgetID, widgetIDIndex) {
-          //get the widgets in this section
-          widgets.forEach(function (deployedWidget, deployedWidgetIndex) {
+          Object.keys(deployedWidgets).forEach((widgetId) => {
+            const deployedWidget = deployedWidgets[widgetId];
+
             if (
               deployedWidget.id === widgetID &&
               deployedWidget.canOverlap === false
             ) {
-              //if the widget is in this section AND it cannot be opverlapped. if it can be overlapped then we can just place on top of it so we don't need to check.
+              // if the widget is in this section AND it cannot be opverlapped. if it can be overlapped then we can just place on top of it so we don't need to check.
               matchingWidgets.push(deployedWidget);
             }
           });
@@ -100,7 +99,7 @@ const assimilator = ({
             matchingWidgets.forEach(
               function (deployedWidget, deployedWidgetIndex) {
                 if (
-                  doesNotOverlap == true &&
+                  doesNotOverlap === true &&
                   doesOverlap(
                     proposedX,
                     proposedY,
@@ -110,7 +109,7 @@ const assimilator = ({
                     deployedWidget.y,
                     deployedWidget.w,
                     deployedWidget.h,
-                  ) == true
+                  ) === true
                 ) {
                   //it did overlap, so set it to false
                   doesNotOverlap = false;
@@ -118,7 +117,7 @@ const assimilator = ({
               },
             );
 
-            if (doesNotOverlap == true) {
+            if (doesNotOverlap === true) {
               //no overlap, deploy widget
               widget.x = proposedX; //set widget's top-left coordinates
               widget.y = proposedY;

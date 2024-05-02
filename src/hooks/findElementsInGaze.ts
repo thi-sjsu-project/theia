@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useMousePosition } from 'src/hooks/useMousePosition';
 import type { Position } from 'src/hooks/useMousePosition';
 import type { AppDispatch } from 'src/redux/store';
-import type { Widget } from 'src/types/widget';
+import type { Widget, WidgetMap } from 'src/types/widget';
 import type { ElementInGaze } from 'src/redux/slices/gazeSlice';
 
 //turn element pixel locations into full locations within screen
@@ -17,7 +17,7 @@ function elemLocToPixLoc(eX: number, eY: number, wX: number, wY: number) {
 export function findElementsInGaze(
   mousePosition: Position,
   dispatch: AppDispatch,
-  widgets: Widget[],
+  widgets: WidgetMap,
   radius: number,
   inCirclePercentageThresh: number,
   elementPercentageThesh: number,
@@ -29,7 +29,10 @@ export function findElementsInGaze(
     Math.hypot(x1 - x0, y1 - y0); //euclidean distance
 
   const widgetsInGaze: Widget[] = [];
-  widgets.forEach(function (widget, widgetIndex) {
+
+  Object.keys(widgets).forEach((widgetId) => {
+    const widget = widgets[widgetId];
+
     //find the widgets that are within our circle
     let isIn = false;
     for (let x = widget.x; x < widget.x + widget.w; x++) {

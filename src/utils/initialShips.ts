@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid';
 import type { IconElement } from 'src/types/element';
 import OWNSHIP_LOGO from 'src/icons/currentPosition.svg';
 import DRONE_LOGO from 'src/icons/drone.svg';
-import type { Widget } from 'src/types/widget';
+import type { Widget, WidgetMap } from 'src/types/widget';
 
 const createDroneWidget = (
   x: number,
@@ -76,4 +76,10 @@ export const drones = [
   createDroneWidget(1150, 750, 50, 50),
 ];
 
-export const initialShips = [ownship, ...drones];
+export const initialShips: WidgetMap = {
+  [ownship.id]: ownship,
+  ...drones.reduce((acc, drone) => {
+    acc[drone.id] = drone;
+    return acc;
+  }, {} as WidgetMap),
+};
