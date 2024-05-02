@@ -4,13 +4,16 @@ import Prototype from 'src/components/Prototype';
 import Minimap from 'src/pages/Minimap';
 import LeftScreen from 'src/pages/LeftScreen';
 import RightScreen from 'src/pages/RightScreen';
-import Layout from 'src/pages/Layout';
+import Root from 'src/pages/Root';
+import useMoveShips from 'src/hooks/useMoveShips';
 
 const App = () => {
+  useMoveShips();
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<Root />}>
           <Route path="minimap" element={<Minimap />} />
           <Route path="left-screen" element={<LeftScreen />} />
           <Route path="right-screen" element={<RightScreen />} />

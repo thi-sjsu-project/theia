@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useMousePosition } from 'src/hooks/useMousePosition';
-import type { Position } from 'src/hooks/useMousePosition';
+import type { Position } from 'src/types/support-types';
 import type { AppDispatch } from 'src/redux/store';
 import type { Widget, WidgetMap } from 'src/types/widget';
 import type { ElementInGaze } from 'src/redux/slices/gazeSlice';

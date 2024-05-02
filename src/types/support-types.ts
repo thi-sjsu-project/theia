@@ -12,12 +12,22 @@ export type Section = {
   w: number;
   h: number;
   priority: number;
-  type: 'free' | 'tinder' | 'message' | 'highWarning' | 'lowWarning' | 'request';
+  type:
+    | 'free'
+    | 'tinder'
+    | 'message'
+    | 'highWarning'
+    | 'lowWarning'
+    | 'request';
   widgetIDs: string[];
-
-}
+};
 
 export type LinkedSectionWidget = {
   widgetID: string;
   sectionID: string;
-}
+};
+
+export type Position = {
+  x: number;
+  y: number;
+};

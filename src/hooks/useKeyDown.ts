@@ -1,9 +1,5 @@
 import { useEffect, useState } from 'react';
-
-export type Position = {
-  x: number;
-  y: number;
-};
+import type { Position } from 'src/types/support-types';
 
 const initialState: Position = {
   x: 0,

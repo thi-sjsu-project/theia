@@ -1,10 +1,13 @@
 import { useEffect } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import Gaze from 'src/ui/Gaze';
 import Navigation from 'src/ui/Navigation';
+import { useMousePosition } from 'src/hooks/useMousePosition';
 
-const Layout = () => {
+const Root = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const mousePosition = useMousePosition();
 
   // Redirect to /minimap if the user is on the root path
   useEffect(() => {
@@ -16,6 +19,7 @@ const Layout = () => {
   return (
     <div>
       <Navigation />
+      <Gaze mousePosition={mousePosition} />
 
       <main>
         <Outlet />
@@ -24,4 +28,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default Root;
