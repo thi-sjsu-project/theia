@@ -4,8 +4,7 @@ import type { Widget } from 'src/types/widget';
 import type { Message } from 'src/types/schema-types';
 import type { Element } from 'src/types/element';
 import type { LinkedSectionWidget, Section } from 'src/types/support-types';
-import { initialSections } from 'src/redux/utils/initialSections';
-import { ownship, drones, initialShips } from 'src/utils/initialShips';
+import selector from 'src/prototype/selector';
 
 type InitialState = {
   visualComplexity: number;
@@ -18,9 +17,9 @@ type InitialState = {
 const initialState: InitialState = {
   visualComplexity: 0,
   audioComplexity: 0,
-  widgets: initialShips,
   messages: [],
-  sections: initialSections,
+  // Initial sections, widgets, and elements
+  ...selector(),
 };
 
 export const minimapSlice = createSlice({
@@ -126,10 +125,18 @@ export const minimapSlice = createSlice({
     getAudioComplexity: (state) => state.audioComplexity,
     getMessages: (state) => state.messages,
     getOwnship: (state) =>
-      state.widgets.find((widget) => widget.id === ownship.id),
+      state.widgets.find(
+        (widget) =>
+          widget.type === 'vehicle' &&
+          widget.elements[0].type === 'icon' &&
+          widget.elements[0].tag === 'ownship',
+      ),
     getDrones: (state) =>
-      state.widgets.filter((widget) =>
-        drones.map((drone) => drone.id).includes(widget.id),
+      state.widgets.filter(
+        (widget) =>
+          widget.type === 'vehicle' &&
+          widget.elements[0].type === 'icon' &&
+          widget.elements[0].tag === 'drone',
       ),
   },
 });

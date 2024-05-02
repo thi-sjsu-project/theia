@@ -38,6 +38,8 @@ const generateWidget = (
   useElementLocation: boolean,
   maxAmount: number,
   elements: Element.Element[],
+  padding?: number,
+  priority?: number,
   style?: Properties,
 ): Widget.Widget => ({
   id,
@@ -51,6 +53,8 @@ const generateWidget = (
   maxAmount,
   style,
   elements,
+  padding,
+  priority,
 });
 
 const generateBaseElement = (

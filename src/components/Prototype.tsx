@@ -65,6 +65,7 @@ const Prototype = () => {
 
     const { message, possibleWidgets } = selector({
       message: currentMessage,
+      stressLevel,
     });
 
     // possibleWidgets[0].id = uuid();
