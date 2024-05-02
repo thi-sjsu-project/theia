@@ -88,18 +88,25 @@ const Root = () => {
   // on key or mouse press, log the press and what elements are in the gaze to state
   useEffect(() => {
     if (keyDown !== '') {
+      const time = new Date().toISOString();
       dispatch(
-        addKeyDown({ elemsInGaze: elemsInGaze, keyPress: keyDown.toString() }),
+        addKeyDown({ 
+          elemsInGaze: elemsInGaze, 
+          keyPress: keyDown.toString(), 
+          timeEnteredGaze: time
+        }),
       );
     }
   }, [keyDown]);
 
   useEffect(() => {
-    if (mouseButtonDown.toString() !== '') {
+    if (mouseButtonDown !== '3') {
+      const time = new Date().toISOString();
       dispatch(
         addKeyDown({
           elemsInGaze: elemsInGaze,
           keyPress: mouseButtonDown.toString(),
+          timeEnteredGaze: time,
         }),
       );
     }
@@ -116,10 +123,11 @@ const Root = () => {
   }, [keyUp]);
 
   useEffect(() => {
-    if (mouseButtonUp !== '') {
+    if (mouseButtonUp !== '3') {
       dispatch(removeKeyDown(mouseButtonUp.toString()));
-      document.dispatchEvent(new KeyboardEvent('mouseup', { key: '_' }));
-      document.dispatchEvent(new KeyboardEvent('mousedown', { key: '_' }));
+      document.dispatchEvent(new MouseEvent('mousedown', { button: 3 }));
+      document.dispatchEvent(new MouseEvent('mouseup', { button:  3}));
+      
     }
   }, [mouseButtonUp]);
 

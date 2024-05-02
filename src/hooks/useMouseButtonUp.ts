@@ -11,9 +11,9 @@ export function useMouseButtonUp() {
 
   useEffect(() => {
     function handleMouseButtonUp(ev: MouseEvent) {
-      if (ev.button === 0 || ev.button === 1 || ev.button === 2) {
+      if (ev.button === 0 || ev.button === 1 || ev.button === 2 || ev.button === 3 ) {
         setMouseButtUp(ev.button.toString());
-        console.log('Mouse button pressed: ' + ev.button);
+        //console.log('Mouse button pressed: ' + ev.button);
       }
     }
 

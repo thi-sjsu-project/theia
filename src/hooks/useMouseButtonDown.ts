@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
-import type { Position } from 'src/types/support-types';
+
+export type Position = {
+  x: number;
+  y: number;
+};
 
 const initialState: Position = {
   x: 0,
@@ -7,13 +11,14 @@ const initialState: Position = {
 };
 
 export function useMouseButtonDown() {
-  const [mouseButtDown, setMouseButtDown] = useState<Number>(-1);
+  const [mouseButtDown, setMouseButtDown] = useState<string>('-1');
 
   useEffect(() => {
     function handleMouseButtonDown(ev: MouseEvent) {
-      if (ev.button === 0 || ev.button === 1 || ev.button === 2) {
-        setMouseButtDown(ev.button);
-        console.log('Mouse button pressed: ' + ev.button);
+      console.log('Mouse button pressed: ' + ev.button);
+      if (ev.button === 0 || ev.button === 1 || ev.button === 2  || ev.button === 3 ) {
+        setMouseButtDown(ev.button.toString());
+        //console.log('Mouse button pressed: ' + ev.button);
       }
     }
 
