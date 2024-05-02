@@ -33,6 +33,7 @@ import assimilator from 'src/prototype/assimilator';
 import selector from 'src/prototype/selector';
 // ~~~~~~~ Constants ~~~~~~~
 import { GAZE_RADIUS } from 'src/utils/constants';
+import monitor from 'src/prototype/monitor';
 const CIRCLE_PERCENTAGE_THRESH = 0.1;
 const ELEMENT_PERCENTAGE_THRESH = 0.1;
 
@@ -130,6 +131,15 @@ const Root = () => {
       
     }
   }, [mouseButtonUp]);
+
+  //call the monitor
+  useEffect(() => {
+    const intervalID = setInterval(() =>  {
+        monitor({dispatch})
+    }, 100);
+
+    return () => clearInterval(intervalID);
+}, []);
 
   // run whenever messages array changes
   useEffect(() => {
