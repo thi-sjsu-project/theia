@@ -1,12 +1,14 @@
 import type { Message } from "src/types/schema-types";
 import lpdHelper from "src/utils/lpdHelper";
+import { v4 as uuid } from 'uuid';
+import WARNING_LOGO from "src/icons/warning-5-256.ico"
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageLow = () => {
     return {
         sections: [],
         possibleWidgets: [lpdHelper.generateWidget(
-            'request',
+            uuid(),
             'request',
             100,
             100,
@@ -24,7 +26,7 @@ const acaFuelLowMessageLow = () => {
     return {
         sections: [],
         possibleWidgets: [lpdHelper.generateWidget(
-            'message',
+            uuid(),
             'message',
             500,
             500,
@@ -42,7 +44,7 @@ const missileToOwnshipDetectedMessageLow = () => {
     return {
         sections: [],
         possibleWidgets: [lpdHelper.generateWidget(
-            'missileDetected',
+            uuid(),
             'highWarning',
             100,
             100,
@@ -52,32 +54,48 @@ const missileToOwnshipDetectedMessageLow = () => {
             true,
             1,
             [
+                lpdHelper.generateIconElement(
+                    lpdHelper.generateBaseElement(
+                        uuid(),
+                        'visual',
+                        50,
+                        50,
+                        0,
+                        0,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        false,
+                        false,
+                        // Blinking icon?
+                    ),
+                    WARNING_LOGO,
+                    "warning"
+                ),
                 lpdHelper.generateTextElement(
                     lpdHelper.generateBaseElement(
-                        'textElement',
+                        uuid(),
                         'visual',
+                        50,
                         100,
-                        100,
+                        75,
                         0,
-                        0,
                         undefined,
                         undefined,
                         undefined,
                         undefined,
                         undefined,
-                        undefined,
-                        undefined,
+                        false,
+                        false,
                         {
-                            fontSize: '20px',
-                            fontWeight: 'bold',
-                            color: 'black',
-                            border: 'solid',
-                            borderColor: 'black',
-                            // borderColor: '#16fd22',
-                        },
+                            background: "black",
+                            color: "#02d118"
+                        }
                     ),
-                    'Missile Detected!',
-                ),
+                    "Missile to ownship detected! T-30 till impact"
+                )
             ],
         )],
     };
@@ -87,7 +105,7 @@ const acaDefectMessageLow = () => {
     return {
         sections: [],
         possibleWidgets: [lpdHelper.generateWidget(
-            'highWarning',
+            uuid(),
             'highWarning',
             500,
             500,
@@ -105,7 +123,7 @@ const acaHeadingToBaseMessageLow = () => {
     return {
         sections: [],
         possibleWidgets: [lpdHelper.generateWidget(
-            'message',
+            uuid(),
             'message',
             500,
             500,

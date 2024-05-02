@@ -1,12 +1,14 @@
 import type { Message } from "src/types/schema-types";
 import lpdHelper from "src/utils/lpdHelper";
+import { v4 as uuid } from 'uuid';
+import WARNING_LOGO from "src/icons/warning-5-256.ico"
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageMedium = () => {
     return {
         sections: [],
-        widgets: [lpdHelper.generateWidget(
-            'request',
+        possibleWidgets: [lpdHelper.generateWidget(
+            uuid(),
             'request',
             100,
             100,
@@ -23,8 +25,8 @@ const requestApprovalToAttackMessageMedium = () => {
 const acaFuelLowMessageMedium = () => {
     return {
         sections: [],
-        widgets: [lpdHelper.generateWidget(
-            'message',
+        possibleWidgets: [lpdHelper.generateWidget(
+            uuid(),
             'message',
             500,
             500,
@@ -41,8 +43,8 @@ const acaFuelLowMessageMedium = () => {
 const missileToOwnshipDetectedMessageMedium = () => {
     return {
         sections: [],
-        widgets: [lpdHelper.generateWidget(
-            'highWarning',
+        possibleWidgets: [lpdHelper.generateWidget(
+            uuid(),
             'highWarning',
             100,
             100,
@@ -51,7 +53,50 @@ const missileToOwnshipDetectedMessageMedium = () => {
             false,
             true,
             1,
-            [],
+            [
+                lpdHelper.generateIconElement(
+                    lpdHelper.generateBaseElement(
+                        uuid(),
+                        'visual',
+                        50,
+                        50,
+                        0,
+                        0,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        false,
+                        false,
+                        // Blinking icon?
+                    ),
+                    WARNING_LOGO,
+                    "warning"
+                ),
+                lpdHelper.generateTextElement(
+                    lpdHelper.generateBaseElement(
+                        uuid(),
+                        'visual',
+                        50,
+                        100,
+                        75,
+                        0,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        undefined,
+                        false,
+                        false,
+                        {
+                            background: "black",
+                            color: "#02d118"
+                        }
+                    ),
+                    "Missile to ownship detected! T-30 till impact"
+                )
+            ],
         )],
     };
 }
@@ -59,8 +104,8 @@ const missileToOwnshipDetectedMessageMedium = () => {
 const acaDefectMessageMedium = () => {
     return {
         sections: [],
-        widgets: [lpdHelper.generateWidget(
-            'message',
+        possibleWidgets: [lpdHelper.generateWidget(
+            uuid(),
             'message',
             500,
             500,
@@ -77,8 +122,8 @@ const acaDefectMessageMedium = () => {
 const acaHeadingToBaseMessageMedium = () => {
     return {
         sections: [],
-        widgets: [lpdHelper.generateWidget(
-            'message',
+        possibleWidgets: [lpdHelper.generateWidget(
+            uuid(),
             'message',
             500,
             500,
