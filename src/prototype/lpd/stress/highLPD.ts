@@ -36,7 +36,31 @@ const acaFuelLowMessageHigh = () => {
             true,
             true,
             1,
-            [],
+            [
+              lpdHelper.generateTextElement(
+                lpdHelper.generateBaseElement(
+                    uuid(),
+                    'visual',
+                    50,
+                    100,
+                    0,
+                    0,
+                    undefined, 
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    false,
+                    true,
+                    {
+                        background: "black",
+                        color: "#02d118"
+                    }
+                ),
+                "ACA fuel low. Heading back to base now."
+            )
+        
+            ],
         )],
     };
 }

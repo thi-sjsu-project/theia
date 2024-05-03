@@ -36,7 +36,53 @@ const acaFuelLowMessageMedium = () => {
             true,
             true,
             1,
-            [],
+            [
+              lpdHelper.generateTextElement(
+                lpdHelper.generateBaseElement(
+                    uuid(),
+                    'visual',
+                    50,
+                    100,
+                    0,
+                    0,
+                    undefined, 
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    false,
+                    true,
+                    {
+                        background: "black",
+                        color: "#02d118"
+                    }
+                ),
+                "ACA fuel low. Heading back to base in 1 minute."
+            ),
+            lpdHelper.generateButtonElement(
+                lpdHelper.generateBaseElement(
+                    uuid(),
+                    'visual',
+                    20,
+                    20,
+                    0, 
+                    125,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    false,
+                    true,
+                    {
+                        background: "#02d118",
+                        color: "black"
+                    }
+                ),
+                "Cancel"
+            )
+        
+            ],
         )],
     };
 }

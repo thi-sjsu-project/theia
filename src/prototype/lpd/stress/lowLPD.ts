@@ -37,7 +37,75 @@ const acaFuelLowMessageLow = () => {
             true,
             true,
             1,
-            [],
+            [
+              lpdHelper.generateTextElement(
+                lpdHelper.generateBaseElement(
+                    uuid(),
+                    'visual',
+                    50,
+                    100,
+                    0,
+                    0,
+                    undefined, 
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    false,
+                    true,
+                    {
+                        background: "black",
+                        color: "#02d118"
+                    }
+                ),
+                "ACA fuel low. Do you want to send it back to base?"
+            ),
+            lpdHelper.generateButtonElement(
+                lpdHelper.generateBaseElement(
+                    uuid(),
+                    'visual',
+                    20,
+                    20,
+                    0, 
+                    125,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    false,
+                    true,
+                    {
+                        background: "#02d118",
+                        color: "black"
+                    }
+                ),
+                "Send"
+            ),
+            lpdHelper.generateButtonElement(
+                lpdHelper.generateBaseElement(
+                    uuid(),
+                    'visual',
+                    20,
+                    20,
+                    30, 
+                    125,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    false,
+                    true,
+                    {
+                        background: "#02d118",
+                        color: "black"
+                    }
+                ),
+                "Stay"
+            )
+        
+            ],
         )],
     };
 }
