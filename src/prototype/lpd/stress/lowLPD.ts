@@ -143,7 +143,6 @@ const missileToOwnshipDetectedMessageLow = () => {
                 undefined,
                 false,
                 false,
-                // Blinking icon? Is it possible in Tailwind without defining blink animation?
                 {
                   display: 'block',
                   margin: 'auto',

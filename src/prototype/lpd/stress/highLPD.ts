@@ -84,8 +84,8 @@ export const missileToOwnshipDetectedMessageHigh = () => {
               lpdHelper.generateBaseElement(
                 uuid(),
                 'visual',
-                100,
-                100,
+                300,
+                300,
                 0,
                 0,
                 undefined,
@@ -95,7 +95,6 @@ export const missileToOwnshipDetectedMessageHigh = () => {
                 undefined,
                 false,
                 false,
-                // Blinking icon? Is it possible in Tailwind without defining blink animation?
                 {
                   display: 'block',
                   margin: 'auto',
