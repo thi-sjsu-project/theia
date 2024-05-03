@@ -29,14 +29,14 @@ const RequestApprovalElement = ({
     },
   } = element;
 
-  if (collapsed) {
-    return (
-      <div className="flex gap-2 items-center">
-        <IconElement element={icon} />
-        <span>Request Approval to Attack</span>
-      </div>
-    );
-  }
+  // if (collapsed) {
+  //   return (
+  //     <div className="flex gap-2 items-center">
+  //       <IconElement element={icon} />
+  //       <span>Request Approval to Attack</span>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div>
