@@ -30,3 +30,8 @@ export type LinkedSectionWidget = {
   widgetID: string;
   sectionID: string;
 };
+
+export type Position = {
+  x: number;
+  y: number;
+};

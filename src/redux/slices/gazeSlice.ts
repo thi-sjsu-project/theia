@@ -10,6 +10,7 @@ export type ElementInGaze = {
 export type GazeAndKey = {
   keyPress: string;
   elemsInGaze: ElementInGaze[];
+  timeEnteredGaze: string;
 };
 
 type InitialState = {

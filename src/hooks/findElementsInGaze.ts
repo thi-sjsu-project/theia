@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useMousePosition } from 'src/hooks/useMousePosition';
-import type { Position } from 'src/hooks/useMousePosition';
+import type { Position } from 'src/types/support-types';
 import type { AppDispatch } from 'src/redux/store';
 import type { Widget, WidgetMap } from 'src/types/widget';
 import type { ElementInGaze } from 'src/redux/slices/gazeSlice';
@@ -14,6 +14,7 @@ function elemLocToPixLoc(eX: number, eY: number, wX: number, wY: number) {
   return position;
 }
 
+// TODO: turn into a hook. So it can access the redux store
 export function findElementsInGaze(
   mousePosition: Position,
   dispatch: AppDispatch,
