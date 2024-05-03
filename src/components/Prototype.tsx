@@ -117,12 +117,11 @@ const Prototype = () => {
     //console.log('running through assimilator...');
     const { widgetToDeploy, sectionID, action } = assimilator({
       // find if there is room for us to put the widget down (returns null if there is not room)
-      possibleWidgets: possibleWidgets,
+      possibleWidgets,
       sections,
       widgets,
     });
-
-    //console.log('widgetToDeploy ' + widgetToDeploy);
+    console.log('action:', action);
     if (action !== 'newWidget') {
       //we should do something other than
       switch (action) {
@@ -139,7 +138,6 @@ const Prototype = () => {
               possibleWidgets[0].elements,
             ),
           );
-          console.log('widgets', widgets);
           break;
         case 'none':
           console.log('proposed widgets could not be placed');
@@ -160,7 +158,6 @@ const Prototype = () => {
           return; */
 
       // dispatch action to add new widget
-      console.log('Deploying widget:', widgetToDeploy);
       dispatch(addWidget(widgetToDeploy));
       dispatch(addWidgetToSection(sectionID));
     }

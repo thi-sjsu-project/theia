@@ -2,7 +2,7 @@ import type { Message } from "src/types/schema-types";
 import lpdHelper from "src/utils/lpdHelper";
 import { v4 as uuid } from 'uuid';
 import WARNING_LOGO from "src/icons/warning-5-256.ico"
-import { MissileToOwnshipDetected_ID } from "./lowLPD";
+import { MissileToOwnshipDetected_ID, acaFuelLow_ID } from "./lowLPD";
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageMedium = () => {
@@ -27,7 +27,7 @@ const acaFuelLowMessageMedium = () => {
     return {
         sections: [],
         possibleWidgets: [lpdHelper.generateWidget(
-            uuid(),
+            acaFuelLow_ID,
             'message',
             500,
             500,
@@ -41,7 +41,7 @@ const acaFuelLowMessageMedium = () => {
                 lpdHelper.generateBaseElement(
                     uuid(),
                     'visual',
-                    50,
+                    150,
                     100,
                     0,
                     0,
@@ -57,14 +57,14 @@ const acaFuelLowMessageMedium = () => {
                         color: "#02d118"
                     }
                 ),
-                "ACA fuel low. Heading back to base in 1 minute."
+                "Medium stress: ACA fuel low. Heading back to base in 1 minute."
             ),
             lpdHelper.generateButtonElement(
                 lpdHelper.generateBaseElement(
                     uuid(),
                     'visual',
-                    20,
-                    20,
+                    25,
+                    50,
                     0, 
                     125,
                     undefined,

@@ -4,6 +4,7 @@ import { v4 as uuid } from 'uuid';
 import WARNING_LOGO from "src/icons/warning-5-256.ico"
 
 export const MissileToOwnshipDetected_ID = uuid();
+export const acaFuelLow_ID = uuid();
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageLow = () => {
@@ -28,21 +29,21 @@ const acaFuelLowMessageLow = () => {
     return {
         sections: [],
         possibleWidgets: [lpdHelper.generateWidget(
-            uuid(),
+            acaFuelLow_ID,
             'message',
             500,
             500,
-            20,
-            20,
-            true,
-            true,
+            150,
+            150,
+            false,
+            false,
             1,
             [
               lpdHelper.generateTextElement(
                 lpdHelper.generateBaseElement(
                     uuid(),
                     'visual',
-                    50,
+                    150,
                     100,
                     0,
                     0,
@@ -58,14 +59,14 @@ const acaFuelLowMessageLow = () => {
                         color: "#02d118"
                     }
                 ),
-                "ACA fuel low. Do you want to send it back to base?"
+                "Low stress: ACA fuel low. Do you want to send it back to base?"
             ),
             lpdHelper.generateButtonElement(
                 lpdHelper.generateBaseElement(
                     uuid(),
                     'visual',
-                    20,
-                    20,
+                    25,
+                    40,
                     0, 
                     125,
                     undefined,
@@ -77,7 +78,9 @@ const acaFuelLowMessageLow = () => {
                     true,
                     {
                         background: "#02d118",
-                        color: "black"
+                        color: "black",
+                        margin: "0 20px 0 0",
+                        textAlign: "center"
                     }
                 ),
                 "Send"
@@ -86,8 +89,8 @@ const acaFuelLowMessageLow = () => {
                 lpdHelper.generateBaseElement(
                     uuid(),
                     'visual',
-                    20,
-                    20,
+                    25,
+                    40,
                     30, 
                     125,
                     undefined,

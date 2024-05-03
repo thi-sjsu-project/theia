@@ -13,31 +13,6 @@ const Widget = ({ widget }: WidgetProps) => {
         return <VehicleWidget widget={widget} />;
       case 'tinder':
         return <TinderWidget widget={widget} />;
-      case 'message':
-        return (
-          <div
-            className='absolute'
-            style={{
-              height: widget.h,
-              width: widget.w,
-              top: widget.y,
-              left: widget.x,
-              ...widget.style,
-            }} 
-          >
-            <p
-              style={{
-                height: widget.elements[0].h,
-                width: widget.elements[0].w,
-                top: widget.elements[0].yWidget,
-                left: widget.elements[0].xWidget,
-                ...widget.elements[0].style,
-              }}
-            >
-              {'text' in widget.elements[0] && widget.elements[0].text}
-            </p>
-          </div>
-        );
       case 'highWarning':
         return (
           <div
@@ -50,7 +25,7 @@ const Widget = ({ widget }: WidgetProps) => {
               ...widget.style,
             }}
           >
-            <img src={'src' in widget.elements[0] ? widget.elements[0].src : undefined} alt={"missileToOwnship"} style={{
+            <img className="animate-ping" src={'src' in widget.elements[0] ? widget.elements[0].src : undefined} alt={"missileToOwnship"} style={{
               height: widget.elements[0].h,
               width: widget.elements[0].w,
               top: widget.elements[0].yWidget,
@@ -68,6 +43,55 @@ const Widget = ({ widget }: WidgetProps) => {
             >
               {'text' in widget.elements[1] && widget.elements[1].text}
             </p>
+          </div>
+        );
+      case 'message':
+        return (
+          <div
+            className="absolute"
+            style={{
+              height: widget.h,
+              width: widget.w,
+              top: widget.y,
+              left: widget.x,
+              ...widget.style,
+            }}
+          >
+            <p
+              style={{
+                height: widget.elements[0].h,
+                width: widget.elements[0].w,
+                top: widget.elements[0].yWidget,
+                left: widget.elements[0].xWidget,
+                ...widget.elements[0].style,
+              }}
+            >
+              {'text' in widget.elements[0] && widget.elements[0].text}
+            </p>
+            {widget.elements[1] ? <button
+              style={{
+                height: widget.elements[1].h,
+                width: widget.elements[1].w,
+                top: widget.elements[1].yWidget,
+                left: widget.elements[1].xWidget,
+                ...widget.elements[1].style,
+              }}
+            >
+              {'text' in widget.elements[1] && widget.elements[1].text}
+            </button>
+            : undefined }
+            {widget.elements[2] ? <button
+              style={{
+                height: widget.elements[2].h,
+                width: widget.elements[2].w,
+                top: widget.elements[2].yWidget,
+                left: widget.elements[2].xWidget,
+                ...widget.elements[2].style,
+              }}
+            >
+              {'text' in widget.elements[2] && widget.elements[2].text}
+            </button>
+            : undefined }
           </div>
         );
       default:

@@ -2,7 +2,7 @@ import type { Message } from "src/types/schema-types";
 import { v4 as uuid } from 'uuid';
 import lpdHelper from "src/utils/lpdHelper";
 import WARNING_LOGO from "src/icons/warning-5-256.ico"
-import { MissileToOwnshipDetected_ID } from "./lowLPD";
+import { MissileToOwnshipDetected_ID, acaFuelLow_ID } from "./lowLPD";
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageHigh = () => {
@@ -27,7 +27,7 @@ const acaFuelLowMessageHigh = () => {
     return {
         sections: [],
         possibleWidgets: [lpdHelper.generateWidget(
-            'message',
+            acaFuelLow_ID,
             'message',
             500,
             500,
@@ -41,7 +41,7 @@ const acaFuelLowMessageHigh = () => {
                 lpdHelper.generateBaseElement(
                     uuid(),
                     'visual',
-                    50,
+                    100,
                     100,
                     0,
                     0,
@@ -57,7 +57,7 @@ const acaFuelLowMessageHigh = () => {
                         color: "#02d118"
                     }
                 ),
-                "ACA fuel low. Heading back to base now."
+                "High Stress: ACA fuel low. Heading back to base now."
             )
         
             ],
