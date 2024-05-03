@@ -136,9 +136,10 @@ const Prototype = () => {
           dispatch(
             addElementToWidget(
               possibleWidgets[0].id,
-              possibleWidgets[0].elements[0],
+              possibleWidgets[0].elements,
             ),
           );
+          console.log('widgets', widgets);
           break;
         case 'none':
           console.log('proposed widgets could not be placed');

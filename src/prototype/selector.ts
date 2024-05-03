@@ -30,8 +30,8 @@ const selector = ({ message, stressLevel }: SelectorProps = {}) => {
   // Call the LPD function that corresponds to the stress level from the message
   if (message && stressLevel) {
     // Transform range of stress levels from 0-1 to 0-2 only returning integers
-    stressLevel = Math.floor(stressLevel * 3);
-    return stressLevelLPDFunctions[0](message);
+    stressLevel = Math.floor(stressLevel * 2);
+    return stressLevelLPDFunctions[stressLevel](message);
   } else {
     // If no message is provided, return the initial LPD
     return initialLPD;
