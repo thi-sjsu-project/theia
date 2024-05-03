@@ -36,6 +36,7 @@ const selector = ({ message }: SelectorProps) => {
     // static ID for Demo3
     id: 'tinder',
     type: 'tinder',
+    screen: 'left',
     elements: [],
     x: 50,
     y: 40,

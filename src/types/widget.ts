@@ -18,6 +18,8 @@ export type Widget = {
   w: number;
   h: number;
 
+  screen: 'left' | 'minimap' | 'right';
+
   padding?: number;
 
   canOverlap: boolean;

@@ -146,13 +146,38 @@ export const minimapSlice = createSlice({
   // selectors are used to access parts of the state within components
   selectors: {
     getSections: (state) => state.sections,
+
+    // ~~~~~ selectors for widgets ~~~~~
     getWidgets: (state) => state.widgets,
-    // find a single widget by id
+    getLeftScreenWidgets: (state) => {
+      const minimapWidgets = Object.keys(state.widgets).filter(
+        (id) => state.widgets[id].screen === 'left',
+      );
+
+      return minimapWidgets.map((id) => state.widgets[id]);
+    },
+    getMinimapWidgets: (state) => {
+      const minimapWidgets = Object.keys(state.widgets).filter(
+        (id) => state.widgets[id].screen === 'minimap',
+      );
+
+      return minimapWidgets.map((id) => state.widgets[id]);
+    },
+    getRightScreenWidgets: (state) => {
+      const minimapWidgets = Object.keys(state.widgets).filter(
+        (id) => state.widgets[id].screen === 'right',
+      );
+
+      return minimapWidgets.map((id) => state.widgets[id]);
+    },
     getWidgetById: (state, id: string) =>
       state.widgets[id] ? state.widgets[id] : null,
+
     getVisualComplexity: (state) => state.visualComplexity,
     getAudioComplexity: (state) => state.audioComplexity,
     getMessages: (state) => state.messages,
+
+    // ~~~~~ selectors for ships ~~~~~
     getOwnship: (state) =>
       state.widgets[ownship.id] ? state.widgets[ownship.id] : null,
     getDrones: (state) =>
@@ -179,11 +204,18 @@ export const {
 
 export const {
   getSections,
+
   getWidgets,
+  getLeftScreenWidgets,
+  getMinimapWidgets,
+  getRightScreenWidgets,
   getWidgetById,
+
   getMessages,
+
   getOwnship,
   getDrones,
+
   getVisualComplexity,
   getAudioComplexity,
 } = minimapSlice.selectors;
