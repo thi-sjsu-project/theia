@@ -1,17 +1,11 @@
 import type { Element } from 'src/types/element';
+import type { Properties } from 'csstype';
+import type { SectionType } from 'src/types/support-types';
 
-type WidgetType =
-  | 'vehicle'
-  | 'tinder'
-  | 'message'
-  | 'highWarning'
-  | 'lowWarning'
-  | 'request';
-
-export type Widget = {
+export type BaseWidget = {
   elements: Element[];
   id: string;
-  type: WidgetType;
+  sectionType: SectionType;
 
   x: number;
   y: number;
@@ -26,6 +20,29 @@ export type Widget = {
   useElementLocation: boolean;
   maxAmount: number;
 };
+
+export type ListWidget = BaseWidget & {
+  type: 'list';
+  maxElements?: number;
+};
+
+export type GridWidget = BaseWidget & {
+  type: 'grid';
+  rows: number;
+  cols: number;
+};
+
+export type VehicleWidget = BaseWidget & {
+  type: 'vehicle';
+  // additonal properties...
+};
+
+export type CustomWidget = BaseWidget & {
+  type: 'custom';
+  // additonal properties...
+};
+
+export type Widget = CustomWidget | VehicleWidget | ListWidget | GridWidget;
 
 export type WidgetMap = { [key: string]: Widget };
 

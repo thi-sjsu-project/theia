@@ -1,4 +1,9 @@
+import { type ReactNode } from 'react';
 import type { Modality } from 'src/types/modality';
+import type {
+  MissileToOwnshipDetected,
+  RequestApprovalToAttack,
+} from 'src/types/schema-types';
 
 export type BaseElement = {
   id: string;
@@ -12,9 +17,6 @@ export type BaseElement = {
   priority?: number;
   collapsed?: boolean;
 
-  // could this be made more strict?
-  messageData?: string;
-
   expirationInterval?: number;
   expiration?: string;
   onExpiration?: 'delete' | 'escalate' | 'deescalate';
@@ -22,17 +24,20 @@ export type BaseElement = {
   canOverlap?: boolean;
 };
 
+//
+// ~~~~~~~ Simple Elements ~~~~~~~~~
+//
+export type ButtonElement = BaseElement & {
+  type: 'button';
+  onClick?: () => void;
+  text: string;
+};
+
 export type TableElement = BaseElement & {
   type: 'table';
   rows: number;
   cols: number;
   tableData: string[][];
-};
-
-export type ButtonElement = BaseElement & {
-  type: 'button';
-  onClick?: () => void;
-  text: string;
 };
 
 export type TextElement = BaseElement & {
@@ -64,10 +69,41 @@ export type IconElement = BaseElement & {
   tag?: 'ownship' | 'drone' | 'target' | 'enemy' | 'warning' | 'message';
 };
 
-export type Element =
+//
+// ~~~~~~~ Complex Elements ~~~~~~~~~
+//
+export type CustomElement = BaseElement & {
+  type: 'custom';
+};
+
+export type RequestApprovalElement = BaseElement & {
+  type: 'request-approval';
+  message: RequestApprovalToAttack;
+  icon: IconElement;
+  leftButton: ButtonElement;
+  rightButton: ButtonElement;
+  // children?: ReactNode;
+};
+
+export type MissileIncomingElement = BaseElement & {
+  type: 'missile-incoming';
+  message: MissileToOwnshipDetected;
+  icon: IconElement;
+};
+
+// Simple elements have no nested elements and no children
+export type SimpleElement =
   | TableElement
   | ButtonElement
   | TextElement
   | ImageElement
   | AudioElement
   | IconElement;
+
+// Complex elements may have nested elements and children
+export type ComplexElement =
+  | MissileIncomingElement
+  | RequestApprovalElement
+  | CustomElement;
+
+export type Element = SimpleElement | ComplexElement;
