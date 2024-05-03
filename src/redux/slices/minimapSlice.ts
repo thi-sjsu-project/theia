@@ -58,6 +58,7 @@ export const minimapSlice = createSlice({
       },
     },
 
+    // TODO: add a prepare function to addWidgetToSection to pass in sectionID and widgetID separately
     addWidgetToSection: (state, action: PayloadAction<LinkedSectionWidget>) => {
       state.sections.forEach(function (section, sectionIndex) {
         if (section.id === action.payload.sectionID) {
@@ -153,6 +154,8 @@ export const minimapSlice = createSlice({
       const minimapWidgets = Object.keys(state.widgets).filter(
         (id) => state.widgets[id].screen === 'left',
       );
+
+      console.log('minimapWidgets:', minimapWidgets);
 
       return minimapWidgets.map((id) => state.widgets[id]);
     },

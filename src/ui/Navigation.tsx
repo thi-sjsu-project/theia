@@ -4,7 +4,7 @@ const Navigation = () => {
   const { pathname } = useLocation();
 
   return (
-    <nav className="bg-gray-800 right-0 min-w-[200px] w-auto absolute">
+    <nav className="bg-gray-800 right-0 min-w-[200px] w-auto absolute hover:cursor-pointer">
       <div
         className="flex flex-col gap-8 items-center p-1 mx-auto text-gray-600 capitalize 
         dark:text-gray-300"
