@@ -2,6 +2,7 @@ import type { Message } from "src/types/schema-types";
 import { v4 as uuid } from 'uuid';
 import lpdHelper from "src/utils/lpdHelper";
 import WARNING_LOGO from "src/icons/warning-5-256.ico"
+import { MissileToOwnshipDetected_ID } from "./lowLPD";
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageHigh = () => {
@@ -42,62 +43,66 @@ const acaFuelLowMessageHigh = () => {
 
 export const missileToOwnshipDetectedMessageHigh = () => {
     return {
-        sections: [],
-        possibleWidgets: [lpdHelper.generateWidget(
-            uuid(),
-            'highWarning',
-            100,
-            100,
-            200,
-            200,
-            false,
-            true,
-            1,
-            [
-                lpdHelper.generateIconElement(
-                    lpdHelper.generateBaseElement(
-                        uuid(),
-                        'visual',
-                        50,
-                        50,
-                        0,
-                        0,
-                        undefined,
-                        undefined,
-                        undefined,
-                        undefined,
-                        undefined,
-                        false,
-                        false,
-                        // Blinking icon?
-                    ),
-                    WARNING_LOGO,
-                    "warning"
-                ),
-                lpdHelper.generateTextElement(
-                    lpdHelper.generateBaseElement(
-                        uuid(),
-                        'visual',
-                        50,
-                        100,
-                        75,
-                        0,
-                        undefined,
-                        undefined,
-                        undefined,
-                        undefined,
-                        undefined,
-                        false,
-                        false,
-                        {
-                            background: "black",
-                            color: "#02d118"
-                        }
-                    ),
-                    "Missile to ownship detected! T-30 till impact"
-                )
-            ],
-        )],
+      sections: [],
+      possibleWidgets: [
+        lpdHelper.generateWidget(
+          MissileToOwnshipDetected_ID,
+          'highWarning',
+          100,
+          100,
+          200,
+          200,
+          false,
+          true,
+          1,
+          [
+            lpdHelper.generateIconElement(
+              lpdHelper.generateBaseElement(
+                uuid(),
+                'visual',
+                100,
+                100,
+                0,
+                0,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                false,
+                false,
+                // Blinking icon?
+              ),
+              WARNING_LOGO,
+              'warning',
+            ),
+            lpdHelper.generateTextElement(
+              lpdHelper.generateBaseElement(
+                uuid(),
+                'visual',
+                70,
+                200,
+                75,
+                0,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                false,
+                false,
+                {
+                  background: 'black',
+                  color: '#02d118',
+                  fontWeight: 'bold',
+                  fontSize: '16px',
+                },
+              ),
+              'High Stress: Missile to ownship detected! T-30 till impact',
+            ),
+          ],
+        ),
+      ],
     };
 }
 

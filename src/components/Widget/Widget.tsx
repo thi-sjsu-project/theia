@@ -1,7 +1,6 @@
 import type { Widget as WidgetType } from 'src/types/widget';
 import TinderWidget from './TinderWidget';
 import VehicleWidget from './VehicleWidget';
-import { TextElement } from 'src/types/element';
 
 type WidgetProps = {
   widget: WidgetType;
@@ -26,16 +25,23 @@ const Widget = ({ widget }: WidgetProps) => {
               ...widget.style,
             }}
           >
+            <img src={'src' in widget.elements[0] ? widget.elements[0].src : undefined} alt={"missileToOwnship"} style={{
+              height: widget.elements[0].h,
+              width: widget.elements[0].w,
+              top: widget.elements[0].yWidget,
+              left: widget.elements[0].xWidget,
+              ...widget.elements[0].style,
+            }}/>
             <p
               style={{
-                height: widget.elements[0].h,
-                width: widget.elements[0].w,
-                top: widget.elements[0].yWidget,
-                left: widget.elements[0].xWidget,
-                ...widget.elements[0].style,
+                height: widget.elements[1].h,
+                width: widget.elements[1].w,
+                top: widget.elements[1].yWidget,
+                left: widget.elements[1].xWidget,
+                ...widget.elements[1].style,
               }}
             >
-              {'text' in widget.elements[0] && widget.elements[0].text}
+              {'text' in widget.elements[1] && widget.elements[1].text}
             </p>
           </div>
         );
