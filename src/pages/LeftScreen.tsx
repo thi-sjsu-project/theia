@@ -1,0 +1,42 @@
+import Widget from 'src/components/Widget/Widget';
+import { useAppSelector } from 'src/redux/hooks';
+import { getLeftScreenWidgets } from 'src/redux/slices/minimapSlice';
+
+const LeftScreen = () => {
+  const widgets = useAppSelector(getLeftScreenWidgets);
+
+  return (
+    <div className="absolute top-0 left-0 bg-stone-200 w-[1920px] h-[1080px] hover:cursor-pointer">
+      {/* Top Bar */}
+      <div className="absolute min-w-[1920px] border-2 border-b-stone-800 min-h-[100px]" />
+
+      {/* Left Video & Map Box */}
+      <div
+        className="absolute top-[150px] left-[50px] flex items-center justify-center flex-col gap-10"
+        style={{
+          height: '900px',
+          width: '600px',
+        }}
+      >
+        <div className="border-2 border-stone-800 min-w-[450px] min-h-[200px] flex items-center justify-center">
+          <span className="text-4xl">Video</span>
+        </div>
+        <div className="border-2 border-stone-800 min-w-[450px] min-h-[200px] flex items-center justify-center gap-10">
+          <span className="text-4xl">Map</span>
+        </div>
+      </div>
+
+      {/* Center box */}
+      <div className="min-w-[600px] min-h-[800px] absolute left-[750px] top-[150px] border-2 border-stone-800 flex items-center justify-center">
+        <span className="text-3xl">Additional Details</span>
+      </div>
+
+      {/* Maybe just render a WidgetList component? Or a ListWidget component? */}
+      {widgets.map((widget) => (
+        <Widget key={widget.id} widget={widget} />
+      ))}
+    </div>
+  );
+};
+
+export default LeftScreen;

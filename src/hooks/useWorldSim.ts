@@ -16,8 +16,8 @@ const useWorldSim = () => {
     socket.current.addEventListener('message', (event) => {
       // console.log('\x1b[34mmessage received:\x1b[0m', event.data);
       const { message, stressLevel }: SimToCmMessage = JSON.parse(event.data);
-      setMessages((prevMessages) => [...prevMessages, message!]);
-      setStressLevel(stressLevel!);
+      if (message) setMessages((prevMessages) => [...prevMessages, message!]);
+      if (stressLevel) setStressLevel(stressLevel!);
     });
 
     socket.current.addEventListener('close', (event) => {

@@ -1,5 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
-import Minimap from 'src/components/Minimap';
+import { useEffect } from 'react';
+// ~~~~~~~ Components ~~~~~~~
+import Gaze from 'src/ui/Gaze';
+// ~~~~~~~ Redux ~~~~~~~
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import {
   addElementToWidget,
@@ -7,57 +9,57 @@ import {
   addWidgetToSection,
   getSections,
   getWidgets,
-  updateWidget,
 } from 'src/redux/slices/minimapSlice';
-import { useMousePosition } from 'src/hooks/useMousePosition';
-import type { Section } from 'src/types/support-types';
-import selector from 'src/prototype/selector';
-import assimilator from 'src/prototype/assimilator';
-import { v4 as uuid } from 'uuid';
-import { findElementsInGaze } from 'src/hooks/findElementsInGaze';
-import { useKeyDown } from 'src/hooks/useKeyDown';
-import useWorldSim from 'src/hooks/useWorldSim';
-import type { Message } from 'src/types/schema-types';
-import { useMouseButtonDown } from 'src/hooks/useMouseButtonDown';
-import { ONE_SECOND_IN_MS } from 'src/utils/constants';
-import useGenerateMessages from 'src/hooks/useGenerateMessages';
 import {
   addKeyDown,
   getElementsInGaze,
   getGazesAndKeys,
   removeKeyDown,
   setElementsInGaze,
+  type ElementInGaze,
 } from 'src/redux/slices/gazeSlice';
-import type { ElementInGaze } from 'src/redux/slices/gazeSlice';
+// ~~~~~~~ Cusdom Hooks ~~~~~~~
+import { useKeyDown } from 'src/hooks/useKeyDown';
+import { useMousePosition } from 'src/hooks/useMousePosition';
 import { useKeyUp } from 'src/hooks/useKeyUp';
+import { useMouseButtonDown } from 'src/hooks/useMouseButtonDown';
 import { useMouseButtonUp } from 'src/hooks/useMouseButtonUp';
+import useWorldSim from 'src/hooks/useWorldSim';
+import { findElementsInGaze } from 'src/hooks/findElementsInGaze';
+// ~~~~~~~ Prototype ~~~~~~~
+import assimilator from 'src/prototype/assimilator';
+import selector from 'src/prototype/selector';
+// ~~~~~~~ Constants ~~~~~~~
+import { GAZE_RADIUS } from 'src/utils/constants';
+const CIRCLE_PERCENTAGE_THRESH = 0.1;
+const ELEMENT_PERCENTAGE_THRESH = 0.1;
 
 const Prototype = () => {
+  // ~~~~~ Custom Hooks ~~~~~~
   const { messages, stressLevel } = useWorldSim();
-
-  const dispatch = useAppDispatch();
-
-  // get the sections that were just made
-  const sections = useAppSelector(getSections);
-  const widgets = useAppSelector(getWidgets);
-  const gazesAndKeys = useAppSelector(getGazesAndKeys);
-  const elemsInGaze:ElementInGaze[] = useAppSelector(getElementsInGaze);
   const mousePosition = useMousePosition();
   const keyDown = useKeyDown();
   const keyUp = useKeyUp();
   const mouseButtonDown = useMouseButtonDown();
   const mouseButtonUp = useMouseButtonUp();
-  const r:number = 50; //radius of gaze
 
-  //on mouse position move, check for elements in gaze
+  // ~~~~~ Selectors ~~~~~~
+  const sections = useAppSelector(getSections);
+  const widgets = useAppSelector(getWidgets);
+  const gazesAndKeys = useAppSelector(getGazesAndKeys);
+  const elemsInGaze: ElementInGaze[] = useAppSelector(getElementsInGaze);
+
+  const dispatch = useAppDispatch();
+
+  // on mouse position move, check for elements in gaze
   useEffect(() => {
     const elementsInGaze = findElementsInGaze(
       mousePosition,
       dispatch,
       widgets,
-      r,
-      0.1,
-      0.1,
+      GAZE_RADIUS,
+      CIRCLE_PERCENTAGE_THRESH,
+      ELEMENT_PERCENTAGE_THRESH,
     );
     dispatch(setElementsInGaze(elementsInGaze));
     if (elementsInGaze.length > 0) {
@@ -65,38 +67,48 @@ const Prototype = () => {
     }
   }, [mousePosition]);
 
+  // print out the gazes and keys
   useEffect(() => {
-   console.log("gazesAndKeys", gazesAndKeys);
-  }, [gazesAndKeys])
+    console.log('gazesAndKeys', gazesAndKeys);
+  }, [gazesAndKeys]);
 
-  //on key or mouse press, log the press and what elements are in the gaze to state
+  // on key or mouse press, log the press and what elements are in the gaze to state
   useEffect(() => {
-    if(keyDown != ''){
-      dispatch(addKeyDown({elemsInGaze: elemsInGaze, keyPress: keyDown.toString()}));
+    if (keyDown !== '') {
+      dispatch(
+        addKeyDown({ elemsInGaze: elemsInGaze, keyPress: keyDown.toString() }),
+      );
     }
-  }, [keyDown])
-  useEffect(() => {
-    if(mouseButtonDown != ''){
-      dispatch(addKeyDown({elemsInGaze: elemsInGaze, keyPress: mouseButtonDown.toString()}));
-    }
-  }, [mouseButtonDown])
+  }, [keyDown]);
 
-  //on key or mouse release, delete the press that was logged to state and ensure the key/mouse is reset so we can accept the same key/mouse again
   useEffect(() => {
-    console.log(keyUp)
-    if(keyUp != ''){
+    if (mouseButtonDown.toString() !== '') {
+      dispatch(
+        addKeyDown({
+          elemsInGaze: elemsInGaze,
+          keyPress: mouseButtonDown.toString(),
+        }),
+      );
+    }
+  }, [mouseButtonDown]);
+
+  // on key or mouse release, delete the press that was logged to state and ensure the key/mouse is reset so we can accept the same key/mouse again
+  useEffect(() => {
+    console.log(keyUp);
+    if (keyUp !== '') {
       dispatch(removeKeyDown(keyUp.toString()));
-      document.dispatchEvent(new KeyboardEvent('keyup', {'key': '_'}));
-      document.dispatchEvent(new KeyboardEvent('keydown', {'key': '_'}));
+      document.dispatchEvent(new KeyboardEvent('keyup', { key: '_' }));
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: '_' }));
     }
-  }, [keyUp])
+  }, [keyUp]);
+
   useEffect(() => {
-    if(mouseButtonUp != ''){
-      dispatch(removeKeyDown(mouseButtonUp.toString()))
-      document.dispatchEvent(new KeyboardEvent('mouseup', {'key': '_'}));
-      document.dispatchEvent(new KeyboardEvent('mousedown', {'key': '_'}));
+    if (mouseButtonUp !== '') {
+      dispatch(removeKeyDown(mouseButtonUp.toString()));
+      document.dispatchEvent(new KeyboardEvent('mouseup', { key: '_' }));
+      document.dispatchEvent(new KeyboardEvent('mousedown', { key: '_' }));
     }
-  }, [mouseButtonUp])
+  }, [mouseButtonUp]);
 
   // run whenever messages array changes
   useEffect(() => {
@@ -163,27 +175,7 @@ const Prototype = () => {
     }
   }, [messages]);
 
-  return (
-    <div className="cursor-none">
-      <Minimap widgets={widgets} />
-      <div className={`absolute rounded-full ring-4 ring-black`} style={{width: r*2, height: r*2, top: mousePosition.y-r, left:mousePosition.x-r}}></div>
-
-      {/* <div className="absolute top-0 right-0 w-[30rem] flex flex-col gap-4">
-        <div className="bg-green-200 w-full h-96 px-2 py-1">
-          <p className="text-center text-5xl">List of Messages:</p>
-          <ul className="overflow-y-scroll divide-y divide-stone-500 h-80">
-            {messages.map((msg, index) => (
-              <li key={`${msg}-${index}`}>
-                <div>
-                  <span className="text-3xl">{msg.kind}</span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div> */}
-    </div>
-  );
+  return <Gaze mousePosition={mousePosition} />;
 };
 
 export default Prototype;

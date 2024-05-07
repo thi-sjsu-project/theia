@@ -63,7 +63,7 @@ const assimilator = ({
       sections.forEach(function (section, sectionIndex) {
         //find matching sections
 
-        if (section.type === widget.type) {
+        if (section.type === widget.sectionType) {
           matchingSections.push(section); //it matches, so add it
         }
       });

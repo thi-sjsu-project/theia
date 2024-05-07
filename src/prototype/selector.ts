@@ -7,6 +7,8 @@ import type {
   IconElement,
   TextElement,
   TableElement,
+  RequestApprovalElement,
+  MissileIncomingElement,
 } from 'src/types/element';
 import DANGER_ICON from 'src/icons/danger.svg';
 import lowLPD from "./lpd/stress/lowLPD";

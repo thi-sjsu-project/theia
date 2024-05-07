@@ -7,6 +7,7 @@ export type Cell = {
 
 export type SectionType =
   | 'free'
+  | 'vehicle'
   | 'tinder'
   | 'message'
   | 'highWarning'
@@ -20,12 +21,17 @@ export type Section = {
   w: number;
   h: number;
   priority: number;
-  type: 'free' | 'tinder' | 'message' | 'highWarning' | 'lowWarning' | 'request';
+  type: SectionType;
   widgetIDs: string[];
+};
 
-}
-
+// TODO: remove this type
 export type LinkedSectionWidget = {
   widgetID: string;
   sectionID: string;
-}
+};
+
+export type Position = {
+  x: number;
+  y: number;
+};

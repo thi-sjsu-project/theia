@@ -1,6 +1,9 @@
 import type { ReactNode, MouseEvent } from 'react';
 import type { Element as ElementType } from 'src/types/element';
-import TableElement from './TableElement';
+import TableElement from 'src/components/Element/Simple/TableElement';
+import RequestApprovalElement from 'src/components/Element/Complex/RequestApprovalElement';
+import ButtonElement from 'src/components/Element/Simple/ButtonElement';
+import MissileIncomingElement from 'src/components/Element/Complex/MissileIncomingElement';
 
 type ElementProps = {
   element: ElementType;
@@ -22,20 +25,18 @@ const Element = ({ element, styleClass, children }: ElementProps) => {
     }
 
     switch (element.type) {
+      case 'request-approval':
+        return <RequestApprovalElement element={element} />;
+
+      case 'missile-incoming':
+        return <MissileIncomingElement element={element} />;
+
       case 'table':
-        return (
-          <TableElement element={element}>
-            <span>Priority: {element.priority}</span>
-          </TableElement>
-        );
+        return <TableElement element={element} />;
+
       case 'button':
-        return (
-          <div>
-            <span className="text-xl">{element.text}</span>
-            <br></br>
-            Priority: {element.priority!}
-          </div>
-        );
+        return <ButtonElement element={element} />;
+
       case 'text':
         return (
           <div>
@@ -54,6 +55,8 @@ const Element = ({ element, styleClass, children }: ElementProps) => {
         ) : (
           <div>Icon</div>
         );
+      case 'custom':
+        return <div>Custom</div>;
       default:
         return <div>Unknown Element</div>;
     }

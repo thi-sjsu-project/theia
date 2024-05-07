@@ -1,6 +1,6 @@
 import type { Widget as WidgetType } from 'src/types/widget';
-import TinderWidget from './TinderWidget';
-import VehicleWidget from './VehicleWidget';
+import ListWidget from 'src/components/Widget/ListWidget';
+import VehicleWidget from 'src/components/Widget/VehicleWidget';
 
 type WidgetProps = {
   widget: WidgetType;
@@ -11,8 +11,8 @@ const Widget = ({ widget }: WidgetProps) => {
     switch (widget.type) {
       case 'vehicle':
         return <VehicleWidget widget={widget} />;
-      case 'tinder':
-        return <TinderWidget widget={widget} />;
+      case 'list':
+        return <ListWidget widget={widget} />;
       case 'highWarning':
         return (
           <div

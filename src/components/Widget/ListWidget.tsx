@@ -1,11 +1,11 @@
 import Element from 'src/components/Element/Element';
 import type { Widget } from 'src/types/widget';
 
-type TinderWidgetProps = {
+type ListWidgetProps = {
   widget: Widget;
 };
 
-const TinderWidget = ({ widget }: TinderWidgetProps) => {
+const ListWidget = ({ widget }: ListWidgetProps) => {
   const className =
     'absolute border-2 border-black p-2 flex flex-col gap-2 items-center';
 
@@ -22,12 +22,15 @@ const TinderWidget = ({ widget }: TinderWidgetProps) => {
       style={{
         height: widget.h,
         width: widget.w,
-        top: widget.y,
-        left: widget.x,
+        // top: widget.y,
+        // left: widget.x,
+        // Hardcoded for now (for demo purposes)
+        top: 150,
+        left: 1550,
       }}
     >
       {sortedElementsByPriority.map((element) => (
-        // TinderWidget enforces a certain layout and style for its Elements
+        // ListWidget enforces a certain layout and style for its Elements
         <div
           key={element.id}
           className="w-full min-h-[75px] border-2 border-black 
@@ -42,4 +45,4 @@ const TinderWidget = ({ widget }: TinderWidgetProps) => {
   );
 };
 
-export default TinderWidget;
+export default ListWidget;
