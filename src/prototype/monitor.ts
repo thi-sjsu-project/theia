@@ -5,8 +5,8 @@ import {
   updateElementExpiration,
 } from 'src/redux/slices/minimapSlice';
 import store from 'src/redux/store';
-import { ElementInGaze, GazeAndKey } from 'src/redux/slices/gazeSlice';
-import { BaseElement } from 'src/types/element';
+import type { ElementInGaze, GazeAndKey } from 'src/redux/slices/gazeSlice';
+import type { BaseElement } from 'src/types/element';
 
 type MonitorProps = {
   // define expected input here and it's type (number, string, etc.)

@@ -34,6 +34,7 @@ import { GAZE_RADIUS } from 'src/utils/constants';
 import { ownship, drones, initialShips } from 'src/utils/initialShips';
 import { initialSections } from 'src/utils/initialSections';
 import Home from 'src/components/Home';
+import monitor from 'src/prototype/monitor';
 
 const CIRCLE_PERCENTAGE_THRESH = 0.1;
 const ELEMENT_PERCENTAGE_THRESH = 0.1;
@@ -94,18 +95,25 @@ const Prototype = () => {
   // on key or mouse press, log the press and what elements are in the gaze to state
   useEffect(() => {
     if (keyDown !== '') {
+      const time = new Date().toISOString();
       dispatch(
-        addKeyDown({ elemsInGaze: elemsInGaze, keyPress: keyDown.toString() }),
+        addKeyDown({ 
+          elemsInGaze: elemsInGaze, 
+          keyPress: keyDown.toString(), 
+          timeEnteredGaze: time
+        }),
       );
     }
   }, [keyDown]);
 
   useEffect(() => {
     if (mouseButtonDown.toString() !== '') {
+      const time = new Date().toISOString();
       dispatch(
         addKeyDown({
           elemsInGaze: elemsInGaze,
           keyPress: mouseButtonDown.toString(),
+          timeEnteredGaze: time
         }),
       );
     }
@@ -128,6 +136,15 @@ const Prototype = () => {
       document.dispatchEvent(new KeyboardEvent('mousedown', { key: '_' }));
     }
   }, [mouseButtonUp]);
+
+    //call the monitor
+    useEffect(() => {
+      const intervalID = setInterval(() =>  {
+          monitor({dispatch})
+      }, 100);
+  
+      return () => clearInterval(intervalID);
+    }, []);
 
   // run whenever messages array changes
   useEffect(() => {
