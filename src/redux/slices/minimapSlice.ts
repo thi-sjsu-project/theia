@@ -8,8 +8,11 @@ import type { LinkedSectionWidget, Section } from 'src/types/support-types';
 export type InitialMinimapState = {
   visualComplexity: number;
   audioComplexity: number;
+
+  // read-only
   ownship: VehicleWidget | null;
   drones: VehicleWidget[];
+
   widgets: WidgetMap;
   messages: Message[];
   sections: Section[];
@@ -31,7 +34,11 @@ export const minimapSlice = createSlice({
   reducers: {
     // This is needed for compatibility with redux-state-sync
     initializeState: (state, action: PayloadAction<InitialMinimapState>) => {
-      console.log('Initializing minimap state with: ', action.payload);
+      // don't initialize if we already have data (one-time initialization)
+      if (Object.keys(state.widgets).length > 0 || state.sections.length > 0) {
+        return;
+      }
+
       state.visualComplexity = action.payload.visualComplexity;
       state.audioComplexity = action.payload.audioComplexity;
       state.ownship = action.payload.ownship;
@@ -67,11 +74,13 @@ export const minimapSlice = createSlice({
         const { shipId, x, y } = action.payload;
         const ship = state.widgets[shipId];
 
+        // check if ship exists
         if (!ship) {
           console.error(`Ship with id ${shipId} not found`);
           return;
         }
 
+        // check if the ship is a vehicle
         if (ship.type !== 'vehicle') {
           console.error(`Widget with id ${shipId} is not a vehicle`);
           return;
@@ -225,8 +234,18 @@ export const minimapSlice = createSlice({
     getMessages: (state) => state.messages,
 
     // ~~~~~ selectors for ships ~~~~~
-    getOwnship: (state) => state.ownship,
-    getDrones: (state) => state.drones,
+    getOwnship: (state) => {
+      if (state.ownship) {
+        return state.widgets[state.ownship.id];
+      }
+      return null;
+    },
+    getDrones: (state) => {
+      if (state.drones.length > 0) {
+        return state.drones.map((drone) => state.widgets[drone.id]);
+      }
+      return [];
+    },
   },
 });
 

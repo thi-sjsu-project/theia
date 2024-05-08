@@ -33,7 +33,6 @@ import selector from 'src/prototype/selector';
 import { GAZE_RADIUS } from 'src/utils/constants';
 import { ownship, drones, initialShips } from 'src/utils/initialShips';
 import { initialSections } from 'src/utils/initialSections';
-import Spinner from 'src/ui/Spinner';
 import Home from 'src/components/Home';
 
 const CIRCLE_PERCENTAGE_THRESH = 0.1;
