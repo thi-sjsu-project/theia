@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
-// ~~~~~~~ Components ~~~~~~~
-import Gaze from 'src/ui/Gaze';
 // ~~~~~~~ Redux ~~~~~~~
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import {
+  type InitialMinimapState,
   addElementToWidget,
   addWidget,
   addWidgetToSection,
   getSections,
   getWidgets,
+  initializeState,
 } from 'src/redux/slices/minimapSlice';
 import {
   addKeyDown,
@@ -31,6 +31,11 @@ import assimilator from 'src/prototype/assimilator';
 import selector from 'src/prototype/selector';
 // ~~~~~~~ Constants ~~~~~~~
 import { GAZE_RADIUS } from 'src/utils/constants';
+import { ownship, drones, initialShips } from 'src/utils/initialShips';
+import { initialSections } from 'src/utils/initialSections';
+import Spinner from 'src/ui/Spinner';
+import Home from 'src/components/Home';
+
 const CIRCLE_PERCENTAGE_THRESH = 0.1;
 const ELEMENT_PERCENTAGE_THRESH = 0.1;
 
@@ -51,6 +56,21 @@ const Prototype = () => {
 
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    // Intiailize minimap state
+    const initialState: InitialMinimapState = {
+      visualComplexity: 0,
+      audioComplexity: 0,
+      ownship,
+      drones,
+      widgets: { ...initialShips },
+      messages: [],
+      sections: [...initialSections],
+    };
+
+    dispatch(initializeState(initialState));
+  }, [dispatch]);
+
   // on mouse position move, check for elements in gaze
   useEffect(() => {
     const elementsInGaze = findElementsInGaze(
@@ -63,13 +83,13 @@ const Prototype = () => {
     );
     dispatch(setElementsInGaze(elementsInGaze));
     if (elementsInGaze.length > 0) {
-      console.log('elements in gaze: ', elemsInGaze);
+      // console.log('elements in gaze: ', elemsInGaze);
     }
   }, [mousePosition]);
 
   // print out the gazes and keys
   useEffect(() => {
-    console.log('gazesAndKeys', gazesAndKeys);
+    // console.log('gazesAndKeys', gazesAndKeys);
   }, [gazesAndKeys]);
 
   // on key or mouse press, log the press and what elements are in the gaze to state
@@ -175,7 +195,7 @@ const Prototype = () => {
     }
   }, [messages]);
 
-  return <Gaze mousePosition={mousePosition} />;
+  return <Home />;
 };
 
 export default Prototype;

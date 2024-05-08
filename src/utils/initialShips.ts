@@ -2,19 +2,21 @@ import { v4 as uuid } from 'uuid';
 import type { IconElement } from 'src/types/element';
 import OWNSHIP_LOGO from 'src/icons/currentPosition.svg';
 import DRONE_LOGO from 'src/icons/drone.svg';
-import type { Widget, VehicleWidget, WidgetMap } from 'src/types/widget';
+import type { VehicleWidget, WidgetMap } from 'src/types/widget';
 
 const createDroneWidget = (
   x: number,
   y: number,
   w: number,
   h: number,
+  vehicleId: number,
 ): VehicleWidget => ({
   elements: [droneElement],
   id: uuid(),
   sectionType: 'free',
   type: 'vehicle',
   screen: 'minimap',
+  vehicleId,
 
   x,
   y,
@@ -42,6 +44,7 @@ const ownshipElement: IconElement = {
 
 export const ownship: VehicleWidget = {
   id: uuid(),
+  vehicleId: 0,
 
   x: 400,
   y: 950,
@@ -72,18 +75,19 @@ const droneElement: IconElement = {
   yWidget: 0,
 };
 
-export const drones = [
-  createDroneWidget(500, 200, 50, 50),
-  createDroneWidget(1500, 550, 50, 50),
-  createDroneWidget(1500, 350, 50, 50),
-  createDroneWidget(200, 900, 50, 50),
-  createDroneWidget(1150, 750, 50, 50),
-];
+const drone1 = createDroneWidget(500, 200, 50, 50, 1);
+const drone2 = createDroneWidget(1500, 550, 50, 50, 2);
+const drone3 = createDroneWidget(1500, 350, 50, 50, 3);
+const drone4 = createDroneWidget(200, 900, 50, 50, 4);
+const drone5 = createDroneWidget(1150, 750, 50, 50, 5);
+
+export const drones = [drone1, drone2, drone3, drone4, drone5];
 
 export const initialShips: WidgetMap = {
   [ownship.id]: ownship,
-  ...drones.reduce((acc, drone) => {
-    acc[drone.id] = drone;
-    return acc;
-  }, {} as WidgetMap),
+  [drone1.id]: drone1,
+  [drone2.id]: drone2,
+  [drone3.id]: drone3,
+  [drone4.id]: drone4,
+  [drone5.id]: drone5,
 };
