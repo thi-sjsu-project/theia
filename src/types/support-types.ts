@@ -16,6 +16,7 @@ export type SectionType =
 
 export type Section = {
   id: string;
+  screen: 'pearce' | 'minimap' | 'boring-right';
   x: number;
   y: number;
   w: number;

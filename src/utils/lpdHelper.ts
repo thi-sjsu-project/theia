@@ -16,8 +16,10 @@ const generateSection = (
   priority: number,
   type: SectionType,
   widgetIDs: string[],
+  screen: string,
 ): Section => ({
   id,
+  screen, 
   x,
   y,
   w,
