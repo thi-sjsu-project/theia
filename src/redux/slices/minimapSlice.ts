@@ -76,7 +76,7 @@ export const minimapSlice = createSlice({
 
         // check if ship exists
         if (!ship) {
-          console.error(`Ship with id ${shipId} not found`);
+          //console.error(`Ship with id ${shipId} not found`);
           return;
         }
 

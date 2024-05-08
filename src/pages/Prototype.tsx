@@ -42,11 +42,6 @@ const ELEMENT_PERCENTAGE_THRESH = 0.1;
 const Prototype = () => {
   // ~~~~~ Custom Hooks ~~~~~~
   const { messages, stressLevel } = useWorldSim();
-  const mousePosition = useMousePosition();
-  const keyDown = useKeyDown();
-  const keyUp = useKeyUp();
-  const mouseButtonDown = useMouseButtonDown();
-  const mouseButtonUp = useMouseButtonUp();
 
   // ~~~~~ Selectors ~~~~~~
   const sections = useAppSelector(getSections);
@@ -70,72 +65,6 @@ const Prototype = () => {
 
     dispatch(initializeState(initialState));
   }, [dispatch]);
-
-  // on mouse position move, check for elements in gaze
-  useEffect(() => {
-    const elementsInGaze = findElementsInGaze(
-      mousePosition,
-      dispatch,
-      widgets,
-      GAZE_RADIUS,
-      CIRCLE_PERCENTAGE_THRESH,
-      ELEMENT_PERCENTAGE_THRESH,
-    );
-    dispatch(setElementsInGaze(elementsInGaze));
-    if (elementsInGaze.length > 0) {
-      // console.log('elements in gaze: ', elemsInGaze);
-    }
-  }, [mousePosition]);
-
-  // print out the gazes and keys
-  useEffect(() => {
-    // console.log('gazesAndKeys', gazesAndKeys);
-  }, [gazesAndKeys]);
-
-  // on key or mouse press, log the press and what elements are in the gaze to state
-  useEffect(() => {
-    if (keyDown !== '') {
-      const time = new Date().toISOString();
-      dispatch(
-        addKeyDown({ 
-          elemsInGaze: elemsInGaze, 
-          keyPress: keyDown.toString(), 
-          timeEnteredGaze: time
-        }),
-      );
-    }
-  }, [keyDown]);
-
-  useEffect(() => {
-    if (mouseButtonDown.toString() !== '') {
-      const time = new Date().toISOString();
-      dispatch(
-        addKeyDown({
-          elemsInGaze: elemsInGaze,
-          keyPress: mouseButtonDown.toString(),
-          timeEnteredGaze: time
-        }),
-      );
-    }
-  }, [mouseButtonDown]);
-
-  // on key or mouse release, delete the press that was logged to state and ensure the key/mouse is reset so we can accept the same key/mouse again
-  useEffect(() => {
-    console.log(keyUp);
-    if (keyUp !== '') {
-      dispatch(removeKeyDown(keyUp.toString()));
-      document.dispatchEvent(new KeyboardEvent('keyup', { key: '_' }));
-      document.dispatchEvent(new KeyboardEvent('keydown', { key: '_' }));
-    }
-  }, [keyUp]);
-
-  useEffect(() => {
-    if (mouseButtonUp !== '') {
-      dispatch(removeKeyDown(mouseButtonUp.toString()));
-      document.dispatchEvent(new KeyboardEvent('mouseup', { key: '_' }));
-      document.dispatchEvent(new KeyboardEvent('mousedown', { key: '_' }));
-    }
-  }, [mouseButtonUp]);
 
     //call the monitor
     useEffect(() => {

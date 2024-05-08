@@ -44,7 +44,6 @@ const ELEMENT_PERCENTAGE_THRESH = 0.1;
 const Layout = () => {
   // ~~~~~ React Router ~~~~~~
   const { pathname } = useLocation();
-  console.log(pathname)
   const navigate = useNavigate();
 
   // ~~~~~ Custom Hooks ~~~~~~
