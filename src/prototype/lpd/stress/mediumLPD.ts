@@ -41,8 +41,6 @@ const acaFuelLowMessageMedium = () => {
                 lpdHelper.generateBaseElement(
                     uuid(),
                     'visual',
-                    150,
-                    100,
                     0,
                     0,
                     undefined, 
@@ -63,8 +61,6 @@ const acaFuelLowMessageMedium = () => {
                 lpdHelper.generateBaseElement(
                     uuid(),
                     'visual',
-                    25,
-                    50,
                     0, 
                     125,
                     undefined,
@@ -106,8 +102,6 @@ const missileToOwnshipDetectedMessageMedium = () => {
               lpdHelper.generateBaseElement(
                 uuid(),
                 'visual',
-                100,
-                100,
                 0,
                 0,
                 undefined,
@@ -130,8 +124,6 @@ const missileToOwnshipDetectedMessageMedium = () => {
               lpdHelper.generateBaseElement(
                 uuid(),
                 'visual',
-                70,
-                200,
                 75,
                 0,
                 undefined,

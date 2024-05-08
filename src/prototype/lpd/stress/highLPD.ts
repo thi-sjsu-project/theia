@@ -41,8 +41,6 @@ const acaFuelLowMessageHigh = () => {
                 lpdHelper.generateBaseElement(
                     uuid(),
                     'visual',
-                    100,
-                    100,
                     0,
                     0,
                     undefined, 
@@ -84,8 +82,6 @@ export const missileToOwnshipDetectedMessageHigh = () => {
               lpdHelper.generateBaseElement(
                 uuid(),
                 'visual',
-                300,
-                300,
                 0,
                 0,
                 undefined,
@@ -108,8 +104,6 @@ export const missileToOwnshipDetectedMessageHigh = () => {
               lpdHelper.generateBaseElement(
                 uuid(),
                 'visual',
-                70,
-                200,
                 75,
                 0,
                 undefined,
