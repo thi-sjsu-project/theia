@@ -5,6 +5,8 @@ import {
   updateElementExpiration,
 } from 'src/redux/slices/minimapSlice';
 import store from 'src/redux/store';
+import { ElementInGaze, GazeAndKey } from 'src/redux/slices/gazeSlice';
+import { BaseElement } from 'src/types/element';
 
 type MonitorProps = {
   // define expected input here and it's type (number, string, etc.)
@@ -34,7 +36,7 @@ const monitor = ({ dispatch }: MonitorProps) => {
   timeSomeMsAgo.setMilliseconds(
     timeSomeMsAgo.getMilliseconds()-100, //<- 100 should be in constants file, but just testing now
   );//set timeSomeMsAgo to the time it was 100 ms ago
-  elementsInGaze.forEach(function(elementInGaze, elementInGazeIndex){
+  elementsInGaze.forEach(function(elementInGaze: ElementInGaze, elementInGazeIndex:number){
     if(timeSomeMsAgo.toISOString() >= elementInGaze.timeEnteredGaze){ //has been in gaze for at least 100 ms
       console.log('interacted with element '+elementInGaze.id+' using gaze');
       dispatch(updateElementExpiration(elementInGaze.widgetId, elementInGaze.id)); //update the time until expiration
@@ -42,7 +44,7 @@ const monitor = ({ dispatch }: MonitorProps) => {
   });
 
   //detect interactions via key press
-  gazesAndKeys.forEach(function(gazeAndKey, gazeAndKeyIndex){
+  gazesAndKeys.forEach(function(gazeAndKey:GazeAndKey, gazeAndKeyIndex:number){
     gazeAndKey.elemsInGaze.forEach(function(elementInGaze, elementInGazeIndex){
       dispatch(updateElementExpiration(elementInGaze.widgetId, elementInGaze.id)); //update the time until expiration
       console.log('interacted with element '+elementInGaze.id+' using '+gazeAndKey.keyPress);
@@ -55,7 +57,7 @@ const monitor = ({ dispatch }: MonitorProps) => {
   Object.keys(widgets).forEach((widgetId) => { //update widgets and elements that haven't been interacted with
     const widget = widgets[widgetId];
 
-    widget.elements.forEach((element, elementIndex) => {
+    widget.elements.forEach((element:BaseElement, elementIndex:number) => {
       //go through each element
       if (element.expiration && !element.interacted) {//if it has an expiration and has not been interacted with
         const time = new Date().toISOString();
