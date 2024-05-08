@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import {
   getDrones,
   getOwnship,
-  updateWidget,
+  updateShipPosition,
 } from 'src/redux/slices/minimapSlice';
 import { OWNSHIP_TRAJECTORY } from 'src/utils/constants';
 
@@ -11,6 +11,10 @@ const useMoveShips = () => {
   const dispatch = useAppDispatch();
   const ownship = useAppSelector(getOwnship);
   const drones = useAppSelector(getDrones);
+
+  useEffect(() => {
+    console.log('drones', drones);
+  }, [drones.length]);
 
   useEffect(() => {
     if (!ownship) return;
@@ -23,11 +27,11 @@ const useMoveShips = () => {
       ) {
         // only update ownship position if within bounds
         dispatch(
-          updateWidget({
-            ...ownship,
-            x: ownship.x + OWNSHIP_TRAJECTORY.xSpeed,
-            y: ownship.y - OWNSHIP_TRAJECTORY.ySpeed,
-          }),
+          updateShipPosition(
+            ownship.id,
+            ownship.x + OWNSHIP_TRAJECTORY.xSpeed,
+            ownship.y - OWNSHIP_TRAJECTORY.ySpeed,
+          ),
         );
       }
     }, 500);
@@ -72,11 +76,11 @@ const useMoveShips = () => {
         }
 
         dispatch(
-          updateWidget({
-            ...drone,
-            x: drone.x + droneMove.x,
-            y: drone.y + droneMove.y,
-          }),
+          updateShipPosition(
+            drone.id,
+            drone.x + droneMove.x,
+            drone.y + droneMove.y,
+          ),
         );
       });
     }, 1500);
@@ -86,7 +90,7 @@ const useMoveShips = () => {
     // dependencies omitted because drones array is changing too frequently
     // some warning/issue of selector returning different values despite same parameters
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
-  }, []);
+  }, [drones.length]);
 };
 
 export default useMoveShips;
