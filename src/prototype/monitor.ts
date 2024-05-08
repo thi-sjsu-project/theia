@@ -35,9 +35,9 @@ const monitor = ({ dispatch }: MonitorProps) => {
     timeSomeMsAgo.getMilliseconds()-100, //<- 100 should be in constants file, but just testing now
   );//set timeSomeMsAgo to the time it was 100 ms ago
   elementsInGaze.forEach(function(elementInGaze, elementInGazeIndex){
-    if(timeSomeMsAgo.toISOString() <= elementInGaze.timeEnteredGaze){ //has been in gaze for at least 100 ms
-      dispatch(updateElementExpiration(elementInGaze.widgetId, elementInGaze.id)); //update the time until expiration
+    if(timeSomeMsAgo.toISOString() >= elementInGaze.timeEnteredGaze){ //has been in gaze for at least 100 ms
       console.log('interacted with element '+elementInGaze.id+' using gaze');
+      dispatch(updateElementExpiration(elementInGaze.widgetId, elementInGaze.id)); //update the time until expiration
     }
   });
 

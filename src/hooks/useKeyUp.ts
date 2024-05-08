@@ -12,7 +12,7 @@ export function useKeyUp() {
   useEffect(() => {
     function handleKeyUp(ev: KeyboardEvent) {
       setKeyUp(ev.code);
-      console.log('Key pressed: ' + ev.code);
+      //console.log('Key pressed: ' + ev.code);
     }
 
     document.addEventListener('keyup', handleKeyUp);

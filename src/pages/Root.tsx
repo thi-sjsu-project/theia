@@ -77,13 +77,13 @@ const Root = () => {
     );
     dispatch(setElementsInGaze(elementsInGaze));
     if (elementsInGaze.length > 0) {
-      console.log('elements in gaze: ', elemsInGaze);
+      //console.log('elements in gaze: ', elemsInGaze);
     }
   }, [mousePosition]);
 
   // print out the gazes and keys
   useEffect(() => {
-    console.log('gazesAndKeys', gazesAndKeys);
+    //console.log('gazesAndKeys', gazesAndKeys);
   }, [gazesAndKeys]);
 
   // on key or mouse press, log the press and what elements are in the gaze to state
@@ -115,7 +115,7 @@ const Root = () => {
 
   // on key or mouse release, delete the press that was logged to state and ensure the key/mouse is reset so we can accept the same key/mouse again
   useEffect(() => {
-    console.log(keyUp);
+    //console.log(keyUp);
     if (keyUp !== '') {
       dispatch(removeKeyDown(keyUp.toString()));
       document.dispatchEvent(new KeyboardEvent('keyup', { key: '_' }));
