@@ -3,15 +3,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Gaze from 'src/ui/Gaze';
 // ~~~~~~~ Redux ~~~~~~~
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import {
-  type InitialMinimapState,
-  addElementToWidget,
-  addWidget,
-  addWidgetToSection,
-  getSections,
-  getWidgets,
-  initializeState,
-} from 'src/redux/slices/minimapSlice';
+import { getSections, getWidgets } from 'src/redux/slices/minimapSlice';
 import {
   addKeyDown,
   getElementsInGaze,
@@ -26,17 +18,9 @@ import { useMousePosition } from 'src/hooks/useMousePosition';
 import { useKeyUp } from 'src/hooks/useKeyUp';
 import { useMouseButtonDown } from 'src/hooks/useMouseButtonDown';
 import { useMouseButtonUp } from 'src/hooks/useMouseButtonUp';
-import useWorldSim from 'src/hooks/useWorldSim';
 import { findElementsInGaze } from 'src/hooks/findElementsInGaze';
-// ~~~~~~~ Prototype ~~~~~~~
-import assimilator from 'src/prototype/assimilator';
-import selector from 'src/prototype/selector';
 // ~~~~~~~ Constants ~~~~~~~
 import { GAZE_RADIUS } from 'src/utils/constants';
-import { ownship, drones, initialShips } from 'src/utils/initialShips';
-import { initialSections } from 'src/utils/initialSections';
-import Home from 'src/components/Home';
-import monitor from 'src/prototype/monitor';
 
 const CIRCLE_PERCENTAGE_THRESH = 0.1;
 const ELEMENT_PERCENTAGE_THRESH = 0.1;
@@ -47,7 +31,6 @@ const Layout = () => {
   const navigate = useNavigate();
 
   // ~~~~~ Custom Hooks ~~~~~~
-  const { messages, stressLevel } = useWorldSim();
   const mousePosition = useMousePosition();
   const keyDown = useKeyDown();
   const keyUp = useKeyUp();
@@ -61,21 +44,6 @@ const Layout = () => {
   const elemsInGaze: ElementInGaze[] = useAppSelector(getElementsInGaze);
 
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    // Intiailize minimap state
-    const initialState: InitialMinimapState = {
-      visualComplexity: 0,
-      audioComplexity: 0,
-      ownship,
-      drones,
-      widgets: { ...initialShips },
-      messages: [],
-      sections: [...initialSections],
-    };
-
-    dispatch(initializeState(initialState));
-  }, [dispatch]);
 
   // on mouse position move, check for elements in gaze
   useEffect(() => {
@@ -103,10 +71,10 @@ const Layout = () => {
     if (keyDown !== '') {
       const time = new Date().toISOString();
       dispatch(
-        addKeyDown({ 
-          elemsInGaze: elemsInGaze, 
-          keyPress: keyDown.toString(), 
-          timeEnteredGaze: time
+        addKeyDown({
+          elemsInGaze: elemsInGaze,
+          keyPress: keyDown.toString(),
+          timeEnteredGaze: time,
         }),
       );
     }
@@ -119,7 +87,7 @@ const Layout = () => {
         addKeyDown({
           elemsInGaze: elemsInGaze,
           keyPress: mouseButtonDown.toString(),
-          timeEnteredGaze: time
+          timeEnteredGaze: time,
         }),
       );
     }
@@ -143,14 +111,12 @@ const Layout = () => {
     }
   }, [mouseButtonUp]);
 
-
   // Redirect to /prototype if the user is on the root path
   useEffect(() => {
     if (pathname === '/') {
       navigate('/prototype');
     }
   }, [pathname, navigate]);
-  
 
   return (
     <div>

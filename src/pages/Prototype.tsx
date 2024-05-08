@@ -11,33 +11,20 @@ import {
   initializeState,
 } from 'src/redux/slices/minimapSlice';
 import {
-  addKeyDown,
   getElementsInGaze,
   getGazesAndKeys,
-  removeKeyDown,
-  setElementsInGaze,
   type ElementInGaze,
 } from 'src/redux/slices/gazeSlice';
 // ~~~~~~~ Cusdom Hooks ~~~~~~~
-import { useKeyDown } from 'src/hooks/useKeyDown';
-import { useMousePosition } from 'src/hooks/useMousePosition';
-import { useKeyUp } from 'src/hooks/useKeyUp';
-import { useMouseButtonDown } from 'src/hooks/useMouseButtonDown';
-import { useMouseButtonUp } from 'src/hooks/useMouseButtonUp';
 import useWorldSim from 'src/hooks/useWorldSim';
-import { findElementsInGaze } from 'src/hooks/findElementsInGaze';
 // ~~~~~~~ Prototype ~~~~~~~
 import assimilator from 'src/prototype/assimilator';
 import selector from 'src/prototype/selector';
 // ~~~~~~~ Constants ~~~~~~~
-import { GAZE_RADIUS } from 'src/utils/constants';
 import { ownship, drones, initialShips } from 'src/utils/initialShips';
 import { initialSections } from 'src/utils/initialSections';
 import Home from 'src/components/Home';
 import monitor from 'src/prototype/monitor';
-
-const CIRCLE_PERCENTAGE_THRESH = 0.1;
-const ELEMENT_PERCENTAGE_THRESH = 0.1;
 
 const Prototype = () => {
   // ~~~~~ Custom Hooks ~~~~~~
@@ -66,14 +53,14 @@ const Prototype = () => {
     dispatch(initializeState(initialState));
   }, [dispatch]);
 
-    //call the monitor
-    useEffect(() => {
-      const intervalID = setInterval(() =>  {
-          monitor({dispatch})
-      }, 100);
-  
-      return () => clearInterval(intervalID);
-    }, []);
+  //call the monitor
+  useEffect(() => {
+    const intervalID = setInterval(() => {
+      monitor({ dispatch });
+    }, 100);
+
+    return () => clearInterval(intervalID);
+  }, []);
 
   // run whenever messages array changes
   useEffect(() => {
