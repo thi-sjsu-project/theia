@@ -65,6 +65,10 @@ export const gazeSlice = createSlice({
       //   ]
       // }
     },
+    removeKeyDown: (state, action:PayloadAction<string>) => {
+      state.gazesAndKeys.map(function(gazeAndKey, gazeAndKeyIndex){
+        //console.log('equality toAdd: '+action.payload+' inStorage: '+gazeAndKey.keyPress)
+        if(action.payload === gazeAndKey.keyPress){ //we found the key that was released
     removeKeyDown: (state, action: PayloadAction<string>) => {
       state.gazesAndKeys.map(function (gazeAndKey, gazeAndKeyIndex) {
         // console.log('equality toAdd: '+action.payload+' inStorage: '+gazeAndKey.keyPress)

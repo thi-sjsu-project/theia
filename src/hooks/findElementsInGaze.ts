@@ -43,7 +43,7 @@ export function findElementsInGaze(
           if (distance(x, y, mousePosition.x, mousePosition.y) < radius) {
             widgetsInGaze.push(widget);
             isIn = true;
-            console.log('isin!');
+            //console.log('isin!');
             break;
           }
         }
