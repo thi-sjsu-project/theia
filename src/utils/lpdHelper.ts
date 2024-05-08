@@ -9,6 +9,7 @@ import type { Section, SectionType } from "src/types/support-types";
 // Functions to create sections, widgets, and elements
 const generateSection = (
   id: string,
+  screen: "pearce" | "minimap" | "boring-right",
   x: number,
   y: number,
   w: number,
@@ -16,7 +17,6 @@ const generateSection = (
   priority: number,
   type: SectionType,
   widgetIDs: string[],
-  screen: string,
 ): Section => ({
   id,
   screen, 
