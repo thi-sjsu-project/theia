@@ -2,110 +2,96 @@ import type { Message } from "src/types/schema-types";
 import lpdHelper from "src/utils/lpdHelper";
 import { v4 as uuid } from 'uuid';
 import WARNING_LOGO from "src/icons/warning-5-256.ico"
+import { l } from "node_modules/vite/dist/node/types.d-aGj9QkWt";
 
 export const MissileToOwnshipDetected_ID = uuid();
 export const acaFuelLow_ID = uuid();
+
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageLow = () => {
     return {
         sections: [],
-        possibleWidgets: [lpdHelper.generateWidget(
+        possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
             uuid(),
             'request',
             100,
             100,
             200,
             200,
+            '/pearce-screen',
             false,
             false,
             1,
-            [],
-        )],
+            [
+                lpdHelper.generateIconElement(lpdHelper.generateBaseElement(
+                    uuid(),
+                    'visual',
+                    30,
+                    30,
+                    0,
+                    0,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                ),
+                'DRONE_ICON',
+            ),
+                lpdHelper.generateButtonElement(lpdHelper.generateBaseElement(
+                    uuid(),
+                    'visual',
+                    30,
+                    80,
+                    0,
+                    0,
+                ), 
+                'Deny',
+            ),
+                lpdHelper.generateButtonElement(lpdHelper.generateBaseElement(
+                    uuid(),
+                    'visual',
+                    30,
+                    80,
+                    0,
+                    0,
+                ),
+                'Approve',),
+            ],
+        ))],
     };
 }
 
 const acaFuelLowMessageLow = () => {
     return {
         sections: [],
-        possibleWidgets: [lpdHelper.generateCustomWidget(lpdHelper.generateBaseWidget(
+        possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
             acaFuelLow_ID,
             'message',
             500,
             500,
             150,
             150,
-            'minimap',
+            '/minimap',
             false,
             false,
             1,
             [
-              lpdHelper.generateTextElement(
-                lpdHelper.generateBaseElement(
+                lpdHelper.generateTableElement(lpdHelper.generateBaseElement(
                     uuid(),
                     'visual',
-                    150,
-                    100,
+                    50,
+                    200,
                     0,
                     0,
-                    undefined, 
-                    undefined,
-                    undefined,
-                    undefined,
-                    false,
-                    true,
-                    {
-                        background: "black",
-                        color: "#02d118"
-                    }
                 ),
-                "Low stress: ACA fuel low. Do you want to send it back to base?"
-            ),
-            lpdHelper.generateButtonElement(
-                lpdHelper.generateBaseElement(
-                    uuid(),
-                    'visual',
-                    25,
-                    40,
-                    0, 
-                    125,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    false,
-                    true,
-                    {
-                        background: "#02d118",
-                        color: "black",
-                        margin: "0 20px 0 0",
-                        textAlign: "center"
-                    }
-                ),
-                "Send"
-            ),
-            lpdHelper.generateButtonElement(
-                lpdHelper.generateBaseElement(
-                    uuid(),
-                    'visual',
-                    25,
-                    40,
-                    30, 
-                    125,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    false,
-                    true,
-                    {
-                        background: "#02d118",
-                        color: "black"
-                    }
-                ),
-                "Stay"
-            )
-        
+                2,
+                2,
+                [['Fuel', 'Low'],['Altitude', 'Low']],
+                )
             ],
         ))],
     };
@@ -115,13 +101,14 @@ const missileToOwnshipDetectedMessageLow = () => {
     return {
       sections: [],
       possibleWidgets: [
-        lpdHelper.generateWidget(
+        lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
           MissileToOwnshipDetected_ID,
           'highWarning',
           100,
           100,
           200,
           200,
+          '/pearce-screen',
           false,
           true,
           1,
@@ -130,11 +117,10 @@ const missileToOwnshipDetectedMessageLow = () => {
               lpdHelper.generateBaseElement(
                 uuid(),
                 'visual',
-                100,
-                100,
+                80,
+                80,
                 0,
                 0,
-                undefined,
                 undefined,
                 undefined,
                 undefined,
@@ -147,8 +133,7 @@ const missileToOwnshipDetectedMessageLow = () => {
                   width: '50%',
                 },
               ),
-              WARNING_LOGO,
-              'warning',
+              'DANGER_ICON',
             ),
             lpdHelper.generateTextElement(
               lpdHelper.generateBaseElement(
@@ -158,7 +143,6 @@ const missileToOwnshipDetectedMessageLow = () => {
                 200,
                 75,
                 0,
-                undefined,
                 undefined,
                 undefined,
                 undefined,
@@ -178,43 +162,67 @@ const missileToOwnshipDetectedMessageLow = () => {
           undefined,
           undefined,
         ),
-      ],
+      )],
     };
 }
 
 const acaDefectMessageLow = () => {
     return {
         sections: [],
-        possibleWidgets: [lpdHelper.generateWidget(
+        possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
             uuid(),
             'highWarning',
             500,
             500,
             20,
             200,
+            '/pearce-screen',
             false,
             true,
             1,
-            [],
-        )],
+            [
+                lpdHelper.generateTableElement(lpdHelper.generateBaseElement(
+                    uuid(),
+                    'visual',
+                    50,
+                    200,
+                    0,
+                    0,
+                ),
+                2,
+            2,
+        [['Defect', 'Engine'], ['Altitude', 'Low']]),
+            ],
+        ))],
     };
 }
 
 const acaHeadingToBaseMessageLow = () => {
     return {
         sections: [],
-        possibleWidgets: [lpdHelper.generateWidget(
+        possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
             uuid(),
             'message',
             500,
             500,
             20,
             200,
+            '/pearce-screen',
             false,
             true,
             1,
-            [],
-        )],
+            [
+                lpdHelper.generateTextElement(lpdHelper.generateBaseElement(
+                    uuid(),
+                    'visual',
+                    30,
+                    200,
+                    0,
+                    0,
+                ),
+                'Aircraft heading to base'),
+            ],
+        ))],
     };
 }
 

@@ -6,168 +6,220 @@ import { MissileToOwnshipDetected_ID, acaFuelLow_ID } from "./lowLPD";
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageHigh = () => {
-    return {
-        sections: [],
-        possibleWidgets: [lpdHelper.generateWidget(
-            'request',
-            'request',
-            100,
-            100,
-            200,
-            200,
-            false,
-            false,
-            1,
-            [],
-        )],
-    };
+  return {
+      sections: [],
+      possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
+          uuid(),
+          'request',
+          100,
+          100,
+          200,
+          200,
+          '/pearce-screen',
+          false,
+          false,
+          1,
+          [
+              lpdHelper.generateIconElement(lpdHelper.generateBaseElement(
+                  uuid(),
+                  'visual',
+                  30,
+                  30,
+                  0,
+                  0,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+              ),
+              'DRONE_ICON',
+          ),
+              lpdHelper.generateButtonElement(lpdHelper.generateBaseElement(
+                  uuid(),
+                  'visual',
+                  30,
+                  80,
+                  0,
+                  0,
+              ), 
+              'Deny',
+          ),
+              lpdHelper.generateButtonElement(lpdHelper.generateBaseElement(
+                  uuid(),
+                  'visual',
+                  30,
+                  80,
+                  0,
+                  0,
+              ),
+              'Approve',),
+          ],
+      ))],
+  };
 }
 
 const acaFuelLowMessageHigh = () => {
-    return {
-        sections: [],
-        possibleWidgets: [lpdHelper.generateWidget(
-            acaFuelLow_ID,
-            'message',
-            500,
-            500,
-            20,
-            20,
-            true,
-            true,
-            1,
-            [
-              lpdHelper.generateTextElement(
-                lpdHelper.generateBaseElement(
-                    uuid(),
-                    'visual',
-                    100,
-                    100,
-                    0,
-                    0,
-                    undefined, 
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    false,
-                    true,
-                    {
-                        background: "black",
-                        color: "#02d118"
-                    }
-                ),
-                "High Stress: ACA fuel low. Heading back to base now."
-            )
-        
-            ],
-        )],
-    };
+  return {
+      sections: [],
+      possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
+          acaFuelLow_ID,
+          'message',
+          500,
+          500,
+          150,
+          150,
+          '/minimap',
+          false,
+          false,
+          1,
+          [
+              lpdHelper.generateTableElement(lpdHelper.generateBaseElement(
+                  uuid(),
+                  'visual',
+                  50,
+                  200,
+                  0,
+                  0,
+              ),
+              2,
+              2,
+              [['Fuel', 'Low'],['Altitude', 'Low']],
+              )
+          ],
+      ))],
+  };
 }
 
-export const missileToOwnshipDetectedMessageHigh = () => {
-    return {
+const missileToOwnshipDetectedMessageHigh = () => {
+  return {
+    sections: [],
+    possibleWidgets: [
+      lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
+        MissileToOwnshipDetected_ID,
+        'highWarning',
+        100,
+        100,
+        200,
+        200,
+        '/pearce-screen',
+        false,
+        true,
+        1,
+        [
+          lpdHelper.generateIconElement(
+            lpdHelper.generateBaseElement(
+              uuid(),
+              'visual',
+              80,
+              80,
+              0,
+              0,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              false,
+              false,
+              {
+                display: 'block',
+                margin: 'auto',
+                width: '50%',
+              },
+            ),
+            'DANGER_ICON',
+          ),
+          lpdHelper.generateTextElement(
+            lpdHelper.generateBaseElement(
+              uuid(),
+              'visual',
+              70,
+              200,
+              75,
+              0,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              false,
+              false,
+              {
+                background: 'black',
+                color: '#02d118',
+                fontWeight: 'bold',
+                fontSize: '16px',
+              },
+            ),
+            'Low Stress: Missile to ownship detected! T-30 till impact',
+          ),
+        ],
+        undefined,
+        undefined,
+      ),
+    )],
+  };
+}
+
+const acaDefectMessageHigh = () => {
+  return {
       sections: [],
-      possibleWidgets: [
-        lpdHelper.generateWidget(
-          MissileToOwnshipDetected_ID,
+      possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
+          uuid(),
           'highWarning',
-          100,
-          100,
+          500,
+          500,
+          20,
           200,
-          200,
+          '/pearce-screen',
           false,
           true,
           1,
           [
-            lpdHelper.generateIconElement(
-              lpdHelper.generateBaseElement(
-                uuid(),
-                'visual',
-                300,
-                300,
-                0,
-                0,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                false,
-                false,
-                {
-                  display: 'block',
-                  margin: 'auto',
-                  width: '50%',
-                },
+              lpdHelper.generateTableElement(lpdHelper.generateBaseElement(
+                  uuid(),
+                  'visual',
+                  50,
+                  200,
+                  0,
+                  0,
               ),
-              WARNING_LOGO,
-              'warning',
-            ),
-            lpdHelper.generateTextElement(
-              lpdHelper.generateBaseElement(
-                uuid(),
-                'visual',
-                70,
-                200,
-                75,
-                0,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                false,
-                false,
-                {
-                  background: 'black',
-                  color: '#02d118',
-                  fontWeight: 'bold',
-                  fontSize: '16px',
-                },
-              ),
-              'High Stress: Missile to ownship detected! T-30 till impact',
-            ),
+              2,
+          2,
+      [['Defect', 'Engine'], ['Altitude', 'Low']]),
           ],
-        ),
-      ],
-    };
-}
-
-const acaDefectMessageHigh = () => {
-    return {
-        sections: [],
-        possibleWidgets: [lpdHelper.generateWidget(
-            'acaDefect',
-            'message',
-            100,
-            100,
-            200,
-            200,
-            false,
-            true,
-            1,
-            [],
-        )],
-    };
+      ))],
+  };
 }
 
 const acaHeadingToBaseMessageHigh = () => {
-    return {
-        sections: [],
-        possibleWidgets: [lpdHelper.generateWidget(
-            'acaHeadingToBase',
-            'message',
-            100,
-            100,
-            200,
-            200,
-            false,
-            true,
-            1,
-            [],
-        )],
-    };
+  return {
+      sections: [],
+      possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
+          uuid(),
+          'message',
+          500,
+          500,
+          20,
+          200,
+          '/pearce-screen',
+          false,
+          true,
+          1,
+          [
+              lpdHelper.generateTextElement(lpdHelper.generateBaseElement(
+                  uuid(),
+                  'visual',
+                  30,
+                  200,
+                  0,
+                  0,
+              ),
+              'Aircraft heading to base'),
+          ],
+      ))],
+  };
 }
 
 // Map each message type to its corresponding LPD function
