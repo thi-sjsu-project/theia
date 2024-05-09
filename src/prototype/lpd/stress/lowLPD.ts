@@ -3,13 +3,42 @@ import lpdHelper from "src/utils/lpdHelper";
 import { v4 as uuid } from 'uuid';
 import WARNING_LOGO from "src/icons/warning-5-256.ico"
 import { l } from "node_modules/vite/dist/node/types.d-aGj9QkWt";
+import type { Element } from "src/types/element";
 
 export const MissileToOwnshipDetected_ID = uuid();
 export const acaFuelLow_ID = uuid();
-
+export const elements: Element[] = [];
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageLow = () => {
+    elements.push(
+      lpdHelper.generateIconElement(
+        lpdHelper.generateBaseElement(
+          uuid(),
+          'visual',
+          30,
+          30,
+          0,
+          0,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+        ),
+        'DRONE_ICON',
+      ),
+      lpdHelper.generateButtonElement(
+        lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80, 0, 0),
+        'Deny',
+      ),
+      lpdHelper.generateButtonElement(
+        lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80, 0, 0),
+        'Approve',
+      ),
+    );
     return {
         sections: [],
         possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
@@ -23,44 +52,7 @@ const requestApprovalToAttackMessageLow = () => {
             false,
             false,
             1,
-            [
-                lpdHelper.generateIconElement(lpdHelper.generateBaseElement(
-                    uuid(),
-                    'visual',
-                    30,
-                    30,
-                    0,
-                    0,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                    undefined,
-                ),
-                'DRONE_ICON',
-            ),
-                lpdHelper.generateButtonElement(lpdHelper.generateBaseElement(
-                    uuid(),
-                    'visual',
-                    30,
-                    80,
-                    0,
-                    0,
-                ), 
-                'Deny',
-            ),
-                lpdHelper.generateButtonElement(lpdHelper.generateBaseElement(
-                    uuid(),
-                    'visual',
-                    30,
-                    80,
-                    0,
-                    0,
-                ),
-                'Approve',),
-            ],
+            elements,
         ))],
     };
 }
