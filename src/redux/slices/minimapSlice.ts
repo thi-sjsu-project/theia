@@ -4,8 +4,8 @@ import type {
   Widget,
   VehicleWidget,
   WidgetMap,
-  Screen,
 } from 'src/types/widget';
+import type { Screen } from 'src/types/support-types';
 import type { Message } from 'src/types/schema-types';
 import type { Element, ElementMap } from 'src/types/element';
 import type { LinkedSectionWidget, Section } from 'src/types/support-types';
