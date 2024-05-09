@@ -1,15 +1,10 @@
 import { v4 as uuid } from 'uuid';
 import type { Element, IconElement } from 'src/types/element';
-import OWNSHIP_LOGO from 'src/icons/currentPosition.svg';
+import OWNSHIP_LOGO from 'src/icons/ownship.svg';
 import DRONE_LOGO from 'src/icons/drone.svg';
 import type { VehicleWidget, WidgetMap } from 'src/types/widget';
 
-const uuid1 = uuid();
-const uuid2 = uuid();
-const uuid3 = uuid();
-const uuid4 = uuid();
-const uuid5 = uuid();
-const uuid6 = uuid();
+const ownshipUuid = uuid();
 
 const createDroneElement = (widgetId: string): IconElement => ({
   type: 'icon',
@@ -33,24 +28,29 @@ const createDroneWidget = (
   w: number,
   h: number,
   vehicleId: number,
-  id: string,
-): VehicleWidget => ({
-  elements: [createDroneElement(id)],
-  id,
-  sectionType: 'free',
-  type: 'vehicle',
-  screen: '/minimap',
-  vehicleId,
+): VehicleWidget => {
+  const id = uuid();
+  return {
+    elements: [createDroneElement(id)],
+    id,
+    sectionType: 'free',
+    type: 'vehicle',
+    screen: '/minimap',
+    vehicleId,
 
-  x,
-  y,
-  w,
-  h,
+    x,
+    y,
+    w,
+    h,
 
-  canOverlap: false,
-  useElementLocation: false,
-  maxAmount: 10,
-});
+    speed: Math.random() * 0.5 + 0.25,
+    rotation: Math.random() * Math.PI,
+
+    canOverlap: false,
+    useElementLocation: false,
+    maxAmount: 10,
+  };
+};
 
 const ownshipElement: IconElement = {
   type: 'icon',
@@ -59,23 +59,26 @@ const ownshipElement: IconElement = {
   src: OWNSHIP_LOGO,
   tag: 'ownship',
 
-  widgetId: uuid1,
+  widgetId: ownshipUuid,
 
-  h: 50,
-  w: 50,
+  h: 56,
+  w: 56,
 
   xWidget: 0,
   yWidget: 0,
 };
 
 export const ownship: VehicleWidget = {
-  id: uuid1,
+  id: ownshipUuid,
   vehicleId: 0,
 
   x: 400,
   y: 950,
-  w: 50,
-  h: 50,
+  w: 56,
+  h: 56,
+
+  speed: 1.5,
+  rotation: 0.2 * Math.PI, // 36deg
 
   screen: '/minimap',
   sectionType: 'free',
@@ -87,13 +90,14 @@ export const ownship: VehicleWidget = {
   maxAmount: 10,
 };
 
-const drone1 = createDroneWidget(500, 200, 50, 50, 1, uuid2);
-const drone2 = createDroneWidget(1500, 550, 50, 50, 2, uuid3);
-const drone3 = createDroneWidget(1500, 350, 50, 50, 3, uuid4);
-const drone4 = createDroneWidget(200, 900, 50, 50, 4, uuid5);
-const drone5 = createDroneWidget(1150, 750, 50, 50, 5, uuid6);
+const drone1 = createDroneWidget(500, 300, 80, 80, 1);
+const drone2 = createDroneWidget(1500, 550, 80, 80, 2);
+const drone3 = createDroneWidget(1500, 350, 80, 80, 3);
+const drone4 = createDroneWidget(200, 900, 80, 80, 4);
+const drone5 = createDroneWidget(1150, 750, 80, 80, 5);
+const drone6 = createDroneWidget(750, 400, 80, 80, 6);
 
-export const drones = [drone1, drone2, drone3, drone4, drone5];
+export const drones = [drone1, drone2, drone3, drone4, drone5, drone6];
 
 export const initialShips: WidgetMap = {
   [ownship.id]: ownship,
@@ -102,4 +106,5 @@ export const initialShips: WidgetMap = {
   [drone3.id]: drone3,
   [drone4.id]: drone4,
   [drone5.id]: drone5,
+  [drone6.id]: drone6,
 };

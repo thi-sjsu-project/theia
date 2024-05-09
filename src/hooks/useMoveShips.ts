@@ -5,92 +5,58 @@ import {
   getOwnship,
   updateShipPosition,
 } from 'src/redux/slices/minimapSlice';
-import { OWNSHIP_TRAJECTORY } from 'src/utils/constants';
+import type { VehicleWidget } from 'src/types/widget';
+import { SHIP_BOUNDS } from 'src/utils/constants';
 
 const useMoveShips = () => {
   const dispatch = useAppDispatch();
   const ownship = useAppSelector(getOwnship);
   const drones = useAppSelector(getDrones);
 
+  const updatePosition = (ship: VehicleWidget) => {
+    let dx = Math.cos(ship.rotation) * ship.speed;
+    let dy = Math.sin(ship.rotation) * ship.speed;
+    if (ship.x <= SHIP_BOUNDS.left) dx = Math.abs(dx);
+    else if (ship.x >= SHIP_BOUNDS.right) dx = -Math.abs(dx);
+    if (ship.y <= SHIP_BOUNDS.top) dy = -Math.abs(dy);
+    else if (ship.y >= SHIP_BOUNDS.bottom) dy = Math.abs(dy);
+    const newRotation = Math.atan2(dy, dx);
+
+    dispatch(
+      updateShipPosition(ship.id, ship.x + dx, ship.y - dy, newRotation),
+    );
+  };
+
   useEffect(() => {
     console.log('drones', drones);
   }, [drones.length]);
 
   useEffect(() => {
-    if (!ownship) return;
+    if (!ownship || ownship.type !== 'vehicle') return;
 
-    // update ownship position every 500ms (0.5s)
     const timer = setInterval(() => {
-      if (
-        ownship.x + OWNSHIP_TRAJECTORY.xSpeed <= OWNSHIP_TRAJECTORY.end[0] &&
-        ownship.y - OWNSHIP_TRAJECTORY.ySpeed >= OWNSHIP_TRAJECTORY.end[1]
-      ) {
-        // only update ownship position if within bounds
-        dispatch(
-          updateShipPosition(
-            ownship.id,
-            ownship.x + OWNSHIP_TRAJECTORY.xSpeed,
-            ownship.y - OWNSHIP_TRAJECTORY.ySpeed,
-          ),
-        );
-      }
-    }, 500);
+      updatePosition(ownship);
+    }, 100);
 
     return () => clearInterval(timer);
   }, [ownship, dispatch]);
 
   useEffect(() => {
-    if (!drones) return;
+    if (!drones || drones.some((widget) => widget.type !== 'vehicle')) return;
 
-    // random drone movement every 1500ms (1.5s)
+    // random drone movement every 100ms
     const timer = setInterval(() => {
-      const bounds = {
-        left: 400,
-        right: 1920,
-        top: 1080,
-        bottom: 50,
-      };
-      const droneMove = {
-        x: 5,
-        y: 0,
-      };
-
       drones.forEach((drone) => {
-        droneMove.x = Math.floor(Math.random() * 10) - 5;
-        droneMove.y = Math.floor(Math.random() * 10) - 5;
-
-        if (!drone) return;
-
-        // only move drone if within defined bounds
-        if (
-          drone.x + droneMove.x < bounds.left ||
-          drone.x + droneMove.x > bounds.right
-        ) {
-          droneMove.x = -droneMove.x;
-        }
-        if (
-          drone.y + droneMove.y < bounds.bottom ||
-          drone.y + droneMove.y > bounds.top
-        ) {
-          droneMove.y = -droneMove.y;
-        }
-
-        dispatch(
-          updateShipPosition(
-            drone.id,
-            drone.x + droneMove.x,
-            drone.y + droneMove.y,
-          ),
-        );
+        updatePosition(drone as VehicleWidget);
       });
-    }, 1500);
+    }, 100);
 
     return () => clearInterval(timer);
 
     // dependencies omitted because drones array is changing too frequently
     // some warning/issue of selector returning different values despite same parameters
     /* eslint-disable-next-line react-hooks/exhaustive-deps */
-  }, [drones.length]);
+  }, [drones[0], drones.length]);
 };
 
 export default useMoveShips;

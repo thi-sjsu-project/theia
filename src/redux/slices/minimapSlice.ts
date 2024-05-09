@@ -66,17 +66,22 @@ export const minimapSlice = createSlice({
     },
 
     updateShipPosition: {
-      prepare(shipId: string, x: number, y: number) {
+      prepare(shipId: string, x: number, y: number, rotation: number) {
         return {
-          payload: { shipId, x, y },
+          payload: { shipId, x, y, rotation },
         };
       },
 
       reducer: (
         state,
-        action: PayloadAction<{ shipId: string; x: number; y: number }>,
+        action: PayloadAction<{
+          shipId: string;
+          x: number;
+          y: number;
+          rotation: number;
+        }>,
       ) => {
-        const { shipId, x, y } = action.payload;
+        const { shipId, x, y, rotation } = action.payload;
         const ship = state.widgets[shipId];
 
         // check if ship exists
@@ -95,6 +100,7 @@ export const minimapSlice = createSlice({
           ...ship,
           x,
           y,
+          rotation,
         };
       },
     },

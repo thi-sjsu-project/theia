@@ -5,6 +5,7 @@ import useMoveShips from 'src/hooks/useMoveShips';
 import useGaze from 'src/hooks/useGaze';
 import { getElementsInGaze } from 'src/redux/slices/gazeSlice';
 import { useEffect } from 'react';
+import background from 'src/assets/minimap-bg.jpg';
 
 const Minimap = () => {
   const widgets = useAppSelector((state) =>
@@ -22,7 +23,10 @@ const Minimap = () => {
   }, [elementsInGaze]);
 
   return (
-    <div className="absolute top-0 left-0 bg-stone-200 w-[1920px] h-[1080px] hover:cursor-pointer">
+    <div
+      className="absolute top-0 left-0 bg-stone-200 w-[1920px] h-[1080px] cursor-none"
+      style={{ backgroundImage: `url(${background})` }}
+    >
       {Object.keys(widgets).map((widgetId) => (
         <Widget key={widgetId} widget={widgets[widgetId]} />
       ))}

@@ -14,9 +14,9 @@ export default defineConfig({
       overlay: false,
     }),
   ],
-  server: {
-    open: true,
-  },
+  //server: {
+  //  open: true,
+  //},
   test: {
     globals: true,
     environment: 'jsdom',
