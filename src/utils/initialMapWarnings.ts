@@ -3,10 +3,12 @@
 import type { MapWarningWidget, WidgetMap } from 'src/types/widget';
 import { v4 as uuid } from 'uuid';
 
-const defaults = {
-  w: 1, // w and h are ignored currently since `small` is used to determine which size the widget should have
-  h: 1,
+import threatMissileLgEmph from 'src/assets/icons/threats/missile-lg-emph.svg';
+import threatArtillerySmReg from 'src/assets/icons/threats/artillery-sm-reg.svg';
+import threatAirDefenseSmReg from 'src/assets/icons/threats/airdefense-sm-reg.svg';
+import threatRadarSmReg from 'src/assets/icons/threats/radar-sm-reg.svg';
 
+const defaultWidget = {
   screen: '/minimap',
   sectionType: 'free',
   type: 'map-warning',
@@ -16,116 +18,155 @@ const defaults = {
   maxAmount: 10,
 } as const;
 
+const defaultIcon = {
+  type: 'icon',
+  modality: 'visual',
+  xWidget: 0,
+  yWidget: 0,
+} as const;
+
 const warn1: MapWarningWidget = {
-  ...defaults,
-  elements: [],
-
+  ...defaultWidget,
   id: uuid(),
-
   x: 750,
   y: 200,
-
-  emphasised: true,
-  small: false,
-  threatType: 'missile',
+  w: 128,
+  h: 129,
+  elements: [
+    {
+      ...defaultIcon,
+      id: uuid(),
+      src: threatMissileLgEmph,
+      w: 128,
+      h: 129,
+    },
+  ],
 };
 
 const warn2: MapWarningWidget = {
-  ...defaults,
-  elements: [],
-
+  ...defaultWidget,
   id: uuid(),
-
   x: 900,
   y: 50,
-
-  emphasised: false,
-  small: true,
-  threatType: 'air-defense',
+  w: 80,
+  h: 81,
+  elements: [
+    {
+      ...defaultIcon,
+      id: uuid(),
+      src: threatAirDefenseSmReg,
+      w: 80,
+      h: 81,
+    },
+  ],
 };
 
 const warn3: MapWarningWidget = {
-  ...defaults,
-  elements: [],
-
+  ...defaultWidget,
   id: uuid(),
-
   x: 300,
   y: 100,
-
-  emphasised: false,
-  small: true,
-  threatType: 'air-defense',
+  w: 80,
+  h: 81,
+  elements: [
+    {
+      ...defaultIcon,
+      id: uuid(),
+      src: threatAirDefenseSmReg,
+      w: 80,
+      h: 81,
+    },
+  ],
 };
 
 const warn4: MapWarningWidget = {
-  ...defaults,
-  elements: [],
-
+  ...defaultWidget,
   id: uuid(),
-
   x: 500,
   y: 200,
-
-  emphasised: false,
-  small: true,
-  threatType: 'radar',
+  w: 80,
+  h: 81,
+  elements: [
+    {
+      ...defaultIcon,
+      id: uuid(),
+      src: threatRadarSmReg,
+      w: 80,
+      h: 81,
+    },
+  ],
 };
 
 const warn5: MapWarningWidget = {
-  ...defaults,
-  elements: [],
-
+  ...defaultWidget,
   id: uuid(),
-
   x: 950,
   y: 400,
-
-  emphasised: false,
-  small: true,
-  threatType: 'artillery',
+  w: 80,
+  h: 81,
+  elements: [
+    {
+      ...defaultIcon,
+      id: uuid(),
+      src: threatArtillerySmReg,
+      w: 80,
+      h: 81,
+    },
+  ],
 };
 
 const warn6: MapWarningWidget = {
-  ...defaults,
-  elements: [],
-
+  ...defaultWidget,
   id: uuid(),
-
   x: 850,
   y: 700,
-
-  emphasised: false,
-  small: true,
-  threatType: 'radar',
+  w: 80,
+  h: 81,
+  elements: [
+    {
+      ...defaultIcon,
+      id: uuid(),
+      src: threatRadarSmReg,
+      w: 80,
+      h: 81,
+    },
+  ],
 };
 
 const warn7: MapWarningWidget = {
-  ...defaults,
-  elements: [],
-
+  ...defaultWidget,
   id: uuid(),
-
   x: 1300,
   y: 100,
-
-  emphasised: false,
-  small: true,
-  threatType: 'radar',
+  w: 80,
+  h: 81,
+  elements: [
+    {
+      ...defaultIcon,
+      id: uuid(),
+      src: threatRadarSmReg,
+      w: 80,
+      h: 81,
+    },
+  ],
 };
 
 const warn8: MapWarningWidget = {
-  ...defaults,
-  elements: [],
-
+  ...defaultWidget,
   id: uuid(),
-
   x: 1600,
   y: 350,
-
-  emphasised: false,
-  small: true,
-  threatType: 'air-defense',
+  w: 80,
+  h: 81,
+  elements: [
+    {
+      ...defaultIcon,
+      id: uuid(),
+      src: threatAirDefenseSmReg,
+      w: 80,
+      h: 81,
+    },
+  ],
 };
 
 export const initailMapWarnings: WidgetMap = {

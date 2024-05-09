@@ -44,9 +44,6 @@ export type VehicleWidget = BaseWidget & {
 
 export type MapWarningWidget = BaseWidget & {
   type: 'map-warning';
-  small: boolean;
-  emphasised: boolean;
-  threatType: 'radar' | 'artillery' | 'air-defense' | 'missile';
 };
 
 export type CustomWidget = BaseWidget & {
