@@ -81,7 +81,7 @@ const Layout = () => {
   }, [keyDown]);
 
   useEffect(() => {
-    if (mouseButtonDown.toString() !== '') {
+    if (mouseButtonDown.toString() !== '3') {
       const time = new Date().toISOString();
       dispatch(
         addKeyDown({
@@ -104,10 +104,10 @@ const Layout = () => {
   }, [keyUp]);
 
   useEffect(() => {
-    if (mouseButtonUp !== '') {
+    if (mouseButtonUp !== '3') {
       dispatch(removeKeyDown(mouseButtonUp.toString()));
-      document.dispatchEvent(new KeyboardEvent('mouseup', { key: '_' }));
-      document.dispatchEvent(new KeyboardEvent('mousedown', { key: '_' }));
+      document.dispatchEvent(new MouseEvent('mouseup', { button: 3 }));
+      document.dispatchEvent(new MouseEvent('mousedown', { button: 3 }));
     }
   }, [mouseButtonUp]);
 
