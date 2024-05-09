@@ -1,11 +1,44 @@
 import type { Message } from "src/types/schema-types";
 import { v4 as uuid } from 'uuid';
 import lpdHelper from "src/utils/lpdHelper";
-import WARNING_LOGO from "src/icons/warning-5-256.ico"
-import { MissileToOwnshipDetected_ID, acaFuelLow_ID } from "./lowLPD";
+import DANGER_ICON from 'src/icons/danger.svg';
+import DRONE_ICON from 'src/icons/drone.svg';
+import type { Element } from "src/types/element";
+import { elements } from "./lowLPD";
+
+export const MissileToOwnshipDetected_ID = uuid();
+export const acaFuelLow_ID = uuid();
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageHigh = () => {
+    elements.push(
+      lpdHelper.generateIconElement(
+        lpdHelper.generateBaseElement(
+          uuid(),
+          'visual',
+          30,
+          30,
+          0,
+          0,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+        ),
+        DRONE_ICON,
+      ),
+      lpdHelper.generateButtonElement(
+        lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80, 0, 0),
+        'Deny',
+      ),
+      lpdHelper.generateButtonElement(
+        lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80, 0, 0),
+        'Approve',
+      ),
+    );
   return {
       sections: [],
       possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
@@ -19,49 +52,26 @@ const requestApprovalToAttackMessageHigh = () => {
           false,
           false,
           1,
-          [
-              lpdHelper.generateIconElement(lpdHelper.generateBaseElement(
-                  uuid(),
-                  'visual',
-                  30,
-                  30,
-                  0,
-                  0,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-              ),
-              'DRONE_ICON',
-          ),
-              lpdHelper.generateButtonElement(lpdHelper.generateBaseElement(
-                  uuid(),
-                  'visual',
-                  30,
-                  80,
-                  0,
-                  0,
-              ), 
-              'Deny',
-          ),
-              lpdHelper.generateButtonElement(lpdHelper.generateBaseElement(
-                  uuid(),
-                  'visual',
-                  30,
-                  80,
-                  0,
-                  0,
-              ),
-              'Approve',),
-          ],
+          elements,
       ))],
   };
 }
 
 const acaFuelLowMessageHigh = () => {
+    elements.push(
+        lpdHelper.generateTableElement(lpdHelper.generateBaseElement(
+            uuid(),
+            'visual',
+            50,
+            200,
+            0,
+            0,
+        ),
+        2,
+        2,
+        [['Fuel', 'Low'],['Altitude', 'Low']],
+        )
+    );
   return {
       sections: [],
       possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
@@ -75,41 +85,14 @@ const acaFuelLowMessageHigh = () => {
           false,
           false,
           1,
-          [
-              lpdHelper.generateTableElement(lpdHelper.generateBaseElement(
-                  uuid(),
-                  'visual',
-                  50,
-                  200,
-                  0,
-                  0,
-              ),
-              2,
-              2,
-              [['Fuel', 'Low'],['Altitude', 'Low']],
-              )
-          ],
+          elements,
       ))],
   };
 }
 
 const missileToOwnshipDetectedMessageHigh = () => {
-  return {
-    sections: [],
-    possibleWidgets: [
-      lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
-        'list',
-        'highWarning',
-        100,
-        100,
-        200,
-        200,
-        '/pearce-screen',
-        false,
-        true,
-        1,
-        [
-          lpdHelper.generateIconElement(
+    elements.push(
+        lpdHelper.generateIconElement(
             lpdHelper.generateBaseElement(
               uuid(),
               'visual',
@@ -154,71 +137,86 @@ const missileToOwnshipDetectedMessageHigh = () => {
             ),
             'Low Stress: Missile to ownship detected! T-30 till impact',
           ),
-        ],
-        undefined,
-        undefined,
+      );
+  return {
+    sections: [],
+    possibleWidgets: [
+      lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
+        'list',
+        'highWarning',
+        100,
+        100,
+        200,
+        200,
+        '/pearce-screen',
+        false,
+        true,
+        1,
+        elements,
       ),
     )],
   };
 }
 
 const acaDefectMessageHigh = () => {
-  return {
-      sections: [],
-      possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
-          'list',
-          'highWarning',
-          500,
-          500,
-          20,
-          200,
-          '/pearce-screen',
-          false,
-          true,
-          1,
-          [
-              lpdHelper.generateTableElement(lpdHelper.generateBaseElement(
-                  uuid(),
-                  'visual',
-                  50,
-                  200,
-                  0,
-                  0,
-              ),
-              2,
-          2,
+  elements.push(
+    lpdHelper.generateTableElement(lpdHelper.generateBaseElement(
+      uuid(),
+      'visual',
+      50,
+      200,
+      0,
+      0,
+    ),
+      2,
+      2,
       [['Defect', 'Engine'], ['Altitude', 'Low']]),
-          ],
-      ))],
+  );
+  return {
+    sections: [],
+    possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
+      'list',
+      'highWarning',
+      500,
+      500,
+      20,
+      200,
+      '/pearce-screen',
+      false,
+      true,
+      1,
+      elements,
+    ))],
   };
 }
 
 const acaHeadingToBaseMessageHigh = () => {
+  elements.push(
+    lpdHelper.generateTextElement(lpdHelper.generateBaseElement(
+      uuid(),
+      'visual',
+      30,
+      200,
+      0,
+      0,
+    ),
+      'Aircraft heading to base'),
+  );
   return {
-      sections: [],
-      possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
-          'list',
-          'message',
-          500,
-          500,
-          20,
-          200,
-          '/pearce-screen',
-          false,
-          true,
-          1,
-          [
-              lpdHelper.generateTextElement(lpdHelper.generateBaseElement(
-                  uuid(),
-                  'visual',
-                  30,
-                  200,
-                  0,
-                  0,
-              ),
-              'Aircraft heading to base'),
-          ],
-      ))],
+    sections: [],
+    possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
+      'list',
+      'message',
+      500,
+      500,
+      20,
+      200,
+      '/pearce-screen',
+      false,
+      true,
+      1,
+      elements,
+    ))],
   };
 }
 

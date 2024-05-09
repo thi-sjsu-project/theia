@@ -4,12 +4,12 @@ import type * as Widget from "src/types/widget";
 
 import type { Properties } from "csstype";
 import type { Modality } from "src/types/modality";
-import type { ScreenType, Section, SectionType } from "src/types/support-types";
+import type { Screen, Section, SectionType } from "src/types/support-types";
 
 // Functions to create sections, widgets, and elements
 const generateSection = (
   id: string,
-  screen: ScreenType,
+  screen: Screen,
   x: number,
   y: number,
   w: number,
@@ -37,7 +37,7 @@ const generateBaseWidget = (
   y: number,
   w: number,
   h: number,
-  screen: ScreenType,
+  screen: Screen,
   canOverlap: boolean,
   useElementLocation: boolean,
   maxAmount: number,
