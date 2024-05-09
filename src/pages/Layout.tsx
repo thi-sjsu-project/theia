@@ -54,6 +54,7 @@ const Layout = () => {
       GAZE_RADIUS,
       CIRCLE_PERCENTAGE_THRESH,
       ELEMENT_PERCENTAGE_THRESH,
+      pathname,
     );
     dispatch(setElementsInGaze(elementsInGaze));
     if (elementsInGaze.length > 0) {

@@ -244,21 +244,21 @@ export const minimapSlice = createSlice({
     getWidgets: (state) => state.widgets,
     getLeftScreenWidgets: (state) => {
       const minimapWidgets = Object.keys(state.widgets).filter(
-        (id) => state.widgets[id].screen === 'left',
+        (id) => state.widgets[id].screen === '/pearce-screen',
       );
 
       return minimapWidgets.map((id) => state.widgets[id]);
     },
     getMinimapWidgets: (state) => {
       const minimapWidgets = Object.keys(state.widgets).filter(
-        (id) => state.widgets[id].screen === 'minimap',
+        (id) => state.widgets[id].screen === '/minimap',
       );
 
       return minimapWidgets.map((id) => state.widgets[id]);
     },
     getRightScreenWidgets: (state) => {
       const minimapWidgets = Object.keys(state.widgets).filter(
-        (id) => state.widgets[id].screen === 'right',
+        (id) => state.widgets[id].screen === '/right-screen',
       );
 
       return minimapWidgets.map((id) => state.widgets[id]);

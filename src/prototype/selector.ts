@@ -40,7 +40,7 @@ const selector = ({ message }: SelectorProps) => {
     id: 'list',
     sectionType: 'tinder',
     type: 'list',
-    screen: 'left',
+    screen: '/pearce-screen',
     elements: [],
     x: 50,
     y: 40,

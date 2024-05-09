@@ -15,7 +15,7 @@ const createDroneWidget = (
   id: uuid(),
   sectionType: 'free',
   type: 'vehicle',
-  screen: 'minimap',
+  screen: '/minimap',
   vehicleId,
 
   x,
@@ -51,7 +51,7 @@ export const ownship: VehicleWidget = {
   w: 50,
   h: 50,
 
-  screen: 'minimap',
+  screen: '/minimap',
   sectionType: 'free',
   type: 'vehicle',
   elements: [ownshipElement],

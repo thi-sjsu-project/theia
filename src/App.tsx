@@ -13,7 +13,7 @@ const App = () => {
         <Route path="/" element={<Layout />}>
           <Route path="/prototype" element={<Prototype />} />
           <Route path="minimap" element={<Minimap />} />
-          <Route path="left-screen" element={<LeftScreen />} />
+          <Route path="pearce-screen" element={<LeftScreen />} />
           <Route path="right-screen" element={<RightScreen />} />
         </Route>
       </Routes>

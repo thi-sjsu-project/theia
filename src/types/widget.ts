@@ -12,7 +12,7 @@ export type BaseWidget = {
   w: number;
   h: number;
 
-  screen: 'left' | 'minimap' | 'right';
+  screen: '/pearce-screen' | '/minimap' | '/right-screen';
 
   padding?: number;
 

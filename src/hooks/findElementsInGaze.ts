@@ -22,6 +22,7 @@ export function findElementsInGaze(
   radius: number,
   inCirclePercentageThresh: number,
   elementPercentageThesh: number,
+  screen: string,
 ) {
   const elemsInGaze: ElementInGaze[] = [];
 
@@ -34,22 +35,25 @@ export function findElementsInGaze(
   Object.keys(widgets).forEach((widgetId) => {
     const widget = widgets[widgetId];
 
-    //find the widgets that are within our circle
-    let isIn = false;
-    for (let x = widget.x; x < widget.x + widget.w; x++) {
-      //find the number of pixels within the element that are in the gaze circle
-      if (!isIn) {
-        for (let y = widget.y; y < widget.y + widget.h; y++) {
-          if (distance(x, y, mousePosition.x, mousePosition.y) < radius) {
-            widgetsInGaze.push(widget);
-            isIn = true;
-            //console.log('isin!');
-            break;
+    if (widget.screen === screen){ //make sure the widget we are on is in the screen we are interacting with and not a different screen
+
+      //find the widgets that are within our circle
+      let isIn = false;
+      for (let x = widget.x; x < widget.x + widget.w; x++) {
+        //find the number of pixels within the element that are in the gaze circle
+        if (!isIn) {
+          for (let y = widget.y; y < widget.y + widget.h; y++) {
+            if (distance(x, y, mousePosition.x, mousePosition.y) < radius) {
+              widgetsInGaze.push(widget);
+              isIn = true;
+              //console.log('isin!');
+              break;
+            }
           }
         }
       }
     }
-    // const topLeft: Position = {x:widget.x, y:widget.y};
+    // const topLeft: Position = {x:widget.x, y:widget.y}; //old bad way without distance formula
     // const topRight: Position = {x:widget.x+widget.w, y:widget.y};
     // const bottomLeft: Position = {x:widget.x, y:widget.y+widget.h};
     // const bottomRight: Position = {x:widget.x+widget.w, y:widget.y+widget.h};
@@ -64,9 +68,9 @@ export function findElementsInGaze(
     // }
   });
 
-  if (widgetsInGaze.length > 0) {
+  //if (widgetsInGaze.length > 0) {
     //console.log("widgets in gaze:", widgetsInGaze)
-  }
+  //}
 
   widgetsInGaze.forEach(function (widget, widgetIndex) {
     widget.elements.forEach(function (element, elementIndex) {
