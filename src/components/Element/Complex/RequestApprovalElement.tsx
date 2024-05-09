@@ -13,6 +13,7 @@ const RequestApprovalElement = ({
   children,
 }: RequestApprovalProps) => {
   const {
+    id,
     collapsed,
     icon,
     rightButton,
@@ -39,7 +40,7 @@ const RequestApprovalElement = ({
   // }
 
   return (
-    <div>
+    <div id={id}>
       <p>Request Approval to Attack</p>
       <p>Target: {target.type}</p>
 

@@ -45,23 +45,6 @@ const Layout = () => {
 
   const dispatch = useAppDispatch();
 
-  // on mouse position move, check for elements in gaze
-  useEffect(() => {
-    const elementsInGaze = findElementsInGaze(
-      mousePosition,
-      dispatch,
-      widgets,
-      GAZE_RADIUS,
-      CIRCLE_PERCENTAGE_THRESH,
-      ELEMENT_PERCENTAGE_THRESH,
-      pathname,
-    );
-    dispatch(setElementsInGaze(elementsInGaze));
-    if (elementsInGaze.length > 0) {
-      // console.log('elements in gaze: ', elemsInGaze);
-    }
-  }, [mousePosition]);
-
   // print out the gazes and keys
   useEffect(() => {
     // console.log('gazesAndKeys', gazesAndKeys);

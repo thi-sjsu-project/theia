@@ -57,6 +57,7 @@ const selector = ({ message }: SelectorProps) => {
     case 'RequestApprovalToAttack':
       elements.push({
         id: uuid(),
+        widgetId: 'list',
         type: 'request-approval',
         modality: 'visual',
         h: 100,
@@ -102,6 +103,7 @@ const selector = ({ message }: SelectorProps) => {
     case 'MissileToOwnshipDetected':
       elements.push({
         id: uuid(),
+        widgetId: 'list',
         type: 'missile-incoming',
         modality: 'visual',
         xWidget: 0,
@@ -126,6 +128,7 @@ const selector = ({ message }: SelectorProps) => {
     case 'AcaHeadingToBase':
       elements.push({
         id: uuid(),
+        widgetId: 'list',
         type: 'text',
         modality: 'visual',
         xWidget: 0,
@@ -140,6 +143,7 @@ const selector = ({ message }: SelectorProps) => {
     case 'AcaFuelLow':
       elements.push({
         id: uuid(),
+        widgetId: 'list',
         type: 'table',
         modality: 'visual',
         xWidget: 0,
@@ -159,6 +163,7 @@ const selector = ({ message }: SelectorProps) => {
     case 'AcaDefect':
       elements.push({
         id: uuid(),
+        widgetId: 'list',
         type: 'table',
         modality: 'visual',
         xWidget: 0,

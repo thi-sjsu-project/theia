@@ -2,6 +2,8 @@ import type { Element } from 'src/types/element';
 import type { Properties } from 'csstype';
 import type { SectionType } from 'src/types/support-types';
 
+export type Screen = '/pearce-screen' | '/minimap' | '/right-screen';
+
 export type BaseWidget = {
   elements: Element[];
   id: string;
@@ -12,7 +14,7 @@ export type BaseWidget = {
   w: number;
   h: number;
 
-  screen: '/pearce-screen' | '/minimap' | '/right-screen';
+  screen: Screen;
 
   padding?: number;
 
