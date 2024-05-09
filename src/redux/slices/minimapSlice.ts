@@ -190,6 +190,72 @@ export const minimapSlice = createSlice({
       },
     },
 
+    escalateElement: {
+      //update the time until window of interaction expires
+      prepare(widgetId: string, elementId: string) {
+        return {
+          payload: { widgetId, elementId },
+        };
+      },
+      reducer: (
+        state,
+        action: PayloadAction<{ widgetId: string; elementId: string }>,
+      ) => {
+        const { widgetId, elementId } = action.payload;
+        const widget = state.widgets[widgetId];
+
+        // if widget exists
+        if (widget) {
+          const tempElements = state.widgets[widgetId].elements;
+          tempElements.forEach(function (element, elementIndex) {
+            if (element.id === elementId && element.collapsed) {
+              //do something
+              tempElements[elementIndex].collapsed = false;
+            }
+          });
+          state.widgets[widgetId] = {
+            ...widget,
+            elements: tempElements,
+          };
+        } else {
+          console.error(`Widget with id ${widgetId} not found`);
+        }
+      },
+    },
+
+    deescalateElement: {
+      //update the time until window of interaction expires
+      prepare(widgetId: string, elementId: string) {
+        return {
+          payload: { widgetId, elementId },
+        };
+      },
+      reducer: (
+        state,
+        action: PayloadAction<{ widgetId: string; elementId: string }>,
+      ) => {
+        const { widgetId, elementId } = action.payload;
+        const widget = state.widgets[widgetId];
+
+        // if widget exists
+        if (widget) {
+          const tempElements = state.widgets[widgetId].elements;
+          tempElements.forEach(function (element, elementIndex) {
+            if (element.id === elementId && element.collapsed) {
+              //do something
+              tempElements[elementIndex].collapsed = true;
+            }
+          });
+          state.widgets[widgetId] = {
+            ...widget,
+            elements: tempElements,
+          };
+        } else {
+          console.error(`Widget with id ${widgetId} not found`);
+        }
+      },
+    },
+
     toggleElementInteraction: {
       // prepare is called before the reducer (allows us to pass in multiple arguments to reducer)
       prepare(widgetId: string, elementId: string) {
@@ -298,6 +364,8 @@ export const {
   addElementToWidget,
   addWidgetToSection,
   updateElementExpiration,
+  escalateElement,
+  deescalateElement,
 
   updateWidget,
   updateShipPosition,

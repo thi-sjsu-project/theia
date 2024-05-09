@@ -3,6 +3,8 @@ import {
   removeWidget,
   deleteElementFromWidget,
   updateElementExpiration,
+  escalateElement,
+  deescalateElement,
 } from 'src/redux/slices/minimapSlice';
 import store from 'src/redux/store';
 import type { ElementInGaze, GazeAndKey } from 'src/redux/slices/gazeSlice';
@@ -73,6 +75,14 @@ const monitor = ({ dispatch }: MonitorProps) => {
                 dispatch(deleteElementFromWidget(widgetId, element.id)); //delete the widget
               }
               break;
+            case 'escalate':
+              console.log('element ' + element.id + ' expired! escalating...');
+                dispatch(escalateElement(widget.id, element.id));
+              break;
+              case 'deescalate':
+                console.log('element ' + element.id + ' expired! escalating...');
+                  dispatch(deescalateElement(widget.id, element.id));
+                break;
           }
         }
       }
