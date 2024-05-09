@@ -25,6 +25,7 @@ import { ownship, drones, initialShips } from 'src/utils/initialShips';
 import { initialSections } from 'src/utils/initialSections';
 import Home from 'src/components/Home';
 import monitor from 'src/prototype/monitor';
+import restrainer from 'src/prototype/restrainer';
 
 const Prototype = () => {
   // ~~~~~ Custom Hooks ~~~~~~
@@ -86,6 +87,7 @@ const Prototype = () => {
     });
 
     //console.log('widgetToDeploy ' + widgetToDeploy);
+    console.log("action", action, "widgetToDeploy", widgetToDeploy);
     if (action !== 'newWidget') {
       //we should do something other than
       switch (action) {
@@ -108,11 +110,12 @@ const Prototype = () => {
           break;
       }
     } else if (widgetToDeploy) {
-      //console.log('widget deployed:', widgetToDeploy);
+      // console.log('widget deployed:', widgetToDeploy);
       //console.log('widgets that are now deployed: ', widgets);
       //if we can actually place the widget
 
       //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
+      if (!restrainer({ widgetToDeploy : widgetToDeploy })) return;
       /* if (
           !restrainer({
             visualComplexity: generateModalityMeasure(),

@@ -1,11 +1,13 @@
+import store from 'src/redux/store';
 import type { Modality } from 'src/types/modalities';
+import { type Widget, type WidgetMap } from 'src/types/widget';
 import { modalityMeasures } from 'src/utils/restrainerConst';
 
 type RestrainerProps = {
   // define expected input here and it's type (number, string, etc.)
-  visualComplexity: number;
-  audioComplexity: number;
-  // widgets: { [key: string]: Widget };
+  // visualComplexity: number;
+  // audioComplexity: number;
+  widgetToDeploy: Widget;
   // add more as needed
 };
 
@@ -32,24 +34,44 @@ export type ModalityMeasure = {
   boundary: ModalityMeasureBoundary;
 };
 
-/**
- * @description ???
- * @param ???
- * @returns ???
- */
-const restrainer = ({ visualComplexity }: RestrainerProps) => {
-  // currently visual only
-  if (
-    modalityMeasures.visual.boundary.max - modalityMeasures.visual.measure <=
-    visualComplexity
-  ) {
-    console.warn('widget could not be added; will surpass boundary');
-    return false;
-  }
+// Simulated restrainer visual complexity
+const screenComplexity = (widgets : WidgetMap) => {
+  return Object.values(widgets).reduce( (acc, widget) => acc + widget.elements.length, 0);
+}
 
-  modalityMeasures.visual.measure += visualComplexity;
-  console.log(modalityMeasures);
-  return true;
+// **** SET MAX BOUND ****
+const maxBound = {
+  visual: 100,
+};
+
+/**
+ * @description restrains the cm if placing the widgetToDeploy will cause to exceed our maximum threshold
+ * @param the widget To Deploy
+ * @returns if widgetToDeploy can be placed
+ */
+const restrainer = ({ widgetToDeploy }: RestrainerProps) => {
+  const visualCurrentComplexity = screenComplexity(store.getState().minimap.widgets);
+  const widgetComplexity = widgetToDeploy?.elements.length;
+  
+  const canBePlaced = maxBound.visual - visualCurrentComplexity >= widgetComplexity; 
+  
+  if (!canBePlaced) 
+    console.warn(`This widget could not be deployed at visual complexity ${widgetComplexity}. The visual complexity (currently at ${visualCurrentComplexity}) will surpass the threshold ${maxBound.visual}.`)
+
+  return canBePlaced;
+
+  // currently visual only
+  // if (
+  //   modalityMeasures.visual.boundary.max - modalityMeasures.visual.measure <=
+  //   visualComplexity
+  // ) {
+  //   console.warn('widget could not be added; will surpass boundary');
+  //   return false;
+  // }
+
+  // modalityMeasures.visual.measure += visualComplexity;
+  // // console.log(modalityMeasures);
+  // return true;
 };
 
 export default restrainer;
