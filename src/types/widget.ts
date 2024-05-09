@@ -36,6 +36,8 @@ export type GridWidget = BaseWidget & {
 
 export type VehicleWidget = BaseWidget & {
   type: 'vehicle';
+  // this corresponds to the id in the schema-types defined by the world-sim team
+  vehicleId: number;
   // additonal properties...
 };
 

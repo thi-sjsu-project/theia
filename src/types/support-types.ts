@@ -5,7 +5,7 @@ export type Cell = {
   color?: string;
 };
 
-export type ScreenType = 'pearce' | 'minimap' | 'boring-right';
+export type ScreenType = '/pearce-screen' | '/minimap' | '/right-screen';
 
 export type SectionType =
   | 'free'

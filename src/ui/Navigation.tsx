@@ -10,11 +10,11 @@ const Navigation = () => {
         dark:text-gray-300"
       >
         <NavLink
-          to="/left-screen"
+          to="/pearce-screen"
           className={`text-gray-800 dark:text-gray-200 border-b-2
-          ${pathname === '/left-screen' ? 'border-blue-500' : ''} mx-1.5 sm:mx-6 text-3xl`}
+          ${pathname === '/pearce-screen' ? 'border-blue-500' : ''} mx-1.5 sm:mx-6 text-3xl`}
         >
-          Left Screen
+          Pearce Screen
         </NavLink>
         <NavLink
           to="/minimap"

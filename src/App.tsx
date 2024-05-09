@@ -3,18 +3,17 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Minimap from 'src/pages/Minimap';
 import LeftScreen from 'src/pages/LeftScreen';
 import RightScreen from 'src/pages/RightScreen';
-import Root from 'src/pages/Root';
-import useMoveShips from 'src/hooks/useMoveShips';
+import Layout from 'src/pages/Layout';
+import Prototype from 'src/pages/Prototype';
 
 const App = () => {
-  useMoveShips();
-
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Root />}>
+        <Route path="/" element={<Layout />}>
+          <Route path="/prototype" element={<Prototype />} />
           <Route path="minimap" element={<Minimap />} />
-          <Route path="left-screen" element={<LeftScreen />} />
+          <Route path="pearce-screen" element={<LeftScreen />} />
           <Route path="right-screen" element={<RightScreen />} />
         </Route>
       </Routes>

@@ -1,7 +1,8 @@
 import { combineSlices, configureStore } from '@reduxjs/toolkit';
 import {
   createStateSyncMiddleware,
-  initMessageListener,
+  initStateWithPrevTab,
+  withReduxStateSync,
   type Config,
 } from 'redux-state-sync';
 import { minimapSlice } from './slices/minimapSlice';
@@ -16,18 +17,20 @@ const rootReducer = combineSlices(minimapSlice, gazeSlice);
 type RootState = ReturnType<typeof rootReducer>;
 
 const reduxStateSyncConfig: Config = {
-  prepareState: (state: RootState) => state,
+  // blacklist actions that should not be synced
+  blacklist: [minimapSlice.actions.initializeState.type],
 };
 const stateSyncMiddleware = createStateSyncMiddleware(reduxStateSyncConfig);
 
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: withReduxStateSync(rootReducer),
   // @ts-ignore (TODO: fix this type error)
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(stateSyncMiddleware),
 });
 
-initMessageListener(store);
+// Initialize the state with the previous tab's state
+initStateWithPrevTab(store);
 
 // Infer the type of `store`
 type AppStore = typeof store;
