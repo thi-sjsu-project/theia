@@ -14,9 +14,9 @@ const LeftScreen = () => {
 
   const elementsInGaze = useAppSelector(getElementsInGaze);
 
-  useEffect(() => {
-    console.log('elementsInGaze: ', elementsInGaze);
-  }, [elementsInGaze]);
+  // useEffect(() => {
+  //   console.log('elementsInGaze: ', elementsInGaze);
+  // }, [elementsInGaze]);
 
   return (
     <div className="absolute top-0 left-0 bg-stone-200 w-[1920px] h-[1080px] hover:cursor-pointer">
