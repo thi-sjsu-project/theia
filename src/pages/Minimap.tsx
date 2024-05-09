@@ -24,7 +24,7 @@ const Minimap = () => {
 
   return (
     <div
-      className="absolute top-0 left-0 bg-stone-200 w-[1920px] h-[1080px] cursor-none"
+      className="absolute top-0 left-0 bg-stone-200 w-[1920px] h-[1080px]"
       style={{ backgroundImage: `url(${background})` }}
     >
       {Object.keys(widgets).map((widgetId) => (

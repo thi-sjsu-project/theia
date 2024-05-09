@@ -15,7 +15,7 @@ const Gaze = ({ mousePosition }: GazeProps) => {
 
   return (
     <div
-      className={`cursor-none absolute rounded-full ring-4 ring-white z-50 bg-white bg-opacity-20`}
+      className={`cursor-none absolute rounded-full ring-4 ring-blue-400 z-50 bg-blue-400 bg-opacity-20`}
       style={{
         width: GAZE_RADIUS * 2,
         height: GAZE_RADIUS * 2,

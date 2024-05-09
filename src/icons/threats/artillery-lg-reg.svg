@@ -1,0 +1,10 @@
+<svg width="128" height="129" viewBox="0 0 128 129" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Artillery">
+<path id="Rectangle 3" d="M5.20105 64.4996L64 5.70062L122.799 64.4996L64 123.298L5.20105 64.4996Z" fill="black" fill-opacity="0.5"/>
+<path id="Rectangle 7 (Stroke)" fill-rule="evenodd" clip-rule="evenodd" d="M5.20105 64.4996L64 5.70062L122.799 64.4996L64 123.298L5.20105 64.4996ZM64 112.904L112.405 64.4996L64 16.0949L15.5953 64.4996L64 112.904Z" fill="#FF4E4E"/>
+<path id="Rectangle 4" d="M4.06968 63.3682L2.93831 64.4996L4.06968 65.6309L62.8686 124.43L64 125.561L65.1314 124.43L123.93 65.6309L125.062 64.4996L123.93 63.3682L65.1314 4.56925L64 3.43788L62.8686 4.56925L4.06968 63.3682Z" stroke="black" stroke-width="3.2"/>
+<path id="Rectangle 5" d="M1.13137 64.5L64 1.63137L126.869 64.5L64 127.369L1.13137 64.5Z" stroke="white" stroke-width="1.6"/>
+<path id="Rectangle 6" d="M17.8583 64.4995L64 18.3579L110.142 64.4995L64 110.641L17.8583 64.4995Z" stroke="black" stroke-width="3.2"/>
+<circle id="Ellipse 1" cx="64" cy="64.4995" r="23.6496" fill="#FF4E4E" stroke="black" stroke-width="3.2"/>
+</g>
+</svg>

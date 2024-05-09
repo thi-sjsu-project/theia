@@ -25,6 +25,7 @@ import { ownship, drones, initialShips } from 'src/utils/initialShips';
 import { initialSections } from 'src/utils/initialSections';
 import Home from 'src/components/Home';
 import monitor from 'src/prototype/monitor';
+import { initailMapWarnings } from 'src/utils/initialMapWarnings';
 
 const Prototype = () => {
   // ~~~~~ Custom Hooks ~~~~~~
@@ -45,7 +46,7 @@ const Prototype = () => {
       audioComplexity: 0,
       ownship,
       drones,
-      widgets: { ...initialShips },
+      widgets: { ...initialShips, ...initailMapWarnings },
       messages: [],
       sections: [...initialSections],
     };

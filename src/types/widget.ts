@@ -42,12 +42,24 @@ export type VehicleWidget = BaseWidget & {
   rotation: number; // rad
 };
 
+export type MapWarningWidget = BaseWidget & {
+  type: 'map-warning';
+  small: boolean;
+  emphasised: boolean;
+  threatType: 'radar' | 'artillery' | 'air-defense' | 'missile';
+};
+
 export type CustomWidget = BaseWidget & {
   type: 'custom';
   // additonal properties...
 };
 
-export type Widget = CustomWidget | VehicleWidget | ListWidget | GridWidget;
+export type Widget =
+  | CustomWidget
+  | VehicleWidget
+  | ListWidget
+  | GridWidget
+  | MapWarningWidget;
 
 export type WidgetMap = { [key: string]: Widget };
 

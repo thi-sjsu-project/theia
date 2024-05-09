@@ -1,7 +1,6 @@
 import Element from 'src/components/Element/Element';
 import type { VehicleWidget as VehicleWidgetType } from 'src/types/widget';
 
-// widget.type must be 'vehicle'
 type VehicleWidgetProps = {
   widget: VehicleWidgetType;
 };
