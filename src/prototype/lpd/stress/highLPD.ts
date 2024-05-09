@@ -71,7 +71,7 @@ const acaFuelLowMessageHigh = () => {
           500,
           150,
           150,
-          '/minimap',
+          '/pearce-screen',
           false,
           false,
           1,
