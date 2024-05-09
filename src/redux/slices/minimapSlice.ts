@@ -1,8 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createSelector } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { Widget, VehicleWidget, WidgetMap } from 'src/types/widget';
+import type {
+  Widget,
+  VehicleWidget,
+  WidgetMap,
+  Screen,
+} from 'src/types/widget';
 import type { Message } from 'src/types/schema-types';
-import type { Element } from 'src/types/element';
+import type { Element, ElementMap } from 'src/types/element';
 import type { LinkedSectionWidget, Section } from 'src/types/support-types';
 import selector from 'src/prototype/selector';
 import { ownship, drones } from 'src/prototype/lpd/initialLPD';
@@ -310,29 +315,41 @@ export const minimapSlice = createSlice({
 
     // ~~~~~ selectors for widgets ~~~~~
     getWidgets: (state) => state.widgets,
-    getLeftScreenWidgets: (state) => {
-      const minimapWidgets = Object.keys(state.widgets).filter(
-        (id) => state.widgets[id].screen === '/pearce-screen',
-      );
+    getWidgetsOnScreen: (state, screen: Screen) => {
+      const widgets: WidgetMap = {};
+      Object.keys(state.widgets).forEach((widgetId) => {
+        const widget = state.widgets[widgetId];
+        if (widget.screen === screen) {
+          widgets[widgetId] = widget;
+        }
+      });
 
-      return minimapWidgets.map((id) => state.widgets[id]);
-    },
-    getMinimapWidgets: (state) => {
-      const minimapWidgets = Object.keys(state.widgets).filter(
-        (id) => state.widgets[id].screen === '/minimap',
-      );
-
-      return minimapWidgets.map((id) => state.widgets[id]);
-    },
-    getRightScreenWidgets: (state) => {
-      const minimapWidgets = Object.keys(state.widgets).filter(
-        (id) => state.widgets[id].screen === '/right-screen',
-      );
-
-      return minimapWidgets.map((id) => state.widgets[id]);
+      return widgets;
     },
     getWidgetById: (state, id: string) =>
       state.widgets[id] ? state.widgets[id] : null,
+
+    // ~~~~~ selectors for elements ~~~~~
+    getAllElements: (state) => {
+      const allElements: Element[] = [];
+      Object.keys(state.widgets).forEach((widgetId) => {
+        allElements.push(...state.widgets[widgetId].elements);
+      });
+      return allElements;
+    },
+    getElementsOnScreen: (state, screen: Screen) => {
+      const elements: ElementMap = {};
+      Object.keys(state.widgets).forEach((widgetId) => {
+        const widget = state.widgets[widgetId];
+        if (widget.screen === screen) {
+          widget.elements.forEach((element) => {
+            elements[element.id] = element;
+          });
+        }
+      });
+
+      return elements;
+    },
 
     getVisualComplexity: (state) => state.visualComplexity,
     getAudioComplexity: (state) => state.audioComplexity,
@@ -382,10 +399,11 @@ export const {
   getSections,
 
   getWidgets,
-  getLeftScreenWidgets,
-  getMinimapWidgets,
-  getRightScreenWidgets,
+  getWidgetsOnScreen,
   getWidgetById,
+
+  getAllElements,
+  getElementsOnScreen,
 
   getMessages,
 

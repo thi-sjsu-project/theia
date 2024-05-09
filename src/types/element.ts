@@ -15,6 +15,9 @@ export type BaseElement = {
   xWidget: number;
   yWidget: number;
 
+  widgetId?: string;
+
+  priority?: number;
   collapsed?: boolean;
 
   expirationInterval?: number;
@@ -108,3 +111,7 @@ export type ComplexElement =
   | CustomElement;
 
 export type Element = SimpleElement | ComplexElement;
+
+export type ElementMap = {
+  [key: string]: Element;
+};

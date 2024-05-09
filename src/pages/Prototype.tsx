@@ -10,11 +10,6 @@ import {
   getWidgets,
   initializeState,
 } from 'src/redux/slices/minimapSlice';
-import {
-  getElementsInGaze,
-  getGazesAndKeys,
-  type ElementInGaze,
-} from 'src/redux/slices/gazeSlice';
 // ~~~~~~~ Cusdom Hooks ~~~~~~~
 import useWorldSim from 'src/hooks/useWorldSim';
 // ~~~~~~~ Prototype ~~~~~~~
@@ -33,8 +28,6 @@ const Prototype = () => {
   // ~~~~~ Selectors ~~~~~~
   const sections = useAppSelector(getSections);
   const widgets = useAppSelector(getWidgets);
-  const gazesAndKeys = useAppSelector(getGazesAndKeys);
-  const elemsInGaze: ElementInGaze[] = useAppSelector(getElementsInGaze);
 
   const dispatch = useAppDispatch();
 

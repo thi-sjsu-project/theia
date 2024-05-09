@@ -1,6 +1,6 @@
 import type { Element } from 'src/types/element';
 import type { Properties } from 'csstype';
-import type { ScreenType, SectionType } from 'src/types/support-types';
+import type { Screen, SectionType } from 'src/types/support-types';
 
 export type BaseWidget = {
   elements: Element[];
@@ -12,7 +12,7 @@ export type BaseWidget = {
   w: number;
   h: number;
 
-  screen: ScreenType;
+  screen: Screen;
 
   canOverlap: boolean;
   useElementLocation: boolean;

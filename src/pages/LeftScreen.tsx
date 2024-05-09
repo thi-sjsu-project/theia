@@ -1,9 +1,22 @@
+import { useEffect } from 'react';
 import Widget from 'src/components/Widget/Widget';
+import useGaze from 'src/hooks/useGaze';
 import { useAppSelector } from 'src/redux/hooks';
-import { getLeftScreenWidgets } from 'src/redux/slices/minimapSlice';
+import { getElementsInGaze } from 'src/redux/slices/gazeSlice';
+import { getWidgetsOnScreen } from 'src/redux/slices/minimapSlice';
 
 const LeftScreen = () => {
-  const widgets = useAppSelector(getLeftScreenWidgets);
+  const widgets = useAppSelector((state) =>
+    getWidgetsOnScreen(state, '/pearce-screen'),
+  );
+
+  useGaze({ screen: '/pearce-screen' });
+
+  const elementsInGaze = useAppSelector(getElementsInGaze);
+
+  // useEffect(() => {
+  //   console.log('elementsInGaze: ', elementsInGaze);
+  // }, [elementsInGaze]);
 
   return (
     <div className="absolute top-0 left-0 bg-stone-200 w-[1920px] h-[1080px] hover:cursor-pointer">
@@ -32,8 +45,8 @@ const LeftScreen = () => {
       </div>
 
       {/* Maybe just render a WidgetList component? Or a ListWidget component? */}
-      {widgets.map((widget) => (
-        <Widget key={widget.id} widget={widget} />
+      {Object.keys(widgets).map((widgetId) => (
+        <Widget key={widgetId} widget={widgets[widgetId]} />
       ))}
     </div>
   );

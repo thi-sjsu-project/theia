@@ -3,13 +3,10 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Gaze from 'src/ui/Gaze';
 // ~~~~~~~ Redux ~~~~~~~
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { getSections, getWidgets } from 'src/redux/slices/minimapSlice';
 import {
   addKeyDown,
   getElementsInGaze,
-  getGazesAndKeys,
   removeKeyDown,
-  setElementsInGaze,
   type ElementInGaze,
 } from 'src/redux/slices/gazeSlice';
 // ~~~~~~~ Cusdom Hooks ~~~~~~~
@@ -18,12 +15,8 @@ import { useMousePosition } from 'src/hooks/useMousePosition';
 import { useKeyUp } from 'src/hooks/useKeyUp';
 import { useMouseButtonDown } from 'src/hooks/useMouseButtonDown';
 import { useMouseButtonUp } from 'src/hooks/useMouseButtonUp';
-import { findElementsInGaze } from 'src/hooks/findElementsInGaze';
 // ~~~~~~~ Constants ~~~~~~~
-import { GAZE_RADIUS } from 'src/utils/constants';
-
-const CIRCLE_PERCENTAGE_THRESH = 0.1;
-const ELEMENT_PERCENTAGE_THRESH = 0.1;
+//none now
 
 const Layout = () => {
   // ~~~~~ React Router ~~~~~~
@@ -38,34 +31,9 @@ const Layout = () => {
   const mouseButtonUp = useMouseButtonUp();
 
   // ~~~~~ Selectors ~~~~~~
-  const sections = useAppSelector(getSections);
-  const widgets = useAppSelector(getWidgets);
-  const gazesAndKeys = useAppSelector(getGazesAndKeys);
   const elemsInGaze: ElementInGaze[] = useAppSelector(getElementsInGaze);
 
   const dispatch = useAppDispatch();
-
-  // on mouse position move, check for elements in gaze
-  useEffect(() => {
-    const elementsInGaze = findElementsInGaze(
-      mousePosition,
-      dispatch,
-      widgets,
-      GAZE_RADIUS,
-      CIRCLE_PERCENTAGE_THRESH,
-      ELEMENT_PERCENTAGE_THRESH,
-      pathname,
-    );
-    dispatch(setElementsInGaze(elementsInGaze));
-    if (elementsInGaze.length > 0) {
-      // console.log('elements in gaze: ', elemsInGaze);
-    }
-  }, [mousePosition]);
-
-  // print out the gazes and keys
-  useEffect(() => {
-    // console.log('gazesAndKeys', gazesAndKeys);
-  }, [gazesAndKeys]);
 
   // on key or mouse press, log the press and what elements are in the gaze to state
   useEffect(() => {
@@ -96,7 +64,6 @@ const Layout = () => {
 
   // on key or mouse release, delete the press that was logged to state and ensure the key/mouse is reset so we can accept the same key/mouse again
   useEffect(() => {
-    console.log(keyUp);
     if (keyUp !== '') {
       dispatch(removeKeyDown(keyUp.toString()));
       document.dispatchEvent(new KeyboardEvent('keyup', { key: '_' }));
@@ -121,7 +88,6 @@ const Layout = () => {
 
   return (
     <div>
-      {/* {pathname !== '/prototype' && <Navigation />} */}
       {pathname !== '/prototype' && <Gaze mousePosition={mousePosition} />}
 
       <main>
