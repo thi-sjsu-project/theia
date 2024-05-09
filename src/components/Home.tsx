@@ -28,13 +28,13 @@ justify-center flex-col gap-10"
         <div className="flex items-center justify-center gap-2 mt-4">
           <div>
             <NavLink
-              to="/left-screen"
+              to="/pearce-screen"
               target="_blank"
               className="w-24 bg-transparent hover:bg-blue-500 
       text-blue-700 font-semibold hover:text-white border border-blue-500 hover:border-transparent 
         rounded text-sm px-2 py-1 text-center"
             >
-              Left Screen
+              Pearce Screen
             </NavLink>
           </div>
 
