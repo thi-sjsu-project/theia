@@ -14,7 +14,7 @@ export type BaseElement = {
   xWidget: number;
   yWidget: number;
 
-  widgetId?: string;
+  widgetId: string;
 
   priority?: number;
   collapsed?: boolean;
@@ -24,6 +24,8 @@ export type BaseElement = {
   onExpiration?: 'delete' | 'escalate' | 'deescalate';
   interacted?: boolean;
   canOverlap?: boolean;
+
+  tags: string[]
 };
 
 //
@@ -67,8 +69,8 @@ export type AudioElement = BaseElement & {
 export type IconElement = BaseElement & {
   type: 'icon';
   src: string;
-  // makes search easier
-  tag?: 'ownship' | 'drone' | 'target' | 'enemy' | 'warning' | 'message';
+  
+  iconTags: 'ownship' | 'drone' | 'target' | 'enemy' | 'warning' | 'message';
 };
 
 //

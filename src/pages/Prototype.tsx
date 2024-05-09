@@ -48,6 +48,7 @@ const Prototype = () => {
       widgets: { ...initialShips },
       messages: [],
       sections: [...initialSections],
+      inSwitchState: false,
     };
 
     dispatch(initializeState(initialState));
