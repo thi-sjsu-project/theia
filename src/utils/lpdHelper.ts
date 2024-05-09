@@ -4,7 +4,7 @@ import type * as Widget from "src/types/widget";
 
 import type { Properties } from "csstype";
 import type { Modality } from "src/types/modality";
-import type { Section, SectionType } from "src/types/support-types";
+import type { ScreenType, Section, SectionType } from "src/types/support-types";
 
 // Functions to create sections, widgets, and elements
 const generateSection = (
@@ -29,13 +29,15 @@ const generateSection = (
   widgetIDs,
 });
 
-const generateWidget = (
+// Generate Base Widget
+const generateBaseWidget = (
   id: string,
-  type: Widget.WidgetType,
+  sectionType: SectionType,
   x: number,
   y: number,
   w: number,
   h: number,
+  screen: ScreenType,
   canOverlap: boolean,
   useElementLocation: boolean,
   maxAmount: number,
@@ -43,22 +45,60 @@ const generateWidget = (
   padding?: number,
   priority?: number,
   style?: Properties,
-): Widget.Widget => ({
+): Widget.BaseWidget => ({
   id,
-  type,
+  sectionType,
   x,
   y,
   w,
   h,
+  screen,
   canOverlap,
   useElementLocation,
   maxAmount,
-  style,
-  elements,
   padding,
   priority,
+  style,
+  elements,
 });
 
+// Generate the different widget types
+const generateListWidget = (
+  baseWidget: Widget.BaseWidget,
+  maxElements?: number,
+): Widget.ListWidget => ({
+  ...baseWidget,
+  type: "list",
+  maxElements,
+});
+
+const generateGridWidget = (
+  baseWidget: Widget.BaseWidget,
+  rows: number,
+  cols: number,
+): Widget.GridWidget => ({
+  ...baseWidget,
+  type: "grid",
+  rows,
+  cols,
+});
+
+const generateVehicleWidget = (
+  baseWidget: Widget.BaseWidget,
+): Widget.VehicleWidget => ({
+  ...baseWidget,
+  type: "vehicle",
+});
+
+const generateCustomWidget = (
+  baseWidget: Widget.BaseWidget,
+): Widget.CustomWidget => ({
+  ...baseWidget,
+  type: "custom",
+});
+
+
+// Generate Base Element
 const generateBaseElement = (
   id: string,
   modality: Modality,
@@ -67,7 +107,6 @@ const generateBaseElement = (
   xWidget: number,
   yWidget: number,
   collapsed?: boolean,
-  messageData?: string,
   expirationInterval?: number,
   expiration?: string,
   onExpiration?: 'delete' | 'escalate' | 'deescalate',
@@ -82,7 +121,6 @@ const generateBaseElement = (
   xWidget,
   yWidget,
   collapsed,
-  messageData,
   expirationInterval,
   expiration,
   onExpiration,
@@ -91,7 +129,7 @@ const generateBaseElement = (
   style,
 });
 
-// Element creation for each Element type
+// Generate simple elements
 const generateIconElement = (
   baseElement: Element.BaseElement,
   src: string,
@@ -156,8 +194,14 @@ const generateAudioElement = (
   frequency,
 });
 
+// Generate complex elements
+
 const lpdHelper = {
-  generateWidget,
+  generateBaseWidget,
+  generateListWidget,
+  generateGridWidget,
+  generateVehicleWidget,
+  generateCustomWidget,
   generateSection,
   generateBaseElement,
   generateIconElement,

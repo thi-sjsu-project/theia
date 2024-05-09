@@ -28,13 +28,14 @@ const requestApprovalToAttackMessageLow = () => {
 const acaFuelLowMessageLow = () => {
     return {
         sections: [],
-        possibleWidgets: [lpdHelper.generateWidget(
+        possibleWidgets: [lpdHelper.generateCustomWidget(lpdHelper.generateBaseWidget(
             acaFuelLow_ID,
             'message',
             500,
             500,
             150,
             150,
+            'minimap',
             false,
             false,
             1,
@@ -48,7 +49,6 @@ const acaFuelLowMessageLow = () => {
                     0,
                     0,
                     undefined, 
-                    undefined,
                     undefined,
                     undefined,
                     undefined,
@@ -69,7 +69,6 @@ const acaFuelLowMessageLow = () => {
                     40,
                     0, 
                     125,
-                    undefined,
                     undefined,
                     undefined,
                     undefined,
@@ -97,7 +96,6 @@ const acaFuelLowMessageLow = () => {
                     undefined,
                     undefined,
                     undefined,
-                    undefined,
                     false,
                     true,
                     {
@@ -109,7 +107,7 @@ const acaFuelLowMessageLow = () => {
             )
         
             ],
-        )],
+        ))],
     };
 }
 

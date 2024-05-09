@@ -13,39 +13,39 @@ const Widget = ({ widget }: WidgetProps) => {
         return <VehicleWidget widget={widget} />;
       case 'list':
         return <ListWidget widget={widget} />;
-      case 'highWarning':
-        return (
-          <div
-            className="absolute"
-            style={{
-              height: widget.h,
-              width: widget.w,
-              top: widget.y,
-              left: widget.x,
-              ...widget.style,
-            }}
-          >
-            <img className="animate-ping" src={'src' in widget.elements[0] ? widget.elements[0].src : undefined} alt={"missileToOwnship"} style={{
-              height: widget.elements[0].h,
-              width: widget.elements[0].w,
-              top: widget.elements[0].yWidget,
-              left: widget.elements[0].xWidget,
-              ...widget.elements[0].style,
-            }}/>
-            <p
-              style={{
-                height: widget.elements[1].h,
-                width: widget.elements[1].w,
-                top: widget.elements[1].yWidget,
-                left: widget.elements[1].xWidget,
-                ...widget.elements[1].style,
-              }}
-            >
-              {'text' in widget.elements[1] && widget.elements[1].text}
-            </p>
-          </div>
-        );
-      case 'message':
+      // case 'custom':
+      //   return (
+      //     <div
+      //       className="absolute"
+      //       style={{
+      //         height: widget.h,
+      //         width: widget.w,
+      //         top: widget.y,
+      //         left: widget.x,
+      //         ...widget.style,
+      //       }}
+      //     >
+      //       <img className="animate-ping" src={'src' in widget.elements[0] ? widget.elements[0].src : undefined} alt={"missileToOwnship"} style={{
+      //         height: widget.elements[0].h,
+      //         width: widget.elements[0].w,
+      //         top: widget.elements[0].yWidget,
+      //         left: widget.elements[0].xWidget,
+      //         ...widget.elements[0].style,
+      //       }}/>
+      //       <p
+      //         style={{
+      //           height: widget.elements[1].h,
+      //           width: widget.elements[1].w,
+      //           top: widget.elements[1].yWidget,
+      //           left: widget.elements[1].xWidget,
+      //           ...widget.elements[1].style,
+      //         }}
+      //       >
+      //         {'text' in widget.elements[1] && widget.elements[1].text}
+      //       </p>
+      //     </div>
+      //   );
+      case 'custom':
         return (
           <div
             className="absolute"
