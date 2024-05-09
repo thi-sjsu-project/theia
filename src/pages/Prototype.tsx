@@ -16,8 +16,7 @@ import useWorldSim from 'src/hooks/useWorldSim';
 import assimilator from 'src/prototype/assimilator';
 import selector from 'src/prototype/selector';
 // ~~~~~~~ Constants ~~~~~~~
-import { ownship, drones, initialShips } from 'src/utils/initialShips';
-import { initialSections } from 'src/utils/initialSections';
+import { ownship, drones } from 'src/prototype/lpd/initialLPD';
 import Home from 'src/components/Home';
 import monitor from 'src/prototype/monitor';
 
@@ -38,9 +37,9 @@ const Prototype = () => {
       audioComplexity: 0,
       ownship,
       drones,
-      widgets: { ...initialShips },
       messages: [],
-      sections: [...initialSections],
+      // Initial sections, widgets, and elements
+      ...selector(),
     };
 
     dispatch(initializeState(initialState));

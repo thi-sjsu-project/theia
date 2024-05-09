@@ -5,132 +5,150 @@ import type { Widget, WidgetMap } from 'src/types/widget';
 import lpdHelper from 'src/utils/lpdHelper';
 
 export const ownship: Widget = {
-  ...lpdHelper.generateVehicleWidget(lpdHelper.generateBaseWidget(
-    uuid(),
-    'vehicle',
-    400,
-    950,
-    50,
-    50,
-    'minimap',
-    false,
-    false,
-    1,
-    [
-      lpdHelper.generateIconElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
-        OWNSHIP_LOGO,
-        'ownship',
-      ),
-    ],
-  )),
+  ...lpdHelper.generateVehicleWidget(
+    lpdHelper.generateBaseWidget(
+      uuid(),
+      'vehicle',
+      400,
+      950,
+      50,
+      50,
+      '/minimap',
+      false,
+      false,
+      1,
+      [
+        lpdHelper.generateIconElement(
+          lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
+          OWNSHIP_LOGO,
+          'ownship',
+        ),
+      ],
+    ),
+    0,
+  ),
 };
 
 export const drones: Widget[] = [
   {
-    ...lpdHelper.generateVehicleWidget(lpdHelper.generateBaseWidget(
-      uuid(),
-      'vehicle',
-      500,
-      200,
-      50,
-      50,
-      'minimap',
-      false,
-      false,
-      10,
-      [
-        lpdHelper.generateIconElement(
-          lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
-          DRONE_LOGO,
-          'drone',
-        ),
-      ],
-    )),
+    ...lpdHelper.generateVehicleWidget(
+      lpdHelper.generateBaseWidget(
+        uuid(),
+        'vehicle',
+        500,
+        200,
+        50,
+        50,
+        '/minimap',
+        false,
+        false,
+        10,
+        [
+          lpdHelper.generateIconElement(
+            lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
+            DRONE_LOGO,
+            'drone',
+          ),
+        ],
+      ),
+      1,
+    ),
   },
   {
-    ...lpdHelper.generateVehicleWidget(lpdHelper.generateBaseWidget(
-      uuid(),
-      'vehicle',
-      1500,
-      550,
-      50,
-      50,
-      'minimap',
-      false,
-      false,
-      10,
-      [
-        lpdHelper.generateIconElement(
-          lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
-          DRONE_LOGO,
-          'drone',
-        ),
-      ],
-    )),
+    ...lpdHelper.generateVehicleWidget(
+      lpdHelper.generateBaseWidget(
+        uuid(),
+        'vehicle',
+        1500,
+        550,
+        50,
+        50,
+        '/minimap',
+        false,
+        false,
+        10,
+        [
+          lpdHelper.generateIconElement(
+            lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
+            DRONE_LOGO,
+            'drone',
+          ),
+        ],
+      ),
+      2,
+    ),
   },
   {
-    ...lpdHelper.generateVehicleWidget(lpdHelper.generateBaseWidget(
-      uuid(),
-      'vehicle',
-      1500,
-      350,
-      50,
-      50,
-      'minimap',
-      false,
-      false,
-      10,
-      [
-        lpdHelper.generateIconElement(
-          lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
-          DRONE_LOGO,
-          'drone',
-        ),
-      ],
-    )),
+    ...lpdHelper.generateVehicleWidget(
+      lpdHelper.generateBaseWidget(
+        uuid(),
+        'vehicle',
+        1500,
+        350,
+        50,
+        50,
+        '/minimap',
+        false,
+        false,
+        10,
+        [
+          lpdHelper.generateIconElement(
+            lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
+            DRONE_LOGO,
+            'drone',
+          ),
+        ],
+      ),
+      3,
+    ),
   },
   {
-    ...lpdHelper.generateVehicleWidget(lpdHelper.generateBaseWidget(
-      uuid(),
-      'vehicle',
-      200,
-      900,
-      50,
-      50,
-      'minimap',
-      false,
-      false,
-      10,
-      [
-        lpdHelper.generateIconElement(
-          lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
-          DRONE_LOGO,
-          'drone',
-        ),
-      ],
-    )),
+    ...lpdHelper.generateVehicleWidget(
+      lpdHelper.generateBaseWidget(
+        uuid(),
+        'vehicle',
+        200,
+        900,
+        50,
+        50,
+        '/minimap',
+        false,
+        false,
+        10,
+        [
+          lpdHelper.generateIconElement(
+            lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
+            DRONE_LOGO,
+            'drone',
+          ),
+        ],
+      ),
+      4,
+    ),
   },
   {
-    ...lpdHelper.generateVehicleWidget(lpdHelper.generateBaseWidget(
-      uuid(),
-      'vehicle',
-      1150,
-      750,
-      50,
-      50,
-      'minimap',
-      false,
-      false,
-      10,
-      [
-        lpdHelper.generateIconElement(
-          lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
-          DRONE_LOGO,
-          'drone',
-        ),
-      ],
-    )),
+    ...lpdHelper.generateVehicleWidget(
+      lpdHelper.generateBaseWidget(
+        uuid(),
+        'vehicle',
+        1150,
+        750,
+        50,
+        50,
+        '/minimap',
+        false,
+        false,
+        10,
+        [
+          lpdHelper.generateIconElement(
+            lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
+            DRONE_LOGO,
+            'drone',
+          ),
+        ],
+      ),
+      5,
+    ),
   },
 ];
 
@@ -146,7 +164,7 @@ const initialLPD = {
   sections: [
     lpdHelper.generateSection(
       uuid(),
-      'minimap',
+      '/minimap',
       50,
       40,
       350,
@@ -157,7 +175,7 @@ const initialLPD = {
     ),
     lpdHelper.generateSection(
       uuid(),
-      'minimap',
+      '/minimap',
       50,
       850,
       800,
@@ -168,7 +186,7 @@ const initialLPD = {
     ),
     lpdHelper.generateSection(
       uuid(),
-      'minimap',
+      '/minimap',
       800,
       200,
       500,
@@ -179,7 +197,7 @@ const initialLPD = {
     ),
     lpdHelper.generateSection(
       uuid(),
-      'minimap',
+      '/minimap',
       1800,
       450,
       500,
@@ -190,7 +208,7 @@ const initialLPD = {
     ),
     lpdHelper.generateSection(
       uuid(),
-      'minimap',
+      '/minimap',
       1800,
       200,
       200,
@@ -201,117 +219,6 @@ const initialLPD = {
     ),
   ],
   widgets: initialShips,
-  // widgets: [
-  // // Ownship
-  // lpdHelper.generateWidget(
-  //   uuid(),
-  //   'vehicle',
-  //   400,
-  //   950,
-  //   50,
-  //   50,
-  //   false,
-  //   false,
-  //   1,
-  //   [
-  //     lpdHelper.generateIconElement(
-  //       lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
-  //       OWNSHIP_LOGO,
-  //       'ownship',
-  //     ),
-  //   ],
-  // ),
-
-  // // Drones
-  // lpdHelper.generateWidget(
-  //   uuid(),
-  //   'vehicle',
-  //   500,
-  //   200,
-  //   50,
-  //   50,
-  //   false,
-  //   false,
-  //   10,
-  //   [
-  //     lpdHelper.generateIconElement(
-  //       lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
-  //       DRONE_LOGO,
-  //       'drone',
-  //     ),
-  //   ],
-  // ),
-  // lpdHelper.generateWidget(
-  //   uuid(),
-  //   'vehicle',
-  //   1500,
-  //   550,
-  //   50,
-  //   50,
-  //   false,
-  //   false,
-  //   10,
-  //   [
-  //     lpdHelper.generateIconElement(
-  //       lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
-  //       DRONE_LOGO,
-  //       'drone',
-  //     ),
-  //   ],
-  // ),
-  // lpdHelper.generateWidget(
-  //   uuid(),
-  //   'vehicle',
-  //   1500,
-  //   350,
-  //   50,
-  //   50,
-  //   false,
-  //   false,
-  //   10,
-  //   [
-  //     lpdHelper.generateIconElement(
-  //       lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
-  //       DRONE_LOGO,
-  //       'drone',
-  //     ),
-  //   ],
-  // ),
-  // lpdHelper.generateWidget(
-  //   uuid(),
-  //   'vehicle',
-  //   200,
-  //   900,
-  //   50,
-  //   50,
-  //   false,
-  //   false,
-  //   10,
-  //   [
-  //     lpdHelper.generateIconElement(
-  //       lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
-  //       DRONE_LOGO,
-  //       'drone',
-  //     ),
-  //   ],
-  // ),
-  // lpdHelper.generateWidget(
-  //   uuid(),
-  //   'vehicle',
-  //   1150,
-  //   750,
-  //   50,
-  //   50,
-  //   false,
-  //   false,
-  //   10,
-  //   [
-  //     lpdHelper.generateIconElement(
-  //       lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
-  //       DRONE_LOGO,
-  //       'drone',
-  //     ),
-  //   ],
 };
 
 export default initialLPD;

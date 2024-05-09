@@ -30,14 +30,15 @@ type SelectorProps = {
  */
 const selector = ({ message, stressLevel }: SelectorProps = {}) => {
   // Call the LPD function that corresponds to the stress level from the message
-  if (message && stressLevel) {
+  if (!message && !stressLevel) {
+    // If no message and no stress provided, return the initial LPD
+    return initialLPD;
+  } else {
     // Transform range of stress levels from 0-1 to 0-2 only returning integers
     stressLevel = Math.floor(stressLevel * 3);
     console.log(stressLevel);
     return stressLevelLPDFunctions[stressLevel](message);
-  } else {
-    // If no message is provided, return the initial LPD
-    return initialLPD;
+  }
 // const selector = ({ message }: SelectorProps) => {
 //   const possibleWidgets: Widget[] = [];
 

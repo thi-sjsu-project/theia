@@ -9,7 +9,7 @@ import type { ScreenType, Section, SectionType } from "src/types/support-types";
 // Functions to create sections, widgets, and elements
 const generateSection = (
   id: string,
-  screen: "pearce" | "minimap" | "boring-right",
+  screen: ScreenType,
   x: number,
   y: number,
   w: number,
@@ -85,9 +85,11 @@ const generateGridWidget = (
 
 const generateVehicleWidget = (
   baseWidget: Widget.BaseWidget,
+  vehicleId: number,
 ): Widget.VehicleWidget => ({
   ...baseWidget,
   type: "vehicle",
+  vehicleId,
 });
 
 const generateCustomWidget = (
