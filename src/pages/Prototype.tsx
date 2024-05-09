@@ -36,8 +36,6 @@ const Prototype = () => {
   const gazesAndKeys = useAppSelector(getGazesAndKeys);
   const elemsInGaze: ElementInGaze[] = useAppSelector(getElementsInGaze);
 
-  console.log('elemsInGaze:', elemsInGaze);
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {
