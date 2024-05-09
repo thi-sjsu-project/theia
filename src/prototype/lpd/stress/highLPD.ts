@@ -9,7 +9,7 @@ const requestApprovalToAttackMessageHigh = () => {
   return {
       sections: [],
       possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
-          uuid(),
+          'list',
           'request',
           100,
           100,
@@ -65,7 +65,7 @@ const acaFuelLowMessageHigh = () => {
   return {
       sections: [],
       possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
-          acaFuelLow_ID,
+          'list',
           'message',
           500,
           500,
@@ -98,7 +98,7 @@ const missileToOwnshipDetectedMessageHigh = () => {
     sections: [],
     possibleWidgets: [
       lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
-        MissileToOwnshipDetected_ID,
+        'list',
         'highWarning',
         100,
         100,
@@ -166,7 +166,7 @@ const acaDefectMessageHigh = () => {
   return {
       sections: [],
       possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
-          uuid(),
+          'list',
           'highWarning',
           500,
           500,
@@ -197,7 +197,7 @@ const acaHeadingToBaseMessageHigh = () => {
   return {
       sections: [],
       possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
-          uuid(),
+          'list',
           'message',
           500,
           500,

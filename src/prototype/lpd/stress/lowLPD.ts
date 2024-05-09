@@ -69,7 +69,7 @@ const acaFuelLowMessageLow = () => {
     return {
         sections: [],
         possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
-            acaFuelLow_ID,
+            'list',
             'message',
             500,
             500,
@@ -102,7 +102,7 @@ const missileToOwnshipDetectedMessageLow = () => {
       sections: [],
       possibleWidgets: [
         lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
-          MissileToOwnshipDetected_ID,
+          'list',
           'highWarning',
           100,
           100,
@@ -170,7 +170,7 @@ const acaDefectMessageLow = () => {
     return {
         sections: [],
         possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
-            uuid(),
+            'list',
             'highWarning',
             500,
             500,
@@ -201,7 +201,7 @@ const acaHeadingToBaseMessageLow = () => {
     return {
         sections: [],
         possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
-            uuid(),
+            'list',
             'message',
             500,
             500,
