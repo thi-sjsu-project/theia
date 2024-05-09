@@ -10,8 +10,8 @@ import type {
   RequestApprovalElement,
   MissileIncomingElement,
 } from 'src/types/element';
-import DANGER_ICON from 'src/icons/danger.svg';
-import DRONE_ICON from 'src/icons/drone.svg';
+import DANGER_ICON from 'src/assets/icons/danger.svg';
+import DRONE_ICON from 'src/assets/icons/drone.svg';
 
 type SelectorProps = {
   message: Message; //Message;

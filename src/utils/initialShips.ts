@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import type { Element, IconElement } from 'src/types/element';
-import OWNSHIP_LOGO from 'src/icons/ownship.svg';
-import DRONE_LOGO from 'src/icons/drone.svg';
+import OWNSHIP_LOGO from 'src/assets/icons/ownship.svg';
+import DRONE_LOGO from 'src/assets/icons/drone.svg';
 import type { VehicleWidget, WidgetMap } from 'src/types/widget';
 
 const ownshipUuid = uuid();
