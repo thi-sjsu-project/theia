@@ -34,14 +34,24 @@ export type ModalityMeasure = {
   boundary: ModalityMeasureBoundary;
 };
 
-// Simulated restrainer visual complexity
-const screenComplexity = (widgets : WidgetMap) => {
-  return Object.values(widgets).reduce( (acc, widget) => acc + widget.elements.length, 0);
+// **** Simulated restrainer visual complexity ****
+function totalVisualComplexity(widget : Widget) {
+  // Calculating the current visual complexity of the screen
+  const currentScreenComplexity = () => Object.values(store.getState().minimap.widgets).reduce( (acc, widget) => acc + widget.elements.length, 0);
+  
+  // Calculating the visual complexity of the widgetToDeploy
+  const widgetVisualComplexity = (widget : Widget) => widget?.elements.length;
+
+  console.log("current", currentScreenComplexity(), "widget", widgetVisualComplexity(widget))
+  
+  return currentScreenComplexity() + widgetVisualComplexity(widget);
 }
 
+
+// Calculating if adding @param widget will exceed maximum threshold
 // **** SET MAX BOUND ****
 const maxBound = {
-  visual: 100,
+  visual: 10,
 };
 
 /**
@@ -50,13 +60,13 @@ const maxBound = {
  * @returns if widgetToDeploy can be placed
  */
 const restrainer = ({ widgetToDeploy }: RestrainerProps) => {
-  const visualCurrentComplexity = screenComplexity(store.getState().minimap.widgets);
-  const widgetComplexity = widgetToDeploy?.elements.length;
+  // const visualCurrentComplexity = currentScreenComplexity(store.getState().minimap.widgets);
+  // const widgetComplexity = widgetToDeploy?.elements.length;
   
-  const canBePlaced = maxBound.visual - visualCurrentComplexity >= widgetComplexity; 
-  
+  const canBePlaced = maxBound.visual > totalVisualComplexity(widgetToDeploy); 
+
   if (!canBePlaced) 
-    console.warn(`This widget could not be deployed at visual complexity ${widgetComplexity}. The visual complexity (currently at ${visualCurrentComplexity}) will surpass the threshold ${maxBound.visual}.`)
+    console.warn(`This widget could not be deployed. The visual complexity (currently at ${widgetToDeploy.elements.length}) will surpass the threshold ${maxBound.visual}.`)
 
   return canBePlaced;
 
