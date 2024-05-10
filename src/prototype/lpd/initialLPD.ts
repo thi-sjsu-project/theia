@@ -173,12 +173,12 @@ const warn8: MapWarningWidget = {
 
 const initailMapWarnings: WidgetMap = {
   [warn1.id]: warn1,
-  [warn2.id]: warn2,
-  [warn3.id]: warn3,
+  //[warn2.id]: warn2,
+  //[warn3.id]: warn3,
   [warn4.id]: warn4,
   [warn5.id]: warn5,
   [warn6.id]: warn6,
-  [warn7.id]: warn7,
+  //[warn7.id]: warn7,
   [warn8.id]: warn8,
 };
 
