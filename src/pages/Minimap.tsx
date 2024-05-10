@@ -71,21 +71,7 @@ const Minimap = () => {
   circleColor: 'yellow'
 
 },
-{
-title: "ACA-7",
-ammoLeft: ['Unused', 'Unused', 'Used', 'Used'],
-ammoRight: ['Unused', 'Used', 'Used', 'Used'],
-fuelAmount: 50,
-circleColor: 'blue'
-},
-{
-title: "ACA-8",
-ammoLeft: ['Unused', 'Used', 'Used', 'Used'],
-ammoRight: ['Unused', 'Unused', 'Used', 'Used'],
-fuelAmount: 80,
-circleColor: 'yellow'
 
-},
 
   ];
 
