@@ -21,6 +21,7 @@ import { initialSections } from 'src/utils/initialSections';
 import Home from 'src/components/Home';
 import monitor from 'src/prototype/monitor';
 import { initailMapWarnings } from 'src/utils/initialMapWarnings';
+import restrainer from 'src/prototype/restrainer';
 
 const Prototype = () => {
   // ~~~~~ Custom Hooks ~~~~~~
@@ -80,6 +81,7 @@ const Prototype = () => {
     });
 
     //console.log('widgetToDeploy ' + widgetToDeploy);
+    console.log("action", action, "widgetToDeploy", widgetToDeploy);
     if (action !== 'newWidget') {
       //we should do something other than
       switch (action) {
@@ -102,22 +104,19 @@ const Prototype = () => {
           break;
       }
     } else if (widgetToDeploy) {
-      //console.log('widget deployed:', widgetToDeploy);
+      // console.log('widget deployed:', widgetToDeploy);
       //console.log('widgets that are now deployed: ', widgets);
       //if we can actually place the widget
 
       //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
-      /* if (
-          !restrainer({
-            visualComplexity: generateModalityMeasure(),
-            audioComplexity: generateModalityMeasure(),
-          })
-        )
-          return; */
+      if (restrainer({ widgetToDeploy : widgetToDeploy })) {
+        // restrainer deems that the widget CAN be deployed
+        
+        // dispatch action to add new widget
+        dispatch(addWidget(widgetToDeploy));
+        dispatch(addWidgetToSection(sectionID));
+      }
 
-      // dispatch action to add new widget
-      dispatch(addWidget(widgetToDeploy));
-      dispatch(addWidgetToSection(sectionID));
     }
   }, [messages]);
 
