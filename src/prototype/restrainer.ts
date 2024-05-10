@@ -44,29 +44,37 @@ function totalVisualComplexity(widget : Widget) {
 
   console.log("current", currentScreenComplexity(), "widget", widgetVisualComplexity(widget))
   
-  return currentScreenComplexity() + widgetVisualComplexity(widget);
+  return Math.min(visualRange.max, Math.max(visualRange.min, currentScreenComplexity() + widgetVisualComplexity(widget))); // keep the complexity within range bounds
 }
 
 
-// Calculating if adding @param widget will exceed maximum threshold
-// **** SET MAX BOUND ****
-const maxBound = {
-  visual: 10,
+// **** Set modality boundaries and ranges ****
+const visualRange : ModalityMeasureRange = {
+  min: 0,
+  max: 100
+};
+
+const visualBound : ModalityMeasureBoundary = {
+  min: 0,
+  max: 80,
 };
 
 /**
  * @description restrains the cm if placing the widgetToDeploy will cause to exceed our maximum threshold
  * @param the widget To Deploy
  * @returns if widgetToDeploy can be placed
- */
+*/
 const restrainer = ({ widgetToDeploy }: RestrainerProps) => {
   // const visualCurrentComplexity = currentScreenComplexity(store.getState().minimap.widgets);
   // const widgetComplexity = widgetToDeploy?.elements.length;
   
-  const canBePlaced = maxBound.visual > totalVisualComplexity(widgetToDeploy); 
+  // Calculating if adding @param widget will remain within bounds
+
+  const visualComplexityAfterAddingWidget = totalVisualComplexity(widgetToDeploy);
+  const canBePlaced = visualBound.min <= visualComplexityAfterAddingWidget && visualComplexityAfterAddingWidget <= visualBound.max;
 
   if (!canBePlaced) 
-    console.warn(`This widget could not be deployed. The visual complexity (currently at ${widgetToDeploy.elements.length}) will surpass the threshold ${maxBound.visual}.`)
+    console.warn(`This widget could not be deployed. Adding the widget will result in visual complexity of ${visualComplexityAfterAddingWidget}. Will go out of acceptable bounds ${visualBound.min} - ${visualBound.max}.`)
 
   return canBePlaced;
 
