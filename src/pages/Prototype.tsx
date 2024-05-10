@@ -115,18 +115,14 @@ const Prototype = () => {
       //if we can actually place the widget
 
       //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
-      if (!restrainer({ widgetToDeploy : widgetToDeploy })) return;
-      /* if (
-          !restrainer({
-            visualComplexity: generateModalityMeasure(),
-            audioComplexity: generateModalityMeasure(),
-          })
-        )
-          return; */
+      if (restrainer({ widgetToDeploy : widgetToDeploy })) {
+        // restrainer deems that the widget CAN be deployed
+        
+        // dispatch action to add new widget
+        dispatch(addWidget(widgetToDeploy));
+        dispatch(addWidgetToSection(sectionID));
+      }
 
-      // dispatch action to add new widget
-      dispatch(addWidget(widgetToDeploy));
-      dispatch(addWidgetToSection(sectionID));
     }
   }, [messages]);
 
