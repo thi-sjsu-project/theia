@@ -8,6 +8,15 @@ import threatArtillerySmReg from 'src/assets/icons/threats/artillery-sm-reg.svg'
 import threatAirDefenseSmReg from 'src/assets/icons/threats/airdefense-sm-reg.svg';
 import threatRadarSmReg from 'src/assets/icons/threats/radar-sm-reg.svg';
 
+const uuid1 = uuid();
+const uuid2 = uuid();
+const uuid3 = uuid();
+const uuid4 = uuid();
+const uuid5 = uuid();
+const uuid6 = uuid();
+const uuid7 = uuid();
+const uuid8 = uuid();
+
 const defaultWidget = {
   screen: '/minimap',
   sectionType: 'free',
@@ -27,7 +36,7 @@ const defaultIcon = {
 
 const warn1: MapWarningWidget = {
   ...defaultWidget,
-  id: uuid(),
+  id: uuid1,
   x: 750,
   y: 200,
   w: 128,
@@ -36,6 +45,7 @@ const warn1: MapWarningWidget = {
     {
       ...defaultIcon,
       id: uuid(),
+      widgetId: uuid1,
       src: threatMissileLgEmph,
       w: 128,
       h: 129,
@@ -45,7 +55,7 @@ const warn1: MapWarningWidget = {
 
 const warn2: MapWarningWidget = {
   ...defaultWidget,
-  id: uuid(),
+  id: uuid2,
   x: 900,
   y: 50,
   w: 80,
@@ -54,6 +64,7 @@ const warn2: MapWarningWidget = {
     {
       ...defaultIcon,
       id: uuid(),
+      widgetId: uuid2,
       src: threatAirDefenseSmReg,
       w: 80,
       h: 81,
@@ -63,7 +74,7 @@ const warn2: MapWarningWidget = {
 
 const warn3: MapWarningWidget = {
   ...defaultWidget,
-  id: uuid(),
+  id: uuid3,
   x: 300,
   y: 100,
   w: 80,
@@ -72,6 +83,7 @@ const warn3: MapWarningWidget = {
     {
       ...defaultIcon,
       id: uuid(),
+      widgetId: uuid3,
       src: threatAirDefenseSmReg,
       w: 80,
       h: 81,
@@ -81,7 +93,7 @@ const warn3: MapWarningWidget = {
 
 const warn4: MapWarningWidget = {
   ...defaultWidget,
-  id: uuid(),
+  id: uuid4,
   x: 500,
   y: 200,
   w: 80,
@@ -90,6 +102,7 @@ const warn4: MapWarningWidget = {
     {
       ...defaultIcon,
       id: uuid(),
+      widgetId: uuid4,
       src: threatRadarSmReg,
       w: 80,
       h: 81,
@@ -99,7 +112,7 @@ const warn4: MapWarningWidget = {
 
 const warn5: MapWarningWidget = {
   ...defaultWidget,
-  id: uuid(),
+  id: uuid5,
   x: 950,
   y: 400,
   w: 80,
@@ -108,6 +121,7 @@ const warn5: MapWarningWidget = {
     {
       ...defaultIcon,
       id: uuid(),
+      widgetId: uuid5,
       src: threatArtillerySmReg,
       w: 80,
       h: 81,
@@ -117,7 +131,7 @@ const warn5: MapWarningWidget = {
 
 const warn6: MapWarningWidget = {
   ...defaultWidget,
-  id: uuid(),
+  id: uuid6,
   x: 850,
   y: 700,
   w: 80,
@@ -126,6 +140,7 @@ const warn6: MapWarningWidget = {
     {
       ...defaultIcon,
       id: uuid(),
+      widgetId: uuid6,
       src: threatRadarSmReg,
       w: 80,
       h: 81,
@@ -135,7 +150,7 @@ const warn6: MapWarningWidget = {
 
 const warn7: MapWarningWidget = {
   ...defaultWidget,
-  id: uuid(),
+  id: uuid7,
   x: 1300,
   y: 100,
   w: 80,
@@ -144,6 +159,7 @@ const warn7: MapWarningWidget = {
     {
       ...defaultIcon,
       id: uuid(),
+      widgetId: uuid7,
       src: threatRadarSmReg,
       w: 80,
       h: 81,
@@ -153,7 +169,7 @@ const warn7: MapWarningWidget = {
 
 const warn8: MapWarningWidget = {
   ...defaultWidget,
-  id: uuid(),
+  id: uuid8,
   x: 1600,
   y: 350,
   w: 80,
@@ -162,6 +178,7 @@ const warn8: MapWarningWidget = {
     {
       ...defaultIcon,
       id: uuid(),
+      widgetId: uuid8,
       src: threatAirDefenseSmReg,
       w: 80,
       h: 81,
