@@ -13,7 +13,7 @@ const ACAHeader: FC<ACAHeaderProps> = ({ data }) => {
         <div style={{ backgroundColor: '#1E1E1E', margin: '0 auto', padding: '20px', maxHeight: '130px'}}>
             <div className="flex flex-wrap space-x-4 h-72">
                 {data.map((item, index) => (
-                    <div key={index} style={{ paddingBottom: '1rem', paddingLeft: index !== 0 && (index + 1) % 4 === 0 ? '390px' : '0px' }}>
+                    <div key={index} style={{ paddingBottom: '1rem' }}>
                         <ACA
                             key={index}
                             title={item.title}
