@@ -3,13 +3,10 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import Gaze from 'src/ui/Gaze';
 // ~~~~~~~ Redux ~~~~~~~
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { getSections, getWidgets } from 'src/redux/slices/minimapSlice';
 import {
   addKeyDown,
   getElementsInGaze,
-  getGazesAndKeys,
   removeKeyDown,
-  setElementsInGaze,
   type ElementInGaze,
 } from 'src/redux/slices/gazeSlice';
 // ~~~~~~~ Cusdom Hooks ~~~~~~~
@@ -91,7 +88,6 @@ const Layout = () => {
 
   return (
     <div>
-      {/* {pathname !== '/prototype' && <Navigation />} */}
       {pathname !== '/prototype' && <Gaze mousePosition={mousePosition} />}
 
       <main>

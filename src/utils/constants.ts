@@ -20,3 +20,5 @@ export const OWNSHIP_TRAJECTORY = {
 };
 
 export const GAZE_RADIUS = 50;
+export const CIRCLE_PERCENTAGE_THRESH = 0.1;
+export const ELEMENT_PERCENTAGE_THRESH = 0.1;

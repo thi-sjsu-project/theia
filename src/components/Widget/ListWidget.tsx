@@ -7,7 +7,7 @@ type ListWidgetProps = {
 
 const ListWidget = ({ widget }: ListWidgetProps) => {
   const className =
-    'absolute border-2 border-black p-2 flex flex-col gap-2 items-center';
+    'absolute border-2 border-black p-2 flex flex-col gap-2 items-center overflow-scroll';
 
   // Sort elements by priority
   const sortedElementsByPriority = [...widget.elements].sort(
@@ -32,6 +32,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
       {sortedElementsByPriority.map((element) => (
         // ListWidget enforces a certain layout and style for its Elements
         <div
+          id={element.id}
           key={element.id}
           className="w-full min-h-[75px] border-2 border-black 
           flex items-center justify-center"
