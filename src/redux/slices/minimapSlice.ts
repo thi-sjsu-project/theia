@@ -28,11 +28,11 @@ export type InitialMinimapState = {
 const initialState: InitialMinimapState = {
   visualComplexity: 0,
   audioComplexity: 0,
-  ownship,
-  drones,
+  ownship: null,
+  drones: [],
   messages: [],
-  // Initial sections, widgets, and elements
-  ...selector(),
+  widgets: {},
+  sections: [],
 };
 
 export const minimapSlice = createSlice({

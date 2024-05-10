@@ -5,6 +5,7 @@ import type * as Widget from "src/types/widget";
 import type { Properties } from "csstype";
 import type { Modality } from "src/types/modality";
 import type { Screen, Section, SectionType } from "src/types/support-types";
+import type { MissileToOwnshipDetected, RequestApprovalToAttack } from "src/types/schema-types";
 
 // Functions to create sections, widgets, and elements
 const generateSection = (
@@ -108,6 +109,8 @@ const generateBaseElement = (
   w: number,
   xWidget: number,
   yWidget: number,
+  priority?: number,
+  widgetId?: string,
   collapsed?: boolean,
   expirationInterval?: number,
   expiration?: string,
@@ -122,6 +125,8 @@ const generateBaseElement = (
   w,
   xWidget,
   yWidget,
+  widgetId,
+  priority,
   collapsed,
   expirationInterval,
   expiration,
@@ -197,6 +202,31 @@ const generateAudioElement = (
 });
 
 // Generate complex elements
+const generateMissileIncomingElement = (
+  baseElement: Element.BaseElement,
+  message: MissileToOwnshipDetected,
+  icon: Element.IconElement,
+): Element.MissileIncomingElement => ({
+  ...baseElement,
+  type: 'missile-incoming',
+  message,
+  icon,
+});
+
+const generateRequestApprovalElement = (
+  baseElement: Element.BaseElement,
+  message: RequestApprovalToAttack,
+  icon: Element.IconElement,
+  leftButton: Element.ButtonElement,
+  rightButton: Element.ButtonElement,
+): Element.RequestApprovalElement => ({
+  ...baseElement,
+  type: 'request-approval',
+  message,
+  icon,
+  leftButton,
+  rightButton,
+});
 
 const lpdHelper = {
   generateBaseWidget,
@@ -212,6 +242,8 @@ const lpdHelper = {
   generateTextElement,
   generateImageElement,
   generateAudioElement,
+  generateMissileIncomingElement,
+  generateRequestApprovalElement,
 };
 
 export default lpdHelper;

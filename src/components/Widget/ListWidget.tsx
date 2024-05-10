@@ -34,7 +34,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
         <div
           id={element.id}
           key={element.id}
-          className="w-full min-h-[75px] border-2 border-black 
+          className="w-full min-h-[100px] border-2 border-black 
           flex items-center justify-center"
         >
           <Element element={element}>

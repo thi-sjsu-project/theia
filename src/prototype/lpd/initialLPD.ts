@@ -154,10 +154,11 @@ export const drones: Widget[] = [
 
 const initialShips: WidgetMap = {
   [ownship.id]: ownship,
-  ...drones.reduce((acc, drone) => {
-    acc[drone.id] = drone;
-    return acc;
-  }, {} as WidgetMap),
+  [drones[0].id]: drones[0],
+  [drones[1].id]: drones[1],
+  [drones[2].id]: drones[2],
+  [drones[3].id]: drones[3],
+  [drones[4].id]: drones[4],
 };
 
 const initialLPD = {

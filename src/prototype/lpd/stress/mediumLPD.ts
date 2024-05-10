@@ -1,35 +1,34 @@
-import type { Message } from "src/types/schema-types";
+import type { Message, MissileToOwnshipDetected, RequestApprovalToAttack } from "src/types/schema-types";
 import lpdHelper from "src/utils/lpdHelper";
 import { v4 as uuid } from 'uuid';
 import DANGER_ICON from 'src/icons/danger.svg';
 import DRONE_ICON from 'src/icons/drone.svg';
-import { elements } from "./lowLPD";
-
-import type { Element } from "src/types/element";
-
-export const MissileToOwnshipDetected_ID = uuid();
-export const acaFuelLow_ID = uuid();
+import { elements } from './lowLPD';
 
 // Functions to create widgets, elements, and sections for each message type
-const requestApprovalToAttackMessageMedium = () => {
-    elements.push(
+const requestApprovalToAttackMessageMedium = (message: RequestApprovalToAttack) => {
+  elements.push(
+    lpdHelper.generateRequestApprovalElement(
+      lpdHelper.generateBaseElement(
+        uuid(),
+        'visual',
+        30,
+        30,
+        0,
+        0,
+        message.priority,
+      ),
+      message,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(
           uuid(),
           'visual',
-          30,
-          30,
+          80,
+          80,
           0,
           0,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
         ),
-        DRONE_ICON,
+        DANGER_ICON,
       ),
       lpdHelper.generateButtonElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80, 0, 0),
@@ -39,198 +38,179 @@ const requestApprovalToAttackMessageMedium = () => {
         lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80, 0, 0),
         'Approve',
       ),
-    );
+    ),
+  );
   return {
-      sections: [],
-      possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
+    sections: [],
+    possibleWidgets: [
+      lpdHelper.generateListWidget(
+        lpdHelper.generateBaseWidget(
           'list',
-          'request',
+          'tinder',
           100,
           100,
-          200,
-          200,
+          300,
+          800,
           '/pearce-screen',
           false,
           false,
           1,
-          elements,
-      ))],
+          [...elements],
+        ),
+      ),
+    ],
   };
-}
+};
 
-const acaFuelLowMessageMedium = () => {
+const acaFuelLowMessageMedium = (message: Message) => {
   elements.push(
-    lpdHelper.generateTableElement(lpdHelper.generateBaseElement(
+    lpdHelper.generateTableElement(
+      lpdHelper.generateBaseElement(uuid(), 'visual', 50, 200, 0, 0, message.priority),
+      2,
+      2,
+      [
+        ['Fuel', 'Low'],
+        ['Altitude', 'Low'],
+      ],
+    ),
+  );
+  return {
+    sections: [],
+    possibleWidgets: [
+      lpdHelper.generateListWidget(
+        lpdHelper.generateBaseWidget(
+          'list',
+          'tinder',
+          500,
+          500,
+          300,
+          800,
+          '/pearce-screen',
+          false,
+          false,
+          1,
+          [...elements],
+        ),
+      ),
+    ],
+  };
+};
+
+const missileToOwnshipDetectedMessageMedium = (message: MissileToOwnshipDetected) => {
+  elements.push(
+    lpdHelper.generateMissileIncomingElement(
+      lpdHelper.generateBaseElement(
         uuid(),
         'visual',
         50,
         200,
         0,
         0,
-    ),
-    2,
-    2,
-    [['Fuel', 'Low'],['Altitude', 'Low']],
-    ));
-  return {
-      sections: [],
-      possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
-          'list',
-          'message',
-          500,
-          500,
-          150,
-          150,
-          '/pearce-screen',
-          false,
-          false,
-          1,
-          elements,
-      ))],
-  };
-}
-
-const missileToOwnshipDetectedMessageMedium = () => {
-  elements.push(
-    lpdHelper.generateIconElement(
-      lpdHelper.generateBaseElement(
-        uuid(),
-        'visual',
-        80,
-        80,
-        0,
-        0,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        false,
-        false,
-        {
-          display: 'block',
-          margin: 'auto',
-          width: '50%',
-        },
+        message.priority,
       ),
-      'DANGER_ICON',
-    ),
-    lpdHelper.generateTextElement(
-      lpdHelper.generateBaseElement(
-        uuid(),
-        'visual',
-        70,
-        200,
-        75,
-        0,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        false,
-        false,
-        {
-          background: 'black',
-          color: '#02d118',
-          fontWeight: 'bold',
-          fontSize: '16px',
-        },
+      message,
+      lpdHelper.generateIconElement(
+        lpdHelper.generateBaseElement(uuid(), 'visual', 80, 80, 0, 0),
+        DANGER_ICON,
       ),
-      'Low Stress: Missile to ownship detected! T-30 till impact',
     ),
-);
+  );
   return {
     sections: [],
     possibleWidgets: [
-      lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
-        'list',
-        'highWarning',
-        100,
-        100,
-        200,
-        200,
-        '/pearce-screen',
-        false,
-        true,
-        1,
-        elements,
-      )),
-      ],
-  };
-}
-
-const acaDefectMessageMedium = () => {
-  elements.push(
-
-    lpdHelper.generateTableElement(lpdHelper.generateBaseElement(
-      uuid(),
-      'visual',
-      50,
-      200,
-      0,
-      0,
+      lpdHelper.generateListWidget(
+        lpdHelper.generateBaseWidget(
+          'list',
+          'tinder',
+          100,
+          100,
+          300,
+          800,
+          '/pearce-screen',
+          false,
+          true,
+          1,
+          [...elements],
+        ),
       ),
+    ],
+  };
+};
+
+const acaDefectMessageMedium = (message: Message) => {
+  elements.push(
+    lpdHelper.generateTableElement(
+      lpdHelper.generateBaseElement(uuid(), 'visual', 50, 200, 0, 0, message.priority),
       2,
       2,
-    [['Defect', 'Engine'], ['Altitude', 'Low']]),
+      [
+        ['Defect', 'Engine'],
+        ['Altitude', 'Low'],
+      ],
+    ),
   );
   return {
-      sections: [],
-      possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
+    sections: [],
+    possibleWidgets: [
+      lpdHelper.generateListWidget(
+        lpdHelper.generateBaseWidget(
           'list',
-          'highWarning',
+          'tinder',
           500,
           500,
-          20,
-          200,
+          300,
+          800,
           '/pearce-screen',
           false,
           true,
           1,
-          elements,
-      ))],
+          [...elements],
+        ),
+      ),
+    ],
   };
-}
+};
 
-const acaHeadingToBaseMessageMedium = () => {
+const acaHeadingToBaseMessageMedium = (message: Message) => {
   elements.push(
-    lpdHelper.generateTextElement(lpdHelper.generateBaseElement(
-        uuid(),
-        'visual',
-        30,
-        200,
-        0,
-        0,
+    lpdHelper.generateTextElement(
+      lpdHelper.generateBaseElement(uuid(), 'visual', 30, 200, 0, 0, message.priority),
+      'Aircraft heading to base',
     ),
-    'Aircraft heading to base'),);
+  );
   return {
-      sections: [],
-      possibleWidgets: [lpdHelper.generateListWidget(lpdHelper.generateBaseWidget(
+    sections: [],
+    possibleWidgets: [
+      lpdHelper.generateListWidget(
+        lpdHelper.generateBaseWidget(
           'list',
-          'message',
+          'tinder',
           500,
           500,
-          20,
-          200,
+          300,
+          800,
           '/pearce-screen',
           false,
           true,
           1,
-          elements,
-      ))],
+          [...elements],
+        ),
+      ),
+    ],
   };
-}
+};
 
 // Map each message type to its corresponding LPD function
 const mediumLPDMessageFunctions: any = {
-  'RequestApprovalToAttack': requestApprovalToAttackMessageMedium,
-  'AcaFuelLow': acaFuelLowMessageMedium,
-  'AcaDefect': acaDefectMessageMedium,
-  'AcaHeadingToBase': acaHeadingToBaseMessageMedium,
-  'MissileToOwnshipDetected': missileToOwnshipDetectedMessageMedium,
-}
+  RequestApprovalToAttack: requestApprovalToAttackMessageMedium,
+  AcaFuelLow: acaFuelLowMessageMedium,
+  AcaDefect: acaDefectMessageMedium,
+  AcaHeadingToBase: acaHeadingToBaseMessageMedium,
+  MissileToOwnshipDetected: missileToOwnshipDetectedMessageMedium,
+};
 
 const mediumLPD = (message: Message) => {
-  return mediumLPDMessageFunctions[message.kind]();
+  return mediumLPDMessageFunctions[message.kind](message);
 };
 
 export default mediumLPD;
