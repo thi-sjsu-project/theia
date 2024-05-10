@@ -87,10 +87,14 @@ const generateGridWidget = (
 const generateVehicleWidget = (
   baseWidget: Widget.BaseWidget,
   vehicleId: number,
+  speed: number,
+  rotation: number,
 ): Widget.VehicleWidget => ({
   ...baseWidget,
   type: "vehicle",
   vehicleId,
+  speed,
+  rotation,
 });
 
 const generateCustomWidget = (

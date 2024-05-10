@@ -1,8 +1,7 @@
 import type { Message, MissileToOwnshipDetected, RequestApprovalToAttack } from "src/types/schema-types";
 import lpdHelper from "src/utils/lpdHelper";
 import { v4 as uuid } from 'uuid';
-import DANGER_ICON from 'src/icons/danger.svg';
-import DRONE_ICON from 'src/icons/drone.svg';
+import DANGER_ICON from 'src/assets/icons/danger.svg';
 import { elements } from './lowLPD';
 
 // Functions to create widgets, elements, and sections for each message type

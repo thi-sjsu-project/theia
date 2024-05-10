@@ -38,7 +38,12 @@ export type VehicleWidget = BaseWidget & {
   type: 'vehicle';
   // this corresponds to the id in the schema-types defined by the world-sim team
   vehicleId: number;
-  // additonal properties...
+  speed: number;
+  rotation: number; // rad
+};
+
+export type MapWarningWidget = BaseWidget & {
+  type: 'map-warning';
 };
 
 export type CustomWidget = BaseWidget & {
@@ -46,7 +51,12 @@ export type CustomWidget = BaseWidget & {
   // additonal properties...
 };
 
-export type Widget = CustomWidget | VehicleWidget | ListWidget | GridWidget;
+export type Widget =
+  | CustomWidget
+  | VehicleWidget
+  | ListWidget
+  | GridWidget
+  | MapWarningWidget;
 
 export type WidgetMap = { [key: string]: Widget };
 

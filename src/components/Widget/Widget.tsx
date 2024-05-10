@@ -1,6 +1,7 @@
 import type { Widget as WidgetType } from 'src/types/widget';
 import ListWidget from 'src/components/Widget/ListWidget';
 import VehicleWidget from 'src/components/Widget/VehicleWidget';
+import MapWarningWidget from './MapWarningWidget';
 
 type WidgetProps = {
   widget: WidgetType;
@@ -13,8 +14,8 @@ const Widget = ({ widget }: WidgetProps) => {
         return <VehicleWidget widget={widget} />;
       case 'list':
         return <ListWidget widget={widget} />;
-      case 'custom':
-        return <div>Custom Widget</div>;
+      case 'map-warning':
+        return <MapWarningWidget widget={widget} />;
       default:
         return <div>Unknown Widget</div>;
     }

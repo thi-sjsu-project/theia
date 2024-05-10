@@ -9,8 +9,6 @@ import type { Screen } from 'src/types/support-types';
 import type { Message } from 'src/types/schema-types';
 import type { Element, ElementMap } from 'src/types/element';
 import type { LinkedSectionWidget, Section } from 'src/types/support-types';
-import selector from 'src/prototype/selector';
-import { ownship, drones } from 'src/prototype/lpd/initialLPD';
 
 export type InitialMinimapState = {
   visualComplexity: number;
@@ -68,17 +66,22 @@ export const minimapSlice = createSlice({
     },
 
     updateShipPosition: {
-      prepare(shipId: string, x: number, y: number) {
+      prepare(shipId: string, x: number, y: number, rotation: number) {
         return {
-          payload: { shipId, x, y },
+          payload: { shipId, x, y, rotation },
         };
       },
 
       reducer: (
         state,
-        action: PayloadAction<{ shipId: string; x: number; y: number }>,
+        action: PayloadAction<{
+          shipId: string;
+          x: number;
+          y: number;
+          rotation: number;
+        }>,
       ) => {
-        const { shipId, x, y } = action.payload;
+        const { shipId, x, y, rotation } = action.payload;
         const ship = state.widgets[shipId];
 
         // check if ship exists
@@ -97,6 +100,7 @@ export const minimapSlice = createSlice({
           ...ship,
           x,
           y,
+          rotation,
         };
       },
     },

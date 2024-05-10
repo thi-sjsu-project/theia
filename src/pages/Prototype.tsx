@@ -19,6 +19,7 @@ import selector from 'src/prototype/selector';
 import { ownship, drones } from 'src/prototype/lpd/initialLPD';
 import Home from 'src/components/Home';
 import monitor from 'src/prototype/monitor';
+import { initailMapWarnings } from 'src/utils/initialMapWarnings';
 
 const Prototype = () => {
   // ~~~~~ Custom Hooks ~~~~~~
