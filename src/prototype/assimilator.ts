@@ -83,13 +83,19 @@ const assimilator = ({
             ) {
               // if the widget is in this section AND it cannot be opverlapped. if it can be overlapped then we can just place on top of it so we don't need to check.
               matchingWidgets.push(deployedWidget);
-            }
+            } 
           });
         });
-
+        // let x = section.x
+        // const xBool = x < section.x + section.w - widget.w
+        // console.log('xBool:', xBool)
+        // let y = section.y
+        // const yBool = y < section.y + section.h - widget.y
+        // console.log('yBool:', yBool)
         for (let x = section.x; x < section.x + section.w - widget.w; x++) {
           //go through every x value in the section that could possibly house the widget (we subtract the size of the wdiget to ensure it doesn't get placed semi-outside of the section)
-          for (let y = section.y; y < section.y + section.h - widget.y; y++) {
+          // Used to be widget.y changed to widget.h - Paul
+          for (let y = section.y; y < section.y + section.h - widget.h; y++) {
             //go through every y value in the section that could possibly house the widget (we subtract the size of the wdiget to ensure it doesn't get placed semi-outside of the section)
             const proposedX = x; //the current x and y values that are proposed to be used as the top-left coordinates (can probably remove and change into x and y if we don't find more use for them later)
             const proposedY = y;

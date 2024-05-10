@@ -10,11 +10,17 @@ import type {
   RequestApprovalElement,
   MissileIncomingElement,
 } from 'src/types/element';
-import DANGER_ICON from 'src/assets/icons/danger.svg';
-import DRONE_ICON from 'src/assets/icons/drone.svg';
+import DANGER_ICON from 'src/icons/danger.svg';
+import lowLPD from "./lpd/stress/lowLPD";
+import mediumLPD from "./lpd/stress/mediumLPD";
+import highLPD from "./lpd/stress/highLPD";
+import initialLPD from "./lpd/initialLPD";
+
+const stressLevelLPDFunctions = [lowLPD, mediumLPD, highLPD];
 
 type SelectorProps = {
-  message: Message; //Message;
+  message?: Message;
+  stressLevel?: number;
 };
 
 /**
@@ -22,171 +28,287 @@ type SelectorProps = {
  * @param ???
  * @returns ???
  */
-const selector = ({ message }: SelectorProps) => {
-  const possibleWidgets: Widget[] = [];
-
-  const expirationTime = new Date();
-  expirationTime.setSeconds(
-    expirationTime.getSeconds() + (Math.floor(Math.random() * 10) + 5),
-  ); //set the time to expire to a time between 5 and 15 seconds
-
-  const expiration = expirationTime.toISOString();
-
-  const onExpiration = 'delete';
-
-  // Only doing a single widget for Demo3
-  const widget: Widget = {
-    // static ID for Demo3
-    id: 'list',
-    sectionType: 'tinder',
-    type: 'list',
-    screen: '/pearce-screen',
-    elements: [],
-    x: 50,
-    y: 40,
-    w: 300,
-    h: 800,
-    canOverlap: false,
-    useElementLocation: false,
-    maxAmount: 1,
-  };
-
-  let elements: Element[] = [];
-
-  switch (message.kind) {
-    case 'RequestApprovalToAttack':
-      elements.push({
-        id: uuid(),
-        widgetId: 'list',
-        type: 'request-approval',
-        modality: 'visual',
-        h: 100,
-        w: 200,
-        xWidget: 0,
-        yWidget: 0,
-        message,
-        collapsed: true,
-        priority: message.priority,
-        icon: {
-          id: uuid(),
-          modality: 'visual',
-          type: 'icon',
-          h: 30,
-          w: 30,
-          xWidget: 0,
-          yWidget: 0,
-          src: DRONE_ICON,
-        },
-        leftButton: {
-          id: uuid(),
-          modality: 'visual',
-          h: 30,
-          w: 80,
-          xWidget: 0,
-          yWidget: 0,
-          text: 'Deny',
-          type: 'button',
-        },
-        rightButton: {
-          id: uuid(),
-          modality: 'visual',
-          h: 30,
-          w: 80,
-          xWidget: 0,
-          yWidget: 0,
-          text: 'Approve',
-          type: 'button',
-        },
-      } satisfies RequestApprovalElement);
-      break;
-
-    case 'MissileToOwnshipDetected':
-      elements.push({
-        id: uuid(),
-        widgetId: 'list',
-        type: 'missile-incoming',
-        modality: 'visual',
-        xWidget: 0,
-        yWidget: 0,
-        h: 80,
-        w: 80,
-        message,
-        priority: message.priority,
-        icon: {
-          id: uuid(),
-          modality: 'visual',
-          type: 'icon',
-          src: DANGER_ICON,
-          h: 30,
-          w: 30,
-          xWidget: 0,
-          yWidget: 0,
-        },
-      } satisfies MissileIncomingElement);
-      break;
-
-    case 'AcaHeadingToBase':
-      elements.push({
-        id: uuid(),
-        widgetId: 'list',
-        type: 'text',
-        modality: 'visual',
-        xWidget: 0,
-        yWidget: 0,
-        h: 30,
-        w: 200,
-        text: 'Aircraft heading to base',
-        priority: message.priority,
-      } satisfies TextElement);
-      break;
-
-    case 'AcaFuelLow':
-      elements.push({
-        id: uuid(),
-        widgetId: 'list',
-        type: 'table',
-        modality: 'visual',
-        xWidget: 0,
-        yWidget: 0,
-        h: 50,
-        w: 200,
-        rows: 2,
-        cols: 2,
-        tableData: [
-          ['Fuel', 'Low'],
-          ['Altitude', 'Low'],
-        ],
-        priority: message.priority,
-      } satisfies TableElement);
-      break;
-
-    case 'AcaDefect':
-      elements.push({
-        id: uuid(),
-        widgetId: 'list',
-        type: 'table',
-        modality: 'visual',
-        xWidget: 0,
-        yWidget: 0,
-        h: 50,
-        w: 200,
-        rows: 2,
-        cols: 2,
-        tableData: [
-          ['Defect', 'Engine'],
-          ['Altitude', 'Low'],
-        ],
-        priority: message.priority,
-      } satisfies TableElement);
-      break;
+const selector = ({ message, stressLevel }: SelectorProps = {}) => {
+  // Call the LPD function that corresponds to the stress level from the message
+  if (!message && !stressLevel) {
+    // If no message and no stress provided, return the initial LPD
+    return initialLPD;
+  } else {
+    // Transform range of stress levels from 0-1 to 0-2 only returning integers
+    stressLevel = Math.floor(stressLevel * 3);
+    console.log(stressLevel);
+    return stressLevelLPDFunctions[stressLevel](message);
   }
+// const selector = ({ message }: SelectorProps) => {
+//   const possibleWidgets: Widget[] = [];
 
-  widget.elements = elements;
+//   const expirationTime = new Date();
+//   expirationTime.setSeconds(
+//     expirationTime.getSeconds() + (Math.floor(Math.random() * 10) + 5),
+//   ); //set the time to expire to a time between 5 and 15 seconds
 
-  return {
-    message,
-    possibleWidgets: [widget],
-  };
+//   const expiration = expirationTime.toISOString();
+
+//   const onExpiration = 'delete';
+
+//   // Only doing a single widget for Demo3
+//   const widget: Widget = {
+//     // static ID for Demo3
+//     id: 'list',
+//     sectionType: 'tinder',
+//     type: 'list',
+//     screen: '/pearce-screen',
+//     elements: [],
+//     x: 50,
+//     y: 40,
+//     w: 300,
+//     h: 800,
+//     canOverlap: false,
+//     useElementLocation: false,
+//     maxAmount: 1,
+//   };
+
+//   let elements: Element[] = [];
+
+//   switch (message.kind) {
+//     case 'RequestApprovalToAttack':
+//       elements.push({
+//         id: uuid(),
+//         type: 'request-approval',
+//         modality: 'visual',
+//         h: 100,
+//         w: 200,
+//         xWidget: 0,
+//         yWidget: 0,
+//         message,
+//         collapsed: true,
+//         priority: message.priority,
+//         icon: {
+//           id: uuid(),
+//           modality: 'visual',
+//           type: 'icon',
+//           h: 30,
+//           w: 30,
+//           xWidget: 0,
+//           yWidget: 0,
+//           src: DRONE_ICON,
+//         },
+//         leftButton: {
+//           id: uuid(),
+//           modality: 'visual',
+//           h: 30,
+//           w: 80,
+//           xWidget: 0,
+//           yWidget: 0,
+//           text: 'Deny',
+//           type: 'button',
+//         },
+//         rightButton: {
+//           id: uuid(),
+//           modality: 'visual',
+//           h: 30,
+//           w: 80,
+//           xWidget: 0,
+//           yWidget: 0,
+//           text: 'Approve',
+//           type: 'button',
+//         },
+//       } satisfies RequestApprovalElement);
+//       break;
+
+//     case 'MissileToOwnshipDetected':
+//       elements.push({
+//         id: uuid(),
+//         type: 'missile-incoming',
+//         modality: 'visual',
+//         xWidget: 0,
+//         yWidget: 0,
+//         h: 80,
+//         w: 80,
+//         message,
+//         priority: message.priority,
+//         icon: {
+//           id: uuid(),
+//           modality: 'visual',
+//           type: 'icon',
+//           src: DANGER_ICON,
+//           h: 30,
+//           w: 30,
+//           xWidget: 0,
+//           yWidget: 0,
+//         },
+//       } satisfies MissileIncomingElement);
+//       break;
+
+//     case 'AcaHeadingToBase':
+//       elements.push({
+//         id: uuid(),
+//         type: 'text',
+//         modality: 'visual',
+//         xWidget: 0,
+//         yWidget: 0,
+//         h: 30,
+//         w: 200,
+//         text: 'Aircraft heading to base',
+//         priority: message.priority,
+//       } satisfies TextElement);
+//       break;
+
+//     case 'AcaFuelLow':
+//       elements.push({
+//         id: uuid(),
+//         type: 'table',
+//         modality: 'visual',
+//         xWidget: 0,
+//         yWidget: 0,
+//         h: 50,
+//         w: 200,
+//         rows: 2,
+//         cols: 2,
+//         tableData: [
+//           ['Fuel', 'Low'],
+//           ['Altitude', 'Low'],
+//         ],
+//         priority: message.priority,
+//       } satisfies TableElement);
+//       break;
+
+//     case 'AcaDefect':
+//       elements.push({
+//         id: uuid(),
+//         type: 'table',
+//         modality: 'visual',
+//         xWidget: 0,
+//         yWidget: 0,
+//         h: 50,
+//         w: 200,
+//         rows: 2,
+//         cols: 2,
+//         tableData: [
+//           ['Defect', 'Engine'],
+//           ['Altitude', 'Low'],
+//         ],
+//         priority: message.priority,
+//       } satisfies TableElement);
+//       break;
+//   }
+  // const possibleWidgets: Widget[] = [];
+
+  // const expirationTime = new Date();
+  // expirationTime.setSeconds(
+  //   expirationTime.getSeconds() + (Math.floor(Math.random() * 10) + 5),
+  // ); //set the time to expire to a time between 5 and 15 seconds
+
+  // const expiration = expirationTime.toISOString();
+
+  // const onExpiration = 'delete';
+
+  // // Only doing a single widget for Demo3
+  // const widget: Widget = {
+  //   // static ID for Demo3
+  //   id: 'tinder',
+  //   type: 'tinder',
+  //   elements: [],
+  //   x: 50,
+  //   y: 40,
+  //   w: 300,
+  //   h: 800,
+  //   canOverlap: false,
+  //   useElementLocation: false,
+  //   maxAmount: 1,
+  // };
+
+  // let elements: Element[] = [];
+
+  // switch (message.kind) {
+  //   case 'RequestApprovalToAttack':
+  //     elements.push({
+  //       id: uuid(),
+  //       type: 'button',
+  //       modality: 'visual',
+  //       xWidget: 0,
+  //       yWidget: 0,
+  //       h: 50,
+  //       w: 80,
+  //       text: 'RequestApprovalToAttack',
+  //       priority: message.priority,
+  //     } satisfies ButtonElement);
+  //     break;
+
+  //   case 'MissileToOwnshipDetected':
+  //     elements.push({
+  //       id: uuid(),
+  //       type: 'icon',
+  //       modality: 'visual',
+  //       xWidget: 0,
+  //       yWidget: 0,
+  //       h: 80,
+  //       w: 80,
+  //       src: DANGER_ICON,
+  //       tag: 'warning',
+  //       priority: message.priority,
+  //     } satisfies IconElement);
+  //     break;
+
+  //   case 'AcaHeadingToBase':
+  //     elements.push({
+  //       id: uuid(),
+  //       type: 'text',
+  //       modality: 'visual',
+  //       xWidget: 0,
+  //       yWidget: 0,
+  //       h: 30,
+  //       w: 200,
+  //       text: 'Aircraft heading to base',
+  //       priority: message.priority,
+  //     } satisfies TextElement);
+  //     break;
+
+  //   case 'AcaFuelLow':
+  //     elements.push({
+  //       id: uuid(),
+  //       type: 'table',
+  //       modality: 'visual',
+  //       xWidget: 0,
+  //       yWidget: 0,
+  //       h: 50,
+  //       w: 200,
+  //       rows: 2,
+  //       cols: 2,
+  //       tableData: [
+  //         ['Fuel', 'Low'],
+  //         ['Altitude', 'Low'],
+  //       ],
+  //       priority: message.priority,
+  //     } satisfies TableElement);
+  //     break;
+
+  //   case 'AcaDefect':
+  //     elements.push({
+  //       id: uuid(),
+  //       type: 'table',
+  //       modality: 'visual',
+  //       xWidget: 0,
+  //       yWidget: 0,
+  //       h: 50,
+  //       w: 200,
+  //       rows: 2,
+  //       cols: 2,
+  //       tableData: [
+  //         ['Defect', 'Engine'],
+  //         ['Altitude', 'Low'],
+  //       ],
+  //       priority: message.priority,
+  //     } satisfies TableElement);
+  //     break;
+  // }
+
+  // widget.elements = elements;
+
+  // return {
+  //   message,
+  //   possibleWidgets: [widget],
+  // };
 
   // simulation LPD
   /* if (message === 'RequestApprovalToAttack') {
@@ -272,6 +394,13 @@ const selector = ({ message }: SelectorProps) => {
       useElementLocation: true,
       canOverlap: false,
       elements,
+      style: {
+        backgroundColor: 'red',
+        position: 'absolute',
+        opacity: 0.5,
+        border: 'solid',
+        zIndex: 100,
+      },
     };
 
     possibleWidgets.push(widget);
@@ -314,6 +443,13 @@ const selector = ({ message }: SelectorProps) => {
       useElementLocation: true,
       canOverlap: false,
       elements,
+      style: {
+        backgroundColor: 'red',
+        position: 'absolute',
+        opacity: 0.5,
+        border: 'solid',
+        zIndex: 100,
+      },
     };
 
     possibleWidgets.push(widget);
@@ -361,6 +497,13 @@ const selector = ({ message }: SelectorProps) => {
       useElementLocation: true,
       canOverlap: false,
       elements,
+      style: {
+        backgroundColor: 'red',
+        position: 'absolute',
+        opacity: 0.5,
+        border: 'solid',
+        zIndex: 100,
+      },
     };
 
     possibleWidgets.push(widget);
@@ -386,6 +529,13 @@ const selector = ({ message }: SelectorProps) => {
       h: 300,
       useElementLocation: false,
       canOverlap: false,
+      style: {
+        backgroundColor: 'red',
+        position: 'absolute',
+        opacity: 0.5,
+        border: 'solid',
+        zIndex: 100,
+      },
     };
 
     possibleWidgets.push(widget);

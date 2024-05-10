@@ -4,6 +4,7 @@ import type {
   MissileToOwnshipDetected,
   RequestApprovalToAttack,
 } from 'src/types/schema-types';
+import type { Properties } from 'csstype';
 
 export type BaseElement = {
   id: string;
@@ -24,6 +25,7 @@ export type BaseElement = {
   onExpiration?: 'delete' | 'escalate' | 'deescalate';
   interacted?: boolean;
   canOverlap?: boolean;
+  style?: Properties;
 };
 
 //

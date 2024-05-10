@@ -1,8 +1,6 @@
 import type { Element } from 'src/types/element';
 import type { Properties } from 'csstype';
-import type { SectionType } from 'src/types/support-types';
-
-export type Screen = '/pearce-screen' | '/minimap' | '/right-screen';
+import type { Screen, SectionType } from 'src/types/support-types';
 
 export type BaseWidget = {
   elements: Element[];
@@ -16,11 +14,13 @@ export type BaseWidget = {
 
   screen: Screen;
 
-  padding?: number;
-
   canOverlap: boolean;
   useElementLocation: boolean;
   maxAmount: number;
+
+  padding?: number;
+  priority?: number;
+  style?: Properties;
 };
 
 export type ListWidget = BaseWidget & {

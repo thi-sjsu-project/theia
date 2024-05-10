@@ -5,6 +5,8 @@ export type Cell = {
   color?: string;
 };
 
+export type Screen = '/pearce-screen' | '/minimap' | '/right-screen';
+
 export type SectionType =
   | 'free'
   | 'vehicle'
@@ -16,6 +18,7 @@ export type SectionType =
 
 export type Section = {
   id: string;
+  screen: Screen;
   x: number;
   y: number;
   w: number;

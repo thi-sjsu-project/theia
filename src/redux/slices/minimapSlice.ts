@@ -4,8 +4,8 @@ import type {
   Widget,
   VehicleWidget,
   WidgetMap,
-  Screen,
 } from 'src/types/widget';
+import type { Screen } from 'src/types/support-types';
 import type { Message } from 'src/types/schema-types';
 import type { Element, ElementMap } from 'src/types/element';
 import type { LinkedSectionWidget, Section } from 'src/types/support-types';
@@ -28,8 +28,8 @@ const initialState: InitialMinimapState = {
   audioComplexity: 0,
   ownship: null,
   drones: [],
-  widgets: {},
   messages: [],
+  widgets: {},
   sections: [],
 };
 
@@ -110,17 +110,19 @@ export const minimapSlice = createSlice({
     },
 
     addElementToWidget: {
-      prepare(widgetId: string, element: Element) {
-        return { payload: { widgetId, element } };
+      prepare(widgetId: string, elements: Element[]) {
+        return { payload: { widgetId, elements } };
       },
 
       reducer(
         state,
-        action: PayloadAction<{ widgetId: string; element: Element }>,
+        action: PayloadAction<{ widgetId: string; elements: Element[] }>,
       ) {
-        state.widgets[action.payload.widgetId].elements.push(
-          action.payload.element,
-        );
+        console.log('adding elements to widget', action.payload.elements);
+        state.widgets[action.payload.widgetId].elements = action.payload.elements;
+        // state.widgets[action.payload.widgetId].elements.push(
+        //   ...action.payload.elements,
+        // );
       },
     },
 

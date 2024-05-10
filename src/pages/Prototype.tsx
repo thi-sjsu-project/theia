@@ -16,8 +16,7 @@ import useWorldSim from 'src/hooks/useWorldSim';
 import assimilator from 'src/prototype/assimilator';
 import selector from 'src/prototype/selector';
 // ~~~~~~~ Constants ~~~~~~~
-import { ownship, drones, initialShips } from 'src/utils/initialShips';
-import { initialSections } from 'src/utils/initialSections';
+import { ownship, drones } from 'src/prototype/lpd/initialLPD';
 import Home from 'src/components/Home';
 import monitor from 'src/prototype/monitor';
 import { initailMapWarnings } from 'src/utils/initialMapWarnings';
@@ -40,9 +39,9 @@ const Prototype = () => {
       audioComplexity: 0,
       ownship,
       drones,
-      widgets: { ...initialShips, ...initailMapWarnings },
       messages: [],
-      sections: [...initialSections],
+      // Initial sections, widgets, and elements
+      ...selector(),
     };
 
     dispatch(initializeState(initialState));
@@ -68,6 +67,7 @@ const Prototype = () => {
 
     const { message, possibleWidgets } = selector({
       message: currentMessage,
+      stressLevel,
     });
 
     // possibleWidgets[0].id = uuid();
@@ -75,7 +75,7 @@ const Prototype = () => {
     //console.log('running through assimilator...');
     const { widgetToDeploy, sectionID, action } = assimilator({
       // find if there is room for us to put the widget down (returns null if there is not room)
-      possibleWidgets: possibleWidgets,
+      possibleWidgets,
       sections,
       widgets,
     });
@@ -95,7 +95,7 @@ const Prototype = () => {
           dispatch(
             addElementToWidget(
               possibleWidgets[0].id,
-              possibleWidgets[0].elements[0],
+              possibleWidgets[0].elements,
             ),
           );
           break;
