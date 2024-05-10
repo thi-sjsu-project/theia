@@ -21,6 +21,8 @@ export type BaseWidget = {
   canOverlap: boolean;
   useElementLocation: boolean;
   maxAmount: number;
+
+  handledMessageIds?: string[];
 };
 
 export type ListWidget = BaseWidget & {
