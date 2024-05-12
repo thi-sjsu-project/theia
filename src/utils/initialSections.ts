@@ -8,6 +8,7 @@ const tinderSection: Section = {
   w: 350,
   h: 900,
   priority: 10,
+  screen: '/pearce-screen',
   type: 'tinder',
   widgetIDs: [],
 };
@@ -20,6 +21,7 @@ const requestSection: Section = {
   h: 200,
   priority: 10,
   type: 'request',
+  screen: '/minimap',
   widgetIDs: [],
 };
 
@@ -31,6 +33,7 @@ const highWarningSection: Section = {
   h: 250,
   priority: 10,
   type: 'highWarning',
+  screen: '/minimap',
   widgetIDs: [],
 };
 
@@ -42,6 +45,7 @@ const lowWarningSection: Section = {
   h: 200,
   priority: 10,
   type: 'lowWarning',
+  screen: '/minimap',
   widgetIDs: [],
 };
 
@@ -53,6 +57,7 @@ const messageSection: Section = {
   h: 200,
   priority: 10,
   type: 'message',
+  screen: '/minimap',
   widgetIDs: [],
 };
 

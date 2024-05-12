@@ -11,10 +11,10 @@ import type {
   MissileIncomingElement,
 } from 'src/types/element';
 import DANGER_ICON from 'src/icons/danger.svg';
-import lowLPD from "./lpd/stress/lowLPD";
-import mediumLPD from "./lpd/stress/mediumLPD";
-import highLPD from "./lpd/stress/highLPD";
-import initialLPD from "./lpd/initialLPD";
+import lowLPD from 'src/prototype/lpd/stress/lowLPD';
+import mediumLPD from 'src/prototype/lpd/stress/mediumLPD';
+import highLPD from 'src/prototype/lpd/stress/highLPD';
+import initialLPD from 'src/prototype/lpd/initialLPD';
 
 const stressLevelLPDFunctions = [lowLPD, mediumLPD, highLPD];
 
@@ -35,163 +35,163 @@ const selector = ({ message, stressLevel }: SelectorProps = {}) => {
     return initialLPD;
   } else {
     // Transform range of stress levels from 0-1 to 0-2 only returning integers
-    stressLevel = Math.floor(stressLevel * 3);
+    stressLevel = Math.floor(stressLevel! * 3);
     console.log(stressLevel);
-    return stressLevelLPDFunctions[stressLevel](message);
+    return stressLevelLPDFunctions[stressLevel](message!);
   }
-// const selector = ({ message }: SelectorProps) => {
-//   const possibleWidgets: Widget[] = [];
+  // const selector = ({ message }: SelectorProps) => {
+  //   const possibleWidgets: Widget[] = [];
 
-//   const expirationTime = new Date();
-//   expirationTime.setSeconds(
-//     expirationTime.getSeconds() + (Math.floor(Math.random() * 10) + 5),
-//   ); //set the time to expire to a time between 5 and 15 seconds
+  //   const expirationTime = new Date();
+  //   expirationTime.setSeconds(
+  //     expirationTime.getSeconds() + (Math.floor(Math.random() * 10) + 5),
+  //   ); //set the time to expire to a time between 5 and 15 seconds
 
-//   const expiration = expirationTime.toISOString();
+  //   const expiration = expirationTime.toISOString();
 
-//   const onExpiration = 'delete';
+  //   const onExpiration = 'delete';
 
-//   // Only doing a single widget for Demo3
-//   const widget: Widget = {
-//     // static ID for Demo3
-//     id: 'list',
-//     sectionType: 'tinder',
-//     type: 'list',
-//     screen: '/pearce-screen',
-//     elements: [],
-//     x: 50,
-//     y: 40,
-//     w: 300,
-//     h: 800,
-//     canOverlap: false,
-//     useElementLocation: false,
-//     maxAmount: 1,
-//   };
+  //   // Only doing a single widget for Demo3
+  //   const widget: Widget = {
+  //     // static ID for Demo3
+  //     id: 'list',
+  //     sectionType: 'tinder',
+  //     type: 'list',
+  //     screen: '/pearce-screen',
+  //     elements: [],
+  //     x: 50,
+  //     y: 40,
+  //     w: 300,
+  //     h: 800,
+  //     canOverlap: false,
+  //     useElementLocation: false,
+  //     maxAmount: 1,
+  //   };
 
-//   let elements: Element[] = [];
+  //   let elements: Element[] = [];
 
-//   switch (message.kind) {
-//     case 'RequestApprovalToAttack':
-//       elements.push({
-//         id: uuid(),
-//         type: 'request-approval',
-//         modality: 'visual',
-//         h: 100,
-//         w: 200,
-//         xWidget: 0,
-//         yWidget: 0,
-//         message,
-//         collapsed: true,
-//         priority: message.priority,
-//         icon: {
-//           id: uuid(),
-//           modality: 'visual',
-//           type: 'icon',
-//           h: 30,
-//           w: 30,
-//           xWidget: 0,
-//           yWidget: 0,
-//           src: DRONE_ICON,
-//         },
-//         leftButton: {
-//           id: uuid(),
-//           modality: 'visual',
-//           h: 30,
-//           w: 80,
-//           xWidget: 0,
-//           yWidget: 0,
-//           text: 'Deny',
-//           type: 'button',
-//         },
-//         rightButton: {
-//           id: uuid(),
-//           modality: 'visual',
-//           h: 30,
-//           w: 80,
-//           xWidget: 0,
-//           yWidget: 0,
-//           text: 'Approve',
-//           type: 'button',
-//         },
-//       } satisfies RequestApprovalElement);
-//       break;
+  //   switch (message.kind) {
+  //     case 'RequestApprovalToAttack':
+  //       elements.push({
+  //         id: uuid(),
+  //         type: 'request-approval',
+  //         modality: 'visual',
+  //         h: 100,
+  //         w: 200,
+  //         xWidget: 0,
+  //         yWidget: 0,
+  //         message,
+  //         collapsed: true,
+  //         priority: message.priority,
+  //         icon: {
+  //           id: uuid(),
+  //           modality: 'visual',
+  //           type: 'icon',
+  //           h: 30,
+  //           w: 30,
+  //           xWidget: 0,
+  //           yWidget: 0,
+  //           src: DRONE_ICON,
+  //         },
+  //         leftButton: {
+  //           id: uuid(),
+  //           modality: 'visual',
+  //           h: 30,
+  //           w: 80,
+  //           xWidget: 0,
+  //           yWidget: 0,
+  //           text: 'Deny',
+  //           type: 'button',
+  //         },
+  //         rightButton: {
+  //           id: uuid(),
+  //           modality: 'visual',
+  //           h: 30,
+  //           w: 80,
+  //           xWidget: 0,
+  //           yWidget: 0,
+  //           text: 'Approve',
+  //           type: 'button',
+  //         },
+  //       } satisfies RequestApprovalElement);
+  //       break;
 
-//     case 'MissileToOwnshipDetected':
-//       elements.push({
-//         id: uuid(),
-//         type: 'missile-incoming',
-//         modality: 'visual',
-//         xWidget: 0,
-//         yWidget: 0,
-//         h: 80,
-//         w: 80,
-//         message,
-//         priority: message.priority,
-//         icon: {
-//           id: uuid(),
-//           modality: 'visual',
-//           type: 'icon',
-//           src: DANGER_ICON,
-//           h: 30,
-//           w: 30,
-//           xWidget: 0,
-//           yWidget: 0,
-//         },
-//       } satisfies MissileIncomingElement);
-//       break;
+  //     case 'MissileToOwnshipDetected':
+  //       elements.push({
+  //         id: uuid(),
+  //         type: 'missile-incoming',
+  //         modality: 'visual',
+  //         xWidget: 0,
+  //         yWidget: 0,
+  //         h: 80,
+  //         w: 80,
+  //         message,
+  //         priority: message.priority,
+  //         icon: {
+  //           id: uuid(),
+  //           modality: 'visual',
+  //           type: 'icon',
+  //           src: DANGER_ICON,
+  //           h: 30,
+  //           w: 30,
+  //           xWidget: 0,
+  //           yWidget: 0,
+  //         },
+  //       } satisfies MissileIncomingElement);
+  //       break;
 
-//     case 'AcaHeadingToBase':
-//       elements.push({
-//         id: uuid(),
-//         type: 'text',
-//         modality: 'visual',
-//         xWidget: 0,
-//         yWidget: 0,
-//         h: 30,
-//         w: 200,
-//         text: 'Aircraft heading to base',
-//         priority: message.priority,
-//       } satisfies TextElement);
-//       break;
+  //     case 'AcaHeadingToBase':
+  //       elements.push({
+  //         id: uuid(),
+  //         type: 'text',
+  //         modality: 'visual',
+  //         xWidget: 0,
+  //         yWidget: 0,
+  //         h: 30,
+  //         w: 200,
+  //         text: 'Aircraft heading to base',
+  //         priority: message.priority,
+  //       } satisfies TextElement);
+  //       break;
 
-//     case 'AcaFuelLow':
-//       elements.push({
-//         id: uuid(),
-//         type: 'table',
-//         modality: 'visual',
-//         xWidget: 0,
-//         yWidget: 0,
-//         h: 50,
-//         w: 200,
-//         rows: 2,
-//         cols: 2,
-//         tableData: [
-//           ['Fuel', 'Low'],
-//           ['Altitude', 'Low'],
-//         ],
-//         priority: message.priority,
-//       } satisfies TableElement);
-//       break;
+  //     case 'AcaFuelLow':
+  //       elements.push({
+  //         id: uuid(),
+  //         type: 'table',
+  //         modality: 'visual',
+  //         xWidget: 0,
+  //         yWidget: 0,
+  //         h: 50,
+  //         w: 200,
+  //         rows: 2,
+  //         cols: 2,
+  //         tableData: [
+  //           ['Fuel', 'Low'],
+  //           ['Altitude', 'Low'],
+  //         ],
+  //         priority: message.priority,
+  //       } satisfies TableElement);
+  //       break;
 
-//     case 'AcaDefect':
-//       elements.push({
-//         id: uuid(),
-//         type: 'table',
-//         modality: 'visual',
-//         xWidget: 0,
-//         yWidget: 0,
-//         h: 50,
-//         w: 200,
-//         rows: 2,
-//         cols: 2,
-//         tableData: [
-//           ['Defect', 'Engine'],
-//           ['Altitude', 'Low'],
-//         ],
-//         priority: message.priority,
-//       } satisfies TableElement);
-//       break;
-//   }
+  //     case 'AcaDefect':
+  //       elements.push({
+  //         id: uuid(),
+  //         type: 'table',
+  //         modality: 'visual',
+  //         xWidget: 0,
+  //         yWidget: 0,
+  //         h: 50,
+  //         w: 200,
+  //         rows: 2,
+  //         cols: 2,
+  //         tableData: [
+  //           ['Defect', 'Engine'],
+  //           ['Altitude', 'Low'],
+  //         ],
+  //         priority: message.priority,
+  //       } satisfies TableElement);
+  //       break;
+  //   }
   // const possibleWidgets: Widget[] = [];
 
   // const expirationTime = new Date();

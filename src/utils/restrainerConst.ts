@@ -1,4 +1,4 @@
-import type { ModalityMeasure } from 'src/prototype/restrainer';
+import { type ModalityMeasure } from 'src/types/restrain';
 
 const visualMeasure: ModalityMeasure = {
   type: 'visual',
