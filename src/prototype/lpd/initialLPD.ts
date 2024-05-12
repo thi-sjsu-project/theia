@@ -10,6 +10,15 @@ import threatArtillerySmReg from 'src/assets/icons/threats/artillery-sm-reg.svg'
 import threatAirDefenseSmReg from 'src/assets/icons/threats/airdefense-sm-reg.svg';
 import threatRadarSmReg from 'src/assets/icons/threats/radar-sm-reg.svg';
 
+const warnUuid1 = uuid();
+const warnUuid2 = uuid();
+const warnUuid3 = uuid();
+const warnUuid4 = uuid();
+const warnUuid5 = uuid();
+const warnUuid6 = uuid();
+const warnUuid7 = uuid();
+const warnUuid8 = uuid();
+
 const defaultWidget = {
   screen: '/minimap',
   sectionType: 'free',
@@ -29,7 +38,7 @@ const defaultIcon = {
 
 const warn1: MapWarningWidget = {
   ...defaultWidget,
-  id: uuid(),
+  id: warnUuid1,
   x: 750,
   y: 200,
   w: 128,
@@ -38,6 +47,7 @@ const warn1: MapWarningWidget = {
     {
       ...defaultIcon,
       id: uuid(),
+      widgetId: warnUuid1, // new gaze implemention needs this (for now)
       src: threatMissileLgEmph,
       w: 128,
       h: 129,
@@ -47,7 +57,7 @@ const warn1: MapWarningWidget = {
 
 const warn2: MapWarningWidget = {
   ...defaultWidget,
-  id: uuid(),
+  id: warnUuid2,
   x: 900,
   y: 50,
   w: 80,
@@ -56,6 +66,7 @@ const warn2: MapWarningWidget = {
     {
       ...defaultIcon,
       id: uuid(),
+      widgetId: warnUuid2, // new gaze implemention needs this (for now)
       src: threatAirDefenseSmReg,
       w: 80,
       h: 81,
@@ -65,7 +76,7 @@ const warn2: MapWarningWidget = {
 
 const warn3: MapWarningWidget = {
   ...defaultWidget,
-  id: uuid(),
+  id: warnUuid3,
   x: 300,
   y: 100,
   w: 80,
@@ -74,6 +85,7 @@ const warn3: MapWarningWidget = {
     {
       ...defaultIcon,
       id: uuid(),
+      widgetId: warnUuid3, // new gaze implemention needs this (for now)
       src: threatAirDefenseSmReg,
       w: 80,
       h: 81,
@@ -83,7 +95,7 @@ const warn3: MapWarningWidget = {
 
 const warn4: MapWarningWidget = {
   ...defaultWidget,
-  id: uuid(),
+  id: warnUuid4,
   x: 500,
   y: 200,
   w: 80,
@@ -92,6 +104,7 @@ const warn4: MapWarningWidget = {
     {
       ...defaultIcon,
       id: uuid(),
+      widgetId: warnUuid4, // new gaze implemention needs this (for now)
       src: threatRadarSmReg,
       w: 80,
       h: 81,
@@ -101,7 +114,7 @@ const warn4: MapWarningWidget = {
 
 const warn5: MapWarningWidget = {
   ...defaultWidget,
-  id: uuid(),
+  id: warnUuid5,
   x: 950,
   y: 400,
   w: 80,
@@ -110,6 +123,7 @@ const warn5: MapWarningWidget = {
     {
       ...defaultIcon,
       id: uuid(),
+      widgetId: warnUuid5, // new gaze implemention needs this (for now)
       src: threatArtillerySmReg,
       w: 80,
       h: 81,
@@ -119,7 +133,7 @@ const warn5: MapWarningWidget = {
 
 const warn6: MapWarningWidget = {
   ...defaultWidget,
-  id: uuid(),
+  id: warnUuid6,
   x: 850,
   y: 700,
   w: 80,
@@ -128,6 +142,7 @@ const warn6: MapWarningWidget = {
     {
       ...defaultIcon,
       id: uuid(),
+      widgetId: warnUuid6, // new gaze implemention needs this (for now)
       src: threatRadarSmReg,
       w: 80,
       h: 81,
@@ -137,7 +152,7 @@ const warn6: MapWarningWidget = {
 
 const warn7: MapWarningWidget = {
   ...defaultWidget,
-  id: uuid(),
+  id: warnUuid7,
   x: 1300,
   y: 100,
   w: 80,
@@ -146,6 +161,7 @@ const warn7: MapWarningWidget = {
     {
       ...defaultIcon,
       id: uuid(),
+      widgetId: warnUuid7, // new gaze implemention needs this (for now)
       src: threatRadarSmReg,
       w: 80,
       h: 81,
@@ -155,7 +171,7 @@ const warn7: MapWarningWidget = {
 
 const warn8: MapWarningWidget = {
   ...defaultWidget,
-  id: uuid(),
+  id: warnUuid8,
   x: 1600,
   y: 350,
   w: 80,
@@ -164,6 +180,7 @@ const warn8: MapWarningWidget = {
     {
       ...defaultIcon,
       id: uuid(),
+      widgetId: warnUuid8, // new gaze implemention needs this (for now)
       src: threatAirDefenseSmReg,
       w: 80,
       h: 81,
@@ -409,7 +426,7 @@ const initialLPD = {
       [],
     ),
   ],
-  widgets: {...initialShips, ...initailMapWarnings}
+  widgets: { ...initialShips, ...initailMapWarnings },
 };
 
 export default initialLPD;
