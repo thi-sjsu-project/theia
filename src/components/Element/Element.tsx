@@ -51,7 +51,9 @@ const Element = ({ element, styleClass, children }: ElementProps) => {
         return <div>Audio</div>;
       case 'icon':
         return element.src ? (
-          <img src={element.src} alt={element.type} />
+          <div id={element.id}>
+            <img src={element.src} alt={element.type} />
+          </div>
         ) : (
           <div>Icon</div>
         );
@@ -63,7 +65,7 @@ const Element = ({ element, styleClass, children }: ElementProps) => {
   };
 
   return (
-    <div onClick={handleClick} id={element.id}>
+    <div onClick={handleClick}>
       {renderElement()}
       {children}
     </div>

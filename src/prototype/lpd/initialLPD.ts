@@ -199,10 +199,17 @@ const initailMapWarnings: WidgetMap = {
   [warn8.id]: warn8,
 };
 
+const ownshipUuid = uuid();
+const droneUuid1 = uuid();
+const droneUuid2 = uuid();
+const droneUuid3 = uuid();
+const droneUuid4 = uuid();
+const droneUuid5 = uuid();
+
 export const ownship: Widget = {
   ...lpdHelper.generateVehicleWidget(
     lpdHelper.generateBaseWidget(
-      uuid(),
+      ownshipUuid,
       'vehicle',
       400,
       950,
@@ -214,7 +221,16 @@ export const ownship: Widget = {
       1,
       [
         lpdHelper.generateIconElement(
-          lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
+          lpdHelper.generateBaseElement(
+            uuid(),
+            'visual',
+            50,
+            50,
+            0,
+            0,
+            undefined,
+            ownshipUuid,
+          ),
           OWNSHIP_LOGO,
           'ownship',
         ),
@@ -230,7 +246,7 @@ export const drones: Widget[] = [
   {
     ...lpdHelper.generateVehicleWidget(
       lpdHelper.generateBaseWidget(
-        uuid(),
+        droneUuid1,
         'vehicle',
         500,
         200,
@@ -242,7 +258,16 @@ export const drones: Widget[] = [
         10,
         [
           lpdHelper.generateIconElement(
-            lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
+            lpdHelper.generateBaseElement(
+              uuid(),
+              'visual',
+              50,
+              50,
+              0,
+              0,
+              undefined,
+              droneUuid1,
+            ),
             DRONE_LOGO,
             'drone',
           ),
@@ -256,7 +281,7 @@ export const drones: Widget[] = [
   {
     ...lpdHelper.generateVehicleWidget(
       lpdHelper.generateBaseWidget(
-        uuid(),
+        droneUuid2,
         'vehicle',
         1500,
         550,
@@ -268,7 +293,16 @@ export const drones: Widget[] = [
         10,
         [
           lpdHelper.generateIconElement(
-            lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
+            lpdHelper.generateBaseElement(
+              uuid(),
+              'visual',
+              50,
+              50,
+              0,
+              0,
+              undefined,
+              droneUuid2,
+            ),
             DRONE_LOGO,
             'drone',
           ),
@@ -282,7 +316,7 @@ export const drones: Widget[] = [
   {
     ...lpdHelper.generateVehicleWidget(
       lpdHelper.generateBaseWidget(
-        uuid(),
+        droneUuid3,
         'vehicle',
         1500,
         350,
@@ -294,7 +328,16 @@ export const drones: Widget[] = [
         10,
         [
           lpdHelper.generateIconElement(
-            lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
+            lpdHelper.generateBaseElement(
+              uuid(),
+              'visual',
+              50,
+              50,
+              0,
+              0,
+              undefined,
+              droneUuid3,
+            ),
             DRONE_LOGO,
             'drone',
           ),
@@ -308,7 +351,7 @@ export const drones: Widget[] = [
   {
     ...lpdHelper.generateVehicleWidget(
       lpdHelper.generateBaseWidget(
-        uuid(),
+        droneUuid4,
         'vehicle',
         200,
         900,
@@ -320,7 +363,16 @@ export const drones: Widget[] = [
         10,
         [
           lpdHelper.generateIconElement(
-            lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
+            lpdHelper.generateBaseElement(
+              uuid(),
+              'visual',
+              50,
+              50,
+              0,
+              0,
+              undefined,
+              droneUuid4,
+            ),
             DRONE_LOGO,
             'drone',
           ),
@@ -334,7 +386,7 @@ export const drones: Widget[] = [
   {
     ...lpdHelper.generateVehicleWidget(
       lpdHelper.generateBaseWidget(
-        uuid(),
+        droneUuid5,
         'vehicle',
         1150,
         750,
@@ -346,7 +398,16 @@ export const drones: Widget[] = [
         10,
         [
           lpdHelper.generateIconElement(
-            lpdHelper.generateBaseElement(uuid(), 'visual', 50, 50, 0, 0),
+            lpdHelper.generateBaseElement(
+              uuid(),
+              'visual',
+              50,
+              50,
+              0,
+              0,
+              undefined,
+              droneUuid5,
+            ),
             DRONE_LOGO,
             'drone',
           ),
