@@ -17,9 +17,6 @@ const createDroneElement = (widgetId: string): IconElement => ({
 
   h: 50,
   w: 50,
-
-  xWidget: 0,
-  yWidget: 0,
 });
 
 const createDroneWidget = (
@@ -63,9 +60,6 @@ const ownshipElement: IconElement = {
 
   h: 56,
   w: 56,
-
-  xWidget: 0,
-  yWidget: 0,
 };
 
 export const ownship: VehicleWidget = {

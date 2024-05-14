@@ -75,8 +75,8 @@ export function findElementsInGaze(
   widgetsInGaze.forEach(function (widget, widgetIndex) {
     widget.elements.forEach(function (element, elementIndex) {
       const elementPos: Position = elemLocToPixLoc(
-        element.xWidget,
-        element.yWidget,
+        0,
+        0,
         widget.x,
         widget.y,
       );
