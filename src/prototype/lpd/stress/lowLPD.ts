@@ -10,33 +10,18 @@ export const elements: Element[] = [];
 const requestApprovalToAttackMessageLow = (message: RequestApprovalToAttack) => {
   elements.push(
     lpdHelper.generateRequestApprovalElement(
-      lpdHelper.generateBaseElement(
-        uuid(),
-        'visual',
-        30,
-        30,
-        0,
-        0,
-        message.priority,
-      ),
+      lpdHelper.generateBaseElement(uuid(), 'visual', 30, 30, message.priority),
       message,
       lpdHelper.generateIconElement(
-        lpdHelper.generateBaseElement(
-          uuid(),
-          'visual',
-          80,
-          80,
-          0,
-          0,
-        ),
+        lpdHelper.generateBaseElement(uuid(), 'visual', 80, 80),
         DANGER_ICON,
       ),
       lpdHelper.generateButtonElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80, 0, 0),
+        lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80),
         'Deny',
       ),
       lpdHelper.generateButtonElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80, 0, 0),
+        lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80),
         'Approve',
       ),
     ),
@@ -66,7 +51,7 @@ const requestApprovalToAttackMessageLow = (message: RequestApprovalToAttack) => 
 const acaFuelLowMessageLow = (message: Message) => {
   elements.push(
     lpdHelper.generateTableElement(
-      lpdHelper.generateBaseElement(uuid(), 'visual', 50, 200, 0, 0, message.priority),
+      lpdHelper.generateBaseElement(uuid(), 'visual', 50, 200, message.priority),
       2,
       2,
       [
@@ -105,13 +90,11 @@ const missileToOwnshipDetectedMessageLow = (message: MissileToOwnshipDetected) =
         'visual',
         50,
         200,
-        0,
-        0,
         message.priority,
       ),
       message,
       lpdHelper.generateIconElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 80, 80, 0, 0),
+        lpdHelper.generateBaseElement(uuid(), 'visual', 80, 80),
         DANGER_ICON,
       ),
     ),
@@ -141,7 +124,7 @@ const missileToOwnshipDetectedMessageLow = (message: MissileToOwnshipDetected) =
 const acaDefectMessageLow = (message: Message) => {
   elements.push(
     lpdHelper.generateTableElement(
-      lpdHelper.generateBaseElement(uuid(), 'visual', 50, 200, 0, 0, message.priority),
+      lpdHelper.generateBaseElement(uuid(), 'visual', 50, 200, message.priority),
       2,
       2,
       [
@@ -175,7 +158,7 @@ const acaDefectMessageLow = (message: Message) => {
 const acaHeadingToBaseMessageLow = (message: Message) => {
   elements.push(
     lpdHelper.generateTextElement(
-      lpdHelper.generateBaseElement(uuid(), 'visual', 30, 200, 0, 0, message.priority),
+      lpdHelper.generateBaseElement(uuid(), 'visual', 30, 200, message.priority),
       'Aircraft heading to base',
     ),
   );

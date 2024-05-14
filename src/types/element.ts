@@ -12,8 +12,6 @@ export type BaseElement = {
 
   h: number;
   w: number;
-  xWidget: number;
-  yWidget: number;
 
   widgetId?: string;
 

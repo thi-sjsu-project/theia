@@ -1,40 +1,31 @@
-import type { Message, MissileToOwnshipDetected, RequestApprovalToAttack } from "src/types/schema-types";
-import lpdHelper from "src/utils/lpdHelper";
+import type {
+  Message,
+  MissileToOwnshipDetected,
+  RequestApprovalToAttack,
+} from 'src/types/schema-types';
+import lpdHelper from 'src/utils/lpdHelper';
 import { v4 as uuid } from 'uuid';
 import DANGER_ICON from 'src/assets/icons/danger.svg';
 import { elements } from './lowLPD';
 
 // Functions to create widgets, elements, and sections for each message type
-const requestApprovalToAttackMessageMedium = (message: RequestApprovalToAttack) => {
+const requestApprovalToAttackMessageMedium = (
+  message: RequestApprovalToAttack,
+) => {
   elements.push(
     lpdHelper.generateRequestApprovalElement(
-      lpdHelper.generateBaseElement(
-        uuid(),
-        'visual',
-        30,
-        30,
-        0,
-        0,
-        message.priority,
-      ),
+      lpdHelper.generateBaseElement(uuid(), 'visual', 30, 30, message.priority),
       message,
       lpdHelper.generateIconElement(
-        lpdHelper.generateBaseElement(
-          uuid(),
-          'visual',
-          80,
-          80,
-          0,
-          0,
-        ),
+        lpdHelper.generateBaseElement(uuid(), 'visual', 80, 80),
         DANGER_ICON,
       ),
       lpdHelper.generateButtonElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80, 0, 0),
+        lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80),
         'Deny',
       ),
       lpdHelper.generateButtonElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80, 0, 0),
+        lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80),
         'Approve',
       ),
     ),
@@ -64,7 +55,13 @@ const requestApprovalToAttackMessageMedium = (message: RequestApprovalToAttack) 
 const acaFuelLowMessageMedium = (message: Message) => {
   elements.push(
     lpdHelper.generateTableElement(
-      lpdHelper.generateBaseElement(uuid(), 'visual', 50, 200, 0, 0, message.priority),
+      lpdHelper.generateBaseElement(
+        uuid(),
+        'visual',
+        50,
+        200,
+        message.priority,
+      ),
       2,
       2,
       [
@@ -95,7 +92,9 @@ const acaFuelLowMessageMedium = (message: Message) => {
   };
 };
 
-const missileToOwnshipDetectedMessageMedium = (message: MissileToOwnshipDetected) => {
+const missileToOwnshipDetectedMessageMedium = (
+  message: MissileToOwnshipDetected,
+) => {
   elements.push(
     lpdHelper.generateMissileIncomingElement(
       lpdHelper.generateBaseElement(
@@ -103,13 +102,11 @@ const missileToOwnshipDetectedMessageMedium = (message: MissileToOwnshipDetected
         'visual',
         50,
         200,
-        0,
-        0,
         message.priority,
       ),
       message,
       lpdHelper.generateIconElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 80, 80, 0, 0),
+        lpdHelper.generateBaseElement(uuid(), 'visual', 80, 80),
         DANGER_ICON,
       ),
     ),
@@ -139,7 +136,13 @@ const missileToOwnshipDetectedMessageMedium = (message: MissileToOwnshipDetected
 const acaDefectMessageMedium = (message: Message) => {
   elements.push(
     lpdHelper.generateTableElement(
-      lpdHelper.generateBaseElement(uuid(), 'visual', 50, 200, 0, 0, message.priority),
+      lpdHelper.generateBaseElement(
+        uuid(),
+        'visual',
+        50,
+        200,
+        message.priority,
+      ),
       2,
       2,
       [
@@ -173,7 +176,13 @@ const acaDefectMessageMedium = (message: Message) => {
 const acaHeadingToBaseMessageMedium = (message: Message) => {
   elements.push(
     lpdHelper.generateTextElement(
-      lpdHelper.generateBaseElement(uuid(), 'visual', 30, 200, 0, 0, message.priority),
+      lpdHelper.generateBaseElement(
+        uuid(),
+        'visual',
+        30,
+        200,
+        message.priority,
+      ),
       'Aircraft heading to base',
     ),
   );
