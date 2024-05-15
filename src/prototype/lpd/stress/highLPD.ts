@@ -14,7 +14,7 @@ const requestApprovalToAttackMessageHigh = (
 ) => {
   elements.push(
     lpdHelper.generateRequestApprovalElement(
-      lpdHelper.generateBaseElement(uuid(), 'visual', 30, 30, message.priority),
+      lpdHelper.generateBaseElement(uuid(), 'visual', 30, 30, message.priority, 'list'),
       message,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 80, 80),
@@ -61,6 +61,7 @@ const acaFuelLowMessageHigh = (message: Message) => {
         50,
         200,
         message.priority,
+        'list',
       ),
       2,
       2,
@@ -103,6 +104,7 @@ const missileToOwnshipDetectedMessageHigh = (
         50,
         200,
         message.priority,
+        'list',
       ),
       message,
       lpdHelper.generateIconElement(
@@ -142,6 +144,7 @@ const acaDefectMessageHigh = (message: Message) => {
         50,
         200,
         message.priority,
+        'list',
       ),
       2,
       2,
@@ -182,6 +185,7 @@ const acaHeadingToBaseMessageHigh = (message: Message) => {
         30,
         200,
         message.priority,
+        'list',
       ),
       'Aircraft heading to base',
     ),
