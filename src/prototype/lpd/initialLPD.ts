@@ -1,15 +1,13 @@
 import initialSections from 'src/prototype/utils/initialSections';
-import initialWidgets from 'src/prototype/utils/initialWidgets';
-import initialWarnings from 'src/prototype/utils/initialWarnings';
 import {
   drones,
   ownship,
-  initialShips,
-} from 'src/prototype/utils/initialShips';
+  initialWidgets,
+} from 'src/prototype/utils/initialWidgets';
 
 const initialLPD = {
   sections: [...initialSections],
-  widgets: { ...initialShips, ...initialWarnings, ...initialWidgets },
+  widgets: { ...initialWidgets },
 };
 
 export { drones, ownship };

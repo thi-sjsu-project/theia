@@ -1,15 +1,22 @@
 import { v4 as uuid } from 'uuid';
 import LeftScreenMap from 'src/assets/left-bottom-map.png';
 import LeftScreenVideo from 'src/assets/left-video.png';
-import type { HistoryWidget, ListWidget } from 'src/types/widget';
+import type { HistoryWidget, ListWidget, WidgetMap } from 'src/types/widget';
 import { type ImageElement } from 'src/types/element';
+import {
+  initialShips,
+  drones,
+  ownship,
+} from 'src/prototype/utils/initialShips';
+import initialWarnings from 'src/prototype/utils/initialWarnings';
 
 const videoBoxUuid = uuid();
 const mapBoxUuid = uuid();
+const historyBoxUuid = uuid();
 
-const initialLeftScreenWidgets = [
+const initialLeftScreenWidgets: WidgetMap = {
   // left video box widget
-  {
+  [videoBoxUuid]: {
     id: videoBoxUuid,
     type: 'list',
     screen: '/pearce-screen',
@@ -36,7 +43,7 @@ const initialLeftScreenWidgets = [
   } satisfies ListWidget,
 
   // left map box widget
-  {
+  [mapBoxUuid]: {
     id: mapBoxUuid,
     type: 'list',
     screen: '/pearce-screen',
@@ -63,7 +70,7 @@ const initialLeftScreenWidgets = [
   } satisfies ListWidget,
 
   // center box widget
-  {
+  [historyBoxUuid]: {
     id: uuid(),
     type: 'history',
     screen: '/pearce-screen',
@@ -78,8 +85,12 @@ const initialLeftScreenWidgets = [
     elements: [],
     maxAmount: 1,
   } satisfies HistoryWidget,
-];
+};
 
-const initialWidgets = [...initialLeftScreenWidgets];
+const initialWidgets = {
+  ...initialShips,
+  ...initialWarnings,
+  ...initialLeftScreenWidgets,
+};
 
-export default initialWidgets;
+export { drones, ownship, initialWidgets };
