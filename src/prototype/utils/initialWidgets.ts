@@ -89,7 +89,7 @@ const initialLeftScreenWidgets: WidgetMap = {
 
 const initialWidgets = {
   ...initialShips,
-  ...initialWarnings,
+  // ...initialWarnings,
   ...initialLeftScreenWidgets,
 };
 
