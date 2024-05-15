@@ -7,7 +7,7 @@ type ListWidgetProps = {
 
 const ListWidget = ({ widget }: ListWidgetProps) => {
   const className =
-    'absolute border-2 border-black p-2 flex flex-col gap-2 items-center overflow-scroll';
+    'absolute p-2 flex flex-col gap-2 items-center overflow-scroll overflow-x-hidden overflow-y-hidden';
 
   // Sort elements by priority
   const sortedElementsByPriority = [...widget.elements].sort(
@@ -22,11 +22,8 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
       style={{
         height: widget.h,
         width: widget.w,
-        // top: widget.y,
-        // left: widget.x,
-        // Hardcoded for now (for demo purposes)
-        top: 150,
-        left: 1550,
+        top: widget.y,
+        left: widget.x,
       }}
     >
       {sortedElementsByPriority.map((element) => (
@@ -34,8 +31,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
         <div
           id={element.id}
           key={element.id}
-          className="w-full min-h-[100px] border-2 border-black 
-          flex items-center justify-center"
+          className="w-full min-h-[100px] text-white bg-[#2D2D30] flex items-center justify-center"
         >
           <Element element={element}>
             {/* Nested children here if wanted.. */}

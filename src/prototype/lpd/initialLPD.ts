@@ -3,6 +3,7 @@ import OWNSHIP_LOGO from 'src/assets/icons/ownship.svg';
 import DRONE_LOGO from 'src/assets/icons/drone.svg';
 import type { MapWarningWidget, Widget, WidgetMap } from 'src/types/widget';
 import lpdHelper from 'src/utils/lpdHelper';
+import initialSections from 'src/prototype/utils/initialSections';
 // temporary until we generate map warnings on the fly
 
 import threatMissileLgEmph from 'src/assets/icons/threats/missile-lg-emph.svg';
@@ -418,63 +419,7 @@ const initialShips: WidgetMap = {
 };
 
 const initialLPD = {
-  sections: [
-    lpdHelper.generateSection(
-      uuid(),
-      '/minimap',
-      50,
-      40,
-      350,
-      900,
-      10,
-      'tinder',
-      [],
-    ),
-    lpdHelper.generateSection(
-      uuid(),
-      '/minimap',
-      50,
-      850,
-      800,
-      200,
-      10,
-      'request',
-      [],
-    ),
-    lpdHelper.generateSection(
-      uuid(),
-      '/minimap',
-      800,
-      200,
-      500,
-      250,
-      10,
-      'highWarning',
-      [],
-    ),
-    lpdHelper.generateSection(
-      uuid(),
-      '/minimap',
-      1800,
-      450,
-      500,
-      200,
-      10,
-      'lowWarning',
-      [],
-    ),
-    lpdHelper.generateSection(
-      uuid(),
-      '/minimap',
-      1800,
-      200,
-      200,
-      200,
-      10,
-      'message',
-      [],
-    ),
-  ],
+  sections: [...initialSections],
   widgets: { ...initialShips, ...initailMapWarnings },
 };
 

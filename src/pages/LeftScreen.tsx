@@ -4,6 +4,8 @@ import useGaze from 'src/hooks/useGaze';
 import { useAppSelector } from 'src/redux/hooks';
 import { getElementsInGaze } from 'src/redux/slices/gazeSlice';
 import { getWidgetsOnScreen } from 'src/redux/slices/minimapSlice';
+import LeftScreenMap from 'src/assets/left-bottom-map.png';
+import LeftScreenVideo from 'src/assets/left-video.png';
 
 const LeftScreen = () => {
   const widgets = useAppSelector((state) =>
@@ -19,7 +21,7 @@ const LeftScreen = () => {
   }, [elementsInGaze]);
 
   return (
-    <div className="absolute top-0 left-0 bg-stone-200 w-[1920px] h-[1080px] hover:cursor-pointer">
+    <div className="absolute top-0 left-0 bg-[#1E1E1E] w-[1920px] h-[1080px] hover:cursor-pointer">
       {/* Top Bar */}
       <div className="absolute min-w-[1920px] border-2 border-b-stone-800 min-h-[100px]" />
 
@@ -32,10 +34,18 @@ const LeftScreen = () => {
         }}
       >
         <div className="border-2 border-stone-800 min-w-[450px] min-h-[200px] flex items-center justify-center">
-          <span className="text-4xl">Video</span>
+          <img
+            style={{ width: 500 }}
+            src={LeftScreenVideo}
+            alt="Left Bottom Map"
+          />
         </div>
         <div className="border-2 border-stone-800 min-w-[450px] min-h-[200px] flex items-center justify-center gap-10">
-          <span className="text-4xl">Map</span>
+          <img
+            style={{ width: 500 }}
+            src={LeftScreenMap}
+            alt="Left Bottom Map"
+          />
         </div>
       </div>
 

@@ -19,7 +19,10 @@ const MissileIncomingElement = ({ element }: MissileIncomingProps) => {
   } = message;
 
   return (
-    <div id={id} className="flex items-center justify-center">
+    <div
+      id={id}
+      className="flex text-white items-center justify-center bg-[#2D2D30]"
+    >
       <IconElement element={iconElement} />
       <span>Missile Incoming!</span>
     </div>

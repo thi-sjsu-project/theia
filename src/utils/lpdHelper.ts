@@ -1,11 +1,14 @@
 // Namespace import since we export all the types from these files
-import type * as Element from "src/types/element";
-import type * as Widget from "src/types/widget";
+import type * as Element from 'src/types/element';
+import type * as Widget from 'src/types/widget';
 
-import type { Properties } from "csstype";
-import type { Modality } from "src/types/modality";
-import type { Screen, Section, SectionType } from "src/types/support-types";
-import type { MissileToOwnshipDetected, RequestApprovalToAttack } from "src/types/schema-types";
+import type { Properties } from 'csstype';
+import type { Modality } from 'src/types/modality';
+import type { Screen, Section, SectionType } from 'src/types/support-types';
+import type {
+  MissileToOwnshipDetected,
+  RequestApprovalToAttack,
+} from 'src/types/schema-types';
 
 // Functions to create sections, widgets, and elements
 const generateSection = (
@@ -20,7 +23,7 @@ const generateSection = (
   widgetIDs: string[],
 ): Section => ({
   id,
-  screen, 
+  screen,
   x,
   y,
   w,
@@ -69,7 +72,7 @@ const generateListWidget = (
   maxElements?: number,
 ): Widget.ListWidget => ({
   ...baseWidget,
-  type: "list",
+  type: 'list',
   maxElements,
 });
 
@@ -79,7 +82,7 @@ const generateGridWidget = (
   cols: number,
 ): Widget.GridWidget => ({
   ...baseWidget,
-  type: "grid",
+  type: 'grid',
   rows,
   cols,
 });
@@ -91,7 +94,7 @@ const generateVehicleWidget = (
   rotation: number,
 ): Widget.VehicleWidget => ({
   ...baseWidget,
-  type: "vehicle",
+  type: 'vehicle',
   vehicleId,
   speed,
   rotation,
@@ -101,9 +104,8 @@ const generateCustomWidget = (
   baseWidget: Widget.BaseWidget,
 ): Widget.CustomWidget => ({
   ...baseWidget,
-  type: "custom",
+  type: 'custom',
 });
-
 
 // Generate Base Element
 const generateBaseElement = (

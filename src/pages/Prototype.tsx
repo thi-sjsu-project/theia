@@ -15,11 +15,12 @@ import useWorldSim from 'src/hooks/useWorldSim';
 // ~~~~~~~ Prototype ~~~~~~~
 import assimilator from 'src/prototype/assimilator';
 import selector from 'src/prototype/selector';
-// ~~~~~~~ Constants ~~~~~~~
-import { ownship, drones } from 'src/prototype/lpd/initialLPD';
-import Home from 'src/components/Home';
 import monitor from 'src/prototype/monitor';
 import restrainer from 'src/prototype/restrainer';
+// ~~~~~~~ Constants ~~~~~~~
+import { ownship, drones } from 'src/prototype/lpd/initialLPD';
+// ~~~~~~~ Components ~~~~~~~
+import Home from 'src/components/Home';
 
 const Prototype = () => {
   // ~~~~~ Custom Hooks ~~~~~~
