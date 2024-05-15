@@ -49,7 +49,7 @@ const assimilator = ({
 
   possibleWidgets.forEach((widget, widgetIndex) => {
     // go through each possible widget until we find one we can place
-    if ((deployedWidgets[widget.id] && !deployedWidgets[widget.id].handledMessageIds!.includes(message.id))){
+    if ((deployedWidgets[widget.id] && deployedWidgets[widget.id].handledMessageIds!.includes(message.id))){
       // check if the widget already exists on the screen and handles the message
       sectionID = { widgetID: widget.id, sectionID: 'none' };
       action = 'messageAlreadyHandled';
