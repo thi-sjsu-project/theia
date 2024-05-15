@@ -1,16 +1,4 @@
 import type { Message } from 'src/types/schema-types';
-import { v4 as uuid } from 'uuid';
-import type { Widget } from 'src/types/widget';
-import type {
-  Element,
-  ButtonElement,
-  IconElement,
-  TextElement,
-  TableElement,
-  RequestApprovalElement,
-  MissileIncomingElement,
-} from 'src/types/element';
-import DANGER_ICON from 'src/icons/danger.svg';
 import lowLPD from 'src/prototype/lpd/stress/lowLPD';
 import mediumLPD from 'src/prototype/lpd/stress/mediumLPD';
 import highLPD from 'src/prototype/lpd/stress/highLPD';
