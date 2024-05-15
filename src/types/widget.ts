@@ -46,6 +46,10 @@ export type MapWarningWidget = BaseWidget & {
   type: 'map-warning';
 };
 
+export type HistoryWidget = BaseWidget & {
+  type: 'history';
+};
+
 export type CustomWidget = BaseWidget & {
   type: 'custom';
   // additonal properties...
@@ -56,6 +60,7 @@ export type Widget =
   | VehicleWidget
   | ListWidget
   | GridWidget
+  | HistoryWidget
   | MapWarningWidget;
 
 export type WidgetMap = { [key: string]: Widget };

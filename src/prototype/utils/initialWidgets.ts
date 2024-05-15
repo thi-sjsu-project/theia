@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import LeftScreenMap from 'src/assets/left-bottom-map.png';
 import LeftScreenVideo from 'src/assets/left-video.png';
-import { type ListWidget } from 'src/types/widget';
+import type { HistoryWidget, ListWidget } from 'src/types/widget';
 import { type ImageElement } from 'src/types/element';
 
 const videoBoxUuid = uuid();
@@ -61,6 +61,23 @@ const initialLeftScreenWidgets = [
     ],
     maxAmount: 1,
   } satisfies ListWidget,
+
+  // center box widget
+  {
+    id: uuid(),
+    type: 'history',
+    screen: '/pearce-screen',
+    sectionType: 'history',
+    x: 625,
+    y: 150,
+    w: 840,
+    h: 800,
+    canOverlap: false,
+    useElementLocation: false,
+    priority: 10,
+    elements: [],
+    maxAmount: 1,
+  } satisfies HistoryWidget,
 ];
 
 const initialWidgets = [...initialLeftScreenWidgets];

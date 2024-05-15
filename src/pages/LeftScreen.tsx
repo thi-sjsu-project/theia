@@ -25,35 +25,6 @@ const LeftScreen = () => {
       {/* Top Bar */}
       <div className="absolute min-w-[1920px] border-2 border-b-stone-800 min-h-[100px]" />
 
-      {/* Left Video & Map Box */}
-      {/* <div
-        className="absolute top-[150px] left-[50px] flex items-center justify-center flex-col gap-10"
-        style={{
-          height: '900px',
-          width: '600px',
-        }}
-      >
-        <div className="border-2 border-stone-800 min-w-[450px] min-h-[200px] flex items-center justify-center">
-          <img
-            style={{ width: 500 }}
-            src={LeftScreenVideo}
-            alt="Left Bottom Map"
-          />
-        </div>
-        <div className="border-2 border-stone-800 min-w-[450px] min-h-[200px] flex items-center justify-center gap-10">
-          <img
-            style={{ width: 500 }}
-            src={LeftScreenMap}
-            alt="Left Bottom Map"
-          />
-        </div>
-      </div> */}
-
-      {/* Center box */}
-      <div className="min-w-[600px] min-h-[800px] absolute left-[750px] top-[150px] border-2 border-stone-800 flex items-center justify-center">
-        <span className="text-3xl">Additional Details</span>
-      </div>
-
       {/* Maybe just render a WidgetList component? Or a ListWidget component? */}
       {Object.keys(widgets).map((widgetId) => (
         <Widget key={widgetId} widget={widgets[widgetId]} />
