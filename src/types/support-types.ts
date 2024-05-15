@@ -9,12 +9,11 @@ export type Screen = '/pearce-screen' | '/minimap' | '/right-screen';
 
 export type SectionType =
   | 'free'
+  | 'top-bar'
   | 'vehicle'
   | 'tinder'
-  | 'message'
-  | 'highWarning'
-  | 'lowWarning'
-  | 'request';
+  | 'history'
+  | 'map-video';
 
 export type Section = {
   id: string;

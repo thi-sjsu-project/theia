@@ -26,7 +26,7 @@ const LeftScreen = () => {
       <div className="absolute min-w-[1920px] border-2 border-b-stone-800 min-h-[100px]" />
 
       {/* Left Video & Map Box */}
-      <div
+      {/* <div
         className="absolute top-[150px] left-[50px] flex items-center justify-center flex-col gap-10"
         style={{
           height: '900px',
@@ -47,7 +47,7 @@ const LeftScreen = () => {
             alt="Left Bottom Map"
           />
         </div>
-      </div>
+      </div> */}
 
       {/* Center box */}
       <div className="min-w-[600px] min-h-[800px] absolute left-[750px] top-[150px] border-2 border-stone-800 flex items-center justify-center">

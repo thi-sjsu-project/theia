@@ -4,6 +4,7 @@ import TableElement from 'src/components/Element/Simple/TableElement';
 import RequestApprovalElement from 'src/components/Element/Complex/RequestApprovalElement';
 import ButtonElement from 'src/components/Element/Simple/ButtonElement';
 import MissileIncomingElement from 'src/components/Element/Complex/MissileIncomingElement';
+import ImageElement from 'src/components/Element/Simple/ImageElement';
 
 type ElementProps = {
   element: ElementType;
@@ -46,7 +47,7 @@ const Element = ({ element, styleClass, children }: ElementProps) => {
           </div>
         );
       case 'image':
-        return <div>Image</div>;
+        return <ImageElement element={element} />;
       case 'audio':
         return <div>Audio</div>;
       case 'icon':

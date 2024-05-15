@@ -157,7 +157,7 @@ const acaDefectMessageHigh = (message: Message) => {
       lpdHelper.generateListWidget(
         lpdHelper.generateBaseWidget(
           'list',
-          'highWarning',
+          'vehicle',
           500,
           500,
           300,

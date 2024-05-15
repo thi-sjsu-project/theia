@@ -4,6 +4,7 @@ import DRONE_LOGO from 'src/assets/icons/drone.svg';
 import type { MapWarningWidget, Widget, WidgetMap } from 'src/types/widget';
 import lpdHelper from 'src/utils/lpdHelper';
 import initialSections from 'src/prototype/utils/initialSections';
+import initialWidgets from 'src/prototype/utils/initialWidgets';
 // temporary until we generate map warnings on the fly
 
 import threatMissileLgEmph from 'src/assets/icons/threats/missile-lg-emph.svg';
@@ -420,7 +421,7 @@ const initialShips: WidgetMap = {
 
 const initialLPD = {
   sections: [...initialSections],
-  widgets: { ...initialShips, ...initailMapWarnings },
+  widgets: { ...initialShips, ...initailMapWarnings, ...initialWidgets },
 };
 
 export default initialLPD;
