@@ -1,5 +1,6 @@
 import type { Widget, WidgetMap } from 'src/types/widget';
 import type { Section, LinkedSectionWidget } from 'src/types/support-types';
+import type { Message } from 'src/types/schema-types';
 
 function doesOverlap(
   x1: number,
@@ -28,6 +29,7 @@ type AssimilatorProps = {
   possibleWidgets: Widget[];
   sections: Section[];
   widgets: WidgetMap;
+  message: Message;
 };
 
 /**
@@ -39,6 +41,7 @@ const assimilator = ({
   possibleWidgets,
   sections,
   widgets: deployedWidgets, // re-name for clarity
+  message,
 }: AssimilatorProps) => {
   let widgetToDeploy: Widget | null = null; //will return null if we cannot find a space
   let sectionID: LinkedSectionWidget = { widgetID: 'none', sectionID: 'none' };
@@ -46,10 +49,22 @@ const assimilator = ({
 
   possibleWidgets.forEach((widget, widgetIndex) => {
     // go through each possible widget until we find one we can place
-    if (deployedWidgets[widget.id]) {
-      // check if the widget already exists on the screen
+    if ((deployedWidgets[widget.id] && deployedWidgets[widget.id].handledMessageIds!.includes(message.id))){
+      // check if the widget already exists on the screen and handles the message
+      sectionID = { widgetID: widget.id, sectionID: 'none' };
+      action = 'messageAlreadyHandled';
+      widgetToDeploy = widget;
+
+      return {
+        widgetToDeploy,
+        sectionID,
+        action,
+      };
+    } else if (deployedWidgets[widget.id] && !deployedWidgets[widget.id].handledMessageIds!.includes(message.id)) {
+      // check if the widget already exists on the screen and that the widget does not handle the message
       sectionID = { widgetID: widget.id, sectionID: 'none' };
       action = 'updateWidget';
+      widgetToDeploy = widget;
 
       return {
         widgetToDeploy,
@@ -127,6 +142,7 @@ const assimilator = ({
               //no overlap, deploy widget
               widget.x = proposedX; //set widget's top-left coordinates
               widget.y = proposedY;
+              widget.handledMessageIds = [message.id] //set widget's first message id
               widgetToDeploy = widget; //the widget can be deployed
               sectionID = { sectionID: section.id, widgetID: widget.id };
               action = 'newWidget';
