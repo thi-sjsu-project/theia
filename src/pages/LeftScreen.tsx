@@ -4,8 +4,6 @@ import useGaze from 'src/hooks/useGaze';
 import { useAppSelector } from 'src/redux/hooks';
 import { getElementsInGaze } from 'src/redux/slices/gazeSlice';
 import { getWidgetsOnScreen } from 'src/redux/slices/minimapSlice';
-import LeftScreenMap from 'src/assets/left-bottom-map.png';
-import LeftScreenVideo from 'src/assets/left-video.png';
 
 const LeftScreen = () => {
   const widgets = useAppSelector((state) =>
