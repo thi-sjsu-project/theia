@@ -8,6 +8,7 @@ import {
   addWidget,
   addWidgetToSection,
 } from 'src/redux/slices/minimapSlice';
+import restrainer from './restrainer';
 
 type ReactToMessageProps = {
     // define expected input here and it's type (number, string, etc.)
@@ -34,56 +35,53 @@ const reactToMessage = ({
     stressLevel,
   });
 
-  // possibleWidgets[0].id = uuid();
+  let resolved = false;
+  while(!resolved){
+    //console.log('running through assimilator...');
+    const { widgetToDeploy, sectionID, action, index} = assimilator({
+      // find if there is room for us to put the widget down (returns null if there is not room)
+      possibleWidgets: possibleWidgets,
+      sections,
+      widgets,
+      message: currentMessage,
+    });
 
-  //console.log('running through assimilator...');
-  const { widgetToDeploy, sectionID, action, index} = assimilator({
-    // find if there is room for us to put the widget down (returns null if there is not room)
-    possibleWidgets: possibleWidgets,
-    sections,
-    widgets,
-    message: currentMessage,
-  });
+    //console.log('widgetToDeploy ' + widgetToDeploy);
+    if (action !== 'newWidget') {
+      resolved = true;
+      //we should do something other than
+      switch (action) {
+        case 'updateWidget':
+          console.log('widget already exists, updating');
+          // only have one widget in possibleWidgets right now, this is why this works
+          // furthermore, only have one element in the widget
+          // so we can just do possibleWidgets[0]...
+          // eventually, maybe assimilator returns the widget that needs to be updated
+          // assimilator should also say if to add a new element or remove one, etc. -- JAGJIT
+          dispatch(
+            addElementToWidget(
+              possibleWidgets[0].id,
+              possibleWidgets[0].elements[0],
+            ),
+          );
+          break;
+        case 'none':
+          console.log('proposed widgets could not be placed');
+          break;
+      }
+    } else if (widgetToDeploy) {
+      if (restrainer({ widgetToDeploy : widgetToDeploy })) {
 
-  //console.log('widgetToDeploy ' + widgetToDeploy);
-  if (action !== 'newWidget') {
-    //we should do something other than
-    switch (action) {
-      case 'updateWidget':
-        console.log('widget already exists, updating');
-        // only have one widget in possibleWidgets right now, this is why this works
-        // furthermore, only have one element in the widget
-        // so we can just do possibleWidgets[0]...
-        // eventually, maybe assimilator returns the widget that needs to be updated
-        // assimilator should also say if to add a new element or remove one, etc. -- JAGJIT
-        dispatch(
-          addElementToWidget(
-            possibleWidgets[0].id,
-            possibleWidgets[0].elements[0],
-          ),
-        );
-        break;
-      case 'none':
-        console.log('proposed widgets could not be placed');
-        break;
+        resolved = true;
+        // restrainer deems that the widget CAN be deployed
+        
+        // dispatch action to add new widget
+        dispatch(addWidget(widgetToDeploy));
+        dispatch(addWidgetToSection(sectionID));
+      } else {
+        possibleWidgets.splice(index, 1);
+      }
     }
-  } else if (widgetToDeploy) {
-    //console.log('widget deployed:', widgetToDeploy);
-    //console.log('widgets that are now deployed: ', widgets);
-    //if we can actually place the widget
-
-    //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
-    /* if (
-            !restrainer({
-              visualComplexity: generateModalityMeasure(),
-              audioComplexity: generateModalityMeasure(),
-            })
-          )
-            return; */
-
-    // dispatch action to add new widget
-    dispatch(addWidget(widgetToDeploy));
-    dispatch(addWidgetToSection(sectionID));
   }
 };
 

@@ -350,7 +350,7 @@ export const minimapSlice = createSlice({
       Object.keys(state.widgets).forEach((widgetId) => {
         const widget = state.widgets[widgetId];
         if (widget.screen === screen) {
-          widget.elements.forEach((element) => {
+          Array.from(widget.elements).forEach((element) => {
             elements[element.id] = element;
           });
         }
