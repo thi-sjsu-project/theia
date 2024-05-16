@@ -12,10 +12,10 @@ import restrainer from './restrainer';
 import type { Widget } from 'src/types/widget';
 
 type ReactToMessageProps = {
-    // define expected input here and it's type (number, string, etc.)
-    dispatch: AppDispatch;
-    currentMessage: Message;
-    stressLevel: number;
+  // define expected input here and it's type (number, string, etc.)
+  dispatch: AppDispatch;
+  currentMessage: Message;
+  stressLevel: number;
 };
 
 /**
@@ -23,24 +23,24 @@ type ReactToMessageProps = {
  * @param ???
  * @returns ???
  */
-const reactToMessage = ({ 
-    dispatch,
-    currentMessage,
-    stressLevel,
+const reactToMessage = ({
+  dispatch,
+  currentMessage,
+  stressLevel,
 }: ReactToMessageProps) => {
-
   const sections = store.getState().minimap.sections;
   const widgets = store.getState().minimap.widgets;
 
-  const { possibleClusters:possibleWidgetClusters } = selector({
+  const { possibleClusters: possibleWidgetClusters } = selector({
     message: currentMessage,
     stressLevel,
   });
 
   let resolved = false;
-  while(!resolved){ //repeat ntil choosing a cluster has resolved
+  while (!resolved) {
+    //repeat ntil choosing a cluster has resolved
     //console.log('running through assimilator...');
-    const { widgetClusterToDeploy,  index} = assimilator({
+    const { widgetClusterToDeploy, index } = assimilator({
       // find if there is room for us to put the widget down (returns null if there is not room)
       possibleWidgetClusters: possibleWidgetClusters,
       sections,
@@ -48,8 +48,7 @@ const reactToMessage = ({
       message: currentMessage,
     });
 
-    if(index == -1)
-        resolved = true;
+    if (index == -1) resolved = true;
 
     //check restrainer with all new widgets
     //if cluster is bad then go back to assim
@@ -58,19 +57,23 @@ const reactToMessage = ({
     //get all widgets that are new widgets in candidate cluster
     const newWidgets: Widget[] = [];
     widgetClusterToDeploy.widgets.forEach((widget, widgetIndex) => {
-      if(widgetClusterToDeploy.actions![widgetIndex] === 'newWidget'){ //if this widget is a new widget, add it to list
-        newWidgets.push(widget)
+      if (widgetClusterToDeploy.actions![widgetIndex] === 'newWidget') {
+        //if this widget is a new widget, add it to list
+        newWidgets.push(widget);
       }
     });
 
-    if(index != -1 && restrainer({widgetsToDeploy: newWidgets})){ //if the assim chose a cluster and the restrainer is okoay with the new widgets
+    if (index != -1 && restrainer({ widgetsToDeploy: newWidgets })) {
+      //if the assim chose a cluster and the restrainer is okoay with the new widgets
       resolved = true;
 
       widgetClusterToDeploy.widgets.forEach((widget, widgetIndex) => {
         const widgetToDeploy = widget;
-        const sectionID = widgetClusterToDeploy.sectionIds![widgetIndex]
-        const action = widgetClusterToDeploy.actions![widgetIndex]
-    
+        const sectionID = widgetClusterToDeploy.sectionIds![widgetIndex];
+        const action = widgetClusterToDeploy.actions![widgetIndex];
+
+        console.log('widgetToDeploy:', widgetToDeploy);
+
         if (action !== 'newWidget') {
           //we should do something other than
           switch (action) {
@@ -84,7 +87,7 @@ const reactToMessage = ({
               dispatch(
                 addElementToWidget(
                   widgetToDeploy.id,
-                  widgetToDeploy.elements[0], //<- This should not be able to happen, why are we choosing one element if multiple need to be placed -Tom
+                  widgetToDeploy.elements, //<- This should not be able to happen, why are we choosing one element if multiple need to be placed -Tom
                 ),
               );
               break;
@@ -93,16 +96,15 @@ const reactToMessage = ({
               break;
           }
         } else if (widgetToDeploy) {
+          // restrainer deems that the widget CAN be deployed
 
-
-            // restrainer deems that the widget CAN be deployed
-            
-            // dispatch action to add new widget
-            dispatch(addWidget(widgetToDeploy));
-            dispatch(addWidgetToSection(sectionID));
+          // dispatch action to add new widget
+          dispatch(addWidget(widgetToDeploy));
+          dispatch(addWidgetToSection(sectionID));
         }
       });
-    } else { //the restrainer said no, so delete the chosen cluster and try again
+    } else {
+      //the restrainer said no, so delete the chosen cluster and try again
       possibleWidgetClusters.splice(index, 1);
     }
   }

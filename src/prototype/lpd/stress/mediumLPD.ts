@@ -6,14 +6,15 @@ import type {
 import lpdHelper from 'src/utils/lpdHelper';
 import { v4 as uuid } from 'uuid';
 import DANGER_ICON from 'src/assets/icons/danger.svg';
-import { elements } from './lowLPD';
 import { type Widget } from 'src/types/widget';
 import type { WidgetCluster } from 'src/types/support-types';
+import type { Element } from 'src/types/element';
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageMedium = (
   message: RequestApprovalToAttack,
 ) => {
+  const elements: Element[] = [];
   elements.push(
     lpdHelper.generateRequestApprovalElement(
       lpdHelper.generateBaseElement(uuid(), 'visual', 30, 30, message.priority),
@@ -34,32 +35,30 @@ const requestApprovalToAttackMessageMedium = (
   );
   return {
     sections: [],
-    possibleClusters:
-      [
-      generateCluster( 
-      [
-      lpdHelper.generateListWidget(
-        lpdHelper.generateBaseWidget(
-          'list',
-          'tinder',
-          100,
-          100,
-          300,
-          800,
-          '/pearce-screen',
-          false,
-          false,
-          1,
-          [...elements],
+    possibleClusters: [
+      generateCluster([
+        lpdHelper.generateListWidget(
+          lpdHelper.generateBaseWidget(
+            'list',
+            'tinder',
+            100,
+            100,
+            300,
+            800,
+            '/pearce-screen',
+            false,
+            false,
+            1,
+            [...elements],
+          ),
         ),
-      ),
+      ]),
     ],
-    ),
-    ]
   };
 };
 
 const acaFuelLowMessageMedium = (message: Message) => {
+  const elements: Element[] = [];
   elements.push(
     lpdHelper.generateTableElement(
       lpdHelper.generateBaseElement(
@@ -79,34 +78,32 @@ const acaFuelLowMessageMedium = (message: Message) => {
   );
   return {
     sections: [],
-    possibleClusters:
-      [
-      generateCluster( 
-      [
-      lpdHelper.generateListWidget(
-        lpdHelper.generateBaseWidget(
-          'list',
-          'tinder',
-          500,
-          500,
-          300,
-          800,
-          '/pearce-screen',
-          false,
-          false,
-          1,
-          [...elements],
+    possibleClusters: [
+      generateCluster([
+        lpdHelper.generateListWidget(
+          lpdHelper.generateBaseWidget(
+            'list',
+            'tinder',
+            500,
+            500,
+            300,
+            800,
+            '/pearce-screen',
+            false,
+            false,
+            1,
+            [...elements],
+          ),
         ),
-      ),
+      ]),
     ],
-    ),
-    ]
   };
 };
 
 const missileToOwnshipDetectedMessageMedium = (
   message: MissileToOwnshipDetected,
 ) => {
+  const elements: Element[] = [];
   elements.push(
     lpdHelper.generateMissileIncomingElement(
       lpdHelper.generateBaseElement(
@@ -125,32 +122,30 @@ const missileToOwnshipDetectedMessageMedium = (
   );
   return {
     sections: [],
-    possibleClusters:
-      [
-      generateCluster( 
-      [
-      lpdHelper.generateListWidget(
-        lpdHelper.generateBaseWidget(
-          'list',
-          'tinder',
-          100,
-          100,
-          300,
-          800,
-          '/pearce-screen',
-          false,
-          true,
-          1,
-          [...elements],
+    possibleClusters: [
+      generateCluster([
+        lpdHelper.generateListWidget(
+          lpdHelper.generateBaseWidget(
+            'list',
+            'tinder',
+            100,
+            100,
+            300,
+            800,
+            '/pearce-screen',
+            false,
+            true,
+            1,
+            [...elements],
+          ),
         ),
-      ),
+      ]),
     ],
-    ),
-    ]
   };
 };
 
 const acaDefectMessageMedium = (message: Message) => {
+  const elements: Element[] = [];
   elements.push(
     lpdHelper.generateTableElement(
       lpdHelper.generateBaseElement(
@@ -170,32 +165,30 @@ const acaDefectMessageMedium = (message: Message) => {
   );
   return {
     sections: [],
-    possibleClusters:
-      [
-      generateCluster( 
-      [
-      lpdHelper.generateListWidget(
-        lpdHelper.generateBaseWidget(
-          'list',
-          'tinder',
-          500,
-          500,
-          300,
-          800,
-          '/pearce-screen',
-          false,
-          true,
-          1,
-          [...elements],
+    possibleClusters: [
+      generateCluster([
+        lpdHelper.generateListWidget(
+          lpdHelper.generateBaseWidget(
+            'list',
+            'tinder',
+            500,
+            500,
+            300,
+            800,
+            '/pearce-screen',
+            false,
+            true,
+            1,
+            [...elements],
+          ),
         ),
-      ),
+      ]),
     ],
-    ),
-    ]
   };
 };
 
 const acaHeadingToBaseMessageMedium = (message: Message) => {
+  const elements: Element[] = [];
   elements.push(
     lpdHelper.generateTextElement(
       lpdHelper.generateBaseElement(
@@ -210,37 +203,31 @@ const acaHeadingToBaseMessageMedium = (message: Message) => {
   );
   return {
     sections: [],
-    possibleClusters:
-      [
-      generateCluster( 
-      [
-      lpdHelper.generateListWidget(
-        lpdHelper.generateBaseWidget(
-          'list',
-          'tinder',
-          500,
-          500,
-          300,
-          800,
-          '/pearce-screen',
-          false,
-          true,
-          1,
-          [...elements],
+    possibleClusters: [
+      generateCluster([
+        lpdHelper.generateListWidget(
+          lpdHelper.generateBaseWidget(
+            'list',
+            'tinder',
+            500,
+            500,
+            300,
+            800,
+            '/pearce-screen',
+            false,
+            true,
+            1,
+            [...elements],
+          ),
         ),
-      ),
+      ]),
     ],
-    ),
-    ]
   };
 };
 
-
-const generateCluster = (
-  widgets: Widget[],
-): WidgetCluster => ({
+const generateCluster = (widgets: Widget[]): WidgetCluster => ({
   widgets: widgets,
-})
+});
 
 // Map each message type to its corresponding LPD function
 const mediumLPDMessageFunctions: any = {
@@ -252,14 +239,17 @@ const mediumLPDMessageFunctions: any = {
 };
 
 const mediumLPD = (message: Message) => {
-  if (message.priority != -1) //if the message is a real message, return the clusters
+  if (message.priority != -1)
+    //if the message is a real message, return the clusters
     return mediumLPDMessageFunctions[message.kind](message);
 
   //if we get this far, we can return all widgets in this LPD
-  const tempMessage = <RequestApprovalToAttack>{ //make a dummy widget to put into LPD function
+  const tempMessage = <RequestApprovalToAttack>{
+    //make a dummy widget to put into LPD function
     priority: 2,
   };
-  const messageKinds = [ //all message kinds, so we can get all widgets
+  const messageKinds = [
+    //all message kinds, so we can get all widgets
     'RequestApprovalToAttack',
     'AcaFuelLow',
     'AcaDefect',
@@ -269,12 +259,17 @@ const mediumLPD = (message: Message) => {
 
   //get all widgets as list of widgets instead of list of clusters
   let allPossibleWidgets: any = [];
-  messageKinds.forEach((kind) => { //for each message kind
-    mediumLPDMessageFunctions[kind](tempMessage).possibleClusters.forEach((cluster: WidgetCluster) => { //for each cluster in kind
-      cluster.widgets.forEach((widget: Widget) => {//for eahc widget in widget cluster
-        allPossibleWidgets.push(widget); //add the widget
-      });
-    });
+  messageKinds.forEach((kind) => {
+    //for each message kind
+    mediumLPDMessageFunctions[kind](tempMessage).possibleClusters.forEach(
+      (cluster: WidgetCluster) => {
+        //for each cluster in kind
+        cluster.widgets.forEach((widget: Widget) => {
+          //for eahc widget in widget cluster
+          allPossibleWidgets.push(widget); //add the widget
+        });
+      },
+    );
   });
   return allPossibleWidgets;
 };

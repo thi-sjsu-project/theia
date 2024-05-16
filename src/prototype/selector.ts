@@ -23,19 +23,23 @@ const selector = ({ message, stressLevel }: SelectorProps = {}) => {
   if (!message && !stressLevel) {
     // If no message and no stress provided, return the initial LPD
     return initialLPD;
-  } else if(stressLevel && !message) { //return all widgets in current stressLevel
-    
+  } else if (stressLevel && !message) {
+    //return all widgets in current stressLevel
+
+    return;
+
     let allWidgets: Widget[] = [];
     //get all of the widgets in the inital LPD
     for (const [key, widget] of Object.entries(initialLPD.widgets)) {
-        allWidgets.push(widget);
+      allWidgets.push(widget);
     }
 
     stressLevel = Math.floor(stressLevel! * 3); //get stress level as int
-    const tempMessage = <Message>({ //dummy message to put into LPD function
+    const tempMessage = <Message>{
+      //dummy message to put into LPD function
       priority: -1,
-    })
-    
+    };
+
     //return the intial LPD widgets with the widgets returned from the LPD function(all widgets in this stress level)
     return allWidgets.concat(stressLevelLPDFunctions[stressLevel](tempMessage));
   } else {

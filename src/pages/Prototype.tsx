@@ -75,23 +75,23 @@ const Prototype = () => {
 
     dispatch(addMessage(currentMessage));
     //console.log('hjere!', messages)
-    reactToMessage({dispatch, currentMessage, stressLevel});
+    reactToMessage({ dispatch, currentMessage, stressLevel });
   }, [messages]);
 
-  useEffect(() => {
-    if(stressLevel != 0){ //don't run at start
-      console.log('stress level', stressLevel)
-      let allWidgetsInNewStressLPD: Widget[] = selector({stressLevel: stressLevel})
-      console.log('allwiidgets',allWidgetsInNewStressLPD)
-      let allWidgetsInNewStressLPDIds: string[] = allWidgetsInNewStressLPD.map(a => a.id); //get all widget ids from new stress level LPD and initial LPD
+  // useEffect(() => {
+  //   if(stressLevel != 0){ //don't run at start
+  //     console.log('stress level', stressLevel)
+  //     let allWidgetsInNewStressLPD: Widget[] = selector({stressLevel: stressLevel})
+  //     console.log('allwiidgets',allWidgetsInNewStressLPD)
+  //     let allWidgetsInNewStressLPDIds: string[] = allWidgetsInNewStressLPD.map(a => a.id); //get all widget ids from new stress level LPD and initial LPD
 
-      stressChangeHandler({dispatch:dispatch, allWidgetIds:Object.keys(widgets), allMessages: messages, allWidgetsInNewStressLPDIds: allWidgetsInNewStressLPDIds, stressLevel:stressLevel})
-    }
-  }, [currentStressLevel]);
+  //     stressChangeHandler({dispatch:dispatch, allWidgetIds:Object.keys(widgets), allMessages: messages, allWidgetsInNewStressLPDIds: allWidgetsInNewStressLPDIds, stressLevel:stressLevel})
+  //   }
+  // }, [currentStressLevel]);
 
-  useEffect(() => {
-    dispatch(setStressLevel(Math.floor(stressLevel * 3)));
-  }, [stressLevel]);
+  // useEffect(() => {
+  //   dispatch(setStressLevel(Math.floor(stressLevel * 3)));
+  // }, [stressLevel]);
 
   return <Home />;
 };
