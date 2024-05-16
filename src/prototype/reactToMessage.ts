@@ -48,7 +48,7 @@ const reactToMessage = ({
       message: currentMessage,
     });
 
-    if(widgetClusterToDeploy.widgets.length == 0)
+    if(index == -1)
         resolved = true;
 
     //check restrainer with all new widgets
