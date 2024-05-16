@@ -29,7 +29,7 @@ const reactToMessage = ({
   const sections = store.getState().minimap.sections;
   const widgets = store.getState().minimap.widgets;
 
-  const { message, possibleWidgets } = selector({
+  const { possibleWidgets } = selector({
     message: currentMessage,
     stressLevel,
   });
@@ -42,7 +42,7 @@ const reactToMessage = ({
     possibleWidgets: possibleWidgets,
     sections,
     widgets,
-    message,
+    message: currentMessage,
   });
 
   //console.log('widgetToDeploy ' + widgetToDeploy);

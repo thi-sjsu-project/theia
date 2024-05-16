@@ -6,37 +6,41 @@ import reactToMessage from "./reactToMessage";
 
 
 type StressChangeHandlerProps = {
-    // define expected input here and it's type (number, string, etc.)
-    dispatch: AppDispatch;
-    allWidgetIds: string[];
-    allMessages: Message[];
-    allWidgetsInNewStressLPDIds: string[];
-    stressLevel: number;
-  };
-  
+  // define expected input here and it's type (number, string, etc.)
+  stressLevel: number;
+  dispatch: AppDispatch;
+  allWidgetIds: string[];
+  allMessages: Message[];
+  allWidgetsInNewStressLPDIds: string[];
+};
+
 /**
  * @description ???
  * @param ???
  * @returns ???
  */
-const stressChangeHandler = ({ 
-    dispatch,
-    allWidgetIds,
-    allMessages,
-    allWidgetsInNewStressLPDIds,
-    stressLevel,
- }: StressChangeHandlerProps) => {
-    allWidgetIds.forEach(function(widgetId, widgetIdIndex){
-        if(!allWidgetsInNewStressLPDIds.includes(widgetId)){
-            dispatch(removeWidget(widgetId))
-        }
-    });
+const stressChangeHandler = ({
+  stressLevel,
+  dispatch,
+  allWidgetIds,
+  allMessages,
+  allWidgetsInNewStressLPDIds,
+}: StressChangeHandlerProps) => {
+  allWidgetIds.forEach(function (widgetId, widgetIdIndex) {
+    if (!allWidgetsInNewStressLPDIds.includes(widgetId)) {
+      dispatch(removeWidget(widgetId));
+    }
+  });
 
-    allMessages.forEach(function(message, messageIndex){
-        if(!message.fulfilled){
-            reactToMessage({dispatch:dispatch, currentMessage:message, stressLevel:stressLevel});
-        }
-    });
+  allMessages.forEach(function (message, messageIndex) {
+    if (!message.fulfilled) {
+      reactToMessage({
+        dispatch: dispatch,
+        currentMessage: message,
+        stressLevel,
+      });
+    }
+  });
 
   //messages need to have completed
 
