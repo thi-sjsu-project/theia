@@ -7,7 +7,7 @@ import lpdHelper from 'src/utils/lpdHelper';
 import { v4 as uuid } from 'uuid';
 import DANGER_ICON from 'src/assets/icons/danger.svg';
 import { elements } from './lowLPD';
-import { Widget } from 'src/types/widget';
+import { type Widget } from 'src/types/widget';
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageMedium = (
@@ -219,25 +219,27 @@ const mediumLPDMessageFunctions: any = {
 };
 
 const mediumLPD = (message: Message) => {
-  if(message.priority != -1)
+  if (message.priority != -1)
     return mediumLPDMessageFunctions[message.kind](message);
 
   //we can return all widgets in this LPD
-  const tempMessage = <RequestApprovalToAttack>({
+  const tempMessage = <RequestApprovalToAttack>{
     priority: 2,
-  });
+  };
   const messageKinds = [
     'RequestApprovalToAttack',
     'AcaFuelLow',
     'AcaDefect',
     'AcaHeadingToBase',
-    'MissileToOwnshipDetected'
+    'MissileToOwnshipDetected',
   ];
   let allPossibleWidgets: any = [];
   messageKinds.forEach((kind) => {
-    mediumLPDMessageFunctions[kind](tempMessage).possibleWidgets.forEach((widget: Widget) => {
-      allPossibleWidgets.push(widget);
-    })
+    mediumLPDMessageFunctions[kind](tempMessage).possibleWidgets.forEach(
+      (widget: Widget) => {
+        allPossibleWidgets.push(widget);
+      },
+    );
   });
   return allPossibleWidgets;
 };
