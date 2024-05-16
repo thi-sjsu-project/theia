@@ -71,13 +71,18 @@ const Prototype = () => {
 
     dispatch(addMessage(currentMessage));
 
-    reactToMessage({dispatch, currentMessage});
+    reactToMessage({ dispatch, currentMessage, stressLevel });
   }, [messages]);
 
   useEffect(() => {
     let allWidgetsInNewStressLPDIds: string[] = Object.keys(widgets); //this should be the actual new ones
-    stressChangeHandler({dispatch:dispatch, allWidgetIds:Object.keys(widgets), allMessages: messages, allWidgetsInNewStressLPDIds: allWidgetsInNewStressLPDIds})
-  }, [stressLevel])
+    stressChangeHandler({
+      dispatch: dispatch,
+      allWidgetIds: Object.keys(widgets),
+      allMessages: messages,
+      allWidgetsInNewStressLPDIds: allWidgetsInNewStressLPDIds,
+    });
+  }, [stressLevel]);
 
   return <Home />;
 };
