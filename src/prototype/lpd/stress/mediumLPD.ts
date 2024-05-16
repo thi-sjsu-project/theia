@@ -7,6 +7,7 @@ import lpdHelper from 'src/utils/lpdHelper';
 import { v4 as uuid } from 'uuid';
 import DANGER_ICON from 'src/assets/icons/danger.svg';
 import { elements } from './lowLPD';
+import { Widget } from 'src/types/widget';
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageMedium = (
@@ -14,14 +15,7 @@ const requestApprovalToAttackMessageMedium = (
 ) => {
   elements.push(
     lpdHelper.generateRequestApprovalElement(
-      lpdHelper.generateBaseElement(
-        uuid(),
-        'visual',
-        30,
-        30,
-        message.priority,
-        'list',
-      ),
+      lpdHelper.generateBaseElement(uuid(), 'visual', 30, 30, message.priority),
       message,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 80, 80),
@@ -68,7 +62,6 @@ const acaFuelLowMessageMedium = (message: Message) => {
         50,
         200,
         message.priority,
-        'list',
       ),
       2,
       2,
@@ -111,7 +104,6 @@ const missileToOwnshipDetectedMessageMedium = (
         50,
         200,
         message.priority,
-        'list',
       ),
       message,
       lpdHelper.generateIconElement(
@@ -151,7 +143,6 @@ const acaDefectMessageMedium = (message: Message) => {
         50,
         200,
         message.priority,
-        'list',
       ),
       2,
       2,
@@ -192,7 +183,6 @@ const acaHeadingToBaseMessageMedium = (message: Message) => {
         30,
         200,
         message.priority,
-        'list',
       ),
       'Aircraft heading to base',
     ),
@@ -228,9 +218,28 @@ const mediumLPDMessageFunctions: any = {
   MissileToOwnshipDetected: missileToOwnshipDetectedMessageMedium,
 };
 
-const mediumLPD = (message?: Message) => {
-  if(message)
+const mediumLPD = (message: Message) => {
+  if(message.priority != -1)
     return mediumLPDMessageFunctions[message.kind](message);
+
+  //we can return all widgets in this LPD
+  const tempMessage = <RequestApprovalToAttack>({
+    priority: 2,
+  });
+  const messageKinds = [
+    'RequestApprovalToAttack',
+    'AcaFuelLow',
+    'AcaDefect',
+    'AcaHeadingToBase',
+    'MissileToOwnshipDetected'
+  ];
+  let allPossibleWidgets: any = [];
+  messageKinds.forEach((kind) => {
+    mediumLPDMessageFunctions[kind](tempMessage).possibleWidgets.forEach((widget: Widget) => {
+      allPossibleWidgets.push(widget);
+    })
+  });
+  return allPossibleWidgets;
 };
 
 export default mediumLPD;

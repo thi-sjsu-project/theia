@@ -31,7 +31,6 @@ const reactToMessage = ({
 
   const { message, possibleWidgets } = selector({
     message: currentMessage,
-        stressLevel,
     stressLevel,
   });
 
