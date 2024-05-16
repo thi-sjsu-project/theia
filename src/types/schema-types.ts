@@ -19,6 +19,7 @@ export type BaseMessage<TKind extends string, TData extends object> = {
   priority: Priority;
   kind: TKind;
   data: TData;
+  fulfilled?: boolean;
 };
 
 export type RequestApprovalToAttack = BaseMessage<

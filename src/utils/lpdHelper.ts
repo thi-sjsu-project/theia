@@ -33,6 +33,12 @@ const generateSection = (
   widgetIDs,
 });
 
+const generateCluster = (
+  widgets: any[],
+) => ({
+  widgets: widgets,
+})
+
 // Generate Base Widget
 const generateBaseWidget = (
   id: string,
@@ -136,8 +142,6 @@ const generateBaseElement = (
   expiration,
   onExpiration,
   interacted,
-  canOverlap,
-  style,
 });
 
 // Generate simple elements

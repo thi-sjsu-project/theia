@@ -9,6 +9,10 @@ import {
   getSections,
   getWidgets,
   initializeState,
+  addMessage,
+  getAllElements,
+  getStressLevel,
+  setStressLevel,
 } from 'src/redux/slices/minimapSlice';
 // ~~~~~~~ Cusdom Hooks ~~~~~~~
 import useWorldSim from 'src/hooks/useWorldSim';
@@ -21,10 +25,14 @@ import restrainer from 'src/prototype/restrainer';
 import { ownship, drones } from 'src/prototype/lpd/initialLPD';
 // ~~~~~~~ Components ~~~~~~~
 import Home from 'src/components/Home';
+import reactToMessage from 'src/prototype/reactToMessage';
+import stressChangeHandler from 'src/prototype/stressChangeHandler';
+import type { Widget } from 'src/types/widget';
 
 const Prototype = () => {
   // ~~~~~ Custom Hooks ~~~~~~
   const { messages, stressLevel } = useWorldSim();
+  const currentStressLevel = useAppSelector(getStressLevel);
 
   // ~~~~~ Selectors ~~~~~~
   const sections = useAppSelector(getSections);
@@ -65,59 +73,25 @@ const Prototype = () => {
     const currentMessage = messages[messages.length - 1];
     //console.log('currentMessage:', currentMessage);
 
-    const { message, possibleWidgets } = selector({
-      message: currentMessage,
-      stressLevel,
-    });
-
-    // possibleWidgets[0].id = uuid();
-
-    //console.log('running through assimilator...');
-    const { widgetToDeploy, sectionID, action } = assimilator({
-      // find if there is room for us to put the widget down (returns null if there is not room)
-      possibleWidgets,
-      sections,
-      widgets,
-    });
-
-    //console.log('widgetToDeploy ' + widgetToDeploy);
-    console.log('action', action, 'widgetToDeploy', widgetToDeploy);
-    if (action !== 'newWidget') {
-      //we should do something other than
-      switch (action) {
-        case 'updateWidget':
-          console.log('widget already exists, updating');
-          // only have one widget in possibleWidgets right now, this is why this works
-          // furthermore, only have one element in the widget
-          // so we can just do possibleWidgets[0]...
-          // eventually, maybe assimilator returns the widget that needs to be updated
-          // assimilator should also say if to add a new element or remove one, etc. -- JAGJIT
-          dispatch(
-            addElementToWidget(
-              possibleWidgets[0].id,
-              possibleWidgets[0].elements,
-            ),
-          );
-          break;
-        case 'none':
-          console.log('proposed widgets could not be placed');
-          break;
-      }
-    } else if (widgetToDeploy) {
-      // console.log('widget deployed:', widgetToDeploy);
-      //console.log('widgets that are now deployed: ', widgets);
-      //if we can actually place the widget
-
-      //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
-      if (restrainer({ widgetToDeploy: widgetToDeploy })) {
-        // restrainer deems that the widget CAN be deployed
-
-        // dispatch action to add new widget
-        dispatch(addWidget(widgetToDeploy));
-        dispatch(addWidgetToSection(sectionID));
-      }
-    }
+    dispatch(addMessage(currentMessage));
+    //console.log('hjere!', messages)
+    reactToMessage({dispatch, currentMessage, stressLevel});
   }, [messages]);
+
+  useEffect(() => {
+    if(stressLevel != 0){ //don't run at start
+      console.log('stress level', stressLevel)
+      let allWidgetsInNewStressLPD: Widget[] = selector({stressLevel: stressLevel})
+      console.log('allwiidgets',allWidgetsInNewStressLPD)
+      let allWidgetsInNewStressLPDIds: string[] = allWidgetsInNewStressLPD.map(a => a.id); //get all widget ids from new stress level LPD and initial LPD
+
+      stressChangeHandler({dispatch:dispatch, allWidgetIds:Object.keys(widgets), allMessages: messages, allWidgetsInNewStressLPDIds: allWidgetsInNewStressLPDIds, stressLevel:stressLevel})
+    }
+  }, [currentStressLevel]);
+
+  useEffect(() => {
+    dispatch(setStressLevel(Math.floor(stressLevel * 3)));
+  }, [stressLevel]);
 
   return <Home />;
 };

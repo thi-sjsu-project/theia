@@ -7,6 +7,8 @@ import { v4 as uuid } from 'uuid';
 import lpdHelper from 'src/utils/lpdHelper';
 import DANGER_ICON from 'src/assets/icons/danger.svg';
 import { elements } from './lowLPD';
+import type { Widget } from 'src/types/widget';
+import type { WidgetCluster } from 'src/types/support-types';
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageHigh = (
@@ -32,7 +34,10 @@ const requestApprovalToAttackMessageHigh = (
   );
   return {
     sections: [],
-    possibleWidgets: [
+    possibleClusters:
+      [
+      generateCluster( 
+      [
       lpdHelper.generateListWidget(
         lpdHelper.generateBaseWidget(
           'list',
@@ -49,6 +54,8 @@ const requestApprovalToAttackMessageHigh = (
         ),
       ),
     ],
+    ),
+    ]
   };
 };
 
@@ -73,7 +80,10 @@ const acaFuelLowMessageHigh = (message: Message) => {
   );
   return {
     sections: [],
-    possibleWidgets: [
+    possibleClusters:
+      [
+      generateCluster( 
+      [
       lpdHelper.generateListWidget(
         lpdHelper.generateBaseWidget(
           'list',
@@ -90,6 +100,8 @@ const acaFuelLowMessageHigh = (message: Message) => {
         ),
       ),
     ],
+    ),
+  ]
   };
 };
 
@@ -115,7 +127,10 @@ const missileToOwnshipDetectedMessageHigh = (
   );
   return {
     sections: [],
-    possibleWidgets: [
+    possibleClusters:
+      [
+      generateCluster( 
+      [
       lpdHelper.generateListWidget(
         lpdHelper.generateBaseWidget(
           'list',
@@ -132,6 +147,8 @@ const missileToOwnshipDetectedMessageHigh = (
         ),
       ),
     ],
+    ),
+    ]
   };
 };
 
@@ -156,7 +173,10 @@ const acaDefectMessageHigh = (message: Message) => {
   );
   return {
     sections: [],
-    possibleWidgets: [
+    possibleClusters:
+      [
+      generateCluster(
+      [
       lpdHelper.generateListWidget(
         lpdHelper.generateBaseWidget(
           'list',
@@ -173,6 +193,8 @@ const acaDefectMessageHigh = (message: Message) => {
         ),
       ),
     ],
+    ),
+    ]
   };
 };
 
@@ -192,25 +214,36 @@ const acaHeadingToBaseMessageHigh = (message: Message) => {
   );
   return {
     sections: [],
-    possibleWidgets: [
-      lpdHelper.generateListWidget(
-        lpdHelper.generateBaseWidget(
-          'list',
-          'tinder',
-          500,
-          500,
-          300,
-          800,
-          '/pearce-screen',
-          false,
-          true,
-          1,
-          [...elements],
-        ),
+    possibleClusters:
+    [
+      generateCluster(
+        [
+          lpdHelper.generateListWidget(
+            lpdHelper.generateBaseWidget(
+              'list',
+              'tinder',
+              500,
+              500,
+              300,
+              800,
+              '/pearce-screen',
+              false,
+              true,
+              1,
+              [...elements],
+            ),
+          ),
+        ],
       ),
-    ],
+    ]
   };
 };
+
+const generateCluster = (
+  widgets: Widget[],
+): WidgetCluster => ({
+  widgets: widgets,
+})
 
 // Map each message type to its corresponding LPD function
 const highLPDMessageFunctions: any = {
@@ -222,7 +255,33 @@ const highLPDMessageFunctions: any = {
 };
 
 const highLPD = (message: Message) => {
-  return highLPDMessageFunctions[message.kind](message);
+  if(message.priority != -1) //if the message is a real message, return the clusters
+    return highLPDMessageFunctions[message.kind](message);
+
+  //if we get this far, we can return all widgets in this LPD
+  const tempMessage = <RequestApprovalToAttack>({ //make a dummy widget to put into LPD function
+    priority: 2,
+  });
+  
+
+  const messageKinds = [ //all message kinds, so we can get all widgets
+    'RequestApprovalToAttack',
+    'AcaFuelLow',
+    'AcaDefect',
+    'AcaHeadingToBase',
+    'MissileToOwnshipDetected'
+  ];
+
+  //get all widgets as list of widgets instead of list of clusters
+  let allPossibleWidgets: any = [];
+  messageKinds.forEach((kind) => { //for each message kind
+    highLPDMessageFunctions[kind](tempMessage).possibleClusters.forEach((cluster: WidgetCluster) => { //for each cluster in kind
+      cluster.widgets.forEach((widget: Widget) => { //for eahc widget in widget cluster
+        allPossibleWidgets.push(widget); //add the widget
+      });
+    });
+  });
+  return allPossibleWidgets;
 };
 
 export default highLPD;

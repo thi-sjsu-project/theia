@@ -1,10 +1,6 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type {
-  Widget,
-  VehicleWidget,
-  WidgetMap,
-} from 'src/types/widget';
+import type { Widget, VehicleWidget, WidgetMap } from 'src/types/widget';
 import type { Screen } from 'src/types/support-types';
 import type { Message } from 'src/types/schema-types';
 import type { Element, ElementMap } from 'src/types/element';
@@ -21,6 +17,8 @@ export type InitialMinimapState = {
   widgets: WidgetMap;
   messages: Message[];
   sections: Section[];
+
+  stressLevel: number;
 };
 
 const initialState: InitialMinimapState = {
@@ -31,6 +29,7 @@ const initialState: InitialMinimapState = {
   messages: [],
   widgets: {},
   sections: [],
+  stressLevel: 0,
 };
 
 export const minimapSlice = createSlice({
@@ -110,19 +109,18 @@ export const minimapSlice = createSlice({
     },
 
     addElementToWidget: {
-      prepare(widgetId: string, elements: Element[]) {
-        return { payload: { widgetId, elements } };
+      prepare(widgetId: string, element: Element) {
+        return { payload: { widgetId, element } };
       },
 
       reducer(
         state,
-        action: PayloadAction<{ widgetId: string; elements: Element[] }>,
+        action: PayloadAction<{ widgetId: string; element: Element }>,
       ) {
-        console.log('adding elements to widget', action.payload.elements);
-        state.widgets[action.payload.widgetId].elements = action.payload.elements;
-        // state.widgets[action.payload.widgetId].elements.push(
-        //   ...action.payload.elements,
-        // );
+        console.log('adding elements to widget', action.payload.element);
+        state.widgets[action.payload.widgetId].elements.push(
+          action.payload.element,
+        );
       },
     },
 
@@ -314,6 +312,10 @@ export const minimapSlice = createSlice({
     addMessage: (state, action: PayloadAction<Message>) => {
       state.messages.push(action.payload);
     },
+
+    setStressLevel: (state, action: PayloadAction<number>) => {
+      state.stressLevel = action.payload;
+    },
   },
   // selectors are used to access parts of the state within components
   selectors: {
@@ -348,7 +350,7 @@ export const minimapSlice = createSlice({
       Object.keys(state.widgets).forEach((widgetId) => {
         const widget = state.widgets[widgetId];
         if (widget.screen === screen) {
-          widget.elements.forEach((element) => {
+          Array.from(widget.elements).forEach((element) => {
             elements[element.id] = element;
           });
         }
@@ -360,6 +362,7 @@ export const minimapSlice = createSlice({
     getVisualComplexity: (state) => state.visualComplexity,
     getAudioComplexity: (state) => state.audioComplexity,
     getMessages: (state) => state.messages,
+    getStressLevel: (state) => state.stressLevel,
 
     // ~~~~~ selectors for ships ~~~~~
     getOwnship: (state) => {
@@ -407,6 +410,8 @@ export const {
   deleteElementFromWidget,
 
   toggleElementInteraction,
+
+  setStressLevel,
 } = minimapSlice.actions;
 
 export const {
@@ -426,4 +431,6 @@ export const {
 
   getVisualComplexity,
   getAudioComplexity,
+
+  getStressLevel,
 } = minimapSlice.selectors;

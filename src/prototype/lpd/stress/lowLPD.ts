@@ -3,6 +3,8 @@ import lpdHelper from 'src/utils/lpdHelper';
 import { v4 as uuid } from 'uuid';
 import type { Element } from 'src/types/element';
 import DANGER_ICON from 'src/assets/icons/danger.svg';
+import type { Widget } from 'src/types/widget';
+import type { WidgetCluster } from 'src/types/support-types';
 
 export const elements: Element[] = [];
 
@@ -10,14 +12,7 @@ export const elements: Element[] = [];
 const requestApprovalToAttackMessageLow = (message: RequestApprovalToAttack) => {
   elements.push(
     lpdHelper.generateRequestApprovalElement(
-      lpdHelper.generateBaseElement(
-        uuid(),
-        'visual',
-        30,
-        30,
-        message.priority,
-        'list',
-      ),
+      lpdHelper.generateBaseElement(uuid(), 'visual', 30, 30, message.priority),
       message,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 80, 80),
@@ -35,7 +30,10 @@ const requestApprovalToAttackMessageLow = (message: RequestApprovalToAttack) => 
   );
   return {
     sections: [],
-    possibleWidgets: [
+    possibleClusters:
+      [
+      generateCluster( 
+      [
       lpdHelper.generateListWidget(
         lpdHelper.generateBaseWidget(
           'list',
@@ -52,20 +50,15 @@ const requestApprovalToAttackMessageLow = (message: RequestApprovalToAttack) => 
         ),
       ),
     ],
+    ),
+    ]
   };
 };
 
 const acaFuelLowMessageLow = (message: Message) => {
   elements.push(
     lpdHelper.generateTableElement(
-      lpdHelper.generateBaseElement(
-        uuid(),
-        'visual',
-        50,
-        200,
-        message.priority,
-        'list',
-      ),
+      lpdHelper.generateBaseElement(uuid(), 'visual', 50, 200, message.priority),
       2,
       2,
       [
@@ -76,7 +69,10 @@ const acaFuelLowMessageLow = (message: Message) => {
   );
   return {
     sections: [],
-    possibleWidgets: [
+    possibleClusters:
+      [
+      generateCluster( 
+      [
       lpdHelper.generateListWidget(
         lpdHelper.generateBaseWidget(
           'list',
@@ -93,6 +89,8 @@ const acaFuelLowMessageLow = (message: Message) => {
         ),
       ),
     ],
+    ),
+    ]
   };
 };
 
@@ -105,7 +103,6 @@ const missileToOwnshipDetectedMessageLow = (message: MissileToOwnshipDetected) =
         50,
         200,
         message.priority,
-        'list',
       ),
       message,
       lpdHelper.generateIconElement(
@@ -116,7 +113,10 @@ const missileToOwnshipDetectedMessageLow = (message: MissileToOwnshipDetected) =
   );
   return {
     sections: [],
-    possibleWidgets: [
+    possibleClusters:
+      [
+      generateCluster( 
+      [
       lpdHelper.generateListWidget(
         lpdHelper.generateBaseWidget(
           'list',
@@ -133,13 +133,15 @@ const missileToOwnshipDetectedMessageLow = (message: MissileToOwnshipDetected) =
         ),
       ),
     ],
+    ),
+    ]
   };
 };
 
 const acaDefectMessageLow = (message: Message) => {
   elements.push(
     lpdHelper.generateTableElement(
-      lpdHelper.generateBaseElement(uuid(), 'visual', 50, 200, message.priority, 'list'),
+      lpdHelper.generateBaseElement(uuid(), 'visual', 50, 200, message.priority),
       2,
       2,
       [
@@ -150,7 +152,10 @@ const acaDefectMessageLow = (message: Message) => {
   );
   return {
     sections: [],
-    possibleWidgets: [
+    possibleClusters:
+      [
+      generateCluster( 
+      [
       lpdHelper.generateListWidget(
         lpdHelper.generateBaseWidget(
           'list',
@@ -167,19 +172,24 @@ const acaDefectMessageLow = (message: Message) => {
         ),
       ),
     ],
+    ),
+    ]
   };
 };
 
 const acaHeadingToBaseMessageLow = (message: Message) => {
   elements.push(
     lpdHelper.generateTextElement(
-      lpdHelper.generateBaseElement(uuid(), 'visual', 30, 200, message.priority, 'list'),
+      lpdHelper.generateBaseElement(uuid(), 'visual', 30, 200, message.priority),
       'Aircraft heading to base',
     ),
   );
   return {
     sections: [],
-    possibleWidgets: [
+    possibleClusters:
+      [
+        generateCluster( 
+      [
       lpdHelper.generateListWidget(
         lpdHelper.generateBaseWidget(
           'list',
@@ -196,8 +206,16 @@ const acaHeadingToBaseMessageLow = (message: Message) => {
         ),
       ),
     ],
+  )
+  ]
   };
 };
+
+const generateCluster = (
+  widgets: Widget[],
+): WidgetCluster => ({
+  widgets: widgets,
+})
 
 // Map each message type to its corresponding LPD function
 const lowLPDMessageFunctions: any = {
@@ -209,7 +227,33 @@ const lowLPDMessageFunctions: any = {
 };
 
 const lowLPD = (message: Message) => {
-  return lowLPDMessageFunctions[message.kind](message);
+  if(message.priority != -1)  //if the message is a real message, return the clusters
+    return lowLPDMessageFunctions[message.kind](message);
+  
+
+
+  //if we get this far, we can return all widgets in this LPD
+  const tempMessage = <RequestApprovalToAttack>({ //make a dummy widget to put into LPD function
+    priority: 2,
+  });
+  const messageKinds = [ //all message kinds, so we can get all widgets
+    'RequestApprovalToAttack',
+    'AcaFuelLow',
+    'AcaDefect',
+    'AcaHeadingToBase',
+    'MissileToOwnshipDetected'
+  ];
+
+  //get all widgets as list of widgets instead of list of clusters
+  let allPossibleWidgets: any = [];
+  messageKinds.forEach((kind) => { //for each message kind
+    lowLPDMessageFunctions[kind](tempMessage).possibleClusters.forEach((cluster: WidgetCluster) => { //for each cluster in kind
+      cluster.widgets.forEach((widget: Widget) => { //for eahc widget in widget cluster
+        allPossibleWidgets.push(widget); //add the widget
+      });
+    });
+  });
+  return allPossibleWidgets;
 };
 
 export default lowLPD;

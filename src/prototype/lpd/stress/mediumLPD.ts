@@ -7,6 +7,8 @@ import lpdHelper from 'src/utils/lpdHelper';
 import { v4 as uuid } from 'uuid';
 import DANGER_ICON from 'src/assets/icons/danger.svg';
 import { elements } from './lowLPD';
+import { type Widget } from 'src/types/widget';
+import type { WidgetCluster } from 'src/types/support-types';
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageMedium = (
@@ -14,14 +16,7 @@ const requestApprovalToAttackMessageMedium = (
 ) => {
   elements.push(
     lpdHelper.generateRequestApprovalElement(
-      lpdHelper.generateBaseElement(
-        uuid(),
-        'visual',
-        30,
-        30,
-        message.priority,
-        'list',
-      ),
+      lpdHelper.generateBaseElement(uuid(), 'visual', 30, 30, message.priority),
       message,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 80, 80),
@@ -39,7 +34,10 @@ const requestApprovalToAttackMessageMedium = (
   );
   return {
     sections: [],
-    possibleWidgets: [
+    possibleClusters:
+      [
+      generateCluster( 
+      [
       lpdHelper.generateListWidget(
         lpdHelper.generateBaseWidget(
           'list',
@@ -56,6 +54,8 @@ const requestApprovalToAttackMessageMedium = (
         ),
       ),
     ],
+    ),
+    ]
   };
 };
 
@@ -68,7 +68,6 @@ const acaFuelLowMessageMedium = (message: Message) => {
         50,
         200,
         message.priority,
-        'list',
       ),
       2,
       2,
@@ -80,7 +79,10 @@ const acaFuelLowMessageMedium = (message: Message) => {
   );
   return {
     sections: [],
-    possibleWidgets: [
+    possibleClusters:
+      [
+      generateCluster( 
+      [
       lpdHelper.generateListWidget(
         lpdHelper.generateBaseWidget(
           'list',
@@ -97,6 +99,8 @@ const acaFuelLowMessageMedium = (message: Message) => {
         ),
       ),
     ],
+    ),
+    ]
   };
 };
 
@@ -111,7 +115,6 @@ const missileToOwnshipDetectedMessageMedium = (
         50,
         200,
         message.priority,
-        'list',
       ),
       message,
       lpdHelper.generateIconElement(
@@ -122,7 +125,10 @@ const missileToOwnshipDetectedMessageMedium = (
   );
   return {
     sections: [],
-    possibleWidgets: [
+    possibleClusters:
+      [
+      generateCluster( 
+      [
       lpdHelper.generateListWidget(
         lpdHelper.generateBaseWidget(
           'list',
@@ -139,6 +145,8 @@ const missileToOwnshipDetectedMessageMedium = (
         ),
       ),
     ],
+    ),
+    ]
   };
 };
 
@@ -151,7 +159,6 @@ const acaDefectMessageMedium = (message: Message) => {
         50,
         200,
         message.priority,
-        'list',
       ),
       2,
       2,
@@ -163,7 +170,10 @@ const acaDefectMessageMedium = (message: Message) => {
   );
   return {
     sections: [],
-    possibleWidgets: [
+    possibleClusters:
+      [
+      generateCluster( 
+      [
       lpdHelper.generateListWidget(
         lpdHelper.generateBaseWidget(
           'list',
@@ -180,6 +190,8 @@ const acaDefectMessageMedium = (message: Message) => {
         ),
       ),
     ],
+    ),
+    ]
   };
 };
 
@@ -192,14 +204,16 @@ const acaHeadingToBaseMessageMedium = (message: Message) => {
         30,
         200,
         message.priority,
-        'list',
       ),
       'Aircraft heading to base',
     ),
   );
   return {
     sections: [],
-    possibleWidgets: [
+    possibleClusters:
+      [
+      generateCluster( 
+      [
       lpdHelper.generateListWidget(
         lpdHelper.generateBaseWidget(
           'list',
@@ -216,8 +230,17 @@ const acaHeadingToBaseMessageMedium = (message: Message) => {
         ),
       ),
     ],
+    ),
+    ]
   };
 };
+
+
+const generateCluster = (
+  widgets: Widget[],
+): WidgetCluster => ({
+  widgets: widgets,
+})
 
 // Map each message type to its corresponding LPD function
 const mediumLPDMessageFunctions: any = {
@@ -229,7 +252,31 @@ const mediumLPDMessageFunctions: any = {
 };
 
 const mediumLPD = (message: Message) => {
-  return mediumLPDMessageFunctions[message.kind](message);
+  if (message.priority != -1) //if the message is a real message, return the clusters
+    return mediumLPDMessageFunctions[message.kind](message);
+
+  //if we get this far, we can return all widgets in this LPD
+  const tempMessage = <RequestApprovalToAttack>{ //make a dummy widget to put into LPD function
+    priority: 2,
+  };
+  const messageKinds = [ //all message kinds, so we can get all widgets
+    'RequestApprovalToAttack',
+    'AcaFuelLow',
+    'AcaDefect',
+    'AcaHeadingToBase',
+    'MissileToOwnshipDetected',
+  ];
+
+  //get all widgets as list of widgets instead of list of clusters
+  let allPossibleWidgets: any = [];
+  messageKinds.forEach((kind) => { //for each message kind
+    mediumLPDMessageFunctions[kind](tempMessage).possibleClusters.forEach((cluster: WidgetCluster) => { //for each cluster in kind
+      cluster.widgets.forEach((widget: Widget) => {//for eahc widget in widget cluster
+        allPossibleWidgets.push(widget); //add the widget
+      });
+    });
+  });
+  return allPossibleWidgets;
 };
 
 export default mediumLPD;

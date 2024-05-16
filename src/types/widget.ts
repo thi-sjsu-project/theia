@@ -27,6 +27,8 @@ export type BaseWidget = {
   useElementLocation: boolean;
   maxAmount: number;
 
+  handledMessageIds?: string[];
+
   padding?: number;
   priority?: number;
   style?: Properties;
