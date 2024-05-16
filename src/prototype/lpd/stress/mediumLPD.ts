@@ -223,6 +223,7 @@ const mediumLPD = (message: Message) => {
     return mediumLPDMessageFunctions[message.kind](message);
 
   //we can return all widgets in this LPD
+  // TODO: this is incorrect syntax.
   const tempMessage = <RequestApprovalToAttack>{
     priority: 2,
   };
