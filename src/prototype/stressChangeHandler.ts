@@ -38,11 +38,9 @@ const stressChangeHandler = ({
         }
     });
 
-      //messages need to have completed
+  //messages need to have completed
 
-    return {
+  return {};
+};
 
-    };
-  }
-
-  export default stressChangeHandler;
+export default stressChangeHandler;

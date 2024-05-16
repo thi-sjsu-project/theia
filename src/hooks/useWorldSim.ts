@@ -3,7 +3,7 @@ import type { Message, SimToCmMessage, Range } from 'src/types/schema-types';
 
 const useWorldSim = () => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [stressLevel, setStressLevel] = useState<Range<0,1>>(0);
+  const [stressLevel, setStressLevel] = useState<Range<0, 1>>(0);
   const socket = useRef<WebSocket | null>();
 
   useEffect(() => {
@@ -16,7 +16,11 @@ const useWorldSim = () => {
     socket.current.addEventListener('message', (event) => {
       // console.log('\x1b[34mmessage received:\x1b[0m', event.data);
       const { message, stressLevel }: SimToCmMessage = JSON.parse(event.data);
-      if (message) setMessages((prevMessages) => [...prevMessages, {...message, fulfilled: false}]);
+      if (message)
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { ...message, fulfilled: false },
+        ]);
       if (stressLevel) setStressLevel(stressLevel);
     });
 
