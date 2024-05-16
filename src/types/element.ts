@@ -24,6 +24,7 @@ export type BaseElement = {
   interacted?: boolean;
   canOverlap?: boolean;
   style?: Properties;
+  tag?: string;
 };
 
 //
@@ -33,6 +34,7 @@ export type ButtonElement = BaseElement & {
   type: 'button';
   onClick?: () => void;
   text: string;
+  tag: 'button';
 };
 
 export type TableElement = BaseElement & {
@@ -40,6 +42,7 @@ export type TableElement = BaseElement & {
   rows: number;
   cols: number;
   tableData: string[][];
+  tag: 'table';
 };
 
 export type TextElement = BaseElement & {
@@ -47,6 +50,7 @@ export type TextElement = BaseElement & {
 
   // additional properties here
   text: string;
+  tag: 'text';
 };
 
 export type ImageElement = BaseElement & {
@@ -54,6 +58,7 @@ export type ImageElement = BaseElement & {
 
   // additional properties here
   src: string;
+  tag: 'image';
 };
 
 export type AudioElement = BaseElement & {
@@ -62,13 +67,13 @@ export type AudioElement = BaseElement & {
   // additional properties here
   intensity: number;
   frequency: number;
+  tag: 'audio';
 };
 
 export type IconElement = BaseElement & {
   type: 'icon';
   src: string;
-  // makes search easier
-  tag?: 'ownship' | 'drone' | 'target' | 'enemy' | 'warning' | 'message';
+  tag: 'icon';
 };
 
 //
@@ -76,6 +81,7 @@ export type IconElement = BaseElement & {
 //
 export type CustomElement = BaseElement & {
   type: 'custom';
+  tag: 'custom';
 };
 
 export type RequestApprovalElement = BaseElement & {
