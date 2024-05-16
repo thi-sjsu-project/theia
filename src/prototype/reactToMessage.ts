@@ -29,7 +29,6 @@ const reactToMessage = ({
     stressLevel,
 }: ReactToMessageProps) => {
 
-  console.log("msg here", currentMessage)
   const sections = store.getState().minimap.sections;
   const widgets = store.getState().minimap.widgets;
 
@@ -37,7 +36,6 @@ const reactToMessage = ({
     message: currentMessage,
     stressLevel,
   });
-  console.log('clusters',possibleWidgetClusters)
 
   let resolved = false;
   while(!resolved){ //repeat ntil choosing a cluster has resolved

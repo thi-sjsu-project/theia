@@ -50,8 +50,6 @@ const assimilator = ({
   }; //will return null if we cannot find a space
   let index = -1;
 
-  console.log(possibleWidgetClusters)
-
   possibleWidgetClusters.forEach((widgetCluster, widgetClusterIndex) => {
     //go through every widget cluster
     let allWidgetsPlaced = true//tracks if all widgets in this cluster have been placed
@@ -180,7 +178,7 @@ const assimilator = ({
           }
         });
 
-        if (widgetPlaced === false){
+        if (widgetPlaced === false){// we couldn't place the widget, so all widgetsPlaced is false
           allWidgetsPlaced = false;
         }
       }
@@ -203,6 +201,7 @@ const assimilator = ({
 
   });
 
+  //got to end without finding any clusters to place
   return {
     widgetClusterToDeploy,
     index,

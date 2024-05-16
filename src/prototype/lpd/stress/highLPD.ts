@@ -255,24 +255,29 @@ const highLPDMessageFunctions: any = {
 };
 
 const highLPD = (message: Message) => {
-  if(message.priority != -1)
+  if(message.priority != -1) //if the message is a real message, return the clusters
     return highLPDMessageFunctions[message.kind](message);
-  //we can return all widgets in this LPD
-  const tempMessage = <RequestApprovalToAttack>({
+
+  //if we get this far, we can return all widgets in this LPD
+  const tempMessage = <RequestApprovalToAttack>({ //make a dummy widget to put into LPD function
     priority: 2,
   });
-  const messageKinds = [
+  
+
+  const messageKinds = [ //all message kinds, so we can get all widgets
     'RequestApprovalToAttack',
     'AcaFuelLow',
     'AcaDefect',
     'AcaHeadingToBase',
     'MissileToOwnshipDetected'
   ];
+
+  //get all widgets as list of widgets instead of list of clusters
   let allPossibleWidgets: any = [];
-  messageKinds.forEach((kind) => {
-    highLPDMessageFunctions[kind](tempMessage).possibleClusters.forEach((cluster: WidgetCluster) => {
-      cluster.widgets.forEach((widget: Widget) => {
-        allPossibleWidgets.push(widget);
+  messageKinds.forEach((kind) => { //for each message kind
+    highLPDMessageFunctions[kind](tempMessage).possibleClusters.forEach((cluster: WidgetCluster) => { //for each cluster in kind
+      cluster.widgets.forEach((widget: Widget) => { //for eahc widget in widget cluster
+        allPossibleWidgets.push(widget); //add the widget
       });
     });
   });
