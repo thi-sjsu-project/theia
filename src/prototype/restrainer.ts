@@ -18,7 +18,7 @@ import { type ModalityMeasure } from 'src/types/restrain';
 
 type RestrainerProps = {
   // define expected input here and it's type (number, string, etc.)
-  widgetToDeploy: Widget;
+  widgetsToDeploy: Widget[];
   // add more as needed
 };
 
@@ -54,7 +54,7 @@ function totalVisualComplexity(widget : Widget) {
  * @param the widget To Deploy
  * @returns if widgetToDeploy can be placed
 */
-const restrainer = ({ widgetToDeploy }: RestrainerProps) => {
+const restrainer = ({ widgetsToDeploy }: RestrainerProps) => {
   // Calculating if adding @param widget will remain within bounds
   const visualComplexityAfterAddingWidget = totalVisualComplexity(widgetToDeploy);
   const canBePlaced = visualMeasure.boundary.min <= visualComplexityAfterAddingWidget && visualComplexityAfterAddingWidget <= visualMeasure.boundary.max;
