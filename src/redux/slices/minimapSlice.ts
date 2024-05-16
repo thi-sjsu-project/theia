@@ -363,16 +363,24 @@ export const minimapSlice = createSlice({
 
     // ~~~~~ selectors for ships ~~~~~
     getOwnship: (state) => {
-      if (state.ownship) {
-        return state.widgets[state.ownship.id];
-      }
-      return null;
+      // if (state.ownship) {
+      //   return state.widgets[state.ownship.id];
+      // }
+      // For each vehicle widget, check if the widget tag is 'ownship'
+      const ownship = Object.values(state.widgets).find(
+        (widget: any) => widget.type === 'vehicle' && widget.tags.includes('ownship'),
+      );
+      return ownship;
     },
     getDrones: (state) => {
-      if (state.drones.length > 0) {
-        return state.drones.map((drone) => state.widgets[drone.id]);
-      }
-      return [];
+      // if (state.drones.length > 0) {
+      //   return state.drones.map((drone) => state.widgets[drone.id]);
+      // }
+      // For each vehicle widget, check if the widget tag is 'drone'
+      const drones = Object.values(state.widgets).filter(
+        (widget: any) => widget.type === 'vehicle' && widget.tags.includes('drone'),
+      );
+      return drones;
     },
   },
 });

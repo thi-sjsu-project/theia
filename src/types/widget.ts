@@ -2,6 +2,15 @@ import type { Element } from 'src/types/element';
 import type { Properties } from 'csstype';
 import type { Screen, SectionType } from 'src/types/support-types';
 
+export type TagsType =
+  | ['ownship']
+  | ['drone']
+  | ['target']
+  | ['enemy']
+  | ['warning']
+  | ['message']
+  | string[];
+
 export type BaseWidget = {
   elements: Element[];
   id: string;
@@ -21,6 +30,7 @@ export type BaseWidget = {
   padding?: number;
   priority?: number;
   style?: Properties;
+  tags?: TagsType;
 };
 
 export type ListWidget = BaseWidget & {

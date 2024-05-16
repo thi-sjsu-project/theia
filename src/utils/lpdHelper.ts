@@ -49,6 +49,7 @@ const generateBaseWidget = (
   padding?: number,
   priority?: number,
   style?: Properties,
+  tags?: Widget.TagsType,
 ): Widget.BaseWidget => ({
   id,
   sectionType,
@@ -64,6 +65,7 @@ const generateBaseWidget = (
   priority,
   style,
   elements,
+  tags,
 });
 
 // Generate the different widget types
