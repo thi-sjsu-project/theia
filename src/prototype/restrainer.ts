@@ -38,13 +38,17 @@ const visualMeasure : ModalityMeasure = {
 
 // **** Simulated restrainer visual complexity ****
 function totalVisualComplexity(widgets : Widget[]) {
+  
   // Calculating the current visual complexity of the screen
   const currentScreenComplexity = () => Object.values(store.getState().minimap.widgets).reduce( (acc, widget) => acc + widget.elements.length, 0);
   
   // Calculating the visual complexity of the widgetsToDeploy
   const newWidgetsVisualComplexity = (newWidgets : Widget[]) => Object.values(newWidgets).reduce( (acc, widget) => acc + widget.elements.length, 0)
 
-  return Math.min(visualMeasure.range.max, Math.max(visualMeasure.range.min, currentScreenComplexity() + newWidgetsVisualComplexity(widgets))); // keep the complexity within range bounds
+   //map the number of elements into the visualMeasure range based on the max number of elements we want to allow on our screens
+  const maxNumElements = 100;
+  const valueInRange = Math.min(((currentScreenComplexity() + newWidgetsVisualComplexity(widgets))/maxNumElements)*visualMeasure.range.max, visualMeasure.range.max)
+  return valueInRange;
 }
 
 
@@ -56,11 +60,11 @@ function totalVisualComplexity(widgets : Widget[]) {
 */
 const restrainer = ({ widgetsToDeploy }: RestrainerProps) => {
   // Calculating if adding @param widget will remain within bounds
-  const visualComplexityAfterAddingWidget = totalVisualComplexity(widgetsToDeploy);
-  const canBePlaced = visualMeasure.boundary.min <= visualComplexityAfterAddingWidget && visualComplexityAfterAddingWidget <= visualMeasure.boundary.max;
+  const visualComplexityAfterAddingWidgets = totalVisualComplexity(widgetsToDeploy);
+  const canBePlaced = visualMeasure.boundary.min <= visualComplexityAfterAddingWidgets && visualComplexityAfterAddingWidgets <= visualMeasure.boundary.max;
 
   if (!canBePlaced) 
-    console.warn(`This widget could not be deployed. Adding the widget will result in visual complexity of ${visualComplexityAfterAddingWidget}. Will go out of acceptable bounds ${visualMeasure.boundary.min} - ${visualMeasure.boundary.max}.`)
+    console.warn(`This widget could not be deployed. Adding the widget will result in visual complexity of ${visualComplexityAfterAddingWidgets}. Will go out of acceptable bounds ${visualMeasure.boundary.min} - ${visualMeasure.boundary.max}.`)
 
   return canBePlaced;
 };

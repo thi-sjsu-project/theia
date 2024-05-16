@@ -9,7 +9,7 @@ import {
   addWidgetToSection,
 } from 'src/redux/slices/minimapSlice';
 import restrainer from './restrainer';
-import { Widget } from 'src/types/widget';
+import type { Widget } from 'src/types/widget';
 
 type ReactToMessageProps = {
     // define expected input here and it's type (number, string, etc.)
@@ -28,13 +28,16 @@ const reactToMessage = ({
     currentMessage,
     stressLevel,
 }: ReactToMessageProps) => {
+
+  console.log("msg here", currentMessage)
   const sections = store.getState().minimap.sections;
   const widgets = store.getState().minimap.widgets;
 
-  const { possibleWidgetClusters } = selector({
+  const { possibleClusters:possibleWidgetClusters } = selector({
     message: currentMessage,
     stressLevel,
   });
+  console.log('clusters',possibleWidgetClusters)
 
   let resolved = false;
   while(!resolved){ //repeat ntil choosing a cluster has resolved

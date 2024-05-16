@@ -74,7 +74,7 @@ const Prototype = () => {
     //console.log('currentMessage:', currentMessage);
 
     dispatch(addMessage(currentMessage));
-
+    //console.log('hjere!', messages)
     reactToMessage({dispatch, currentMessage, stressLevel});
   }, [messages]);
 

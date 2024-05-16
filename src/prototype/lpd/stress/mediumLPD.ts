@@ -8,6 +8,7 @@ import { v4 as uuid } from 'uuid';
 import DANGER_ICON from 'src/assets/icons/danger.svg';
 import { elements } from './lowLPD';
 import { type Widget } from 'src/types/widget';
+import type { WidgetCluster } from 'src/types/support-types';
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageMedium = (
@@ -33,7 +34,10 @@ const requestApprovalToAttackMessageMedium = (
   );
   return {
     sections: [],
-    possibleWidgets: [
+    possibleClusters:
+      [
+      generateCluster( 
+      [
       lpdHelper.generateListWidget(
         lpdHelper.generateBaseWidget(
           'list',
@@ -50,6 +54,8 @@ const requestApprovalToAttackMessageMedium = (
         ),
       ),
     ],
+    ),
+    ]
   };
 };
 
@@ -73,7 +79,10 @@ const acaFuelLowMessageMedium = (message: Message) => {
   );
   return {
     sections: [],
-    possibleWidgets: [
+    possibleClusters:
+      [
+      generateCluster( 
+      [
       lpdHelper.generateListWidget(
         lpdHelper.generateBaseWidget(
           'list',
@@ -90,6 +99,8 @@ const acaFuelLowMessageMedium = (message: Message) => {
         ),
       ),
     ],
+    ),
+    ]
   };
 };
 
@@ -114,7 +125,10 @@ const missileToOwnshipDetectedMessageMedium = (
   );
   return {
     sections: [],
-    possibleWidgets: [
+    possibleClusters:
+      [
+      generateCluster( 
+      [
       lpdHelper.generateListWidget(
         lpdHelper.generateBaseWidget(
           'list',
@@ -131,6 +145,8 @@ const missileToOwnshipDetectedMessageMedium = (
         ),
       ),
     ],
+    ),
+    ]
   };
 };
 
@@ -154,7 +170,10 @@ const acaDefectMessageMedium = (message: Message) => {
   );
   return {
     sections: [],
-    possibleWidgets: [
+    possibleClusters:
+      [
+      generateCluster( 
+      [
       lpdHelper.generateListWidget(
         lpdHelper.generateBaseWidget(
           'list',
@@ -171,6 +190,8 @@ const acaDefectMessageMedium = (message: Message) => {
         ),
       ),
     ],
+    ),
+    ]
   };
 };
 
@@ -189,7 +210,10 @@ const acaHeadingToBaseMessageMedium = (message: Message) => {
   );
   return {
     sections: [],
-    possibleWidgets: [
+    possibleClusters:
+      [
+      generateCluster( 
+      [
       lpdHelper.generateListWidget(
         lpdHelper.generateBaseWidget(
           'list',
@@ -206,8 +230,17 @@ const acaHeadingToBaseMessageMedium = (message: Message) => {
         ),
       ),
     ],
+    ),
+    ]
   };
 };
+
+
+const generateCluster = (
+  widgets: Widget[],
+): WidgetCluster => ({
+  widgets: widgets,
+})
 
 // Map each message type to its corresponding LPD function
 const mediumLPDMessageFunctions: any = {
@@ -236,11 +269,11 @@ const mediumLPD = (message: Message) => {
   ];
   let allPossibleWidgets: any = [];
   messageKinds.forEach((kind) => {
-    mediumLPDMessageFunctions[kind](tempMessage).possibleWidgets.forEach(
-      (widget: Widget) => {
+    mediumLPDMessageFunctions[kind](tempMessage).possibleClusters.forEach((cluster: WidgetCluster) => {
+      cluster.widgets.forEach((widget: Widget) => {
         allPossibleWidgets.push(widget);
-      },
-    );
+      });
+    });
   });
   return allPossibleWidgets;
 };
