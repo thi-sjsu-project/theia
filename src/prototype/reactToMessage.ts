@@ -9,6 +9,7 @@ type ReactToMessageProps = {
     // define expected input here and it's type (number, string, etc.)
     dispatch: AppDispatch;
     currentMessage: Message;
+    stressLevel: number;
 };
 
 /**
@@ -19,6 +20,7 @@ type ReactToMessageProps = {
 const reactToMessage = ({ 
     dispatch,
     currentMessage,
+    stressLevel,
 }: ReactToMessageProps) => {
 
     const sections = store.getState().minimap.sections;
@@ -27,6 +29,7 @@ const reactToMessage = ({
 
     const { message, possibleWidgets } = selector({
         message: currentMessage,
+        stressLevel,
       });
   
       // possibleWidgets[0].id = uuid();

@@ -21,6 +21,8 @@ export type InitialMinimapState = {
   widgets: WidgetMap;
   messages: Message[];
   sections: Section[];
+
+  stressLevel: number;
 };
 
 const initialState: InitialMinimapState = {
@@ -31,6 +33,7 @@ const initialState: InitialMinimapState = {
   messages: [],
   widgets: {},
   sections: [],
+  stressLevel: 0,
 };
 
 export const minimapSlice = createSlice({
@@ -314,6 +317,10 @@ export const minimapSlice = createSlice({
     addMessage: (state, action: PayloadAction<Message>) => {
       state.messages.push(action.payload);
     },
+
+    setStressLevel: (state, action: PayloadAction<number>) => {
+      state.stressLevel = action.payload;
+    }
   },
   // selectors are used to access parts of the state within components
   selectors: {
@@ -360,6 +367,7 @@ export const minimapSlice = createSlice({
     getVisualComplexity: (state) => state.visualComplexity,
     getAudioComplexity: (state) => state.audioComplexity,
     getMessages: (state) => state.messages,
+    getStressLevel: (state) => state.stressLevel,
 
     // ~~~~~ selectors for ships ~~~~~
     getOwnship: (state) => {
@@ -399,6 +407,8 @@ export const {
   deleteElementFromWidget,
 
   toggleElementInteraction,
+
+  setStressLevel,
 } = minimapSlice.actions;
 
 export const {
@@ -418,4 +428,6 @@ export const {
 
   getVisualComplexity,
   getAudioComplexity,
+
+  getStressLevel,
 } = minimapSlice.selectors;

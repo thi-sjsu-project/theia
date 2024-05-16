@@ -22,6 +22,8 @@ export type BaseElement = {
   expiration?: string;
   onExpiration?: 'delete' | 'escalate' | 'deescalate';
   interacted?: boolean;
+  canOverlap?: boolean;
+  style?: Properties;
 };
 
 //

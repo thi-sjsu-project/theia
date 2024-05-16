@@ -217,8 +217,9 @@ const mediumLPDMessageFunctions: any = {
   MissileToOwnshipDetected: missileToOwnshipDetectedMessageMedium,
 };
 
-const mediumLPD = (message: Message) => {
-  return mediumLPDMessageFunctions[message.kind](message);
+const mediumLPD = (message?: Message) => {
+  if(message)
+    return mediumLPDMessageFunctions[message.kind](message);
 };
 
 export default mediumLPD;

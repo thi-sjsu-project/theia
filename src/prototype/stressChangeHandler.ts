@@ -1,9 +1,6 @@
-import { ElementInGaze } from "src/redux/slices/gazeSlice";
 import { removeWidget } from "src/redux/slices/minimapSlice";
-import { AppDispatch } from "src/redux/store";
-import { BaseElement } from "src/types/element";
-import { Message } from "src/types/schema-types";
-import { Widget } from "src/types/widget";
+import type { AppDispatch } from "src/redux/store";
+import type { Message } from "src/types/schema-types";
 import reactToMessage from "./reactToMessage";
 
 
@@ -14,6 +11,7 @@ type StressChangeHandlerProps = {
     allWidgetIds: string[];
     allMessages: Message[];
     allWidgetsInNewStressLPDIds: string[];
+    stressLevel: number;
   };
   
 /**
@@ -26,6 +24,7 @@ const stressChangeHandler = ({
     allWidgetIds,
     allMessages,
     allWidgetsInNewStressLPDIds,
+    stressLevel,
  }: StressChangeHandlerProps) => {
     allWidgetIds.forEach(function(widgetId, widgetIdIndex){
         if(!allWidgetsInNewStressLPDIds.includes(widgetId)){
@@ -35,7 +34,7 @@ const stressChangeHandler = ({
 
     allMessages.forEach(function(message, messageIndex){
         if(!message.fulfilled){
-            reactToMessage({dispatch:dispatch, currentMessage:message});
+            reactToMessage({dispatch:dispatch, currentMessage:message, stressLevel:stressLevel});
         }
     });
 

@@ -7,6 +7,7 @@ import { v4 as uuid } from 'uuid';
 import lpdHelper from 'src/utils/lpdHelper';
 import DANGER_ICON from 'src/assets/icons/danger.svg';
 import { elements } from './lowLPD';
+import type { Widget } from 'src/types/widget';
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageHigh = (
@@ -217,8 +218,28 @@ const highLPDMessageFunctions: any = {
   AcaHeadingToBase: acaHeadingToBaseMessageHigh,
 };
 
-const highLPD = (message: Message) => {
-  return highLPDMessageFunctions[message.kind](message);
+const highLPD = (message?: Message) => {
+  if(message)
+    return highLPDMessageFunctions[message.kind](message);
+
+  //we can return all widgets in this LPD
+  const tempMessage = <RequestApprovalToAttack>({
+    priority: 2,
+  });
+  const messageKinds = [
+    'RequestApprovalToAttack',
+    'AcaFuelLow',
+    'AcaDefect',
+    'AcaHeadingToBase',
+    'MissileToOwnshipDetected'
+  ];
+  let allPossibleWidgets: any = [];
+  messageKinds.forEach((kind) => {
+    highLPDMessageFunctions[kind](tempMessage).possibleWidgets.forEach((widget: Widget) => {
+      allPossibleWidgets.push(widget);
+    })
+  });
+  return allPossibleWidgets;
 };
 
 export default highLPD;

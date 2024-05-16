@@ -3,6 +3,7 @@ import lpdHelper from 'src/utils/lpdHelper';
 import { v4 as uuid } from 'uuid';
 import type { Element } from 'src/types/element';
 import DANGER_ICON from 'src/assets/icons/danger.svg';
+import type { Widget } from 'src/types/widget';
 
 export const elements: Element[] = [];
 
@@ -194,7 +195,29 @@ const lowLPDMessageFunctions: any = {
 };
 
 const lowLPD = (message: Message) => {
-  return lowLPDMessageFunctions[message.kind](message);
+  if(message.priority != -1){
+    return lowLPDMessageFunctions[message.kind](message);
+  }
+
+  
+  //we can return all widgets in this LPD
+  const tempMessage = <RequestApprovalToAttack>({
+    priority: 2,
+  });
+  const messageKinds = [
+    'RequestApprovalToAttack',
+    'AcaFuelLow',
+    'AcaDefect',
+    'AcaHeadingToBase',
+    'MissileToOwnshipDetected'
+  ];
+  let allPossibleWidgets: any = [];
+  messageKinds.forEach((kind) => {
+    lowLPDMessageFunctions[kind](tempMessage).possibleWidgets.forEach((widget: Widget) => {
+      allPossibleWidgets.push(widget);
+    })
+  });
+  return allPossibleWidgets;
 };
 
 export default lowLPD;
