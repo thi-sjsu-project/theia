@@ -37,14 +37,14 @@ const visualMeasure : ModalityMeasure = {
 }
 
 // **** Simulated restrainer visual complexity ****
-function totalVisualComplexity(widget : Widget) {
+function totalVisualComplexity(widgets : Widget[]) {
   // Calculating the current visual complexity of the screen
   const currentScreenComplexity = () => Object.values(store.getState().minimap.widgets).reduce( (acc, widget) => acc + widget.elements.length, 0);
   
-  // Calculating the visual complexity of the widgetToDeploy
-  const widgetVisualComplexity = (widget : Widget) => widget?.elements.length;
+  // Calculating the visual complexity of the widgetsToDeploy
+  const newWidgetsVisualComplexity = (newWidgets : Widget[]) => Object.values(newWidgets).reduce( (acc, widget) => acc + widget.elements.length, 0)
 
-  return Math.min(visualMeasure.range.max, Math.max(visualMeasure.range.min, currentScreenComplexity() + widgetVisualComplexity(widget))); // keep the complexity within range bounds
+  return Math.min(visualMeasure.range.max, Math.max(visualMeasure.range.min, currentScreenComplexity() + newWidgetsVisualComplexity(widgets))); // keep the complexity within range bounds
 }
 
 
@@ -56,7 +56,7 @@ function totalVisualComplexity(widget : Widget) {
 */
 const restrainer = ({ widgetsToDeploy }: RestrainerProps) => {
   // Calculating if adding @param widget will remain within bounds
-  const visualComplexityAfterAddingWidget = totalVisualComplexity(widgetToDeploy);
+  const visualComplexityAfterAddingWidget = totalVisualComplexity(widgetsToDeploy);
   const canBePlaced = visualMeasure.boundary.min <= visualComplexityAfterAddingWidget && visualComplexityAfterAddingWidget <= visualMeasure.boundary.max;
 
   if (!canBePlaced) 
