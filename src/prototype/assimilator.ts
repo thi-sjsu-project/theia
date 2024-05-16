@@ -46,6 +46,7 @@ const assimilator = ({
   let widgetToDeploy: Widget | null = null; //will return null if we cannot find a space
   let sectionID: LinkedSectionWidget = { widgetID: 'none', sectionID: 'none' };
   let action: string = 'none';
+  let index = -1;
 
   possibleWidgets.forEach((widget, widgetIndex) => {
     // go through each possible widget until we find one we can place
@@ -54,22 +55,26 @@ const assimilator = ({
       sectionID = { widgetID: widget.id, sectionID: 'none' };
       action = 'messageAlreadyHandled';
       widgetToDeploy = widget;
+      index = widgetIndex;
 
       return {
         widgetToDeploy,
         sectionID,
         action,
+        index, //<- group of widgets tomorrow
       };
     } else if (deployedWidgets[widget.id] && !deployedWidgets[widget.id].handledMessageIds!.includes(message.id)) {
       // check if the widget already exists on the screen and that the widget does not handle the message
       sectionID = { widgetID: widget.id, sectionID: 'none' };
       action = 'updateWidget';
       widgetToDeploy = widget;
+      index = widgetIndex;
 
       return {
         widgetToDeploy,
         sectionID,
         action,
+        index,
       };
     } else {
       //the widget doesn't exist yet
@@ -150,6 +155,7 @@ const assimilator = ({
                 widgetToDeploy,
                 sectionID,
                 action,
+                widgetIndex, //<- group of widgets tomorrow
               };
             }
           }
@@ -162,6 +168,7 @@ const assimilator = ({
     widgetToDeploy,
     sectionID,
     action,
+    index,
   };
 };
 

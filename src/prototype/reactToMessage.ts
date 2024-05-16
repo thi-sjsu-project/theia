@@ -37,7 +37,7 @@ const reactToMessage = ({
   // possibleWidgets[0].id = uuid();
 
   //console.log('running through assimilator...');
-  const { widgetToDeploy, sectionID, action } = assimilator({
+  const { widgetToDeploy, sectionID, action, index} = assimilator({
     // find if there is room for us to put the widget down (returns null if there is not room)
     possibleWidgets: possibleWidgets,
     sections,
