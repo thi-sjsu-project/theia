@@ -48,6 +48,9 @@ const reactToMessage = ({
       message: currentMessage,
     });
 
+    if(widgetClusterToDeploy.widgets.length == 0)
+        resolved = true;
+
     //check restrainer with all new widgets
     //if cluster is bad then go back to assim
     //else run through individual widgets in cluster and do their thing
