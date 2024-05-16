@@ -222,8 +222,8 @@ const highLPDMessageFunctions: any = {
   AcaHeadingToBase: acaHeadingToBaseMessageHigh,
 };
 
-const highLPD = (message?: Message) => {
-  if(message)
+const highLPD = (message: Message) => {
+  if(message.priority != -1)
     return highLPDMessageFunctions[message.kind](message);
 
   //we can return all widgets in this LPD
