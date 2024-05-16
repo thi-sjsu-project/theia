@@ -8,6 +8,7 @@ import {
   addWidget,
   addWidgetToSection,
 } from 'src/redux/slices/minimapSlice';
+import restrainer from './restrainer';
 
 type ReactToMessageProps = {
     // define expected input here and it's type (number, string, etc.)
@@ -68,22 +69,13 @@ const reactToMessage = ({
         break;
     }
   } else if (widgetToDeploy) {
-    //console.log('widget deployed:', widgetToDeploy);
-    //console.log('widgets that are now deployed: ', widgets);
-    //if we can actually place the widget
-
-    //ADD RESTRAINER HERE TO CHECK IF WE CAN PLACE THE WIDGET
-    /* if (
-            !restrainer({
-              visualComplexity: generateModalityMeasure(),
-              audioComplexity: generateModalityMeasure(),
-            })
-          )
-            return; */
-
-    // dispatch action to add new widget
-    dispatch(addWidget(widgetToDeploy));
-    dispatch(addWidgetToSection(sectionID));
+    if (restrainer({ widgetToDeploy : widgetToDeploy })) {
+      // restrainer deems that the widget CAN be deployed
+      
+      // dispatch action to add new widget
+      dispatch(addWidget(widgetToDeploy));
+      dispatch(addWidgetToSection(sectionID));
+    }
   }
 };
 
