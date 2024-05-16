@@ -29,6 +29,7 @@ const defaultIcon = {
   modality: 'visual',
   xWidget: 0,
   yWidget: 0,
+  tag: 'icon',
 } as const;
 
 const warn1: MapWarningWidget = {

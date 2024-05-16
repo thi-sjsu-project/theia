@@ -148,12 +148,11 @@ const generateBaseElement = (
 const generateIconElement = (
   baseElement: Element.BaseElement,
   src: string,
-  tag?: 'ownship' | 'drone' | 'target' | 'enemy' | 'warning' | 'message',
 ): Element.IconElement => ({
   ...baseElement,
   type: 'icon',
   src,
-  tag,
+  tag: 'icon',
 });
 
 const generateTableElement = (
@@ -167,6 +166,7 @@ const generateTableElement = (
   rows,
   cols,
   tableData,
+  tag: 'table',
 });
 
 const generateButtonElement = (
@@ -178,6 +178,7 @@ const generateButtonElement = (
   type: 'button',
   text,
   onClick,
+  tag: 'button',
 });
 
 const generateTextElement = (
@@ -187,6 +188,7 @@ const generateTextElement = (
   ...baseElement,
   type: 'text',
   text,
+  tag: 'text',
 });
 
 const generateImageElement = (
@@ -196,6 +198,7 @@ const generateImageElement = (
   ...baseElement,
   type: 'image',
   src,
+  tag: 'image',
 });
 
 const generateAudioElement = (
@@ -207,6 +210,7 @@ const generateAudioElement = (
   type: 'audio',
   intensity,
   frequency,
+  tag: 'audio',
 });
 
 // Generate complex elements
