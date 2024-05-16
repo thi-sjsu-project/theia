@@ -181,6 +181,35 @@ export const minimapSlice = createSlice({
       },
     },
 
+    // add a new message to widget's handledMessages array
+    addHandledMessageToWidget: {
+      prepare(widgetId: string, messageId: string) {
+        return {
+          payload: { widgetId, messageId },
+        };
+      },
+
+      reducer: (
+        state,
+        action: PayloadAction<{ widgetId: string; messageId: string }>,
+      ) => {
+        const { widgetId, messageId } = action.payload;
+        const widget = state.widgets[widgetId];
+
+        if (!widget) {
+          console.error(`Widget with id ${widgetId} not found`);
+          return;
+        }
+
+        if (!widget.handledMessageIds) {
+          widget.handledMessageIds = [];
+        }
+
+        widget.handledMessageIds.push(messageId);
+        state.widgets[widgetId] = widget;
+      },
+    },
+
     deleteElementFromWidget: {
       prepare(widgetId: string, elementId: string) {
         return {
@@ -398,6 +427,7 @@ export const {
   addMapSection,
   addMessage,
   addWidget,
+  addHandledMessageToWidget,
   addElementToWidget,
   addWidgetToSection,
   updateElementExpiration,

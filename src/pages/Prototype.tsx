@@ -71,10 +71,8 @@ const Prototype = () => {
     //console.log('passing message to the selector');
     // latest message in the last one in the list
     const currentMessage = messages[messages.length - 1];
-    //console.log('currentMessage:', currentMessage);
 
     dispatch(addMessage(currentMessage));
-    //console.log('hjere!', messages)
     reactToMessage({ dispatch, currentMessage, stressLevel });
   }, [messages]);
 

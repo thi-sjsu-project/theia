@@ -5,6 +5,7 @@ import store from 'src/redux/store';
 import type { AppDispatch } from 'src/redux/store';
 import {
   addElementToWidget,
+  addHandledMessageToWidget,
   addWidget,
   addWidgetToSection,
 } from 'src/redux/slices/minimapSlice';
@@ -48,7 +49,7 @@ const reactToMessage = ({
       message: currentMessage,
     });
 
-    if (index == -1) resolved = true;
+    if (index === -1) resolved = true;
 
     //check restrainer with all new widgets
     //if cluster is bad then go back to assim
@@ -63,7 +64,7 @@ const reactToMessage = ({
       }
     });
 
-    if (index != -1 && restrainer({ widgetsToDeploy: newWidgets })) {
+    if (index !== -1 && restrainer({ widgetsToDeploy: newWidgets })) {
       //if the assim chose a cluster and the restrainer is okoay with the new widgets
       resolved = true;
 
@@ -72,27 +73,19 @@ const reactToMessage = ({
         const sectionID = widgetClusterToDeploy.sectionIds![widgetIndex];
         const action = widgetClusterToDeploy.actions![widgetIndex];
 
-        console.log('widgetToDeploy:', widgetToDeploy);
-
         if (action !== 'newWidget') {
           //we should do something other than
           switch (action) {
             case 'updateWidget':
-              console.log('widget already exists, updating');
-              // only have one widget in possibleWidgets right now, this is why this works
-              // furthermore, only have one element in the widget
-              // so we can just do possibleWidgets[0]...
-              // eventually, maybe assimilator returns the widget that needs to be updated
-              // assimilator should also say if to add a new element or remove one, etc. -- JAGJIT
               dispatch(
-                addElementToWidget(
-                  widgetToDeploy.id,
-                  widgetToDeploy.elements, //<- This should not be able to happen, why are we choosing one element if multiple need to be placed -Tom
-                ),
+                addElementToWidget(widgetToDeploy.id, widgetToDeploy.elements), // add new elements to the widget
+              );
+              dispatch(
+                addHandledMessageToWidget(widgetToDeploy.id, currentMessage.id), // add the message to the widget's handledMessages array
               );
               break;
             case 'none':
-              console.log('proposed widgets could not be placed');
+              console.error('proposed widgets could not be placed');
               break;
           }
         } else if (widgetToDeploy) {
