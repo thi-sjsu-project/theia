@@ -8,6 +8,7 @@ import reactToMessage from './reactToMessage';
 
 type StressChangeHandlerProps = {
   // define expected input here and it's type (number, string, etc.)
+  stressLevel: number;
   dispatch: AppDispatch;
   allWidgetIds: string[];
   allMessages: Message[];
@@ -20,6 +21,7 @@ type StressChangeHandlerProps = {
  * @returns ???
  */
 const stressChangeHandler = ({
+  stressLevel,
   dispatch,
   allWidgetIds,
   allMessages,
@@ -33,7 +35,11 @@ const stressChangeHandler = ({
 
   allMessages.forEach(function (message, messageIndex) {
     if (!message.fulfilled) {
-      reactToMessage({ dispatch: dispatch, currentMessage: message });
+      reactToMessage({
+        dispatch: dispatch,
+        currentMessage: message,
+        stressLevel,
+      });
     }
   });
 

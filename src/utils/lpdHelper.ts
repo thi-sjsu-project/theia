@@ -134,8 +134,6 @@ const generateBaseElement = (
   expiration,
   onExpiration,
   interacted,
-  canOverlap,
-  style,
 });
 
 // Generate simple elements

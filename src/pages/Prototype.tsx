@@ -77,6 +77,7 @@ const Prototype = () => {
   useEffect(() => {
     let allWidgetsInNewStressLPDIds: string[] = Object.keys(widgets); //this should be the actual new ones
     stressChangeHandler({
+      stressLevel,
       dispatch: dispatch,
       allWidgetIds: Object.keys(widgets),
       allMessages: messages,
