@@ -1,3 +1,5 @@
+import { Widget } from "./widget";
+
 export type Cell = {
   widgetIDs: string[];
   priority: number;
@@ -37,3 +39,9 @@ export type Position = {
   x: number;
   y: number;
 };
+
+export type WidgetCluster = {
+  widgets: Widget[];
+  sectionIds?: LinkedSectionWidget[];
+  actions?: string[];
+}

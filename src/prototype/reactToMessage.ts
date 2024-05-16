@@ -30,7 +30,7 @@ const reactToMessage = ({
   const sections = store.getState().minimap.sections;
   const widgets = store.getState().minimap.widgets;
 
-  const { possibleWidgets } = selector({
+  const { possibleWidgetClusters } = selector({
     message: currentMessage,
     stressLevel,
   });
@@ -38,9 +38,9 @@ const reactToMessage = ({
   let resolved = false;
   while(!resolved){
     //console.log('running through assimilator...');
-    const { widgetToDeploy, sectionID, action, index} = assimilator({
+    const { widgetClusterToDeploy,  index} = assimilator({
       // find if there is room for us to put the widget down (returns null if there is not room)
-      possibleWidgets: possibleWidgets,
+      possibleWidgetClusters: possibleWidgets,
       sections,
       widgets,
       message: currentMessage,
