@@ -1,4 +1,4 @@
-import type { tags } from 'typia';
+import { type tags } from 'typia';
 
 /* messages ***************************************************************************************/
 
@@ -15,7 +15,8 @@ export type Message =
   | AcaHeadingToBase;
 
 export type BaseMessage<TKind extends string, TData extends object> = {
-  id: MessageId;
+  id: Uuid;
+  conversationId: Uuid;
   priority: Priority;
   kind: TKind;
   data: TData;
@@ -36,7 +37,7 @@ export type RequestApprovalToAttack = BaseMessage<
 export type MissileToOwnshipDetected = BaseMessage<
   'MissileToOwnshipDetected',
   {
-    missileLocation: GeoPoint;
+    missileLocation: Point;
     survivability: Range<0, 1>;
     detectedByAca?: Id;
     acaAttackWeapon?: Weapon;
@@ -71,22 +72,26 @@ export type AcaHeadingToBase = BaseMessage<
 /* utility types **********************************************************************************/
 
 export type Id = number & tags.Type<'uint64'>;
-export type MessageId = string & tags.Format<'uuid'>;
-export type Priority = number & tags.Type<'uint32'> & tags.Maximum<10>;
+export type Uuid = string & tags.Format<'uuid'>;
+export type Priority = DiscreteRange<0, 10>;
 export type Range<From extends number, To extends number> = number &
   tags.Type<'float'> &
   tags.Minimum<From> &
   tags.Maximum<To>;
+export type DiscreteRange<From extends number, To extends number> = number &
+  tags.Type<'int64'> &
+  tags.Minimum<From> &
+  tags.Maximum<To>;
 
 export type Target = {
-  location: GeoPoint;
+  location: Point;
   threatLevel: Range<0, 1>;
-  type: string;
+  type: 'airDefense' | 'artillery' | 'radar';
 };
 
-export type GeoPoint = {
-  lat: Range<-90, 90>;
-  lng: Range<-180, 180>;
+export type Point = {
+  x: DiscreteRange<0, 1920>;
+  y: DiscreteRange<0, 1080>;
 };
 
 export type Weapon = {
