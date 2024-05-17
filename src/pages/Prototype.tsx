@@ -17,10 +17,8 @@ import {
 // ~~~~~~~ Cusdom Hooks ~~~~~~~
 import useWorldSim from 'src/hooks/useWorldSim';
 // ~~~~~~~ Prototype ~~~~~~~
-import assimilator from 'src/prototype/assimilator';
 import selector from 'src/prototype/selector';
 import monitor from 'src/prototype/monitor';
-import restrainer from 'src/prototype/restrainer';
 // ~~~~~~~ Constants ~~~~~~~
 import { ownship, drones } from 'src/prototype/lpd/initialLPD';
 // ~~~~~~~ Components ~~~~~~~
@@ -76,20 +74,31 @@ const Prototype = () => {
     reactToMessage({ dispatch, currentMessage, stressLevel });
   }, [messages]);
 
-  // useEffect(() => {
-  //   if(stressLevel != 0){ //don't run at start
-  //     console.log('stress level', stressLevel)
-  //     let allWidgetsInNewStressLPD: Widget[] = selector({stressLevel: stressLevel})
-  //     console.log('allwiidgets',allWidgetsInNewStressLPD)
-  //     let allWidgetsInNewStressLPDIds: string[] = allWidgetsInNewStressLPD.map(a => a.id); //get all widget ids from new stress level LPD and initial LPD
+  useEffect(() => {
+    if (stressLevel != 0) {
+      //don't run at start
+      console.log('stress level', stressLevel);
+      let allWidgetsInNewStressLPD: Widget[] = selector({
+        stressLevel: stressLevel,
+      });
+      console.log('allwiidgets', allWidgetsInNewStressLPD);
+      let allWidgetsInNewStressLPDIds: string[] = allWidgetsInNewStressLPD.map(
+        (a) => a.id,
+      ); //get all widget ids from new stress level LPD and initial LPD
 
-  //     stressChangeHandler({dispatch:dispatch, allWidgetIds:Object.keys(widgets), allMessages: messages, allWidgetsInNewStressLPDIds: allWidgetsInNewStressLPDIds, stressLevel:stressLevel})
-  //   }
-  // }, [currentStressLevel]);
+      stressChangeHandler({
+        dispatch: dispatch,
+        allWidgetIds: Object.keys(widgets),
+        allMessages: messages,
+        allWidgetsInNewStressLPDIds: allWidgetsInNewStressLPDIds,
+        stressLevel: stressLevel,
+      });
+    }
+  }, [currentStressLevel]);
 
-  // useEffect(() => {
-  //   dispatch(setStressLevel(Math.floor(stressLevel * 3)));
-  // }, [stressLevel]);
+  useEffect(() => {
+    dispatch(setStressLevel(Math.floor(stressLevel * 3)));
+  }, [stressLevel]);
 
   return <Home />;
 };
