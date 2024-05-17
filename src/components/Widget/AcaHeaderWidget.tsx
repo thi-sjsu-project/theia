@@ -17,7 +17,7 @@ const AcaHeaderWidget = ({ widget }: AcaHeaderWidgetProps) => {
         width: w,
         height: h,
       }}
-      className="absolute bg-[#2D2D30]"
+      className="absolute bg-[#2D2D30] flex"
     >
       {elements.map((element) => (
         <AcaStatusElement

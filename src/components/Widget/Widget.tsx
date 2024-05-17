@@ -20,9 +20,8 @@ const Widget = ({ widget }: WidgetProps) => {
         return <MapWarningWidget widget={widget} />;
       case 'history':
         return <HistoryWidget widget={widget} />;
-      // Jeff, if you uncomment this, then header widget will be displayed -- Jagjit
-      // case 'aca-header':
-      //   return <AcaHeaderWidget widget={widget} />;
+      case 'aca-header':
+        return <AcaHeaderWidget widget={widget} />;
       default:
         return <div>Unknown Widget</div>;
     }

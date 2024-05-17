@@ -1,13 +1,15 @@
 import { type AcaStatusElement as AcaStatusElementType } from 'src/types/element';
 import UsedBullet from 'src/assets/used.png';
 import UnusedBullet from 'src/assets/unused.png';
+import { useAppDispatch } from 'src/redux/hooks';
 
 type PropsType = {
   element: AcaStatusElementType;
 };
 
 const AcaStatusElement = ({ element }: PropsType) => {
-  const { id, acaId, fuelLevel, h, w } = element;
+  const { id, acaId, fuelLevel, h, w, weaponLoad } = element;
+  const dispatch = useAppDispatch();
 
   return (
     <div
