@@ -17,15 +17,13 @@ const AcaHeaderWidget = ({ widget }: AcaHeaderWidgetProps) => {
         width: w,
         height: h,
       }}
-      className="absolute bg-[#1E1E1E] flex space-x-5 pl-4 h-12"
+      className="absolute bg-[#2D2D30] flex"
     >
       {elements.map((element) => (
-        <div key={element.id} className="mx-2">
         <AcaStatusElement
           key={element.id}
           element={element as AcaStatusElementType}
         />
-        </div>
       ))}
     </div>
   );
