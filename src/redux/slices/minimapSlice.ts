@@ -42,6 +42,7 @@ export const minimapSlice = createSlice({
       if (Object.keys(state.widgets).length > 0 || state.sections.length > 0) {
         return;
       }
+      console.log('initializing state', action.payload);
 
       state.visualComplexity = action.payload.visualComplexity;
       state.audioComplexity = action.payload.audioComplexity;

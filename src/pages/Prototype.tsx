@@ -41,17 +41,21 @@ const Prototype = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    const { sections, widgets, stressLevel } = selector();
+    const { droneWidgets, ownshipWidget, newWidgets } = assimilator({ sections, widgets});
     // Intiailize minimap state
     const initialState: InitialMinimapState = {
       visualComplexity: 0,
       audioComplexity: 0,
-      ownship,
-      drones,
+      ownship: ownshipWidget!,
+      drones: droneWidgets!,
       messages: [],
+      widgets: newWidgets!,
       // Initial sections, widgets, and elements
-      ...selector(),
+      sections,
+      stressLevel
     };
-
+    console.log('initialState:', initialState);
     dispatch(initializeState(initialState));
   }, [dispatch]);
 
