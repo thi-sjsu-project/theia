@@ -15,18 +15,9 @@ import ThreatAirDefenseSmReg from 'src/assets/icons/threats/airdefense-sm-reg.sv
 const requestApprovalToAttackMessageLow = (
   message: RequestApprovalToAttack,
 ) => {
-  // element in list and on minimap will share this id
-  const warningElementId = uuid();
-
   const pearceScreenElements = [
     lpdHelper.generateRequestApprovalElement(
-      lpdHelper.generateBaseElement(
-        warningElementId,
-        'visual',
-        30,
-        30,
-        message.priority,
-      ),
+      lpdHelper.generateBaseElement(uuid(), 'visual', 30, 30, message.priority),
       message,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 80, 80),
@@ -46,7 +37,7 @@ const requestApprovalToAttackMessageLow = (
   const minimapWidgetId1 = uuid();
   const minimapElements: Element[] = [
     {
-      id: warningElementId,
+      id: uuid(),
       modality: 'visual',
       type: 'icon',
       h: 50,
