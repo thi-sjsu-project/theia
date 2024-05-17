@@ -4,6 +4,8 @@ import UnusedBulletLeft from 'src/assets/unused.png';
 import UnusedBulletRight from 'src/assets/unused_right.png';
 import UsedBulletRight from 'src/assets/used_right.png';
 import { useAppDispatch } from 'src/redux/hooks';
+import { useEffect } from 'react';
+import { updateDroneFuelLevel } from 'src/redux/slices/minimapSlice';
 
 type PropsType = {
   element: AcaStatusElementType;
@@ -13,6 +15,17 @@ const AcaStatusElement = ({ element }: PropsType) => {
   const { id, acaId, fuelLevel, h, w, weaponLoad } = element;
   
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+    
+      const newFuelLevel = fuelLevel - 1; 
+      dispatch(updateDroneFuelLevel({ payload: {droneId: id, newFuel: newFuelLevel }}));
+    }, 1000); 
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, [dispatch, id, fuelLevel]);
+
 
 
   const getFuelColor = () => {

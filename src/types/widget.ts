@@ -42,6 +42,7 @@ export type VehicleWidget = BaseWidget & {
   vehicleId: number;
   speed: number;
   rotation: number; // rad
+  fuelLevel?: number;
 };
 
 export type MapWarningWidget = BaseWidget & {

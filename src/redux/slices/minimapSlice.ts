@@ -71,6 +71,8 @@ export const minimapSlice = createSlice({
         };
       },
 
+
+
       reducer: (
         state,
         action: PayloadAction<{
@@ -101,6 +103,34 @@ export const minimapSlice = createSlice({
           y,
           rotation,
         };
+      },
+    },
+
+    updateDroneFuelLevel: {
+      prepare(droneId: string, fuelLevel: number) {
+        return {
+          payload: { droneId, fuelLevel },
+        };
+      },
+      reducer: (
+        state,
+        action: PayloadAction<{ droneId: string; fuelLevel: number }>,
+      ) => {
+        const { droneId, fuelLevel } = action.payload;
+        const drone = state.widgets[droneId];
+    
+       
+        if (!drone) {
+          console.error(`Drone with id ${droneId} not found`);
+          return;
+        }
+    
+       
+        if ('fuelLevel' in drone) {
+          drone.fuelLevel = fuelLevel;
+        } else {
+          console.error(`Widget with id ${droneId} is not a drone`);
+        }
       },
     },
 
@@ -438,6 +468,7 @@ export const {
   updateShipPosition,
   updateVisualComplexity,
   updateAudioComplexity,
+  updateDroneFuelLevel,
 
   removeWidget,
   deleteElementFromWidget,
