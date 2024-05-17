@@ -1,7 +1,9 @@
 import React from 'react';
 import type { FC } from 'react';
-import usedBullet from 'src/assets/used.png';
-import unusedBullet from 'src/assets/unused.png';
+import usedBulletLeft from 'src/assets/used.png';
+import unusedBulletLeft from 'src/assets/unused.png';
+import usedBulletRight from 'src/assets/used_right.png';
+import unusedBulletRight from 'src/assets/unused_right.png';
 
 export interface ACAProps {
   title: string;
@@ -19,9 +21,14 @@ const ACA: FC<ACAProps> = ({ title, ammoLeft, ammoRight, fuelAmount, circleColor
     return 'bg-gray-300';
   };
 
-  const getBulletImage = (status: 'Used' | 'Unused') => {
-    return status === 'Used' ? usedBullet : unusedBullet;
+  const getBulletImageLeft = (status: 'Used' | 'Unused') => {
+    return status === 'Used' ? usedBulletLeft : unusedBulletLeft;
   };
+
+  const getBulletImageRight = (status: 'Used' | 'Unused') => {
+    return status === 'Used' ? usedBulletRight : unusedBulletRight;
+  }
+
 
   const circleClass = circleColor === 'blue' ? 'bg-blue-500' : 'bg-yellow-500';
 
@@ -37,7 +44,7 @@ const ACA: FC<ACAProps> = ({ title, ammoLeft, ammoRight, fuelAmount, circleColor
           {ammoLeft.map((bullet, index) => (
             <img
               key={index}
-              src={getBulletImage(bullet)}
+              src={getBulletImageLeft(bullet)}
               alt={bullet}
               className="w-4 h-10 mx-0.5"
             />
@@ -47,7 +54,7 @@ const ACA: FC<ACAProps> = ({ title, ammoLeft, ammoRight, fuelAmount, circleColor
           {ammoRight.map((bullet, index) => (
             <img
               key={index}
-              src={getBulletImage(bullet)}
+              src={getBulletImageRight(bullet)}
               alt={bullet}
               className="w-4 h-10 mx-0.5"
             />
