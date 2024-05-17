@@ -1,9 +1,7 @@
-import { removeWidget } from "src/redux/slices/minimapSlice";
-import type { AppDispatch } from "src/redux/store";
-import type { Message } from "src/types/schema-types";
-import reactToMessage from "./reactToMessage";
-
-
+import { removeWidget } from 'src/redux/slices/minimapSlice';
+import type { AppDispatch } from 'src/redux/store';
+import type { Message } from 'src/types/schema-types';
+import reactToMessage from 'src/prototype/reactToMessage';
 
 type StressChangeHandlerProps = {
   // define expected input here and it's type (number, string, etc.)

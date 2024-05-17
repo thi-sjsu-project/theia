@@ -71,7 +71,7 @@ const initialLeftScreenWidgets: WidgetMap = {
 
   // center box widget
   [historyBoxUuid]: {
-    id: uuid(),
+    id: historyBoxUuid,
     type: 'history',
     screen: '/pearce-screen',
     sectionType: 'history',

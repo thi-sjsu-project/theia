@@ -3,14 +3,10 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import {
   type InitialMinimapState,
-  addElementToWidget,
-  addWidget,
-  addWidgetToSection,
   getSections,
   getWidgets,
   initializeState,
   addMessage,
-  getAllElements,
   getStressLevel,
   setStressLevel,
 } from 'src/redux/slices/minimapSlice';
@@ -33,7 +29,6 @@ const Prototype = () => {
   const currentStressLevel = useAppSelector(getStressLevel);
 
   // ~~~~~ Selectors ~~~~~~
-  const sections = useAppSelector(getSections);
   const widgets = useAppSelector(getWidgets);
 
   const dispatch = useAppDispatch();
@@ -75,8 +70,8 @@ const Prototype = () => {
   }, [messages]);
 
   useEffect(() => {
-    if (stressLevel != 0) {
-      //don't run at start
+    if (stressLevel !== 0) {
+      // don't run at start
       console.log('stress level', stressLevel);
       let allWidgetsInNewStressLPD: Widget[] = selector({
         stressLevel: stressLevel,
@@ -84,7 +79,7 @@ const Prototype = () => {
       console.log('allwiidgets', allWidgetsInNewStressLPD);
       let allWidgetsInNewStressLPDIds: string[] = allWidgetsInNewStressLPD.map(
         (a) => a.id,
-      ); //get all widget ids from new stress level LPD and initial LPD
+      ); // get all widget ids from new stress level LPD and initial LPD
 
       stressChangeHandler({
         dispatch: dispatch,
