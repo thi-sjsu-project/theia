@@ -15,7 +15,7 @@ const ownship: Widget = {
   ...lpdHelper.generateVehicleWidget(
     lpdHelper.generateBaseWidget(
       ownshipUuid,
-      'vehicle',
+      'minimap',
       400,
       950,
       50,
@@ -50,7 +50,7 @@ const drones: Widget[] = [
     ...lpdHelper.generateVehicleWidget(
       lpdHelper.generateBaseWidget(
         droneUuid1,
-        'vehicle',
+        'minimap',
         500,
         200,
         80,
@@ -83,7 +83,7 @@ const drones: Widget[] = [
     ...lpdHelper.generateVehicleWidget(
       lpdHelper.generateBaseWidget(
         droneUuid2,
-        'vehicle',
+        'minimap',
         1500,
         550,
         80,
@@ -116,7 +116,7 @@ const drones: Widget[] = [
     ...lpdHelper.generateVehicleWidget(
       lpdHelper.generateBaseWidget(
         droneUuid3,
-        'vehicle',
+        'minimap',
         1500,
         350,
         80,
@@ -149,7 +149,7 @@ const drones: Widget[] = [
     ...lpdHelper.generateVehicleWidget(
       lpdHelper.generateBaseWidget(
         droneUuid4,
-        'vehicle',
+        'minimap',
         200,
         900,
         80,
@@ -182,7 +182,7 @@ const drones: Widget[] = [
     ...lpdHelper.generateVehicleWidget(
       lpdHelper.generateBaseWidget(
         droneUuid5,
-        'vehicle',
+        'minimap',
         1150,
         750,
         80,

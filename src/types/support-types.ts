@@ -1,4 +1,4 @@
-import { Widget } from "./widget";
+import { type Widget } from 'src/types/widget';
 
 export type Cell = {
   widgetIDs: string[];
@@ -12,7 +12,7 @@ export type Screen = '/pearce-screen' | '/minimap' | '/right-screen';
 export type SectionType =
   | 'free'
   | 'top-bar'
-  | 'vehicle'
+  | 'minimap'
   | 'tinder'
   | 'history'
   | 'map-video';
@@ -44,4 +44,4 @@ export type WidgetCluster = {
   widgets: Widget[];
   sectionIds?: LinkedSectionWidget[];
   actions?: string[];
-}
+};

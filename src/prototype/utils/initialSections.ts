@@ -90,7 +90,7 @@ const initialMinimapSections = [
     1920,
     980,
     0,
-    'vehicle',
+    'minimap',
     [],
   ),
 ];

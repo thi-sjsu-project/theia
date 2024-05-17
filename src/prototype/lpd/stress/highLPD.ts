@@ -180,7 +180,7 @@ const acaDefectMessageHigh = (message: Message) => {
         lpdHelper.generateListWidget(
           lpdHelper.generateBaseWidget(
             'list',
-            'vehicle',
+            'minimap',
             500,
             500,
             300,
@@ -250,15 +250,24 @@ const highLPDMessageFunctions: any = {
 };
 
 const highLPD = (message: Message) => {
-  if (message.priority != -1)
+  console.log('highLPD');
+  if (message.priority !== -1)
     //if the message is a real message, return the clusters
     return highLPDMessageFunctions[message.kind](message);
 
   //if we get this far, we can return all widgets in this LPD
-  const tempMessage = <RequestApprovalToAttack>{
+  const tempMessage = {
     //make a dummy widget to put into LPD function
     priority: 2,
-  };
+    data: {
+      target: {
+        location: {
+          x: 0,
+          y: 0,
+        },
+      },
+    },
+  } as RequestApprovalToAttack;
 
   const messageKinds = [
     //all message kinds, so we can get all widgets

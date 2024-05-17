@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import {
   type InitialMinimapState,
-  getSections,
   getWidgets,
   initializeState,
   addMessage,
@@ -86,7 +85,7 @@ const Prototype = () => {
         allWidgetIds: Object.keys(widgets),
         allMessages: messages,
         allWidgetsInNewStressLPDIds: allWidgetsInNewStressLPDIds,
-        stressLevel: stressLevel,
+        stressLevel: 0.1, // don't forget to change
       });
     }
   }, [currentStressLevel]);
