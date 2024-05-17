@@ -6,7 +6,6 @@ import useGaze from 'src/hooks/useGaze';
 import { getElementsInGaze } from 'src/redux/slices/gazeSlice';
 import { useEffect } from 'react';
 import background from 'src/assets/minimap-bg.jpg';
-import ACA from 'src/components/Widget/ACA';
 import ACAHeader from 'src/components/Element/ACAHeader';
 
 const data: {

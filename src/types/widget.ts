@@ -52,6 +52,10 @@ export type HistoryWidget = BaseWidget & {
   type: 'history';
 };
 
+export type AcaHeaderWidget = BaseWidget & {
+  type: 'aca-header';
+};
+
 export type CustomWidget = BaseWidget & {
   type: 'custom';
   // additonal properties...
@@ -63,6 +67,7 @@ export type Widget =
   | ListWidget
   | GridWidget
   | HistoryWidget
+  | AcaHeaderWidget
   | MapWarningWidget;
 
 export type WidgetMap = { [key: string]: Widget };

@@ -1,10 +1,10 @@
-import { type ReactNode } from 'react';
 import type { Modality } from 'src/types/modality';
 import type {
   MissileToOwnshipDetected,
   RequestApprovalToAttack,
 } from 'src/types/schema-types';
 import type { Properties } from 'csstype';
+import type { Id, Range } from 'src/types/schema-types';
 
 export type BaseElement = {
   id: string;
@@ -93,6 +93,13 @@ export type MissileIncomingElement = BaseElement & {
   icon: IconElement;
 };
 
+export type AcaStatusElement = BaseElement & {
+  type: 'aca-status';
+  acaId: Id;
+  fuelLevel: Range<0, 1>;
+  weaponLoad: Range<0, 1>;
+};
+
 // Simple elements have no nested elements and no children
 export type SimpleElement =
   | TableElement
@@ -100,7 +107,8 @@ export type SimpleElement =
   | TextElement
   | ImageElement
   | AudioElement
-  | IconElement;
+  | IconElement
+  | AcaStatusElement;
 
 // Complex elements may have nested elements and children
 export type ComplexElement =

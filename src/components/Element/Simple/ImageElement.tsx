@@ -13,7 +13,7 @@ const ImageElement = ({ element }: ImageElementProps) => {
     <div id={id}>
       <img
         style={{
-          // height: h,
+          height: h,
           width: w,
         }}
         id={id}

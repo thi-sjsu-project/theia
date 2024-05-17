@@ -8,7 +8,7 @@ import {
   drones,
   ownship,
 } from 'src/prototype/utils/initialShips';
-import initialWarnings from 'src/prototype/utils/initialWarnings';
+import { initialAcaHeaderWidget } from 'src/prototype/utils/initialAcaHeader';
 
 const videoBoxUuid = uuid();
 const mapBoxUuid = uuid();
@@ -87,10 +87,15 @@ const initialLeftScreenWidgets: WidgetMap = {
   } satisfies HistoryWidget,
 };
 
-const initialWidgets = {
+const initialMinimapWidgets: WidgetMap = {
+  [initialAcaHeaderWidget.id]: initialAcaHeaderWidget,
   ...initialShips,
+};
+
+const initialWidgets = {
   // ...initialWarnings,
   ...initialLeftScreenWidgets,
+  ...initialMinimapWidgets,
 };
 
 export { drones, ownship, initialWidgets };
