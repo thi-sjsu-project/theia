@@ -136,8 +136,7 @@ const acaFuelLowMessageMedium = (message: Message) => {
 const missileToOwnshipDetectedMessageMedium = (
   message: MissileToOwnshipDetected,
 ) => {
-  const elements: Element[] = [];
-  elements.push(
+  const pearceScreenElements: Element[] = [
     lpdHelper.generateMissileIncomingElement(
       lpdHelper.generateBaseElement(
         uuid(),
@@ -152,7 +151,39 @@ const missileToOwnshipDetectedMessageMedium = (
         DANGER_ICON,
       ),
     ),
-  );
+  ];
+
+  const minimapWidgetId1 = uuid();
+  const minimapElements: Element[] = [
+    {
+      id: uuid(),
+      modality: 'visual',
+      type: 'icon',
+      h: 50,
+      w: 50,
+      widgetId: minimapWidgetId1,
+      src: mapTargetTypeToWarningIcon('missile'),
+    } satisfies IconElement,
+  ];
+
+  const minimapWidgets: Widget[] = [
+    {
+      id: minimapWidgetId1, // this should be something static?
+      sectionType: 'minimap',
+      type: 'map-warning',
+      x: message.data.missileLocation.x,
+      y: message.data.missileLocation.y,
+      w: 50,
+      h: 50,
+      screen: '/minimap',
+      canOverlap: true,
+      useElementLocation: false,
+      maxAmount: 10,
+
+      elements: minimapElements,
+    } satisfies MapWarningWidget,
+  ];
+
   return {
     sections: [],
     possibleClusters: [
@@ -169,9 +200,10 @@ const missileToOwnshipDetectedMessageMedium = (
             false,
             true,
             1,
-            [...elements],
+            [...pearceScreenElements],
           ),
         ),
+        ...minimapWidgets,
       ]),
     ],
   };
@@ -287,8 +319,12 @@ const mediumLPD = (message: Message) => {
           y: 0,
         },
       },
+      missileLocation: {
+        x: 0,
+        y: 0,
+      },
     },
-  } as RequestApprovalToAttack;
+  };
 
   const messageKinds = [
     //all message kinds, so we can get all widgets

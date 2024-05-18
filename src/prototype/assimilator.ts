@@ -128,16 +128,22 @@ const assimilator = ({
           let startingX = section.x;
           let startingY = section.y;
           const { data } = message;
-          if (Object.prototype.hasOwnProperty.call(data, 'target')) {
+
+          // @ts-ignore
+          const { missileLocation, target } = data;
+          // account for missiles and targets
+          if (missileLocation || target) {
+            const { x: locationX, y: locationY } =
+              missileLocation || target.location;
+
             if (
               // @ts-ignore
-              message.data.target.location.x + widget.w <=
-                section.x + section.w && // @ts-ignore
-              message.data.target.location.y + widget.h <= section.y + section.h
+              locationX + widget.w <= section.x + section.w && // @ts-ignore
+              locationY + widget.h <= section.y + section.h
             ) {
               // @ts-ignore //use the coords given in message if they are within the section and could possibly house the widget
-              startingX = message.data.target.location.x; // @ts-ignore
-              startingY = message.data.target.location.y;
+              startingX = locationX; // @ts-ignore
+              startingY = locationY;
             }
           }
           for (let x = startingX; x < section.x + section.w - widget.w; x++) {
