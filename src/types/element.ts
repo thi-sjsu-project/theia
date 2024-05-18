@@ -70,7 +70,7 @@ export type IconElement = BaseElement & {
   type: 'icon';
   src: string;
   // makes search easier
-  tag?: 'ownship' | 'drone' | 'target' | 'enemy' | 'warning' | 'message';
+  tag?: string;
 };
 
 //

@@ -8,6 +8,28 @@ type VehicleWidgetProps = {
 const VehicleWidget = ({ widget }: VehicleWidgetProps) => {
   const className = 'absolute';
 
+  const renderVehicleTag = () => {
+    // @ts-ignore
+    console.log(widget.elements[0].tag);
+    // @ts-ignore
+    if (widget.elements[0].tag.includes('ACA')) {
+      return (
+        <div
+          style={{
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            opacity: 0.9,
+            color: 'white',
+            fontSize: 20,
+            zIndex: 100,
+          }}
+        >
+          {/* @ts-ignore */}
+          {widget.elements[0].tag}
+        </div>
+      );
+    }
+  };
+
   return (
     <div
       key={widget.id}
@@ -18,12 +40,21 @@ const VehicleWidget = ({ widget }: VehicleWidgetProps) => {
         width: ~~widget.w,
         top: widget.y,
         left: widget.x,
-        transform: `rotate(${-widget.rotation + Math.PI * 0.5}rad)`,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
     >
-      <Element key={widget.id} element={widget.elements[0]}>
-        {/* Nested children here if wanted */}
-      </Element>
+      <div
+        style={{ transform: `rotate(${-widget.rotation + Math.PI * 0.5}rad)` }}
+      >
+        <Element key={widget.id} element={widget.elements[0]}>
+          {/* Nested children here if wanted */}
+        </Element>
+      </div>
+
+      {renderVehicleTag()}
     </div>
   );
 };

@@ -33,11 +33,9 @@ const generateSection = (
   widgetIDs,
 });
 
-const generateCluster = (
-  widgets: any[],
-) => ({
+const generateCluster = (widgets: any[]) => ({
   widgets: widgets,
-})
+});
 
 // Generate Base Widget
 const generateBaseWidget = (
@@ -146,7 +144,7 @@ const generateBaseElement = (
 const generateIconElement = (
   baseElement: Element.BaseElement,
   src: string,
-  tag?: 'ownship' | 'drone' | 'target' | 'enemy' | 'warning' | 'message',
+  tag?: string,
 ): Element.IconElement => ({
   ...baseElement,
   type: 'icon',
