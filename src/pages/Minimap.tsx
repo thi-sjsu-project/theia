@@ -21,7 +21,7 @@ const Minimap = () => {
 
   // useEffect(() => {
   //   console.log('elementsInGaze: ', elementsInGaze);
-  // }, [elementsInGaze]);
+  // }, [elementsInGaze.length]);
 
   return (
     <>

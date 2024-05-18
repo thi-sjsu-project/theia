@@ -117,7 +117,7 @@ export const minimapSlice = createSlice({
         state,
         action: PayloadAction<{ widgetId: string; elements: Element[] }>,
       ) {
-        console.log('adding elements to widget', action.payload.elements);
+        // console.log('adding elements to widget', action.payload.elements);
         const { widgetId, elements } = action.payload;
         const widget = state.widgets[widgetId];
 

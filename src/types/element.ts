@@ -15,6 +15,8 @@ export type BaseElement = {
 
   widgetId?: string;
 
+  size?: 'S' | 'M' | 'L';
+
   priority?: number;
   collapsed?: boolean;
 
