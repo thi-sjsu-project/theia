@@ -136,9 +136,6 @@ const assimilator = ({
             const { x: locationX, y: locationY } =
               missileLocation || target.location;
 
-            console.log('section', section, section.x, section.y);
-            console.log('widget', widget);
-
             // check if the location of the missile or target is within the section
             if (
               // @ts-ignore

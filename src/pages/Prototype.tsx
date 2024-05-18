@@ -60,7 +60,6 @@ const Prototype = () => {
   useEffect(() => {
     if (messages.length === 0) return;
 
-    //console.log('passing message to the selector');
     // latest message in the last one in the list
     const currentMessage = messages[messages.length - 1];
 
@@ -75,7 +74,8 @@ const Prototype = () => {
       let allWidgetsInNewStressLPD: Widget[] = selector({
         stressLevel: stressLevel,
       });
-      console.log('allwiidgets', allWidgetsInNewStressLPD);
+
+      // console.log('allwiidgets', allWidgetsInNewStressLPD);
       let allWidgetsInNewStressLPDIds: string[] = allWidgetsInNewStressLPD.map(
         (a) => a.id,
       ); // get all widget ids from new stress level LPD and initial LPD

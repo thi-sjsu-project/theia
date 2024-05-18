@@ -175,8 +175,6 @@ const missileToOwnshipDetectedMessageHigh = (
     } satisfies IconElement,
   ];
 
-  console.log('message', message);
-
   const minimapWidgets: Widget[] = [
     {
       id: minimapWidgetId1, // this should be something static?
