@@ -10,8 +10,6 @@ const VehicleWidget = ({ widget }: VehicleWidgetProps) => {
 
   const renderVehicleTag = () => {
     // @ts-ignore
-    console.log(widget.elements[0].tag);
-    // @ts-ignore
     if (widget.elements[0].tag.includes('ACA')) {
       return (
         <div

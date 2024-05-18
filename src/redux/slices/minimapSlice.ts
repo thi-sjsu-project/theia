@@ -108,7 +108,7 @@ export const minimapSlice = createSlice({
       delete state.widgets[action.payload];
     },
 
-    addElementToWidget: {
+    addElementsToWidget: {
       prepare(widgetId: string, elements: Element[]) {
         return { payload: { widgetId, elements } };
       },
@@ -428,7 +428,7 @@ export const {
   addMessage,
   addWidget,
   addHandledMessageToWidget,
-  addElementToWidget,
+  addElementsToWidget,
   addWidgetToSection,
   updateElementExpiration,
   escalateElement,

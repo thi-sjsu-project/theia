@@ -4,7 +4,7 @@ import assimilator from './assimilator';
 import store from 'src/redux/store';
 import type { AppDispatch } from 'src/redux/store';
 import {
-  addElementToWidget,
+  addElementsToWidget,
   addHandledMessageToWidget,
   addWidget,
   addWidgetToSection,
@@ -78,7 +78,7 @@ const reactToMessage = ({
           switch (action) {
             case 'updateWidget':
               dispatch(
-                addElementToWidget(widgetToDeploy.id, widgetToDeploy.elements), // add new elements to the widget
+                addElementsToWidget(widgetToDeploy.id, widgetToDeploy.elements), // add new elements to the widget
               );
               dispatch(
                 addHandledMessageToWidget(widgetToDeploy.id, currentMessage.id), // add the message to the widget's handledMessages array

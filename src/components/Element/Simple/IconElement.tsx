@@ -9,7 +9,11 @@ const IconElement = ({ element }: IconElementProps) => {
 
   if (!src) return null;
 
-  return <img id={id} src={src} alt={type} />;
+  return (
+    <div id={element.id}>
+      <img src={src} alt={type} />
+    </div>
+  );
 };
 
 export default IconElement;

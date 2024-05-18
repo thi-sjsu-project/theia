@@ -1,5 +1,6 @@
 import type { Modality } from 'src/types/modality';
 import type {
+  Message,
   MissileToOwnshipDetected,
   RequestApprovalToAttack,
 } from 'src/types/schema-types';
@@ -14,8 +15,6 @@ export type BaseElement = {
   w: number;
 
   widgetId?: string;
-
-  size?: 'S' | 'M' | 'L';
 
   priority?: number;
   collapsed?: boolean;
@@ -102,6 +101,13 @@ export type AcaStatusElement = BaseElement & {
   weaponLoad: Range<0, 1>;
 };
 
+export type InformationElement = BaseElement & {
+  type: 'information';
+  size: 'S' | 'M' | 'L';
+  title: string;
+  messages: Message[];
+};
+
 // Simple elements have no nested elements and no children
 export type SimpleElement =
   | TableElement
@@ -116,7 +122,8 @@ export type SimpleElement =
 export type ComplexElement =
   | MissileIncomingElement
   | RequestApprovalElement
-  | CustomElement;
+  | CustomElement
+  | InformationElement;
 
 export type Element = SimpleElement | ComplexElement;
 
