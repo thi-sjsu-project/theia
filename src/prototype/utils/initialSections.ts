@@ -78,7 +78,7 @@ const initialMinimapSections = [
     1920,
     100,
     0,
-    'tinder',
+    'top-bar',
     [],
   ),
   // minimap section (where drones move)
