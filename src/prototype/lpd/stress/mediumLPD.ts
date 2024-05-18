@@ -9,7 +9,7 @@ import DANGER_ICON from 'src/assets/icons/danger.svg';
 import type { Widget, MapWarningWidget } from 'src/types/widget';
 import type { WidgetCluster } from 'src/types/support-types';
 import type { Element, IconElement } from 'src/types/element';
-import ThreatAirDefenseSmReg from 'src/assets/icons/threats/airdefense-sm-reg.svg';
+import { mapTargetTypeToWarningIcon } from 'src/prototype/utils/helpers';
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageMedium = (
@@ -43,7 +43,7 @@ const requestApprovalToAttackMessageMedium = (
       h: 50,
       w: 50,
       widgetId: minimapWidgetId1,
-      src: ThreatAirDefenseSmReg,
+      src: mapTargetTypeToWarningIcon(message.data.target.type),
     } satisfies IconElement,
   ];
 
