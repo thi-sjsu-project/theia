@@ -20,7 +20,7 @@ const VehicleWidget = ({ widget }: VehicleWidgetProps) => {
             opacity: 0.9,
             color: 'white',
             fontSize: 20,
-            zIndex: 100,
+            zIndex: 1,
           }}
         >
           {/* @ts-ignore */}
@@ -47,7 +47,11 @@ const VehicleWidget = ({ widget }: VehicleWidgetProps) => {
       }}
     >
       <div
-        style={{ transform: `rotate(${-widget.rotation + Math.PI * 0.5}rad)` }}
+        style={{
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          borderRadius: '50%',
+          transform: `rotate(${-widget.rotation + Math.PI * 0.5}rad)`,
+        }}
       >
         <Element key={widget.id} element={widget.elements[0]}>
           {/* Nested children here if wanted */}
