@@ -85,7 +85,7 @@ const Prototype = () => {
         allWidgetIds: Object.keys(widgets),
         allMessages: messages,
         allWidgetsInNewStressLPDIds: allWidgetsInNewStressLPDIds,
-        stressLevel: 0.1, // don't forget to change
+        stressLevel,
       });
     }
   }, [currentStressLevel]);

@@ -19,9 +19,9 @@ const Minimap = () => {
 
   const elementsInGaze = useAppSelector(getElementsInGaze);
 
-  useEffect(() => {
-    console.log('elementsInGaze: ', elementsInGaze);
-  }, [elementsInGaze]);
+  // useEffect(() => {
+  //   console.log('elementsInGaze: ', elementsInGaze);
+  // }, [elementsInGaze]);
 
   return (
     <>

@@ -6,16 +6,16 @@ import type {
 import lpdHelper from 'src/utils/lpdHelper';
 import { v4 as uuid } from 'uuid';
 import DANGER_ICON from 'src/assets/icons/danger.svg';
-import { type Widget } from 'src/types/widget';
+import type { Widget, MapWarningWidget } from 'src/types/widget';
 import type { WidgetCluster } from 'src/types/support-types';
-import type { Element } from 'src/types/element';
+import type { Element, IconElement } from 'src/types/element';
+import ThreatAirDefenseSmReg from 'src/assets/icons/threats/airdefense-sm-reg.svg';
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageMedium = (
   message: RequestApprovalToAttack,
 ) => {
-  const elements: Element[] = [];
-  elements.push(
+  const pearceScreenElements: Element[] = [
     lpdHelper.generateRequestApprovalElement(
       lpdHelper.generateBaseElement(uuid(), 'visual', 30, 30, message.priority),
       message,
@@ -32,7 +32,39 @@ const requestApprovalToAttackMessageMedium = (
         'Approve',
       ),
     ),
-  );
+  ];
+
+  const minimapWidgetId1 = uuid();
+  const minimapElements: Element[] = [
+    {
+      id: uuid(),
+      modality: 'visual',
+      type: 'icon',
+      h: 50,
+      w: 50,
+      widgetId: minimapWidgetId1,
+      src: ThreatAirDefenseSmReg,
+    } satisfies IconElement,
+  ];
+
+  const minimapWidgets: Widget[] = [
+    {
+      id: minimapWidgetId1, // this should be something static?
+      sectionType: 'minimap',
+      type: 'map-warning',
+      x: message.data.target.location.x,
+      y: message.data.target.location.y,
+      w: 50,
+      h: 50,
+      screen: '/minimap',
+      canOverlap: true,
+      useElementLocation: false,
+      maxAmount: 10,
+
+      elements: minimapElements,
+    } satisfies MapWarningWidget,
+  ];
+
   return {
     sections: [],
     possibleClusters: [
@@ -49,9 +81,10 @@ const requestApprovalToAttackMessageMedium = (
             false,
             false,
             1,
-            [...elements],
+            [...pearceScreenElements],
           ),
         ),
+        ...minimapWidgets,
       ]),
     ],
   };
