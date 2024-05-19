@@ -20,7 +20,10 @@ type MapWarningWidgetProps = {
 };
 
 const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
-  /** We have made widgets too generic, I think. Severely restricts our ability to design different widgets differently. */
+  /** We have made widgets too generic, I think. Severely restricts our ability to design different widgets differently.
+   * It would be very useful for different widgets types to specify in detail the number of elements they will have
+   * as well as the type of each of those elements - Jagjit.
+   */
   const [iconElement, threatInfoElement] = widget.elements;
 
   const elementsInGaze = useAppSelector(getElementsInGaze);
@@ -30,6 +33,7 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
     (element) => element.id === iconElement.id,
   );
 
+  // if the icon element is in gaze, create a threat info element
   useEffect(() => {
     if (inGaze && !threatInfoElement) {
       console.log('adding threat info element');
@@ -56,7 +60,8 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
     }
   }, [inGaze, dispatch, widget.id, threatInfoElement]);
 
-  const handleInGaze = () => {
+  const renderThreatInformation = () => {
+    // if the threat info element exists, render it
     if (threatInfoElement) {
       return (
         <>
@@ -82,7 +87,7 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
       }}
     >
       <IconElement element={iconElement as IconElementType} />
-      {handleInGaze()}
+      {renderThreatInformation()}
     </div>
   );
 };
