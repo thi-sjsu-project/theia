@@ -65,6 +65,7 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
     if (threatInfoElement) {
       return (
         <>
+          {/* Connecting line */}
           <div style={{ height: 2, width: 75, border: '2px dashed white' }} />
           <MapThreatInfoElement
             element={threatInfoElement as InformationElementType}
