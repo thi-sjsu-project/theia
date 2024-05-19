@@ -64,6 +64,37 @@ export const minimapSlice = createSlice({
       state.widgets[action.payload.id] = action.payload;
     },
 
+    updateElement: {
+      prepare(widgetId: string, element: Element) {
+        return {
+          payload: { widgetId, element },
+        };
+      },
+
+      reducer: (
+        state,
+        action: PayloadAction<{ widgetId: string; element: Element }>,
+      ) => {
+        const { widgetId, element } = action.payload;
+        const widget = state.widgets[widgetId];
+
+        if (!widget) {
+          console.error(`Widget with id ${widgetId} not found`);
+          return;
+        }
+
+        state.widgets[widgetId] = {
+          ...widget,
+          elements: widget.elements.map((el) => {
+            if (el.id === element.id) {
+              return element;
+            }
+            return el;
+          }),
+        };
+      },
+    },
+
     updateShipPosition: {
       prepare(shipId: string, x: number, y: number, rotation: number) {
         return {
@@ -257,9 +288,10 @@ export const minimapSlice = createSlice({
         if (widget) {
           const tempElements = state.widgets[widgetId].elements;
           tempElements.forEach(function (element, elementIndex) {
-            if (element.id === elementId && element.collapsed) {
+            if (element.id === elementId) {
               //do something
-              tempElements[elementIndex].collapsed = false;
+              tempElements[elementIndex].escalate = true;
+              tempElements[elementIndex].deescalate = false;
             }
           });
           state.widgets[widgetId] = {
@@ -290,9 +322,10 @@ export const minimapSlice = createSlice({
         if (widget) {
           const tempElements = state.widgets[widgetId].elements;
           tempElements.forEach(function (element, elementIndex) {
-            if (element.id === elementId && element.collapsed) {
+            if (element.id === elementId) {
               //do something
-              tempElements[elementIndex].collapsed = true;
+              tempElements[elementIndex].escalate = false;
+              tempElements[elementIndex].deescalate = true;
             }
           });
           state.widgets[widgetId] = {
@@ -435,6 +468,7 @@ export const {
   deescalateElement,
 
   updateWidget,
+  updateElement,
   updateShipPosition,
   updateVisualComplexity,
   updateAudioComplexity,

@@ -1,5 +1,6 @@
 import type { Modality } from 'src/types/modality';
 import type {
+  Conversation,
   Message,
   MissileToOwnshipDetected,
   RequestApprovalToAttack,
@@ -22,6 +23,9 @@ export type BaseElement = {
   expirationInterval?: number;
   expiration?: string;
   onExpiration?: 'delete' | 'escalate' | 'deescalate';
+  escalate?: boolean;
+  deescalate?: boolean;
+
   interacted?: boolean;
   canOverlap?: boolean;
   style?: Properties;
@@ -104,8 +108,8 @@ export type AcaStatusElement = BaseElement & {
 export type InformationElement = BaseElement & {
   type: 'information';
   size: 'S' | 'M' | 'L';
-  title: string;
-  messages: Message[];
+  title?: string;
+  message: RequestApprovalToAttack | MissileToOwnshipDetected;
 };
 
 // Simple elements have no nested elements and no children

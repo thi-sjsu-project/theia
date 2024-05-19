@@ -7,6 +7,10 @@ export type SimToCmMessage = {
   stressLevel?: Range<0, 1>;
 };
 
+export type Conversation = {
+  messages: Message[];
+};
+
 export type Message =
   | RequestApprovalToAttack
   | AcaFuelLow

@@ -5,6 +5,8 @@ import { getElementsInGaze } from 'src/redux/slices/gazeSlice';
 import {
   addElementsToWidget,
   deleteElementFromWidget,
+  updateElement,
+  updateWidget,
 } from 'src/redux/slices/minimapSlice';
 import { useEffect, useState } from 'react';
 import type {
@@ -33,49 +35,14 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
     (element) => element.id === iconElement.id,
   );
 
-  // if the icon element is in gaze, create a threat info element
+  // show threat info element if icon element is in gaze
   useEffect(() => {
-    if (inGaze && !threatInfoElement) {
-      console.log('adding threat info element');
+    if (inGaze && threatInfoElement.collapsed) {
       dispatch(
-        addElementsToWidget(widget.id, [
-          {
-            id: uuid(),
-            type: 'information',
-            modality: 'visual',
-            h: 60,
-            w: 100,
-            /** if iconElement as a conversation number, we can fetch that conversation and pass it in here */
-            messages: [],
-            widgetId: widget.id,
-            size: 'M',
-            title: 'Threat Information',
-            onExpiration: 'delete',
-            // 3 seconds into the future
-            expiration: new Date(Date.now() + 3000).toISOString(),
-            expirationInterval: 3000,
-          } satisfies InformationElementType,
-        ]),
+        updateElement(widget.id, { ...threatInfoElement, collapsed: false }),
       );
     }
-  }, [inGaze, dispatch, widget.id, threatInfoElement]);
-
-  const renderThreatInformation = () => {
-    // if the threat info element exists, render it
-    if (threatInfoElement) {
-      return (
-        <>
-          {/* Connecting line */}
-          <div style={{ height: 2, width: 75, border: '2px dashed white' }} />
-          <MapThreatInfoElement
-            element={threatInfoElement as InformationElementType}
-          />
-        </>
-      );
-    }
-
-    return null;
-  };
+  }, [inGaze, dispatch, iconElement, threatInfoElement, widget]);
 
   return (
     <div
@@ -88,7 +55,15 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
       }}
     >
       <IconElement element={iconElement as IconElementType} />
-      {renderThreatInformation()}
+      {!threatInfoElement.collapsed && (
+        <>
+          {/* Connecting line */}
+          <div style={{ height: 2, width: 75, border: '2px dashed white' }} />
+          <MapThreatInfoElement
+            element={threatInfoElement as InformationElementType}
+          />
+        </>
+      )}
     </div>
   );
 };

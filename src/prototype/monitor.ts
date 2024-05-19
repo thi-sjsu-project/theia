@@ -34,6 +34,7 @@ const monitor = ({ dispatch }: MonitorProps) => {
 
   //detect interactions via gaze
   const timeSomeMsAgo = new Date();
+  // THE 100 MS DIFFERENCE COMPARISON NOT WORKING -- SO COMMENTED OUT FOR NOW - Jagjit
   // timeSomeMsAgo.setMilliseconds(
   //   timeSomeMsAgo.getMilliseconds() - 100, //<- 100 should be in constants file, but just testing now
   // ); //set timeSomeMsAgo to the time it was 100 ms ago
@@ -99,7 +100,7 @@ const monitor = ({ dispatch }: MonitorProps) => {
               dispatch(escalateElement(widget.id, element.id));
               break;
             case 'deescalate':
-              console.log('element ' + element.id + ' expired! escalating...');
+              console.log('element ' + element.id + ' expired! descalating...');
               dispatch(deescalateElement(widget.id, element.id));
               break;
           }

@@ -6,7 +6,11 @@ import type {
 import { v4 as uuid } from 'uuid';
 import lpdHelper from 'src/utils/lpdHelper';
 import DANGER_ICON from 'src/assets/icons/danger.svg';
-import type { Element, IconElement } from 'src/types/element';
+import type {
+  Element,
+  IconElement,
+  InformationElement,
+} from 'src/types/element';
 import type { Widget, MapWarningWidget } from 'src/types/widget';
 import type { WidgetCluster } from 'src/types/support-types';
 import { mapTargetTypeToWarningIcon } from 'src/prototype/utils/helpers';
@@ -52,6 +56,19 @@ const requestApprovalToAttackMessageHigh = (
       widgetId: minimapWidgetId1,
       src: mapTargetTypeToWarningIcon(message.data.target.type),
     } satisfies IconElement,
+    {
+      id: uuid(),
+      modality: 'visual',
+      type: 'information',
+      h: 70,
+      w: 150,
+      message,
+      size: 'M', // size L when stress is low
+      collapsed: true, // initially, the information elemnt is not displayed
+      expirationInterval: 3000,
+      onExpiration: 'deescalate',
+      widgetId: minimapWidgetId1,
+    } satisfies InformationElement,
   ];
 
   const minimapWidgets: Widget[] = [
@@ -172,7 +189,22 @@ const missileToOwnshipDetectedMessageHigh = (
       w: 50,
       widgetId: minimapWidgetId1,
       src: mapTargetTypeToWarningIcon('missile'),
+      expirationInterval: 5000,
+      onExpiration: 'escalate',
     } satisfies IconElement,
+    {
+      id: uuid(),
+      modality: 'visual',
+      type: 'information',
+      h: 70,
+      w: 150,
+      message,
+      size: 'M', // size L when stress is low
+      collapsed: true, // initially, the information elemnt is not displayed
+      expirationInterval: 3000,
+      onExpiration: 'deescalate',
+      widgetId: minimapWidgetId1,
+    } satisfies InformationElement,
   ];
 
   const minimapWidgets: Widget[] = [
