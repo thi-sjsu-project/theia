@@ -4,6 +4,7 @@ import VehicleWidget from 'src/components/Widget/VehicleWidget';
 import MapWarningWidget from 'src/components/Widget/MapWarningWidget';
 import HistoryWidget from 'src/components/Widget/HistoryWidget';
 import AcaHeaderWidget from 'src/components/Widget/AcaHeaderWidget';
+import BasicWidget from './BasicWidget';
 
 type WidgetProps = {
   widget: WidgetType;
@@ -14,6 +15,8 @@ const Widget = ({ widget }: WidgetProps) => {
     switch (widget.type) {
       case 'vehicle':
         return <VehicleWidget widget={widget} />;
+      case 'basic':
+        return <BasicWidget widget={widget} />;
       case 'list':
         return <ListWidget widget={widget} />;
       case 'map-warning':

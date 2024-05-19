@@ -14,7 +14,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
     (a, b) => a.priority! - b.priority!,
   );
 
-  const selectedElement = 0;
+  const selectedElement = 0; // TODO
 
   return (
     <div

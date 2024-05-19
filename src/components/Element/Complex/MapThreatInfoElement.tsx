@@ -78,15 +78,19 @@ const MapThreatInfoElement = ({ element, inGaze }: Props) => {
         return (
           <div
             id={element.id}
+            className="rounded-xl bg-[#282828] bg-opacity-80 text-[#f5f5f5] border-black border-2 text-[24px]"
             style={{
-              height: h,
-              width: w,
-              fontSize: 24,
-              backgroundColor: 'turquoise',
-              opacity: 0.8,
+              height: M_HEIGHT,
+              width: 'auto',
             }}
           >
-            MEDIUM {cfl(target)}
+            <div
+              className="px-5 py-2.5 font-medium"
+              style={{ height: M_HEIGHT }}
+            >
+              {cfl(target)}
+            </div>
+            {inGaze ? <GazeHighlight /> : <></>}
           </div>
         );
       case 'L':
@@ -108,21 +112,6 @@ const MapThreatInfoElement = ({ element, inGaze }: Props) => {
   };
 
   return <>{renderElement()}</>;
-//  return (
-//    <div
-//      id={element.id}
-//      className="rounded-xl bg-[#282828] bg-opacity-80 text-[#f5f5f5] border-black border-2 text-[24px]"
-//      style={{
-//        height: M_HEIGHT,
-//        width: 'auto',
-//      }}
-//    >
-//      <div className="px-5 py-2.5 font-medium" style={{ height: M_HEIGHT }}>
-//        {title}
-//      </div>
-//      {inGaze ? <GazeHighlight /> : <></>}
-//    </div>
-//  );
 };
 
 const GazeHighlight = () => {
