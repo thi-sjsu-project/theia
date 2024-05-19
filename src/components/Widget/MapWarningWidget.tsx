@@ -52,7 +52,7 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
         ]),
       );
     }
-  }, [inGaze, dispatch, widget.id]);
+  }, [inGaze, dispatch, widget.id, threatInfoElement]);
 
   const handleInGaze = () => {
     if (threatInfoElement) {
