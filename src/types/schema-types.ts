@@ -25,6 +25,7 @@ export type BaseMessage<TKind extends string, TData extends object> = {
   kind: TKind;
   data: TData;
   fulfilled?: boolean;
+  tags?: string[]
 };
 
 export type RequestApprovalToAttack = BaseMessage<

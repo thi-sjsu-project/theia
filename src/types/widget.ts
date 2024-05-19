@@ -23,6 +23,8 @@ export type BaseWidget = {
   padding?: number;
   priority?: number;
   style?: Properties;
+
+  tags?: string[];
 };
 
 export type ListWidget = BaseWidget & {

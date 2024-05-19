@@ -75,16 +75,11 @@ const Prototype = () => {
         stressLevel: stressLevel,
       });
 
-      // console.log('allwiidgets', allWidgetsInNewStressLPD);
-      let allWidgetsInNewStressLPDIds: string[] = allWidgetsInNewStressLPD.map(
-        (a) => a.id,
-      ); // get all widget ids from new stress level LPD and initial LPD
-
       stressChangeHandler({
         dispatch: dispatch,
-        allWidgetIds: Object.keys(widgets),
+        allWidgets: Object.values(widgets),
         allMessages: messages,
-        allWidgetsInNewStressLPDIds: allWidgetsInNewStressLPDIds,
+        allWidgetsInNewStressLPD: allWidgetsInNewStressLPD,
         stressLevel,
       });
     }

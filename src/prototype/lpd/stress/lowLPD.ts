@@ -90,7 +90,7 @@ const requestApprovalToAttackMessageLow = (
       generateCluster([
         lpdHelper.generateListWidget(
           lpdHelper.generateBaseWidget(
-            'list',
+            uuid(),
             'tinder',
             100,
             100,
@@ -134,7 +134,7 @@ const acaFuelLowMessageLow = (message: Message) => {
       generateCluster([
         lpdHelper.generateListWidget(
           lpdHelper.generateBaseWidget(
-            'list',
+            uuid(),
             'tinder',
             500,
             500,
@@ -224,7 +224,7 @@ const missileToOwnshipDetectedMessageLow = (
       generateCluster([
         lpdHelper.generateListWidget(
           lpdHelper.generateBaseWidget(
-            'list',
+            uuid(),
             'tinder',
             100,
             100,
@@ -268,7 +268,7 @@ const acaDefectMessageLow = (message: Message) => {
       generateCluster([
         lpdHelper.generateListWidget(
           lpdHelper.generateBaseWidget(
-            'list',
+            uuid(),
             'tinder',
             500,
             500,
@@ -306,7 +306,7 @@ const acaHeadingToBaseMessageLow = (message: Message) => {
       generateCluster([
         lpdHelper.generateListWidget(
           lpdHelper.generateBaseWidget(
-            'list',
+            uuid(),
             'tinder',
             500,
             500,
