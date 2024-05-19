@@ -10,8 +10,8 @@ const IconElement = ({ element }: IconElementProps) => {
   if (!src) return null;
 
   return (
-    <div id={element.id}>
-      <img src={src} alt={type} />
+    <div id={id}>
+      <img src={src} alt={type} width={w} height={h} />
     </div>
   );
 };

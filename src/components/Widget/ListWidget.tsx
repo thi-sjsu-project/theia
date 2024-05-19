@@ -7,12 +7,14 @@ type ListWidgetProps = {
 
 const ListWidget = ({ widget }: ListWidgetProps) => {
   const className =
-    'absolute p-2 flex flex-col gap-2 items-center overflow-scroll overflow-x-hidden overflow-y-hidden';
+    'absolute p-2 flex flex-col gap-6 items-center overflow-scroll overflow-x-hidden overflow-y-hidden';
 
   // Sort elements by priority
   const sortedElementsByPriority = [...widget.elements].sort(
     (a, b) => a.priority! - b.priority!,
   );
+
+  const selectedElement = 0;
 
   return (
     <div
@@ -26,18 +28,25 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
         left: widget.x,
       }}
     >
-      {sortedElementsByPriority.map((element) => (
-        // ListWidget enforces a certain layout and style for its Elements
-        <div
-          id={element.id}
-          key={element.id}
-          className="w-full min-h-[100px] text-white bg-[#2D2D30] flex items-center justify-center"
-        >
-          <Element element={element}>
-            {/* Nested children here if wanted.. */}
-          </Element>
-        </div>
-      ))}
+      {sortedElementsByPriority.map((element, index) => {
+        const style =
+          selectedElement === index
+            ? 'bg-[#444449] text-[28px] font-medium'
+            : 'bg-[#323235] text-[24px]';
+        return (
+          // ListWidget enforces a certain layout and style for its Elements
+          <div
+            id={element.id}
+            key={element.id}
+            style={{ height: 80 }}
+            className={`w-full text-white flex items-center justify-center rounded-xl p-3 ${style}`}
+          >
+            <Element element={element} styleClass="w-full h-full">
+              {/* Nested children here if wanted.. */}
+            </Element>
+          </div>
+        );
+      })}
     </div>
   );
 };

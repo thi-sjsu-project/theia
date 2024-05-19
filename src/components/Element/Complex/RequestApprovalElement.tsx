@@ -39,17 +39,15 @@ const RequestApprovalElement = ({
   //   );
   // }
 
+  // <div className="flex gap-2">
+  //   <ButtonElement element={leftButton} />
+  //   <ButtonElement element={rightButton} />
+  // </div>
+
   return (
-    <div id={id}>
-      <p>Request Approval to Attack</p>
-      <p>Target: {target.type}</p>
-
-      {/* More information here */}
-
-      <div className="flex gap-2">
-        <ButtonElement element={leftButton} />
-        <ButtonElement element={rightButton} />
-      </div>
+    <div id={id} className="flex text-white items-center gap-4">
+      <IconElement element={icon} />
+      <span>{target.type}</span>
     </div>
   );
 };

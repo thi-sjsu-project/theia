@@ -5,7 +5,7 @@ import type {
 } from 'src/types/schema-types';
 import { v4 as uuid } from 'uuid';
 import lpdHelper from 'src/utils/lpdHelper';
-import DANGER_ICON from 'src/assets/icons/danger.svg';
+import DANGER_ICON from 'src/assets/icons/threats/missile-sm-emph.svg';
 import type {
   Element,
   IconElement,
@@ -31,8 +31,8 @@ const requestApprovalToAttackMessageHigh = (
       ),
       message,
       lpdHelper.generateIconElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 80, 80),
-        DANGER_ICON,
+        lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
+        mapTargetTypeToWarningIcon(message.data.target.type),
       ),
       lpdHelper.generateButtonElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80),
@@ -173,7 +173,7 @@ const missileToOwnshipDetectedMessageHigh = (
       ),
       message,
       lpdHelper.generateIconElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 80, 80),
+        lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
         DANGER_ICON,
       ),
     ),

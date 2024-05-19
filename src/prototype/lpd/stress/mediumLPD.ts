@@ -5,7 +5,7 @@ import type {
 } from 'src/types/schema-types';
 import lpdHelper from 'src/utils/lpdHelper';
 import { v4 as uuid } from 'uuid';
-import DANGER_ICON from 'src/assets/icons/danger.svg';
+import DANGER_ICON from 'src/assets/icons/threats/missile-sm-emph.svg';
 import type { Widget, MapWarningWidget } from 'src/types/widget';
 import type { WidgetCluster } from 'src/types/support-types';
 import type {
@@ -24,8 +24,8 @@ const requestApprovalToAttackMessageMedium = (
       lpdHelper.generateBaseElement(uuid(), 'visual', 30, 30, message.priority),
       message,
       lpdHelper.generateIconElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 80, 80),
-        DANGER_ICON,
+        lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
+        mapTargetTypeToWarningIcon(message.data.target.type),
       ),
       lpdHelper.generateButtonElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80),
@@ -164,7 +164,7 @@ const missileToOwnshipDetectedMessageMedium = (
       ),
       message,
       lpdHelper.generateIconElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 80, 80),
+        lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
         DANGER_ICON,
       ),
     ),
