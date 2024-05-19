@@ -193,6 +193,7 @@ const missileToOwnshipDetectedMessageMedium = (
       collapsed: true, // initially, the information elemnt is not displayed
       expirationInterval: 3000,
       onExpiration: 'deescalate',
+      widgetId: minimapWidgetId1,
     } satisfies InformationElement,
   ];
 
