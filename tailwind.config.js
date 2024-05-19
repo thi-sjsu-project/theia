@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+
+const config = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
@@ -8,6 +9,11 @@ export default {
       //   pointer: 'url(https://i.stack.imgur.com/UOvLJ.png), pointer',
       // },
     },
+    fontFamily: {
+      sans: ['Roboto Condensed', 'system-ui', 'sans-serif'],
+    },
   },
   plugins: [],
 };
+
+export default config;

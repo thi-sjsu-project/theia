@@ -11,7 +11,6 @@ import {
 import { useEffect, useState } from 'react';
 import type {
   IconElement as IconElementType,
-  TextElement as TextElementType,
   InformationElement as InformationElementType,
 } from 'src/types/element';
 import IconElement from 'src/components/Element/Simple/IconElement';
@@ -43,6 +42,22 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
       );
     }
   }, [inGaze, dispatch, iconElement, threatInfoElement, widget]);
+
+  const handleInGaze = () => {
+    if (threatInfoElement) {
+      return (
+        <>
+          <div style={{ height: 2, width: 75, border: '2px dashed white' }} />
+          <MapThreatInfoElement
+            element={threatInfoElement as InformationElementType}
+            inGaze={inGaze}
+          />
+        </>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <div

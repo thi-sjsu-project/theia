@@ -6,9 +6,12 @@ import { capitalizeFirstLetter as cfl } from 'src/utils/helpers';
 
 type Props = {
   element: InformationElement;
+  inGaze: boolean;
 };
 
-const MapThreatInfoElement = ({ element }: Props) => {
+const M_HEIGHT = 60;
+
+const MapThreatInfoElement = ({ element, inGaze }: Props) => {
   const dispatch = useAppDispatch();
   // could also fetch messages from redux
   // provided there is a conversation number
@@ -105,6 +108,40 @@ const MapThreatInfoElement = ({ element }: Props) => {
   };
 
   return <>{renderElement()}</>;
+//  return (
+//    <div
+//      id={element.id}
+//      className="rounded-xl bg-[#282828] bg-opacity-80 text-[#f5f5f5] border-black border-2 text-[24px]"
+//      style={{
+//        height: M_HEIGHT,
+//        width: 'auto',
+//      }}
+//    >
+//      <div className="px-5 py-2.5 font-medium" style={{ height: M_HEIGHT }}>
+//        {title}
+//      </div>
+//      {inGaze ? <GazeHighlight /> : <></>}
+//    </div>
+//  );
+};
+
+const GazeHighlight = () => {
+  return (
+    <>
+      <div
+        className="w-auto rounded-xl border-[#19DEBB] border-x-[5px]"
+        style={{ height: M_HEIGHT - 4, marginTop: -M_HEIGHT }}
+      ></div>
+      <div className="mx-auto mt-1" style={{ width: 26, height: 13 }}>
+        <svg style={{ width: 26, height: 15 }}>
+          <polygon
+            points="1,1 26,1 14,14"
+            style={{ fill: '#19DEBB', stroke: '#3E3E42', strokeWidth: 2 }}
+          />
+        </svg>
+      </div>
+    </>
+  );
 };
 
 export default MapThreatInfoElement;
