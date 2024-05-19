@@ -41,6 +41,7 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
             modality: 'visual',
             h: 60,
             w: 100,
+            /** if iconElement as a conversation number, we can fetch that conversation and pass it in here */
             messages: [],
             widgetId: widget.id,
             size: 'M',
