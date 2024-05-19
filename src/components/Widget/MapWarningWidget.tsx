@@ -48,6 +48,7 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
             onExpiration: 'delete',
             // 3 seconds into the future
             expiration: new Date(Date.now() + 3000).toISOString(),
+            expirationInterval: 3000,
           } satisfies InformationElementType,
         ]),
       );
