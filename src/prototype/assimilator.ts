@@ -33,6 +33,8 @@ function doesOverlap(
 
 //tags1 should be the proposed widget, tags2 should be the tags in the message
 function findSpecifierTag(tagsProposed:string[], tagsMessage:string[]){
+
+  let specifier = 'none'
   //go through every tag in proposed widget and find the specified tag that links the messageTag to the widget tag
   tagsProposed.forEach((tagProposed) => {
     if(tagsMessage.includes(tagProposed)){
@@ -42,14 +44,14 @@ function findSpecifierTag(tagsProposed:string[], tagsMessage:string[]){
         //if the tagMessage is not the same as the link tag, and it includes the link tag
         if(tagMessage !== tagProposed && tagMessage.includes(tagProposed)){
           //we found the specifier
-          return tagProposed;
+          specifier = tagMessage;
         }
       });
     }
   });
 
   //there were no matching specifer tags
-  return 'none';
+  return specifier;
 }
 
 type AssimilatorProps = {
@@ -108,13 +110,13 @@ const assimilator = ({
               sameWidget = false; //the current tag was not in the current deployed widget, so it is not the same widget type
             }
           });
-
+        
           if(sameWidget){ //the current deployed widget is the same widget type
             //find if they have the same tags and are the exact same widge instance
             let hasSameSpecifier = true;
             if(widget.tags!.includes('specify')){//if the proposed widget has 'specify', that means there could be multiple widget instances with the same widget type
               //go through every tag in the message and see if the current deployed widget has the same tags
-              if(findSpecifierTag(widget.tags!, message.tags!) === 'none'){
+              if(!deployedWidget.tags!.includes(findSpecifierTag(widget.tags!, message.tags!))){
                 hasSameSpecifier = false;
               }
             }
@@ -137,9 +139,11 @@ const assimilator = ({
         widgetExists &&
         widgetHandlesMessage
       ) {
+        console.log('message handled by widget already')
         // check if the widget already exists on the screen and handles the message
-        const sectionID = { widgetID: widget.id, sectionID: 'none' };
+        const sectionID = { widgetID: widgetIdToUpdate, sectionID: 'none' };
         const action = 'messageAlreadyHandled';
+        widget.id = widgetIdToUpdate;
         const widgetToDeploy = widget;
 
         widgetsToDeploy.push(widgetToDeploy);
@@ -149,15 +153,18 @@ const assimilator = ({
         widgetExists &&
         !widgetHandlesMessage
       ) {
+        console.log('updating widget')
         // check if the widget already exists on the screen and that the widget does not handle the message
-        const sectionID = { widgetID: widget.id, sectionID: 'none' };
+        const sectionID = { widgetID: widgetIdToUpdate, sectionID: 'none' };
         const action = 'updateWidget';
+        widget.id = widgetIdToUpdate;
         const widgetToDeploy = widget;
 
         widgetsToDeploy.push(widgetToDeploy);
         actionsToDeploy.push(action);
         sectionIdsToDeploy.push(sectionID);
       } else {
+        console.log('placing widget')
         //the widget doesn't exist yet
 
         let widgetPlaced = false; //tracks if we have placed this the widget
@@ -256,8 +263,9 @@ const assimilator = ({
                   widget.x = proposedX; //set widget's top-left coordinates
                   widget.y = proposedY;
                   widget.handledMessageIds = [message.id]; //set widget's first message id
-                  if(widget.tags!.includes('specify')) //only add the specifier tag if the widget needs to be specified
-                    widget.tags!.concat(findSpecifierTag(widget.tags!, message.tags!))
+                  if(widget.tags!.includes('specify')){ //only add the specifier tag if the widget needs to be specified
+                    widget.tags!.push(findSpecifierTag(widget.tags!, message.tags!))
+                  }
                   const widgetToDeploy = widget; //the widget can be deployed
                   const sectionID = {
                     sectionID: section.id,

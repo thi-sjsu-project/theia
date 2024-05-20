@@ -84,6 +84,7 @@ const requestApprovalToAttackMessageHigh = (
       canOverlap: true,
       useElementLocation: false,
       maxAmount: 10,
+      tags: ['specify', 'map-warning'],
 
       elements: minimapElements,
     } satisfies MapWarningWidget,
@@ -106,6 +107,7 @@ const requestApprovalToAttackMessageHigh = (
             false,
             1,
             [...pearceScreenElements],
+            ['message'],
           ),
         ),
         ...minimapWidgets,
@@ -151,6 +153,7 @@ const acaFuelLowMessageHigh = (message: Message) => {
             false,
             1,
             [...elements],
+            ['message'],
           ),
         ),
       ]),
@@ -221,6 +224,8 @@ const missileToOwnshipDetectedMessageHigh = (
       useElementLocation: false,
       maxAmount: 10,
 
+      tags: ['specify', 'map-warning'],
+
       elements: minimapElements,
     } satisfies MapWarningWidget,
   ];
@@ -242,6 +247,7 @@ const missileToOwnshipDetectedMessageHigh = (
             true,
             1,
             [...pearceScreenElements],
+            ['message'],
           ),
         ),
         ...minimapWidgets,
@@ -287,6 +293,7 @@ const acaDefectMessageHigh = (message: Message) => {
             true,
             1,
             [...elements],
+            ['aca-defect'],
           ),
         ),
       ]),
@@ -326,6 +333,7 @@ const acaHeadingToBaseMessageHigh = (message: Message) => {
             true,
             1,
             [...elements],
+            ['message'],
           ),
         ),
       ]),
@@ -347,7 +355,6 @@ const highLPDMessageFunctions: any = {
 };
 
 const highLPD = (message: Message) => {
-  console.log('highLPD');
   if (message.priority !== -1)
     //if the message is a real message, return the clusters
     return highLPDMessageFunctions[message.kind](message);

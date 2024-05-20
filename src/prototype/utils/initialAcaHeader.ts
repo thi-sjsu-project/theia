@@ -84,6 +84,7 @@ const initialAcaHeaderWidget: AcaHeaderWidget = {
   useElementLocation: false,
   maxAmount: 2,
   elements: [...acaHeaderElements],
+  tags: ['header'],
 };
 
 export { initialAcaHeaderWidget, acaHeaderElements };

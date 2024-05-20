@@ -50,6 +50,7 @@ const generateBaseWidget = (
   useElementLocation: boolean,
   maxAmount: number,
   elements: Element.Element[],
+  tags: string[],
   padding?: number,
   priority?: number,
   style?: Properties,
@@ -68,6 +69,7 @@ const generateBaseWidget = (
   priority,
   style,
   elements,
+  tags,
 });
 
 // Generate the different widget types

@@ -80,6 +80,8 @@ const requestApprovalToAttackMessageLow = (
       useElementLocation: false,
       maxAmount: 10,
 
+      tags: ['specify', 'map-warning'],
+
       elements: minimapElements,
     } satisfies MapWarningWidget,
   ];
@@ -101,6 +103,7 @@ const requestApprovalToAttackMessageLow = (
             false,
             1,
             [...pearceScreenElements],
+            ['message'],
           ),
         ),
         ...minimapWidgets,
@@ -145,6 +148,7 @@ const acaFuelLowMessageLow = (message: Message) => {
             false,
             1,
             [...elements],
+            ['message']
           ),
         ),
       ]),
@@ -197,6 +201,8 @@ const missileToOwnshipDetectedMessageLow = (
       useElementLocation: false,
       maxAmount: 10,
 
+      tags: ['specify', 'map-warning'],
+
       elements: minimapElements,
     } satisfies MapWarningWidget,
   ];
@@ -235,6 +241,7 @@ const missileToOwnshipDetectedMessageLow = (
             true,
             1,
             [...pearceScreenElements],
+            ['message'],
           ),
         ),
         ...minimapWidgets,
@@ -279,6 +286,7 @@ const acaDefectMessageLow = (message: Message) => {
             true,
             1,
             [...elements],
+            ['message'],
           ),
         ),
       ]),
@@ -317,6 +325,7 @@ const acaHeadingToBaseMessageLow = (message: Message) => {
             true,
             1,
             [...elements],
+            ['message'],
           ),
         ),
       ]),

@@ -40,6 +40,7 @@ const initialLeftScreenWidgets: WidgetMap = {
       } satisfies ImageElement,
     ],
     maxAmount: 1,
+    tags: ['video'],
   } satisfies ListWidget,
 
   // left map box widget
@@ -67,6 +68,7 @@ const initialLeftScreenWidgets: WidgetMap = {
       } satisfies ImageElement,
     ],
     maxAmount: 1,
+    tags: ['small-map'],
   } satisfies ListWidget,
 
   // center box widget
@@ -84,6 +86,7 @@ const initialLeftScreenWidgets: WidgetMap = {
     priority: 10,
     elements: [],
     maxAmount: 1,
+    tags: ['history'],
   } satisfies HistoryWidget,
 };
 
