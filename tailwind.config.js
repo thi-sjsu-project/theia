@@ -14,6 +14,7 @@ const tailwindConfig =  {
       "muted-gray": "#97979d",
       convo: {
         bar: "#656566",
+        bg: "#252526",
       },
     },
   },
