@@ -16,26 +16,26 @@ type TableElementProps = {
 const TableElement = ({
   element,
   children,
-  borderColor = '#585864',
-  evenAlternatingColor = '#202021',
-  oddAlternatingColor = '#00FFFFFF',
-  leftLabelColor = '#bcbcbc',
+  borderColor = 'border-[#585864]',
+  evenAlternatingColor = 'bg-[#202021]',
+  oddAlternatingColor = 'bg-[rgba(0,0,0,0)]',
+  leftLabelColor = 'text-[#bcbcbc]',
 }: TableElementProps) => {
   const { rows, cols, tableData } = element;
 
   const renderTable = () => {
     return (
-      <table className="border-collapse border-spacing-14 w-full">
+      <table className="border-collapse w-full">
         <tbody>
           {Array.from({ length: rows }).map((_, i) => (
             <tr
-              className={`border-y-2 border-[${borderColor}] bg-[${i % 2 === 0 ? evenAlternatingColor : oddAlternatingColor}] `}
+              className={`border-y-2 ${borderColor} ${i % 2 === 0 ? evenAlternatingColor : oddAlternatingColor}`}
               key={i}
             >
               {Array.from({ length: cols }).map((_, j) => (
                 <td
                   key={j}
-                  className={`${j > 0 ? 'border-l-2' : 'border-x-0'} ${j === 0 && `text-[${leftLabelColor}]`} border-[${borderColor}] py-1`}
+                  className={`${j > 0 ? 'border-l-2' : 'border-x-0'} ${j === 0 && leftLabelColor} ${borderColor} py-1`}
                   style={{ width: `${100 / cols}%` }}
                 >
                   <div className="ml-6">{tableData[i][j]}</div>
