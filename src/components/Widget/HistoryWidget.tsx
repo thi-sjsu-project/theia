@@ -21,7 +21,7 @@ const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
         {/* TODO : extract out into HistoryMessageElement. Currently is mock data to test look */}
 
         <div className="col-span-1 flex flex-col h-full">
-          <span className="bg-[#19debb] text-black text-xl font-bold flex flex-row py-1 mx-3 rounded-md items-center justify-center">
+          <span className="bg-[#19debb] text-black text-xl font-bold flex flex-row py-1 mx-2 rounded-md items-center justify-center">
             4
           </span>
           <div className="border-[#656566] h-full w-1/2 border-r-4 mt-4 flex flex-row items-center justify-center rounded-sm" />
