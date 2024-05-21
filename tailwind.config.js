@@ -12,6 +12,15 @@ const config = {
     fontFamily: {
       sans: ['Roboto Condensed', 'system-ui', 'sans-serif'],
     },
+    colors: {
+      ...require('tailwindcss/colors'),
+      turquoise: "#19debb",
+      "muted-gray": "#97979d",
+      convo: {
+        bar: "#656566",
+        bg: "#252526",
+      },
+    },
   },
   plugins: [],
 };
