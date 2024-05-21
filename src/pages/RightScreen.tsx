@@ -17,10 +17,8 @@ const RightScreen = () => {
        <img src={airfieldKnots} alt="Airfield Knots" />
        <img src={target} alt="Target" />
         <img src={turnCoordinator} alt="Turn Coordinator" />
-      
         <img src={altmeter} alt="Altmeter" />
         <img src={planeDirection} alt="Plane Direction" />
-      
         <img src={verticalSpeed} alt="Vertical Speed" />
   </div>
 </div>
