@@ -16,7 +16,7 @@ const aca1: AcaStatusElement = {
 const aca2: AcaStatusElement = {
   type: 'aca-status',
   acaId: 2,
-  fuelLevel: 0.5,
+  fuelLevel: 0.2,
   weaponLoad: 0.5,
   h: 80,
   w: 132,
@@ -27,7 +27,7 @@ const aca2: AcaStatusElement = {
 const aca3: AcaStatusElement = {
   type: 'aca-status',
   acaId: 3,
-  fuelLevel: 0.5,
+  fuelLevel: 0.1,
   weaponLoad: 0.5,
   h: 80,
   w: 132,
@@ -38,7 +38,7 @@ const aca3: AcaStatusElement = {
 const aca4: AcaStatusElement = {
   type: 'aca-status',
   acaId: 4,
-  fuelLevel: 0.5,
+  fuelLevel: 0.15,
   weaponLoad: 0.5,
   h: 80,
   w: 132,
