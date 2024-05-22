@@ -86,7 +86,7 @@ const Prototype = () => {
   }, [currentStressLevel]);
 
   useEffect(() => {
-    dispatch(setStressLevel(Math.floor(stressLevel * 3)));
+    dispatch(setStressLevel(Math.min(Math.floor(stressLevel * 3), 2)));
   }, [stressLevel]);
 
   return <Home />;

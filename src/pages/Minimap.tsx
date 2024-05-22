@@ -7,6 +7,7 @@ import { getElementsInGaze } from 'src/redux/slices/gazeSlice';
 import { useEffect } from 'react';
 import background from 'src/assets/minimap-bg.jpg';
 import ACAHeader from 'src/components/Element/ACAHeader';
+import StressLevelIndicator from 'src/components/StressLevelIndicator';
 
 const Minimap = () => {
   const widgets = useAppSelector((state) =>
@@ -33,6 +34,7 @@ const Minimap = () => {
           <Widget key={widgetId} widget={widgets[widgetId]} />
         ))}
       </div>
+      <StressLevelIndicator />
     </>
   );
 };

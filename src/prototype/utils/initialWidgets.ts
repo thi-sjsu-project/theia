@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import LeftScreenMap from 'src/assets/left-bottom-map.png';
 import LeftScreenVideo from 'src/assets/left-video.png';
-import type { HistoryWidget, ListWidget, WidgetMap } from 'src/types/widget';
+import type { BasicWidget, HistoryWidget, WidgetMap } from 'src/types/widget';
 import { type ImageElement } from 'src/types/element';
 import {
   initialShips,
@@ -18,7 +18,7 @@ const initialLeftScreenWidgets: WidgetMap = {
   // left video box widget
   [videoBoxUuid]: {
     id: videoBoxUuid,
-    type: 'list',
+    type: 'basic',
     screen: '/pearce-screen',
     sectionType: 'map-video',
     x: 50,
@@ -41,16 +41,16 @@ const initialLeftScreenWidgets: WidgetMap = {
     ],
     maxAmount: 1,
     tags: ['video'],
-  } satisfies ListWidget,
+  } satisfies BasicWidget,
 
   // left map box widget
   [mapBoxUuid]: {
     id: mapBoxUuid,
-    type: 'list',
+    type: 'basic',
     screen: '/pearce-screen',
     sectionType: 'map-video',
     x: 50,
-    y: 550,
+    y: 600,
     w: 500,
     h: 350,
     canOverlap: false,
@@ -68,8 +68,8 @@ const initialLeftScreenWidgets: WidgetMap = {
       } satisfies ImageElement,
     ],
     maxAmount: 1,
-    tags: ['small-map'],
-  } satisfies ListWidget,
+    tags: ['map'],
+  } satisfies BasicWidget,
 
   // center box widget
   [historyBoxUuid]: {

@@ -66,7 +66,7 @@ const Element = ({ element, styleClass, children }: ElementProps) => {
   };
 
   return (
-    <div onClick={handleClick}>
+    <div onClick={handleClick} className={styleClass}>
       {renderElement()}
       {children}
     </div>

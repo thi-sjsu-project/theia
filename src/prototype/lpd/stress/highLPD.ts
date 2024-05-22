@@ -5,7 +5,7 @@ import type {
 } from 'src/types/schema-types';
 import { v4 as uuid } from 'uuid';
 import lpdHelper from 'src/utils/lpdHelper';
-import DANGER_ICON from 'src/assets/icons/danger.svg';
+import DANGER_ICON from 'src/assets/icons/threats/missile-sm-emph.svg';
 import type {
   Element,
   IconElement,
@@ -31,8 +31,8 @@ const requestApprovalToAttackMessageHigh = (
       ),
       message,
       lpdHelper.generateIconElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 80, 80),
-        DANGER_ICON,
+        lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
+        mapTargetTypeToWarningIcon(message.data.target.type),
       ),
       lpdHelper.generateButtonElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80),
@@ -51,8 +51,8 @@ const requestApprovalToAttackMessageHigh = (
       id: uuid(),
       modality: 'visual',
       type: 'icon',
-      h: 50,
-      w: 50,
+      h: 80,
+      w: 80,
       widgetId: minimapWidgetId1,
       src: mapTargetTypeToWarningIcon(message.data.target.type),
     } satisfies IconElement,
@@ -78,8 +78,8 @@ const requestApprovalToAttackMessageHigh = (
       type: 'map-warning',
       x: message.data.target.location.x,
       y: message.data.target.location.y,
-      w: 50,
-      h: 50,
+      w: 80,
+      h: 80,
       screen: '/minimap',
       canOverlap: true,
       useElementLocation: false,
@@ -176,7 +176,7 @@ const missileToOwnshipDetectedMessageHigh = (
       ),
       message,
       lpdHelper.generateIconElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 80, 80),
+        lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
         DANGER_ICON,
       ),
     ),
@@ -188,8 +188,8 @@ const missileToOwnshipDetectedMessageHigh = (
       id: uuid(),
       modality: 'visual',
       type: 'icon',
-      h: 50,
-      w: 50,
+      h: 128,
+      w: 128,
       widgetId: minimapWidgetId1,
       src: mapTargetTypeToWarningIcon('missile'),
       expirationInterval: 5000,
@@ -217,8 +217,8 @@ const missileToOwnshipDetectedMessageHigh = (
       type: 'map-warning',
       x: message.data.missileLocation.x,
       y: message.data.missileLocation.y,
-      w: 50,
-      h: 50,
+      w: 128,
+      h: 128,
       screen: '/minimap',
       canOverlap: true,
       useElementLocation: false,

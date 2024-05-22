@@ -10,7 +10,7 @@ import type {
   IconElement,
   InformationElement,
 } from 'src/types/element';
-import DANGER_ICON from 'src/assets/icons/danger.svg';
+import DANGER_ICON from 'src/assets/icons/threats/missile-sm-emph.svg';
 import type { MapWarningWidget, Widget } from 'src/types/widget';
 import type { WidgetCluster } from 'src/types/support-types';
 import { mapTargetTypeToWarningIcon } from 'src/prototype/utils/helpers';
@@ -24,8 +24,8 @@ const requestApprovalToAttackMessageLow = (
       lpdHelper.generateBaseElement(uuid(), 'visual', 30, 30, message.priority),
       message,
       lpdHelper.generateIconElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 80, 80),
-        DANGER_ICON,
+        lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
+        mapTargetTypeToWarningIcon(message.data.target.type),
       ),
       lpdHelper.generateButtonElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80),
@@ -44,8 +44,8 @@ const requestApprovalToAttackMessageLow = (
       id: uuid(),
       modality: 'visual',
       type: 'icon',
-      h: 50,
-      w: 50,
+      h: 80,
+      w: 80,
       widgetId: minimapWidgetId1,
       src: mapTargetTypeToWarningIcon(message.data.target.type),
       expirationInterval: 3000,
@@ -73,8 +73,8 @@ const requestApprovalToAttackMessageLow = (
       type: 'map-warning',
       x: message.data.target.location.x,
       y: message.data.target.location.y,
-      w: 50,
-      h: 50,
+      w: 80,
+      h: 80,
       screen: '/minimap',
       canOverlap: true,
       useElementLocation: false,
@@ -167,8 +167,8 @@ const missileToOwnshipDetectedMessageLow = (
       id: uuid(),
       modality: 'visual',
       type: 'icon',
-      h: 50,
-      w: 50,
+      h: 128,
+      w: 128,
       widgetId: minimapWidgetId1,
       src: mapTargetTypeToWarningIcon('missile'),
     } satisfies IconElement,
@@ -194,8 +194,8 @@ const missileToOwnshipDetectedMessageLow = (
       type: 'map-warning',
       x: message.data.missileLocation.x,
       y: message.data.missileLocation.y,
-      w: 50,
-      h: 50,
+      w: 128,
+      h: 128,
       screen: '/minimap',
       canOverlap: true,
       useElementLocation: false,
@@ -218,7 +218,7 @@ const missileToOwnshipDetectedMessageLow = (
       ),
       message,
       lpdHelper.generateIconElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 80, 80),
+        lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
         DANGER_ICON,
       ),
     ),

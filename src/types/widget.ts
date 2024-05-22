@@ -27,6 +27,11 @@ export type BaseWidget = {
   tags?: string[];
 };
 
+// widget without any bells and whistles when you really only want to place some static stuff
+export type BasicWidget = BaseWidget & {
+  type: 'basic';
+};
+
 export type ListWidget = BaseWidget & {
   type: 'list';
   maxElements?: number;
@@ -66,6 +71,7 @@ export type CustomWidget = BaseWidget & {
 export type Widget =
   | CustomWidget
   | VehicleWidget
+  | BasicWidget
   | ListWidget
   | GridWidget
   | HistoryWidget

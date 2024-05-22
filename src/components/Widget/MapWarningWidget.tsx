@@ -1,17 +1,10 @@
 import type { MapWarningWidget as MapWarningWidgetType } from 'src/types/widget';
-import { v4 as uuid } from 'uuid';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { getElementsInGaze } from 'src/redux/slices/gazeSlice';
-import {
-  addElementsToWidget,
-  deleteElementFromWidget,
-  updateElement,
-  updateWidget,
-} from 'src/redux/slices/minimapSlice';
-import { useEffect, useState } from 'react';
+import { updateElement } from 'src/redux/slices/minimapSlice';
+import { useEffect } from 'react';
 import type {
   IconElement as IconElementType,
-  TextElement as TextElementType,
   InformationElement as InformationElementType,
 } from 'src/types/element';
 import IconElement from 'src/components/Element/Simple/IconElement';
@@ -61,6 +54,7 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
           <div style={{ height: 2, width: 75, border: '2px dashed white' }} />
           <MapThreatInfoElement
             element={threatInfoElement as InformationElementType}
+            inGaze={inGaze}
           />
         </>
       )}
