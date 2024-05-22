@@ -1,14 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { type WidgetChannel } from 'src/types/support-types';
 
 type InitialState = {
-  activeConvoID : string;
-  selectedElementID : string;
+  widgetChannels: {
+    [key in WidgetChannel]: any;
+  };
 };
 
 const initialState: InitialState = {
-    activeConvoID : "",
-    selectedElementID : "",
+  widgetChannels: {
+    'list-history': {
+      activeConvoID : "",
+      selectedElementID : "",
+    },
+  },
 };
 
 export const componentSlice = createSlice({
@@ -17,18 +23,18 @@ export const componentSlice = createSlice({
   reducers: {
     // add state updating functions here)
     setActiveConvoID : (state, action : PayloadAction<string>) => {
-        state.activeConvoID = action.payload;
+        state.widgetChannels['list-history'].activeConvoID = action.payload;
     },
 
     setSelectedElementID : (state, action : PayloadAction<string>) => {
-        state.selectedElementID = action.payload;
+        state.widgetChannels['list-history'].selectedElementID = action.payload;
     },
   },
 
   selectors: {
     // add selector functions here (to get state values from the store)
-    getActiveConvoID : (state) => state.activeConvoID,
-    getSelectedElementID : (state) => state.selectedElementID,
+    getActiveConvoID : (state) => state.widgetChannels['list-history'].activeConvoID,
+    getSelectedElementID : (state) => state.widgetChannels['list-history'].selectedElementID,
   },
 });
 
