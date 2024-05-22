@@ -104,8 +104,10 @@ export type AcaStatusElement = BaseElement & {
   type: 'aca-status';
   acaId: Id;
   fuelLevel: Range<0, 1>;
-  weaponLoad: Range<0, 1>;
+  weaponLoad1: Range<0, 1>;
+  weaponLoad2: Range<0, 1>;
   widgetId: string;
+  isDead: boolean;
 };
 
 export type InformationElement = BaseElement & {
