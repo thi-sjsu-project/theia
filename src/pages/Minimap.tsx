@@ -6,7 +6,6 @@ import useGaze from 'src/hooks/useGaze';
 import { getElementsInGaze } from 'src/redux/slices/gazeSlice';
 import { useEffect } from 'react';
 import background from 'src/assets/minimap-bg.jpg';
-import ACAHeader from 'src/components/Element/ACAHeader';
 import StressLevelIndicator from 'src/components/StressLevelIndicator';
 
 const Minimap = () => {
