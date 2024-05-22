@@ -10,7 +10,7 @@ type ListWidgetProps = {
 
 const ListWidget = ({ widget }: ListWidgetProps) => {
   const className =
-    'absolute p-2 flex flex-col gap-6 items-center overflow-scroll overflow-x-hidden overflow-y-auto';
+    'absolute p-2 flex flex-col gap-6 items-center overflow-scroll overflow-x-hidden overflow-y-hidden';
 
   // Sort elements by priority
   const sortedElementsByPriority = [...widget.elements].sort(
