@@ -16,6 +16,7 @@ export function useMouseButtonDown() {
   useEffect(() => {
     function handleMouseButtonDown(ev: MouseEvent) {
       //console.log('Mouse button pressed: ' + ev.button);
+      ev.preventDefault();
       if (ev.button === 0 || ev.button === 1 || ev.button === 2  || ev.button === 3 ) {
         setMouseButtDown(ev.button.toString());
         //console.log('Mouse button pressed: ' + ev.button);

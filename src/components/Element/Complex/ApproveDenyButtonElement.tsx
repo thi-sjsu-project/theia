@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useAppSelector } from 'src/redux/hooks';
+import { getGazesAndKeys } from 'src/redux/slices/gazeSlice';
 import type { ApproveDenyButtonElement as ApproveDenyButtonElementType } from 'src/types/element';
 
 type ApproveDenyButtonElementProps = {
@@ -24,8 +26,10 @@ type KeyframeParameters = {
   tinyDotOpacity: number,
   approveButtonPosition: number,
   approveButtonOpacity: number,
+  approveArrowOpacity: number,
   denyButtonPosition: number,
   denyButtonOpacity: number,
+  denyArrowOpacity: number,
 };
 
 const INITIAL_KEYFRAME: KeyframeParameters = {
@@ -37,8 +41,10 @@ const INITIAL_KEYFRAME: KeyframeParameters = {
   tinyDotOpacity: 0.8,
   approveButtonPosition: 1,
   approveButtonOpacity: 1,
+  approveArrowOpacity: 1,
   denyButtonPosition: 0,
   denyButtonOpacity: 1,
+  denyArrowOpacity: 1,
 } as const;
 
 const KEYFRAMES_APPROVE = [
@@ -52,13 +58,15 @@ const KEYFRAMES_APPROVE = [
       bigCircleRadius: SIZES.bigCircle,
       bigCircleGradientStart: 0x646464,
       bigCircleGradientEnd: 0x00C007,
-      smallTurqoiseCirclePosition: 0.5,
+      smallTurqoiseCirclePosition: 0.7,
       smallTurqoiseCircleOpacity: 1,
       tinyDotOpacity: 0.8,
       approveButtonPosition: 1,
       approveButtonOpacity: 1,
+      approveArrowOpacity: 1,
       denyButtonPosition: 0,
       denyButtonOpacity: 1,
+      denyArrowOpacity: 0.2,
     },
   },
   {
@@ -72,8 +80,10 @@ const KEYFRAMES_APPROVE = [
       tinyDotOpacity: 0,
       approveButtonPosition: 0.5,
       approveButtonOpacity: 1,
+      approveArrowOpacity: 0,
       denyButtonPosition: 0,
       denyButtonOpacity: 0,
+      denyArrowOpacity: 0,
     },
   },
   {
@@ -87,8 +97,10 @@ const KEYFRAMES_APPROVE = [
       tinyDotOpacity: 0,
       approveButtonPosition: 0.5,
       approveButtonOpacity: 1,
+      approveArrowOpacity: 0,
       denyButtonPosition: 0,
       denyButtonOpacity: 0,
+      denyArrowOpacity: 0,
     },
   },
 ];
@@ -104,13 +116,15 @@ const KEYFRAMES_DENY = [
       bigCircleRadius: SIZES.bigCircle,
       bigCircleGradientStart: 0x646464,
       bigCircleGradientEnd: 0xBC2503,
-      smallTurqoiseCirclePosition: 0.5,
+      smallTurqoiseCirclePosition: 0.3,
       smallTurqoiseCircleOpacity: 1,
       tinyDotOpacity: 0.8,
       approveButtonPosition: 1,
       approveButtonOpacity: 1,
+      approveArrowOpacity: 0.2,
       denyButtonPosition: 0,
       denyButtonOpacity: 1,
+      denyArrowOpacity: 1,
     },
   },
   {
@@ -124,8 +138,10 @@ const KEYFRAMES_DENY = [
       tinyDotOpacity: 0,
       approveButtonPosition: 1,
       approveButtonOpacity: 0,
+      approveArrowOpacity: 0,
       denyButtonPosition: 0.5,
       denyButtonOpacity: 1,
+      denyArrowOpacity: 0,
     },
   },
   {
@@ -139,8 +155,10 @@ const KEYFRAMES_DENY = [
       tinyDotOpacity: 0,
       approveButtonPosition: 1,
       approveButtonOpacity: 0,
+      approveArrowOpacity: 0,
       denyButtonPosition: 0.5,
       denyButtonOpacity: 1,
+      denyArrowOpacity: 0,
     },
   },
 ];
@@ -157,6 +175,8 @@ const KEYFRAMES_DENY = [
 //   - 2: pos turqoise circle left of entire button, "deny" in middle of button, button red
 //   - 3: no turqoise circle, "deny" in middle of button, button red
 
+const FRAMETIME = 1.0 / 60.0;
+
 const ApproveDenyButtonElement = ({
   element,
 }: ApproveDenyButtonElementProps) => {
@@ -166,6 +186,78 @@ const ApproveDenyButtonElement = ({
   const buttonStyle = { fontSize: w * SIZES.fontSize, height: w * SIZES.button - 2, lineHeight: `${w * SIZES.button - 2}px`, width: w * SIZES.sideLabel };
 
   const [state, setState] = useState(INITIAL_KEYFRAME);
+  const [animation, setAnimation] = useState<"approve" | "deny" | undefined>(undefined);
+  const [time, setTime] = useState(0);
+  const intervalRef = useRef<any>(undefined); // this is really just `number | undefined` but typescript is stoopid
+
+  useEffect(() => {
+    let intervalHandle: any;
+
+    const animationTick = () => {
+      setState({...state, bigCircleRadius: state.bigCircleRadius + 0.01});
+      setTime(prevTime => {
+        const newTime = prevTime + FRAMETIME;
+        if (newTime >= 1000) {
+          stopAnimation();
+        }
+        return newTime;
+      });
+    };
+
+    if (animation) {
+      intervalRef.current = setInterval(animationTick, FRAMETIME);
+    } else  {
+      if (intervalRef.current !== undefined) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = undefined;
+      }
+    }
+
+    return () => {
+      if (intervalRef.current !== undefined) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = undefined;
+      }
+    };
+  });
+
+  //const [intervalHandle, setIntervalHandle] = useState<number | undefined>(undefined);
+  //const [time, setTime] = useState(0);
+
+  //const animationTick = (action: "approve" | "deny") => {
+  //  setTime(time + FRAMETIME);
+  //  setState({...state, bigCircleRadius: state.bigCircleRadius * 1.1})
+  //  if (time >= 1) {
+  //    setAnimation(undefined);
+  //    clearInterval(intervalHandle);
+  //  }
+  //}
+  
+  const stopAnimation = () => {
+    setState(INITIAL_KEYFRAME);
+    setAnimation(undefined);
+    if (intervalRef.current !== undefined) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = undefined;
+    }
+    setTime(0);
+  };
+
+  const gazeAndKeys = useAppSelector(getGazesAndKeys);
+  useEffect(() => {
+    for (const i of gazeAndKeys) {
+      if (animation !== "deny" && i.keyPress === "0") { // left mouse button
+        setAnimation("deny");
+        return;
+      } else if (animation !== "approve" && i.keyPress === "2") { // right mouse button
+        setAnimation("approve");
+        return;
+      }
+    }
+    if (!gazeAndKeys.some(x => x.keyPress === "0") && !gazeAndKeys.some(x => x.keyPress === "2")) {
+      stopAnimation();
+    }
+  }, [gazeAndKeys]);
 
   return (
     <div
@@ -187,8 +279,8 @@ const ApproveDenyButtonElement = ({
         </div>
         <svg className="" style={{ width: w, height: w * SIZES.button, marginTop: -w * SIZES.button }}>
           <clipPath id="clip">
-            <rect />
           </clipPath>
+          <circle cx={10} cy={10} r={state.bigCircleRadius * 100} fill="red" />
         </svg>
       </div>
     </div>
