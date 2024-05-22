@@ -67,6 +67,10 @@ export const minimapSlice = createSlice({
     },
 
     addWidget: (state, action: PayloadAction<Widget>) => {
+      // set widgetIds of all elements to the widget id
+      action.payload.elements.forEach((element) => {
+        element.widgetId = action.payload.id;
+      });
       state.widgets[action.payload.id] = action.payload;
     },
 
@@ -173,6 +177,11 @@ export const minimapSlice = createSlice({
           ...widget,
           elements: [...widget.elements, ...elements],
         };
+
+        // set widgetId of all elements to the widget id
+        state.widgets[widgetId].elements.forEach((element) => {
+          element.widgetId = widgetId;
+        });
       },
     },
 

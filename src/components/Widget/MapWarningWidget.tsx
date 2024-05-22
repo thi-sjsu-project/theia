@@ -35,7 +35,7 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
         updateElement(widget.id, { ...threatInfoElement, collapsed: false }),
       );
     }
-  }, [inGaze, dispatch, iconElement, threatInfoElement, widget]);
+  }, [inGaze, dispatch, iconElement, threatInfoElement, widget.id]);
 
   return (
     <div

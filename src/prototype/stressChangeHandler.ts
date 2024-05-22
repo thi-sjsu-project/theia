@@ -25,29 +25,34 @@ const stressChangeHandler = ({
   allMessages,
   allWidgetsInNewStressLPD,
 }: StressChangeHandlerProps) => {
-
   //find the widgets we can delete via tags
 
-  allWidgets.forEach(function (widget, widgetIndex) { //go through every widget in state
+  allWidgets.forEach(function (widget, widgetIndex) {
+    //go through every widget in state
     let widgetIsInNewStressLPD = false;
-    allWidgetsInNewStressLPD.forEach((widgetInStress) => { //go through every widget in new stress LPD
-      if(!widgetIsInNewStressLPD){
+    allWidgetsInNewStressLPD.forEach((widgetInStress) => {
+      //go through every widget in new stress LPD
+      if (!widgetIsInNewStressLPD) {
         let hasAllTags = true;
-        widgetInStress.tags!.forEach((stressTag) => { //go through every tag in the current widget in stress LPD
-          if(!widget.tags!.includes(stressTag)){ //if a tag from the new stress widget is not in the current widget, then it is not the same
+        widgetInStress.tags!.forEach((stressTag) => {
+          //go through every tag in the current widget in stress LPD
+          if (!widget.tags!.includes(stressTag)) {
+            //if a tag from the new stress widget is not in the current widget, then it is not the same
             hasAllTags = false;
           }
         });
 
-        if(hasAllTags){ //if the widget has all the tags that the new stress widget does, then this widget exists in the new stress LPD
+        if (hasAllTags) {
+          //if the widget has all the tags that the new stress widget does, then this widget exists in the new stress LPD
           widgetIsInNewStressLPD = true; //so lets say that it exists
         }
       }
     });
 
     //if the widget does not exist in new stress LPD, then we can delete it
-    if(!widgetIsInNewStressLPD)
+    if (!widgetIsInNewStressLPD) {
       dispatch(removeWidget(widget.id));
+    }
   });
 
   //rerun through all messages that are not handled so that widgets that should be displayed for current stress level get displayed

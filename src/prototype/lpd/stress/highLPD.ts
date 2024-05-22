@@ -19,6 +19,7 @@ import { mapTargetTypeToWarningIcon } from 'src/prototype/utils/helpers';
 const requestApprovalToAttackMessageHigh = (
   message: RequestApprovalToAttack,
 ) => {
+  const listWidgetId = uuid();
   const pearceScreenElements: Element[] = [
     lpdHelper.generateRequestApprovalElement(
       lpdHelper.generateBaseElement(
@@ -30,6 +31,7 @@ const requestApprovalToAttackMessageHigh = (
         'list',
       ),
       message,
+      listWidgetId,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
         mapTargetTypeToWarningIcon(message.data.target.type),
@@ -96,7 +98,7 @@ const requestApprovalToAttackMessageHigh = (
       generateCluster([
         lpdHelper.generateListWidget(
           lpdHelper.generateBaseWidget(
-            uuid(),
+            listWidgetId,
             'tinder',
             100,
             100,
@@ -164,6 +166,7 @@ const acaFuelLowMessageHigh = (message: Message) => {
 const missileToOwnshipDetectedMessageHigh = (
   message: MissileToOwnshipDetected,
 ) => {
+  const listWidgetId = uuid();
   const pearceScreenElements: Element[] = [
     lpdHelper.generateMissileIncomingElement(
       lpdHelper.generateBaseElement(
@@ -175,6 +178,7 @@ const missileToOwnshipDetectedMessageHigh = (
         'list',
       ),
       message,
+      listWidgetId,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
         DANGER_ICON,
@@ -236,7 +240,7 @@ const missileToOwnshipDetectedMessageHigh = (
       generateCluster([
         lpdHelper.generateListWidget(
           lpdHelper.generateBaseWidget(
-            uuid(),
+            listWidgetId,
             'tinder',
             100,
             100,

@@ -30,19 +30,17 @@ function doesOverlap(
   return true; //since neither is to the left or under, they are overlapping
 }
 
-
 //tags1 should be the proposed widget, tags2 should be the tags in the message
-function findSpecifierTag(tagsProposed:string[], tagsMessage:string[]){
-
-  let specifier = 'none'
+function findSpecifierTag(tagsProposed: string[], tagsMessage: string[]) {
+  let specifier = 'none';
   //go through every tag in proposed widget and find the specified tag that links the messageTag to the widget tag
   tagsProposed.forEach((tagProposed) => {
-    if(tagsMessage.includes(tagProposed)){
+    if (tagsMessage.includes(tagProposed)) {
       //we found the specified tag that links them
       //find the specifier
-      tagsMessage.forEach((tagMessage) =>{
+      tagsMessage.forEach((tagMessage) => {
         //if the tagMessage is not the same as the link tag, and it includes the link tag
-        if(tagMessage !== tagProposed && tagMessage.includes(tagProposed)){
+        if (tagMessage !== tagProposed && tagMessage.includes(tagProposed)) {
           //we found the specifier
           specifier = tagMessage;
         }
@@ -97,36 +95,45 @@ const assimilator = ({
       let widgetIdToUpdate = '';
       let widgetExists = false;
       let widgetHandlesMessage = false;
-      
+
       //go through each deployed widget
       Object.keys(deployedWidgets).forEach((widgetId) => {
-        if(widgetExists === false){ //make sure we haven't already found the widget
+        if (widgetExists === false) {
+          //make sure we haven't already found the widget
           const deployedWidget = deployedWidgets[widgetId];
-          
+
           //find if the current deployedWidget is the same widget type as the proposed widget
           let sameWidget = true;
-          widget.tags!.forEach((tag) => { //go through every tag in the proposed wigets tags
-            if(!deployedWidget.tags!.includes(tag)){ //check if the tags are in the current deployed widget
+          widget.tags!.forEach((tag) => {
+            //go through every tag in the proposed wigets tags
+            if (!deployedWidget.tags!.includes(tag)) {
+              //check if the tags are in the current deployed widget
               sameWidget = false; //the current tag was not in the current deployed widget, so it is not the same widget type
             }
           });
-        
-          if(sameWidget){ //the current deployed widget is the same widget type
+
+          if (sameWidget) {
+            //the current deployed widget is the same widget type
             //find if they have the same tags and are the exact same widge instance
             let hasSameSpecifier = true;
-            if(widget.tags!.includes('specify')){//if the proposed widget has 'specify', that means there could be multiple widget instances with the same widget type
+            if (widget.tags!.includes('specify')) {
+              //if the proposed widget has 'specify', that means there could be multiple widget instances with the same widget type
               //go through every tag in the message and see if the current deployed widget has the same tags
-              if(!deployedWidget.tags!.includes(findSpecifierTag(widget.tags!, message.tags!))){
+              if (
+                !deployedWidget.tags!.includes(
+                  findSpecifierTag(widget.tags!, message.tags!),
+                )
+              ) {
                 hasSameSpecifier = false;
               }
             }
 
             //if this deployed widget has the same specifier (or doesn't need them), then we found our widget
-            if(hasSameSpecifier){
+            if (hasSameSpecifier) {
               widgetIdToUpdate = deployedWidget.id;
               widgetExists = true;
               //check if this deployed widget handles the message we are reacting to
-              if(deployedWidget.handledMessageIds!.includes(message.id)){
+              if (deployedWidget.handledMessageIds!.includes(message.id)) {
                 widgetHandlesMessage = true;
               }
             }
@@ -134,12 +141,8 @@ const assimilator = ({
         }
       });
 
-
-      if (
-        widgetExists &&
-        widgetHandlesMessage
-      ) {
-        console.log('message handled by widget already')
+      if (widgetExists && widgetHandlesMessage) {
+        console.log('message handled by widget already');
         // check if the widget already exists on the screen and handles the message
         const sectionID = { widgetID: widgetIdToUpdate, sectionID: 'none' };
         const action = 'messageAlreadyHandled';
@@ -149,11 +152,8 @@ const assimilator = ({
         widgetsToDeploy.push(widgetToDeploy);
         actionsToDeploy.push(action);
         sectionIdsToDeploy.push(sectionID);
-      } else if (
-        widgetExists &&
-        !widgetHandlesMessage
-      ) {
-        console.log('updating widget')
+      } else if (widgetExists && !widgetHandlesMessage) {
+        console.log('updating widget');
         // check if the widget already exists on the screen and that the widget does not handle the message
         const sectionID = { widgetID: widgetIdToUpdate, sectionID: 'none' };
         const action = 'updateWidget';
@@ -164,7 +164,7 @@ const assimilator = ({
         actionsToDeploy.push(action);
         sectionIdsToDeploy.push(sectionID);
       } else {
-        console.log('placing widget')
+        console.log('placing widget');
         //the widget doesn't exist yet
 
         let widgetPlaced = false; //tracks if we have placed this the widget
@@ -259,12 +259,15 @@ const assimilator = ({
                 if (doesNotOverlap === true) {
                   widgetPlaced = true;
                   //no overlap, deploy widget
-                  widget.id = uuid();
+                  widget.id = uuid(); // why this?
                   widget.x = proposedX; //set widget's top-left coordinates
                   widget.y = proposedY;
                   widget.handledMessageIds = [message.id]; //set widget's first message id
-                  if(widget.tags!.includes('specify')){ //only add the specifier tag if the widget needs to be specified
-                    widget.tags!.push(findSpecifierTag(widget.tags!, message.tags!))
+                  if (widget.tags!.includes('specify')) {
+                    //only add the specifier tag if the widget needs to be specified
+                    widget.tags!.push(
+                      findSpecifierTag(widget.tags!, message.tags!),
+                    );
                   }
                   const widgetToDeploy = widget; //the widget can be deployed
                   const sectionID = {

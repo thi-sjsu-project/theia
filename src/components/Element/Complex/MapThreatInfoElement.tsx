@@ -34,7 +34,7 @@ const MapThreatInfoElement = ({ element, inGaze }: Props) => {
       );
 
       dispatch(
-        updateElement(element.widgetId!, {
+        updateElement(element.widgetId, {
           ...element,
           expiration: expireAt.toISOString(),
         }),

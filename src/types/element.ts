@@ -89,6 +89,7 @@ export type RequestApprovalElement = BaseElement & {
   icon: IconElement;
   leftButton: ButtonElement;
   rightButton: ButtonElement;
+  widgetId: string;
   // children?: ReactNode;
 };
 
@@ -96,6 +97,7 @@ export type MissileIncomingElement = BaseElement & {
   type: 'missile-incoming';
   message: MissileToOwnshipDetected;
   icon: IconElement;
+  widgetId: string;
 };
 
 export type AcaStatusElement = BaseElement & {
@@ -103,6 +105,7 @@ export type AcaStatusElement = BaseElement & {
   acaId: Id;
   fuelLevel: Range<0, 1>;
   weaponLoad: Range<0, 1>;
+  widgetId: string;
 };
 
 export type InformationElement = BaseElement & {
@@ -110,6 +113,7 @@ export type InformationElement = BaseElement & {
   size: 'S' | 'M' | 'L';
   title?: string;
   message: RequestApprovalToAttack | MissileToOwnshipDetected;
+  widgetId: string;
 };
 
 // Simple elements have no nested elements and no children

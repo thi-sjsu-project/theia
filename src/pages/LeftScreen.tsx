@@ -17,7 +17,7 @@ const LeftScreen = () => {
   // useEffect(() => {
   //   console.log('elementsInGaze: ', elementsInGaze);
   // }, [elementsInGaze]);
-  
+
   return (
     <div className="absolute top-0 left-0 bg-[#1E1E1E] w-[1920px] h-[1080px] hover:cursor-pointer">
       {/* Top Bar */}
