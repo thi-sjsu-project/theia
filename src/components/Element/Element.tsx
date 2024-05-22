@@ -5,6 +5,7 @@ import RequestApprovalElement from 'src/components/Element/Complex/RequestApprov
 import ButtonElement from 'src/components/Element/Simple/ButtonElement';
 import MissileIncomingElement from 'src/components/Element/Complex/MissileIncomingElement';
 import ImageElement from 'src/components/Element/Simple/ImageElement';
+import ApproveDenyButtonElement from './Complex/ApproveDenyButtonElement';
 
 type ElementProps = {
   element: ElementType;
@@ -58,6 +59,8 @@ const Element = ({ element, styleClass, children }: ElementProps) => {
         ) : (
           <div>Icon</div>
         );
+      case 'approve-deny-button':
+        return <ApproveDenyButtonElement element={element} />;
       case 'custom':
         return <div>Custom</div>;
       default:

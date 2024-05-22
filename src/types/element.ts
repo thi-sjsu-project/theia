@@ -116,6 +116,10 @@ export type InformationElement = BaseElement & {
   widgetId: string;
 };
 
+export type ApproveDenyButtonElement = BaseElement & {
+  type: 'approve-deny-button';
+};
+
 // Simple elements have no nested elements and no children
 export type SimpleElement =
   | TableElement
@@ -131,7 +135,8 @@ export type ComplexElement =
   | MissileIncomingElement
   | RequestApprovalElement
   | CustomElement
-  | InformationElement;
+  | InformationElement
+  | ApproveDenyButtonElement;
 
 export type Element = SimpleElement | ComplexElement;
 
