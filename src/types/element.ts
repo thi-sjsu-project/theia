@@ -20,7 +20,7 @@ export type BaseElement = {
   priority?: number;
   collapsed?: boolean;
 
-  expirationInterval?: number;
+  expirationIntervalMs?: number; // should be in ms
   expiration?: string;
   onExpiration?: 'delete' | 'escalate' | 'deescalate';
   escalate?: boolean;

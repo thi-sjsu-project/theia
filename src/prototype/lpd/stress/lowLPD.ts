@@ -50,7 +50,7 @@ const requestApprovalToAttackMessageLow = (
       w: 80,
       widgetId: minimapWidgetId1,
       src: mapTargetTypeToWarningIcon(message.data.target.type),
-      expirationInterval: 3000,
+      expirationIntervalMs: 3000,
       onExpiration: 'escalate',
     } satisfies IconElement,
     {
@@ -62,7 +62,7 @@ const requestApprovalToAttackMessageLow = (
       message,
       size: 'L', // size L when stress is low
       collapsed: true, // initially, the information elemnt is not displayed
-      expirationInterval: 3000,
+      expirationIntervalMs: 3000,
       onExpiration: 'deescalate',
       widgetId: minimapWidgetId1,
     } satisfies InformationElement,
@@ -183,7 +183,7 @@ const missileToOwnshipDetectedMessageLow = (
       message,
       size: 'L', // size L when stress is low
       collapsed: true, // initially, the information elemnt is not displayed
-      expirationInterval: 3000,
+      expirationIntervalMs: 3000,
       onExpiration: 'deescalate',
       widgetId: minimapWidgetId1,
     } satisfies InformationElement,

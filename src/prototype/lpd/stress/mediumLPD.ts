@@ -60,7 +60,7 @@ const requestApprovalToAttackMessageMedium = (
       message,
       size: 'M', // size L when stress is low
       collapsed: true, // initially, the information elemnt is not displayed
-      expirationInterval: 3000,
+      expirationIntervalMs: 3000,
       onExpiration: 'deescalate',
       widgetId: minimapWidgetId1,
     } satisfies InformationElement,
@@ -199,7 +199,7 @@ const missileToOwnshipDetectedMessageMedium = (
       message,
       size: 'M', // size L when stress is medium
       collapsed: true, // initially, the information elemnt is not displayed
-      expirationInterval: 3000,
+      expirationIntervalMs: 3000,
       onExpiration: 'deescalate',
       widgetId: minimapWidgetId1,
     } satisfies InformationElement,
