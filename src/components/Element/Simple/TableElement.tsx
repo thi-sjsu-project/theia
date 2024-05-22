@@ -21,7 +21,10 @@ const TableElement = ({
   oddAlternatingColor = 'bg-[rgba(0,0,0,0)]',
   leftLabelColor = 'text-[#bcbcbc]',
 }: TableElementProps) => {
-  const { rows, cols, tableData } = element;
+  const { tableData } = element;
+
+  const rows = element.rows ?? tableData?.length;
+  const cols = element.cols ?? tableData[0]?.length;
 
   const renderTable = () => {
     return (

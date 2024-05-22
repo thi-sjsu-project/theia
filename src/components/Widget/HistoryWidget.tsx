@@ -3,16 +3,19 @@ import TableElement from '../Element/Simple/TableElement';
 import HistoryMessageElement from '../Element/Complex/HistoryMessageElement';
 import { getActiveConvoID } from 'src/redux/slices/componentSlice';
 import { useAppSelector } from 'src/redux/hooks';
+import { getMessages } from 'src/redux/slices/minimapSlice';
 
 type HistoryWidgetProps = {
   widget: HistoryWidgetType;
 };
 
 const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
-  const { id, x, y, w, h, elements } = widget;
+  const { id, x, y, w, h } = widget;
 
-  // console.log('elements: ', widget);
-  console.log(useAppSelector(getActiveConvoID));
+  const convoID = useAppSelector(getActiveConvoID);
+  const convoMessages = useAppSelector(getMessages).filter(
+    (message) => message.conversationId === convoID,
+  );
 
   return (
     <div
@@ -21,62 +24,53 @@ const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
       className={`absolute text-white `}
     >
       <div className="grid grid-cols-12 items-start justify-start p-4 gap-4">
+        {convoMessages.reverse().map((message, index) => {
+          switch (message.kind) {
+            case 'RequestApprovalToAttack':
+              return (
+                <HistoryMessageElement
+                  index={convoMessages.length - index}
+                  isActive={true}
+                  title={`ACA-${message.data.detectedByAca}`}
+                  header="Request to attack"
+                  desc = {`Approval for ${message.data.attackWeapon.type} attack`}
+                  tableContent={
+                    <TableElement
+                      element={{
+                        id: `table:${convoID}_${message}`,
+                        modality: 'visual',
+                        h: 3,
+                        w: 4,
 
-        {/* TODO : pass in convo message parameters. Currently is mock data to test look */}
-        {/* to be removed */}
+                        type: 'table',
+                        tableData: [
+                          ...Object.entries(message.data.target).map(
+                            ([key, value]) => {
+                              return [key, JSON.stringify(value)];
+                            },
+                          ),
+                          ['col.damage', message.data.collateralDamage],
+                        ],
+                      }}
+                    />
+                  }
+                />
+              );
 
-        <HistoryMessageElement
-          index={4}
-          isActive={true}
-          title="ACA-7"
-          header="Request to attack"
-          desc="Approval for kinetic attack"
-          tableContent={
-            <TableElement
-              element={{
-                id: 'convoID_<el.index>',
-                modality: 'visual',
-                h: 3,
-                w: 4,
+            case 'AcaDefect':
+              return;
 
-                type: 'table',
-                rows: 4,
-                cols: 2,
-                tableData: [
-                  ['location', '34N, 118W'],
-                  ['priority', 'high'],
-                  ['threat-level', 'high'],
-                  ['col.damage', '45%'],
-                ],
-              }}
-            />
+            case 'AcaFuelLow':
+              return;
+
+            case 'AcaHeadingToBase':
+              return;
+
+            case 'MissileToOwnshipDetected':
+              return;
           }
-        />
+        })}
 
-        <HistoryMessageElement
-          index={3}
-          isActive={false}
-          title="Update"
-          header="Threat level high"
-          tableContent={
-            <TableElement
-              element={{
-                id: 'convoID_<el.index>',
-                modality: 'visual',
-                h: 3,
-                w: 4,
-
-                type: 'table',
-                rows: 2,
-                cols: 2,
-                tableData: [
-                  ['priority', 'high'],
-                  ['threat-level', 'high'],
-                ],
-              }}
-            />
-          }
-        />
       </div>
     </div>
   );

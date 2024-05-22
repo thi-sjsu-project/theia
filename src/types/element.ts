@@ -42,8 +42,8 @@ export type ButtonElement = BaseElement & {
 
 export type TableElement = BaseElement & {
   type: 'table';
-  rows: number;
-  cols: number;
+  rows?: number;
+  cols?: number;
   tableData: string[][];
 };
 
