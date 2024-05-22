@@ -1,6 +1,8 @@
 import { type HistoryWidget as HistoryWidgetType } from 'src/types/widget';
 import TableElement from '../Element/Simple/TableElement';
 import HistoryMessageElement from '../Element/Complex/HistoryMessageElement';
+import { getActiveConvoID } from 'src/redux/slices/componentSlice';
+import { useAppSelector } from 'src/redux/hooks';
 
 type HistoryWidgetProps = {
   widget: HistoryWidgetType;
@@ -9,7 +11,8 @@ type HistoryWidgetProps = {
 const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
   const { id, x, y, w, h, elements } = widget;
 
-  console.log('elements: ', widget);
+  // console.log('elements: ', widget);
+  console.log(useAppSelector(getActiveConvoID));
 
   return (
     <div
