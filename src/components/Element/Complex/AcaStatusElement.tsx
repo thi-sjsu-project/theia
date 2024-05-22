@@ -1,7 +1,7 @@
 import { type AcaStatusElement as AcaStatusElementType } from 'src/types/element';
 import UsedBullet from 'src/assets/used.png';
 import UnusedBullet from 'src/assets/unused.png';
-import { useAppDispatch } from 'src/redux/hooks';
+import { useEffect, useState } from 'react';
 
 type PropsType = {
   element: AcaStatusElementType;
@@ -9,11 +9,31 @@ type PropsType = {
 
 const AcaStatusElement = ({ element }: PropsType) => {
   const { id, acaId, fuelLevel, h, w, weaponLoad } = element;
-  const dispatch = useAppDispatch();
+  const [fuel, setFuel] = useState(fuelLevel);
+  const [color, setColor] = useState(fuel < 0.2 ? 'bg-red-500' : 'bg-gray-300');
+
+  // const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const intervalID = setInterval(() => {
+      setFuel((prevFuel) => {
+        const newFuel = prevFuel - 0.005;
+        setColor(newFuel < 0.2 ? 'bg-red-500' : 'bg-gray-300');
+        return newFuel;
+      });
+    }, 100);
+
+    return () => clearInterval(intervalID);
+  }, []);
 
   return (
     <div
-      style={{ width: w, height: h, backgroundColor: '#2D2D30' }}
+      style={{
+        width: w,
+        height: h,
+        backgroundColor: fuel <= 0 ? '#2D2D30' : '#2D2D30',
+        opacity: fuel <= 0 ? 0.5 : 1,
+      }}
       className="bg-gray-800 rounded-lg flex flex-col justify-between"
     >
       <div className="flex items-center mb-2">
@@ -45,8 +65,8 @@ const AcaStatusElement = ({ element }: PropsType) => {
       <div className="w-full flex items-center h-6">
         <div className="h-1.5 w-full bg-gray-500 rounded-full">
           <div
-            className={`h-1.5 bg-gray-300 rounded-full`}
-            style={{ width: `${fuelLevel}%` }}
+            className={`h-1.5 rounded-full ${fuel <= 0 ? 'bg-transparent' : color}`}
+            style={{ width: `${fuel * 100}%` }}
           ></div>
         </div>
       </div>
