@@ -21,16 +21,16 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    dispatch(
-      setActiveConvoID(
-        sortedElementsByPriority[selectedElement].message?.conversationId ?? '',
-      ),
-      dispatch(
-        setSelectedElementID(sortedElementsByPriority[selectedElement].message?.id)
-      )
-    );
-  }, [selectedElement]);
+  // useEffect(() => {
+  //   dispatch(
+  //     setActiveConvoID(
+  //       sortedElementsByPriority[selectedElement].message?.conversationId ?? '',
+  //     ),
+  //     dispatch(
+  //       setSelectedElementID(sortedElementsByPriority[selectedElement].message?.id)
+  //     )
+  //   );
+  // }, [selectedElement]);
 
   return (
     <div

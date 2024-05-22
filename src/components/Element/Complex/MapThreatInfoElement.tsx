@@ -3,6 +3,7 @@ import { useAppDispatch } from 'src/redux/hooks';
 import { updateElement } from 'src/redux/slices/minimapSlice';
 import type { InformationElement } from 'src/types/element';
 import { capitalizeFirstLetter as cfl } from 'src/utils/helpers';
+import TableElement from '../Simple/TableElement';
 
 type Props = {
   element: InformationElement;
@@ -95,18 +96,60 @@ const MapThreatInfoElement = ({ element, inGaze }: Props) => {
         );
       case 'L':
         return (
-          <div
-            id={element.id}
-            style={{
-              height: h,
-              width: w,
-              fontSize: 24,
-              backgroundColor: 'turquoise',
-              opacity: 0.8,
-            }}
-          >
-            LARGE: {cfl(target)}
+          <div className="grid auto-row-auto gap-y-[10px] p-[15px_20px_30px_30px] text-white bg-[#282828] bg-opacity-90 rounded-xl">
+            <div className="font-medium text-4xl mb-[5px]">SA_4 Air Defense Threat</div>
+            <div className="grid grid-cols-[40px_1fr]">
+              <div className="flex-auto bg-turquoise text-black text-2xl text-center h-fit font-semibold rounded-l-md">
+                4
+              </div>
+
+              <div className="bg-convo-bg h-fit p-4 rounded-lg drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)]">
+                <div className="grid grid-cols-1">
+                  <div className="col-span-2 flex flex-col">
+                    <div className="font-medium text-[28px]">
+                      ACA-7: Request to attack
+                    </div>
+                    <div className="font-2xl">
+                      Kinetic attack approval
+                    </div>
+                  </div>
+
+                  <div className="col-span-4 text-left">
+                    <TableElement
+                      element={{
+                        id: 'convoID_<el.index>',
+                        modality: 'visual',
+                        h: 3,
+                        w: 4,
+
+                        type: 'table',
+                        rows: 4,
+                        cols: 2,
+                        tableData: [
+                          ['location', '34N, 118W'],
+                          ['priority', 'high'],
+                          ['threat-level', 'high'],
+                          ['col.damage', '45%'],
+                        ],
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+          // <div
+          //   id={element.id}
+          //   style={{
+          //     height: h,
+          //     width: w,
+          //     fontSize: 24,
+          //     backgroundColor: 'turquoise',
+          //     opacity: 0.8,
+          //   }}
+          // >
+          //   LARGE: {cfl(target)}
+          // </div>
         );
     }
   };

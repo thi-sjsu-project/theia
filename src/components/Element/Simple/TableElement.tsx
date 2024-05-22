@@ -41,7 +41,7 @@ const TableElement = ({
                   className={`${j > 0 ? 'border-l-2' : 'border-x-0'} ${j === 0 && leftLabelColor} ${borderColor} py-1`}
                   style={{ width: `${100 / cols}%` }}
                 >
-                  <div className="ml-6">{tableData[i][j]}</div>
+                  <div className="ml-3">{tableData[i][j]}</div>
                 </td>
               ))}
             </tr>
