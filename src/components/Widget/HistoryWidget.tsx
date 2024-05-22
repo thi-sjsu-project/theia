@@ -1,9 +1,13 @@
 import { type HistoryWidget as HistoryWidgetType } from 'src/types/widget';
 import TableElement from '../Element/Simple/TableElement';
 import HistoryMessageElement from '../Element/Complex/HistoryMessageElement';
-import { getActiveConvoID } from 'src/redux/slices/componentSlice';
+import {
+  getActiveConvoID,
+  getSelectedElementID,
+} from 'src/redux/slices/componentSlice';
 import { useAppSelector } from 'src/redux/hooks';
 import { getMessages } from 'src/redux/slices/minimapSlice';
+import { useState } from 'react';
 
 type HistoryWidgetProps = {
   widget: HistoryWidgetType;
@@ -16,6 +20,9 @@ const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
   const convoMessages = useAppSelector(getMessages).filter(
     (message) => message.conversationId === convoID,
   );
+  const activeElementID = useAppSelector(getSelectedElementID);
+
+  const highlightIndex = convoMessages.findIndex((message) => message.id === activeElementID)
 
   return (
     <div
@@ -30,10 +37,10 @@ const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
               return (
                 <HistoryMessageElement
                   index={convoMessages.length - index}
-                  isActive={true}
+                  isActive={highlightIndex === convoMessages.length - 1 - index}
                   title={`ACA-${message.data.detectedByAca}`}
                   header="Request to attack"
-                  desc = {`Approval for ${message.data.attackWeapon.type} attack`}
+                  desc={`Approval for ${message.data.attackWeapon.type} attack`}
                   tableContent={
                     <TableElement
                       element={{
@@ -70,7 +77,6 @@ const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
               return;
           }
         })}
-
       </div>
     </div>
   );

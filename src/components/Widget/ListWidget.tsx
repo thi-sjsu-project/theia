@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Element from 'src/components/Element/Element';
 import { useAppDispatch } from 'src/redux/hooks';
-import { setActiveConvoID } from 'src/redux/slices/componentSlice';
+import { setActiveConvoID, setSelectedElementID } from 'src/redux/slices/componentSlice';
 import type { Widget } from 'src/types/widget';
 
 type ListWidgetProps = {
@@ -26,6 +26,9 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
       setActiveConvoID(
         sortedElementsByPriority[selectedElement].message?.conversationId ?? '',
       ),
+      dispatch(
+        setSelectedElementID(sortedElementsByPriority[selectedElement].message?.id)
+      )
     );
   }, [selectedElement]);
 
