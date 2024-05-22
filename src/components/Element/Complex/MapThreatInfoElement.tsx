@@ -11,6 +11,7 @@ type Props = {
 };
 
 const M_HEIGHT = 60;
+const L_HEIGHT = 488;
 
 const MapThreatInfoElement = ({ element, inGaze }: Props) => {
   const dispatch = useAppDispatch();
@@ -75,6 +76,7 @@ const MapThreatInfoElement = ({ element, inGaze }: Props) => {
             SMALL: {cfl(target)}
           </div>
         );
+
       case 'M':
         return (
           <div
@@ -94,6 +96,7 @@ const MapThreatInfoElement = ({ element, inGaze }: Props) => {
             {inGaze ? <GazeHighlight /> : <></>}
           </div>
         );
+
       case 'L':
         return (
           <div className="grid auto-row-auto gap-y-[10px] p-[15px_20px_30px_30px] text-white bg-[#282828] bg-opacity-90 rounded-xl">
@@ -137,6 +140,7 @@ const MapThreatInfoElement = ({ element, inGaze }: Props) => {
                 </div>
               </div>
             </div>
+            {inGaze ? <GazeHighlightL /> : <></>}
           </div>
           // <div
           //   id={element.id}
@@ -173,6 +177,15 @@ const GazeHighlight = () => {
         </svg>
       </div>
     </>
+  );
+};
+
+const GazeHighlightL = () => {
+  return (
+      <div
+        className="w-auto rounded-xl border-[#19DEBB] border-x-[5px]"
+        style={{ height: L_HEIGHT - 4, marginTop: -L_HEIGHT }}
+      ></div>
   );
 };
 

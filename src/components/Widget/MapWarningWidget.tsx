@@ -41,22 +41,27 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
     <div
       key={widget.id}
       id={widget.id}
-      className="absolute flex items-center justify-center"
+      className="absolute"
       style={{
         top: ~~widget.y,
         left: ~~widget.x,
       }}
     >
-      <IconElement element={iconElement as IconElementType} />
+      <div className="inline-block">
+        <div className="flex justify-center items-center">
+          <IconElement element={iconElement as IconElementType} />
+          {!threatInfoElement.collapsed && (
+            <div style={{ height: 2, width: 75, border: '2px dashed white' }} className="inline-block align-[2.375rem]" />
+          )}
+        </div>
+      </div>
       {!threatInfoElement.collapsed && (
-        <>
-          {/* Connecting line */}
-          <div style={{ height: 2, width: 75, border: '2px dashed white' }} />
+        <div className="inline-block align-top mt-2">
           <MapThreatInfoElement
             element={threatInfoElement as InformationElementType}
             inGaze={inGaze}
           />
-        </>
+        </div>
       )}
     </div>
   );
