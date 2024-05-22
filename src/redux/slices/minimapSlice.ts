@@ -1,7 +1,7 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Widget, VehicleWidget, WidgetMap } from 'src/types/widget';
-import type { Screen } from 'src/types/support-types';
+import type { Screen, WidgetChannel } from 'src/types/support-types';
 import type { Message } from 'src/types/schema-types';
 import type { Element, ElementMap } from 'src/types/element';
 import type { LinkedSectionWidget, Section } from 'src/types/support-types';
@@ -9,6 +9,11 @@ import type { LinkedSectionWidget, Section } from 'src/types/support-types';
 export type InitialMinimapState = {
   visualComplexity: number;
   audioComplexity: number;
+
+  // for sharing data between widgets
+  widgetChannels: {
+    [key in WidgetChannel]: any;
+  };
 
   // read-only
   ownship: VehicleWidget | null;
@@ -24,6 +29,11 @@ export type InitialMinimapState = {
 const initialState: InitialMinimapState = {
   visualComplexity: 0,
   audioComplexity: 0,
+  widgetChannels: {
+    'list-history': {
+      activeMessageId: '',
+    },
+  },
   ownship: null,
   drones: [],
   messages: [],
