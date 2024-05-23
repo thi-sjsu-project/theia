@@ -107,6 +107,23 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
   //   }
   // }, [listOverflowed, listCapacity, widget.elements.length]);
 
+  // check if the list is overflowed (alternative to the above method)
+  //  useEffect(() => {
+  //   if (listRef.current) {
+  //     if (
+  //       listRef.current.offsetHeight < listRef.current.scrollHeight &&
+  //       !listOverflowed
+  //     ) {
+  //       setListOverflowed(true);
+  //     } else if (
+  //       listRef.current.offsetHeight >= listRef.current.scrollHeight &&
+  //       listOverflowed
+  //     ) {
+  //       setListOverflowed(false);
+  //     }
+  //   }
+  // }, [listOverflowed]);
+
   const className = `absolute p-2 flex flex-col gap-${GAP_BETWEEN_ELEMENTS} items-center overflow-x-hidden overflow-y-auto`;
 
   // Sort elements by priority
