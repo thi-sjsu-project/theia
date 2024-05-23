@@ -15,7 +15,7 @@ type Channel = ListHistoryChannel; // add more as needed
 
 // ~~~~~ Dictionary ~~~~~
 type ChannelDictionary = {
-  ['list-history']?: ListHistoryChannel;
+  [key in ChannelId]?: Channel;
 };
 
 export type {
