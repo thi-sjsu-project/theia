@@ -1,13 +1,9 @@
 import { type HistoryWidget as HistoryWidgetType } from 'src/types/widget';
 import TableElement from '../Element/Simple/TableElement';
 import HistoryMessageElement from '../Element/Complex/HistoryMessageElement';
-import {
-  getActiveConvoID,
-  getSelectedElementID,
-} from 'src/redux/slices/componentSlice';
+import { getListHistoryChannel } from 'src/redux/slices/componentSlice';
 import { useAppSelector } from 'src/redux/hooks';
-import { getMessages } from 'src/redux/slices/minimapSlice';
-import { useState } from 'react';
+import { getConversationMessages } from 'src/redux/slices/minimapSlice';
 
 type HistoryWidgetProps = {
   widget: HistoryWidgetType;
@@ -16,13 +12,15 @@ type HistoryWidgetProps = {
 const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
   const { id, x, y, w, h } = widget;
 
-  const convoID = useAppSelector(getActiveConvoID);
-  const convoMessages = useAppSelector(getMessages).filter(
-    (message) => message.conversationId === convoID,
+  const { activeConversationId } = useAppSelector(getListHistoryChannel);
+  const convoMessages = useAppSelector((state) =>
+    getConversationMessages(state, activeConversationId),
   );
-  const activeElementID = useAppSelector(getSelectedElementID);
 
-  const highlightIndex = convoMessages.findIndex((message) => message.id === activeElementID)
+  // const activeElementID = useAppSelector(getSelectedElementID);
+  // const highlightIndex = convoMessages.findIndex(
+  //   (message) => message.id === activeElementID,
+  // );
 
   return (
     <div
@@ -37,14 +35,15 @@ const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
               return (
                 <HistoryMessageElement
                   index={convoMessages.length - index}
-                  isActive={highlightIndex === convoMessages.length - 1 - index}
+                  // isActive={highlightIndex === convoMessages.length - 1 - index}
+                  isActive={false}
                   title={`ACA-${message.data.detectedByAca}`}
                   header="Request to attack"
                   desc={`Approval for ${message.data.attackWeapon.type} attack`}
                   tableContent={
                     <TableElement
                       element={{
-                        id: `table:${convoID}_${message}`,
+                        id: `table:${activeConversationId}_${message}`,
                         modality: 'visual',
                         h: 3,
                         w: 4,

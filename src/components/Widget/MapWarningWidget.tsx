@@ -34,13 +34,21 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
         updateElement(widget.id, { ...threatInfoElement, collapsed: false }),
       );
     }
+  }, [inGaze, dispatch, threatInfoElement, widget.id]);
 
+  useEffect(() => {
     if (inGaze && threatInfoElement.expirationIntervalMs) {
       // update expiration even if only icon element is in gaze
       // keep displaying threat info element while we hover over the icon
       dispatch(updateElementExpiration(widget.id, threatInfoElement.id));
     }
-  }, [inGaze, dispatch, iconElement, threatInfoElement, widget.id]);
+  }, [
+    inGaze,
+    dispatch,
+    threatInfoElement.id,
+    threatInfoElement.expirationIntervalMs,
+    widget.id,
+  ]);
 
   return (
     <div

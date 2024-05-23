@@ -45,5 +45,3 @@ export type WidgetCluster = {
   sectionIds?: LinkedSectionWidget[];
   actions?: string[];
 };
-
-export type WidgetChannel = 'list-history';

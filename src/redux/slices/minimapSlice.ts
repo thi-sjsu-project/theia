@@ -204,9 +204,9 @@ export const minimapSlice = createSlice({
             if (element.id === elementId) {
               // if element does not have an expiration interval, log an error
               if (!element.expirationIntervalMs) {
-                console.error(
-                  `Element with id ${elementId} does not have an expiration interval`,
-                );
+                // console.error(
+                //   `Element with id ${elementId} does not have an expiration interval`,
+                // );
                 return;
               }
 
@@ -449,6 +449,11 @@ export const minimapSlice = createSlice({
     getVisualComplexity: (state) => state.visualComplexity,
     getAudioComplexity: (state) => state.audioComplexity,
     getMessages: (state) => state.messages,
+    getConversationMessages: (state, conversationId: string) => {
+      return state.messages.filter(
+        (message) => message.conversationId === conversationId,
+      );
+    },
     getStressLevel: (state) => state.stressLevel,
 
     // ~~~~~ selectors for ships ~~~~~
@@ -506,6 +511,7 @@ export const {
   getElementsOnScreen,
 
   getMessages,
+  getConversationMessages,
 
   getOwnship,
   getDrones,
