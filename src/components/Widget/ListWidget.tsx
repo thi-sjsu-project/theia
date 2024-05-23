@@ -2,10 +2,7 @@ import { useEffect, useState } from 'react';
 import Element from 'src/components/Element/Element';
 import useGaze from 'src/hooks/useGaze';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import {
-  setActiveConvoID,
-  setSelectedElementID,
-} from 'src/redux/slices/componentSlice';
+import { updateListHistoryChannel } from 'src/redux/slices/componentSlice';
 import { getElementsInGaze } from 'src/redux/slices/gazeSlice';
 import type { Widget } from 'src/types/widget';
 
@@ -15,13 +12,32 @@ type ListWidgetProps = {
 
 const ListWidget = ({ widget }: ListWidgetProps) => {
   const elementsInGaze = useAppSelector(getElementsInGaze);
+  const dispatch = useAppDispatch();
 
   // just pick the first element in the gaze for now
+  // FIX: should be fixed when gaze calculates overlapping area and picks element with greater overlapping
   const elementInGazeId = elementsInGaze[0]?.id;
 
-  // useEffect(() => {
-  //   console.log('elementsInGaze: ', elementsInGaze);
-  // }, [elementsInGaze]);
+  useEffect(() => {
+    widget.elements.forEach((element) => {
+      if (element.id === elementInGazeId) {
+        // @ts-ignore
+        if (!element.message) {
+          // FIX: all elements should have a message (at least the ones in the list)
+          // at the minimu, they should have a conversationId attached to them?
+          console.error('Element does not have a message', element);
+          return;
+        }
+
+        dispatch(
+          updateListHistoryChannel({
+            // @ts-ignore
+            activeConversationId: element.message.conversationId,
+          }),
+        );
+      }
+    });
+  }, [elementInGazeId, dispatch, widget.elements]);
 
   const className =
     'absolute p-2 flex flex-col gap-6 items-center overflow-scroll overflow-x-hidden overflow-y-hidden';
@@ -30,23 +46,6 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
   const sortedElementsByPriority = [...widget.elements].sort(
     (a, b) => a.priority! - b.priority!,
   );
-
-  const [selectedElement, setSelectedElement] = useState(0);
-
-  const dispatch = useAppDispatch();
-
-  // useEffect(() => {
-  //   dispatch(
-  //     setActiveConvoID(
-  //       sortedElementsByPriority[selectedElement].message?.conversationId ?? '',
-  //     ),
-  //     dispatch(
-  //       setSelectedElementID(
-  //         sortedElementsByPriority[selectedElement].message?.id,
-  //       ),
-  //     ),
-  //   );
-  // }, [selectedElement]);
 
   return (
     <div
