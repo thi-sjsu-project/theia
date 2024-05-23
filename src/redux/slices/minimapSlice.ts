@@ -1,7 +1,7 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Widget, VehicleWidget, WidgetMap } from 'src/types/widget';
-import type { Screen, WidgetChannel } from 'src/types/support-types';
+import type { Screen } from 'src/types/support-types';
 import type { Message } from 'src/types/schema-types';
 import type { Element, ElementMap } from 'src/types/element';
 import type { LinkedSectionWidget, Section } from 'src/types/support-types';
@@ -9,11 +9,6 @@ import type { LinkedSectionWidget, Section } from 'src/types/support-types';
 export type InitialMinimapState = {
   visualComplexity: number;
   audioComplexity: number;
-
-  // for sharing data between widgets
-  widgetChannels: {
-    [key in WidgetChannel]: any;
-  };
 
   // read-only
   ownship: VehicleWidget | null;
@@ -29,11 +24,6 @@ export type InitialMinimapState = {
 const initialState: InitialMinimapState = {
   visualComplexity: 0,
   audioComplexity: 0,
-  widgetChannels: {
-    'list-history': {
-      activeMessageId: '',
-    },
-  },
   ownship: null,
   drones: [],
   messages: [],
@@ -67,6 +57,10 @@ export const minimapSlice = createSlice({
     },
 
     addWidget: (state, action: PayloadAction<Widget>) => {
+      // set widgetIds of all elements to the widget id
+      action.payload.elements.forEach((element) => {
+        element.widgetId = action.payload.id;
+      });
       state.widgets[action.payload.id] = action.payload;
     },
 
@@ -173,6 +167,11 @@ export const minimapSlice = createSlice({
           ...widget,
           elements: [...widget.elements, ...elements],
         };
+
+        // set widgetId of all elements to the widget id
+        state.widgets[widgetId].elements.forEach((element) => {
+          element.widgetId = widgetId;
+        });
       },
     },
 
@@ -201,21 +200,26 @@ export const minimapSlice = createSlice({
 
         // if widget exists
         if (widget) {
-          const tempElements = state.widgets[widgetId].elements;
-          tempElements.forEach(function (element, elementIndex) {
-            if (element.id === elementId && element.expirationInterval) {
-              const newExpiration = new Date();
-              newExpiration.setSeconds(
-                newExpiration.getSeconds() + element.expirationInterval,
+          widget.elements.forEach((element) => {
+            if (element.id === elementId) {
+              // if element does not have an expiration interval, log an error
+              if (!element.expirationIntervalMs) {
+                console.error(
+                  `Element with id ${elementId} does not have an expiration interval`,
+                );
+                return;
+              }
+
+              const expiration = new Date();
+              expiration.setMilliseconds(
+                expiration.getMilliseconds() + element.expirationIntervalMs,
               );
-              tempElements[elementIndex].expiration =
-                newExpiration.toISOString();
+
+              element.expiration = expiration.toISOString();
             }
           });
-          state.widgets[widgetId] = {
-            ...widget,
-            elements: tempElements,
-          };
+
+          state.widgets[widgetId] = widget;
         } else {
           console.error(`Widget with id ${widgetId} not found`);
         }
@@ -486,7 +490,7 @@ export const {
   removeWidget,
   deleteElementFromWidget,
 
-  toggleElementInteraction,
+  // toggleElementInteraction,
 
   setStressLevel,
 } = minimapSlice.actions;

@@ -9,6 +9,9 @@ type AcaHeaderWidgetProps = {
 const AcaHeaderWidget = ({ widget }: AcaHeaderWidgetProps) => {
   const { x, y, h, w, elements } = widget;
 
+  var firstElements = structuredClone(elements);
+  const lastElements = firstElements.splice(4);
+
   return (
     <div
       style={{
@@ -17,9 +20,16 @@ const AcaHeaderWidget = ({ widget }: AcaHeaderWidgetProps) => {
         width: w,
         height: h,
       }}
-      className="absolute bg-[#2D2D30] flex"
+      className="absolute bg-[#252526] flex gap-4 px-4 py-2"
     >
-      {elements.map((element) => (
+      {firstElements.map((element) => (
+        <AcaStatusElement
+          key={element.id}
+          element={element as AcaStatusElementType}
+        />
+      ))}
+      <div className="grow" />
+      {lastElements.map((element) => (
         <AcaStatusElement
           key={element.id}
           element={element as AcaStatusElementType}

@@ -122,7 +122,7 @@ const generateBaseElement = (
   priority?: number,
   widgetId?: string,
   collapsed?: boolean,
-  expirationInterval?: number,
+  expirationIntervalMs?: number,
   expiration?: string,
   onExpiration?: 'delete' | 'escalate' | 'deescalate',
   interacted?: boolean,
@@ -136,7 +136,7 @@ const generateBaseElement = (
   widgetId,
   priority,
   collapsed,
-  expirationInterval,
+  expirationIntervalMs,
   expiration,
   onExpiration,
   interacted,
@@ -211,17 +211,20 @@ const generateAudioElement = (
 const generateMissileIncomingElement = (
   baseElement: Element.BaseElement,
   message: MissileToOwnshipDetected,
+  widgetId: string,
   icon: Element.IconElement,
 ): Element.MissileIncomingElement => ({
   ...baseElement,
   type: 'missile-incoming',
   message,
+  widgetId,
   icon,
 });
 
 const generateRequestApprovalElement = (
   baseElement: Element.BaseElement,
   message: RequestApprovalToAttack,
+  widgetId: string,
   icon: Element.IconElement,
   leftButton: Element.ButtonElement,
   rightButton: Element.ButtonElement,
@@ -229,6 +232,7 @@ const generateRequestApprovalElement = (
   ...baseElement,
   type: 'request-approval',
   message,
+  widgetId,
   icon,
   leftButton,
   rightButton,

@@ -19,10 +19,12 @@ import { mapTargetTypeToWarningIcon } from 'src/prototype/utils/helpers';
 const requestApprovalToAttackMessageMedium = (
   message: RequestApprovalToAttack,
 ) => {
+  const listWidgetId = uuid();
   const pearceScreenElements: Element[] = [
     lpdHelper.generateRequestApprovalElement(
       lpdHelper.generateBaseElement(uuid(), 'visual', 30, 30, message.priority),
       message,
+      listWidgetId,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
         mapTargetTypeToWarningIcon(message.data.target.type),
@@ -58,7 +60,7 @@ const requestApprovalToAttackMessageMedium = (
       message,
       size: 'M', // size L when stress is low
       collapsed: true, // initially, the information elemnt is not displayed
-      expirationInterval: 3000,
+      expirationIntervalMs: 3000,
       onExpiration: 'deescalate',
       widgetId: minimapWidgetId1,
     } satisfies InformationElement,
@@ -90,7 +92,7 @@ const requestApprovalToAttackMessageMedium = (
       generateCluster([
         lpdHelper.generateListWidget(
           lpdHelper.generateBaseWidget(
-            uuid(),
+            listWidgetId,
             'tinder',
             100,
             100,
@@ -157,6 +159,7 @@ const acaFuelLowMessageMedium = (message: Message) => {
 const missileToOwnshipDetectedMessageMedium = (
   message: MissileToOwnshipDetected,
 ) => {
+  const listWidgetId = uuid();
   const pearceScreenElements: Element[] = [
     lpdHelper.generateMissileIncomingElement(
       lpdHelper.generateBaseElement(
@@ -167,6 +170,7 @@ const missileToOwnshipDetectedMessageMedium = (
         message.priority,
       ),
       message,
+      listWidgetId,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
         DANGER_ICON,
@@ -195,7 +199,7 @@ const missileToOwnshipDetectedMessageMedium = (
       message,
       size: 'M', // size L when stress is medium
       collapsed: true, // initially, the information elemnt is not displayed
-      expirationInterval: 3000,
+      expirationIntervalMs: 3000,
       onExpiration: 'deescalate',
       widgetId: minimapWidgetId1,
     } satisfies InformationElement,
@@ -227,7 +231,7 @@ const missileToOwnshipDetectedMessageMedium = (
       generateCluster([
         lpdHelper.generateListWidget(
           lpdHelper.generateBaseWidget(
-            uuid(),
+            listWidgetId,
             'tinder',
             100,
             100,
@@ -238,7 +242,7 @@ const missileToOwnshipDetectedMessageMedium = (
             true,
             1,
             [...pearceScreenElements],
-            ['message']
+            ['message'],
           ),
         ),
         ...minimapWidgets,
@@ -283,7 +287,7 @@ const acaDefectMessageMedium = (message: Message) => {
             true,
             1,
             [...elements],
-            ['message']
+            ['message'],
           ),
         ),
       ]),

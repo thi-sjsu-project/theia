@@ -28,23 +28,7 @@ const MapThreatInfoElement = ({ element, inGaze }: Props) => {
   }
 
   useEffect(() => {
-    // set its own expiration time in the beginning as soon as it is rendered
-    if (!collapsed && !element.expiration && element.expirationInterval) {
-      const expireAt = new Date();
-      expireAt.setMilliseconds(
-        expireAt.getMilliseconds() + element.expirationInterval,
-      );
-
-      dispatch(
-        updateElement(element.widgetId!, {
-          ...element,
-          expiration: expireAt.toISOString(),
-        }),
-      );
-    }
-  }, [collapsed, element, dispatch]);
-
-  useEffect(() => {
+    // react to deescalation
     if (deescalate) {
       dispatch(
         updateElement(element.widgetId!, {

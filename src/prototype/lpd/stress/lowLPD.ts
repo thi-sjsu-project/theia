@@ -19,10 +19,12 @@ import { mapTargetTypeToWarningIcon } from 'src/prototype/utils/helpers';
 const requestApprovalToAttackMessageLow = (
   message: RequestApprovalToAttack,
 ) => {
+  const listWidgetId = uuid();
   const pearceScreenElements = [
     lpdHelper.generateRequestApprovalElement(
       lpdHelper.generateBaseElement(uuid(), 'visual', 30, 30, message.priority),
       message,
+      listWidgetId,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
         mapTargetTypeToWarningIcon(message.data.target.type),
@@ -48,7 +50,7 @@ const requestApprovalToAttackMessageLow = (
       w: 80,
       widgetId: minimapWidgetId1,
       src: mapTargetTypeToWarningIcon(message.data.target.type),
-      expirationInterval: 3000,
+      expirationIntervalMs: 3000,
       onExpiration: 'escalate',
     } satisfies IconElement,
     {
@@ -60,7 +62,7 @@ const requestApprovalToAttackMessageLow = (
       message,
       size: 'L', // size L when stress is low
       collapsed: true, // initially, the information elemnt is not displayed
-      expirationInterval: 3000,
+      expirationIntervalMs: 3000,
       onExpiration: 'deescalate',
       widgetId: minimapWidgetId1,
     } satisfies InformationElement,
@@ -92,7 +94,7 @@ const requestApprovalToAttackMessageLow = (
       generateCluster([
         lpdHelper.generateListWidget(
           lpdHelper.generateBaseWidget(
-            uuid(),
+            listWidgetId,
             'tinder',
             100,
             100,
@@ -148,7 +150,7 @@ const acaFuelLowMessageLow = (message: Message) => {
             false,
             1,
             [...elements],
-            ['message']
+            ['message'],
           ),
         ),
       ]),
@@ -181,7 +183,7 @@ const missileToOwnshipDetectedMessageLow = (
       message,
       size: 'L', // size L when stress is low
       collapsed: true, // initially, the information elemnt is not displayed
-      expirationInterval: 3000,
+      expirationIntervalMs: 3000,
       onExpiration: 'deescalate',
       widgetId: minimapWidgetId1,
     } satisfies InformationElement,
@@ -207,6 +209,7 @@ const missileToOwnshipDetectedMessageLow = (
     } satisfies MapWarningWidget,
   ];
 
+  const listWidgetId = uuid();
   const pearceScreenElements: Element[] = [
     lpdHelper.generateMissileIncomingElement(
       lpdHelper.generateBaseElement(
@@ -217,6 +220,7 @@ const missileToOwnshipDetectedMessageLow = (
         message.priority,
       ),
       message,
+      listWidgetId,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
         DANGER_ICON,
@@ -230,7 +234,7 @@ const missileToOwnshipDetectedMessageLow = (
       generateCluster([
         lpdHelper.generateListWidget(
           lpdHelper.generateBaseWidget(
-            uuid(),
+            listWidgetId,
             'tinder',
             100,
             100,
