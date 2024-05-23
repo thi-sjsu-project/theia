@@ -10,18 +10,23 @@ type ListWidgetProps = {
   widget: Widget;
 };
 
+const LIST_ELEMENT_HEIGHT = 80;
+const GAP_BETWEEN_ELEMENTS = 6;
+
 const ListWidget = ({ widget }: ListWidgetProps) => {
   const elementsInGaze = useAppSelector(getElementsInGaze);
   const gazesAndKeys = useAppSelector(getGazesAndKeys);
   const listHistoryChannel = useAppSelector((state) =>
     getChannel(state, 'list-history'),
   );
-
   const { data: { activeElementId = '' } = {} } =
     (listHistoryChannel as ListHistoryChannel) || {};
 
+  // const listCapacity = Math.floor(
+  //   widget.h / (LIST_ELEMENT_HEIGHT + GAP_BETWEEN_ELEMENTS) - 1,
+  // );
   // TODO: use this to control the UI to show if the list is overflowed or not
-  const [listOverflowed, setListOverflowed] = useState<boolean>(false);
+  // const [listOverflowed, setListOverflowed] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
   const listRef = useRef<HTMLDivElement>(null);
@@ -94,24 +99,15 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
   }, [gazesAndKeys, dispatch, elementInGazeId, widget.elements]);
 
   // check if the list is overflowed
-  useEffect(() => {
-    if (listRef.current) {
-      if (
-        listRef.current.offsetHeight < listRef.current.scrollHeight &&
-        !listOverflowed
-      ) {
-        setListOverflowed(true);
-      } else if (
-        listRef.current.offsetHeight >= listRef.current.scrollHeight &&
-        listOverflowed
-      ) {
-        setListOverflowed(false);
-      }
-    }
-  }, [listOverflowed, widget.elements.length]);
+  // useEffect(() => {
+  //   if (widget.elements.length > listCapacity && !listOverflowed) {
+  //     setListOverflowed(true);
+  //   } else if (widget.elements.length <= listCapacity && listOverflowed) {
+  //     setListOverflowed(false);
+  //   }
+  // }, [listOverflowed, listCapacity, widget.elements.length]);
 
-  const className =
-    'absolute p-2 flex flex-col gap-6 items-center overflow-scroll overflow-x-hidden overflow-y-hidden';
+  const className = `absolute p-2 flex flex-col gap-${GAP_BETWEEN_ELEMENTS} items-center overflow-x-hidden overflow-y-auto`;
 
   // Sort elements by priority
   const sortedElementsByPriority = [...widget.elements].sort(
@@ -119,60 +115,49 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
   );
 
   return (
-    <>
-      <div
-        key={widget.id}
-        id={widget.id}
-        ref={listRef}
-        className={className}
-        style={{
-          height: widget.h,
-          width: widget.w,
-          top: widget.y,
-          left: widget.x,
-        }}
-      >
-        {sortedElementsByPriority.map((element) => {
-          // style for the element which is current being hoverd over
-          const hoverStyle =
-            element.id === elementInGazeId
-              ? 'bg-[#444449] text-[28px] font-medium'
-              : 'bg-[#323235] text-[24px]';
+    <div
+      key={widget.id}
+      id={widget.id}
+      ref={listRef}
+      className={className}
+      style={{
+        height: widget.h,
+        width: widget.w,
+        top: widget.y,
+        left: widget.x,
+        scrollbarWidth: 'thin',
+        scrollbarColor: '#97979D #e0e0e0',
+        scrollbarGutter: 'stable',
+      }}
+    >
+      {sortedElementsByPriority.map((element) => {
+        // style for the element which is current being hoverd over
+        const hoverStyle =
+          element.id === elementInGazeId
+            ? 'bg-[#444449] text-[28px] font-medium'
+            : 'bg-[#323235] text-[24px]';
 
-          // style for active element (element due to which the history widget is open)
-          const activeElementStyle =
-            element.id === activeElementId
-              ? 'bg-[#444449] text-[28px] font-medium border-4 border-white'
-              : '';
+        // style for active element (element due to which the history widget is open)
+        const activeElementStyle =
+          element.id === activeElementId
+            ? 'bg-[#444449] text-[28px] font-medium border-4 border-white'
+            : '';
 
-          return (
-            // ListWidget enforces a certain layout and style for its Elements
-            <div
-              id={element.id}
-              key={element.id}
-              style={{ height: 80 }}
-              className={`w-full text-white flex items-center justify-center rounded-xl p-3 ${hoverStyle} ${activeElementStyle}`}
-            >
-              <Element element={element} styleClass="w-full h-full">
-                {/* Nested children here if wanted.. */}
-              </Element>
-            </div>
-          );
-        })}
-      </div>
-      {listOverflowed && (
-        <div
-          style={{
-            position: 'absolute',
-            top: widget.y + widget.h / 2 - 50,
-            left: widget.x + widget.w + 10,
-            height: 100,
-            width: 2,
-            background: 'white',
-          }}
-        ></div>
-      )}
-    </>
+        return (
+          // ListWidget enforces a certain layout and style for its Elements
+          <div
+            id={element.id}
+            key={element.id}
+            style={{ height: LIST_ELEMENT_HEIGHT }}
+            className={`w-full text-white flex items-center justify-center rounded-xl p-3 ${hoverStyle} ${activeElementStyle}`}
+          >
+            <Element element={element} styleClass="w-full h-full">
+              {/* Nested children here if wanted.. */}
+            </Element>
+          </div>
+        );
+      })}
+    </div>
   );
 };
 
