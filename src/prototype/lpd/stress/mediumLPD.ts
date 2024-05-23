@@ -14,6 +14,10 @@ import type {
   InformationElement,
 } from 'src/types/element';
 import { mapTargetTypeToWarningIcon } from 'src/prototype/utils/helpers';
+import {
+  LIST_WIDGET_HEIGHT,
+  LIST_WIDGET_WIDTH,
+} from 'src/prototype/utils/constants';
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageMedium = (
@@ -60,7 +64,7 @@ const requestApprovalToAttackMessageMedium = (
       message,
       size: 'M', // size L when stress is low
       collapsed: true, // initially, the information elemnt is not displayed
-      expirationInterval: 3000,
+      expirationIntervalMs: 3000,
       onExpiration: 'deescalate',
       widgetId: minimapWidgetId1,
     } satisfies InformationElement,
@@ -96,8 +100,8 @@ const requestApprovalToAttackMessageMedium = (
             'tinder',
             100,
             100,
-            300,
-            800,
+            LIST_WIDGET_WIDTH,
+            LIST_WIDGET_HEIGHT,
             '/pearce-screen',
             false,
             false,
@@ -141,8 +145,8 @@ const acaFuelLowMessageMedium = (message: Message) => {
             'tinder',
             500,
             500,
-            300,
-            800,
+            LIST_WIDGET_WIDTH,
+            LIST_WIDGET_HEIGHT,
             '/pearce-screen',
             false,
             false,
@@ -199,7 +203,7 @@ const missileToOwnshipDetectedMessageMedium = (
       message,
       size: 'M', // size L when stress is medium
       collapsed: true, // initially, the information elemnt is not displayed
-      expirationInterval: 3000,
+      expirationIntervalMs: 3000,
       onExpiration: 'deescalate',
       widgetId: minimapWidgetId1,
     } satisfies InformationElement,
@@ -235,8 +239,8 @@ const missileToOwnshipDetectedMessageMedium = (
             'tinder',
             100,
             100,
-            300,
-            800,
+            LIST_WIDGET_WIDTH,
+            LIST_WIDGET_HEIGHT,
             '/pearce-screen',
             false,
             true,
@@ -280,8 +284,8 @@ const acaDefectMessageMedium = (message: Message) => {
             'tinder',
             500,
             500,
-            300,
-            800,
+            LIST_WIDGET_WIDTH,
+            LIST_WIDGET_HEIGHT,
             '/pearce-screen',
             false,
             true,
@@ -319,8 +323,8 @@ const acaHeadingToBaseMessageMedium = (message: Message) => {
             'tinder',
             500,
             500,
-            300,
-            800,
+            LIST_WIDGET_WIDTH,
+            LIST_WIDGET_HEIGHT,
             '/pearce-screen',
             false,
             true,

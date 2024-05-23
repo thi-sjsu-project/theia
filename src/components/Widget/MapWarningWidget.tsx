@@ -1,7 +1,10 @@
 import type { MapWarningWidget as MapWarningWidgetType } from 'src/types/widget';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { getElementsInGaze } from 'src/redux/slices/gazeSlice';
-import { updateElement } from 'src/redux/slices/minimapSlice';
+import {
+  updateElement,
+  updateElementExpiration,
+} from 'src/redux/slices/minimapSlice';
 import { useEffect } from 'react';
 import type {
   IconElement as IconElementType,
@@ -15,10 +18,6 @@ type MapWarningWidgetProps = {
 };
 
 const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
-  /** We have made widgets too generic, I think. Severely restricts our ability to design different widgets differently.
-   * It would be very useful for different widgets types to specify in detail the number of elements they will have
-   * as well as the type of each of those elements - Jagjit.
-   */
   const [iconElement, threatInfoElement] = widget.elements;
 
   const elementsInGaze = useAppSelector(getElementsInGaze);
@@ -28,14 +27,28 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
     (element) => element.id === iconElement.id,
   );
 
-  // show threat info element if icon element is in gaze
   useEffect(() => {
+    // show threat info element if icon element is in gaze
     if (inGaze && threatInfoElement.collapsed) {
       dispatch(
         updateElement(widget.id, { ...threatInfoElement, collapsed: false }),
       );
     }
-  }, [inGaze, dispatch, iconElement, threatInfoElement, widget.id]);
+  }, [inGaze, dispatch, threatInfoElement, widget.id]);
+
+  useEffect(() => {
+    if (inGaze && threatInfoElement.expirationIntervalMs) {
+      // update expiration even if only icon element is in gaze
+      // keep displaying threat info element while we hover over the icon
+      dispatch(updateElementExpiration(widget.id, threatInfoElement.id));
+    }
+  }, [
+    inGaze,
+    dispatch,
+    threatInfoElement.id,
+    threatInfoElement.expirationIntervalMs,
+    widget.id,
+  ]);
 
   return (
     <div

@@ -1,13 +1,10 @@
 import { type HistoryWidget as HistoryWidgetType } from 'src/types/widget';
 import TableElement from '../Element/Simple/TableElement';
 import HistoryMessageElement from '../Element/Complex/HistoryMessageElement';
-import {
-  getActiveConvoID,
-  getSelectedElementID,
-} from 'src/redux/slices/componentSlice';
+import { getChannel } from 'src/redux/slices/channelSlice';
 import { useAppSelector } from 'src/redux/hooks';
-import { getMessages } from 'src/redux/slices/minimapSlice';
-import { useState } from 'react';
+import { getConversationMessages } from 'src/redux/slices/minimapSlice';
+import type { ListHistoryChannel } from 'src/types/channel';
 
 type HistoryWidgetProps = {
   widget: HistoryWidgetType;
@@ -16,13 +13,20 @@ type HistoryWidgetProps = {
 const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
   const { id, x, y, w, h } = widget;
 
-  const convoID = useAppSelector(getActiveConvoID);
-  const convoMessages = useAppSelector(getMessages).filter(
-    (message) => message.conversationId === convoID,
+  const listHistoryChannel = useAppSelector((state) =>
+    getChannel(state, 'list-history'),
   );
-  const activeElementID = useAppSelector(getSelectedElementID);
+  const { data: { activeConversationId = '' } = {} } =
+    (listHistoryChannel as ListHistoryChannel) || {};
 
-  const highlightIndex = convoMessages.findIndex((message) => message.id === activeElementID)
+  const convoMessages = useAppSelector((state) =>
+    getConversationMessages(state, activeConversationId),
+  );
+
+  // const activeElementID = useAppSelector(getSelectedElementID);
+  // const highlightIndex = convoMessages.findIndex(
+  //   (message) => message.id === activeElementID,
+  // );
 
   return (
     <div
@@ -36,15 +40,17 @@ const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
             case 'RequestApprovalToAttack':
               return (
                 <HistoryMessageElement
+                  key={message.id}
                   index={convoMessages.length - index}
-                  isActive={highlightIndex === convoMessages.length - 1 - index}
+                  // isActive={highlightIndex === convoMessages.length - 1 - index}
+                  isActive={true}
                   title={`ACA-${message.data.detectedByAca}`}
                   header="Request to attack"
                   desc={`Approval for ${message.data.attackWeapon.type} attack`}
                   tableContent={
                     <TableElement
                       element={{
-                        id: `table:${convoID}_${message}`,
+                        id: `table:${activeConversationId}_${message}`,
                         modality: 'visual',
                         h: 3,
                         w: 4,
@@ -65,16 +71,16 @@ const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
               );
 
             case 'AcaDefect':
-              return;
+              return null;
 
             case 'AcaFuelLow':
-              return;
+              return null;
 
             case 'AcaHeadingToBase':
-              return;
+              return null;
 
             case 'MissileToOwnshipDetected':
-              return;
+              return null;
           }
         })}
       </div>

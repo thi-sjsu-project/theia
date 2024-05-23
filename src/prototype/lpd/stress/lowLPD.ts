@@ -14,6 +14,10 @@ import DANGER_ICON from 'src/assets/icons/threats/missile-sm-emph.svg';
 import type { MapWarningWidget, Widget } from 'src/types/widget';
 import type { WidgetCluster } from 'src/types/support-types';
 import { mapTargetTypeToWarningIcon } from 'src/prototype/utils/helpers';
+import {
+  LIST_WIDGET_HEIGHT,
+  LIST_WIDGET_WIDTH,
+} from 'src/prototype/utils/constants';
 
 // Functions to create widgets, elements, and sections for each message type
 const requestApprovalToAttackMessageLow = (
@@ -50,7 +54,7 @@ const requestApprovalToAttackMessageLow = (
       w: 80,
       widgetId: minimapWidgetId1,
       src: mapTargetTypeToWarningIcon(message.data.target.type),
-      expirationInterval: 3000,
+      expirationIntervalMs: 3000,
       onExpiration: 'escalate',
     } satisfies IconElement,
     {
@@ -62,7 +66,7 @@ const requestApprovalToAttackMessageLow = (
       message,
       size: 'L', // size L when stress is low
       collapsed: true, // initially, the information elemnt is not displayed
-      expirationInterval: 3000,
+      expirationIntervalMs: 3000,
       onExpiration: 'deescalate',
       widgetId: minimapWidgetId1,
     } satisfies InformationElement,
@@ -98,8 +102,8 @@ const requestApprovalToAttackMessageLow = (
             'tinder',
             100,
             100,
-            300,
-            800,
+            LIST_WIDGET_WIDTH,
+            LIST_WIDGET_HEIGHT,
             '/pearce-screen',
             false,
             false,
@@ -143,8 +147,8 @@ const acaFuelLowMessageLow = (message: Message) => {
             'tinder',
             500,
             500,
-            300,
-            800,
+            LIST_WIDGET_WIDTH,
+            LIST_WIDGET_HEIGHT,
             '/pearce-screen',
             false,
             false,
@@ -183,7 +187,7 @@ const missileToOwnshipDetectedMessageLow = (
       message,
       size: 'L', // size L when stress is low
       collapsed: true, // initially, the information elemnt is not displayed
-      expirationInterval: 3000,
+      expirationIntervalMs: 3000,
       onExpiration: 'deescalate',
       widgetId: minimapWidgetId1,
     } satisfies InformationElement,
@@ -238,8 +242,8 @@ const missileToOwnshipDetectedMessageLow = (
             'tinder',
             100,
             100,
-            300,
-            800,
+            LIST_WIDGET_WIDTH,
+            LIST_WIDGET_HEIGHT,
             '/pearce-screen',
             false,
             true,
@@ -283,8 +287,8 @@ const acaDefectMessageLow = (message: Message) => {
             'tinder',
             500,
             500,
-            300,
-            800,
+            LIST_WIDGET_WIDTH,
+            LIST_WIDGET_HEIGHT,
             '/pearce-screen',
             false,
             true,
@@ -322,8 +326,8 @@ const acaHeadingToBaseMessageLow = (message: Message) => {
             'tinder',
             500,
             500,
-            300,
-            800,
+            LIST_WIDGET_WIDTH,
+            LIST_WIDGET_HEIGHT,
             '/pearce-screen',
             false,
             true,
