@@ -124,7 +124,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
   //   }
   // }, [listOverflowed]);
 
-  const className = `absolute p-2 flex flex-col gap-${GAP_BETWEEN_ELEMENTS} items-center overflow-x-hidden overflow-y-auto`;
+  const className = `absolute p-2 flex flex-col gap-6 items-center overflow-x-hidden overflow-y-auto`;
 
   // Sort elements by priority
   const sortedElementsByPriority = [...widget.elements].sort(
