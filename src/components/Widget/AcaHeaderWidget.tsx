@@ -1,6 +1,7 @@
 import type { AcaHeaderWidget as AcaHeaderWidgetType } from 'src/types/widget';
 import type { AcaStatusElement as AcaStatusElementType } from 'src/types/element';
 import AcaStatusElement from 'src/components/Element/Complex/AcaStatusElement';
+import NOTCH from 'src/assets/icons/Ownship Notch.svg';
 
 type AcaHeaderWidgetProps = {
   widget: AcaHeaderWidgetType;
@@ -28,6 +29,10 @@ const AcaHeaderWidget = ({ widget }: AcaHeaderWidgetProps) => {
           element={element as AcaStatusElementType}
         />
       ))}
+      <div>
+        <img src={NOTCH} alt="notch" className="-mt-4" />
+      </div>
+
       <div className="grow" />
       {lastElements.map((element) => (
         <AcaStatusElement
