@@ -30,20 +30,6 @@ const RequestApprovalElement = ({
     },
   } = element;
 
-  // if (collapsed) {
-  //   return (
-  //     <div className="flex gap-2 items-center">
-  //       <IconElement element={icon} />
-  //       <span>Request Approval to Attack</span>
-  //     </div>
-  //   );
-  // }
-
-  // <div className="flex gap-2">
-  //   <ButtonElement element={leftButton} />
-  //   <ButtonElement element={rightButton} />
-  // </div>
-
   return (
     <div id={id} className="flex text-white items-center gap-4">
       <IconElement element={icon} />
