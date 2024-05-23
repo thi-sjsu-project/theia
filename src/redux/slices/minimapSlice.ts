@@ -449,6 +449,11 @@ export const minimapSlice = createSlice({
     getVisualComplexity: (state) => state.visualComplexity,
     getAudioComplexity: (state) => state.audioComplexity,
     getMessages: (state) => state.messages,
+    getConversationMessages: (state, conversationId: string) => {
+      return state.messages.filter(
+        (message) => message.conversationId === conversationId,
+      );
+    },
     getStressLevel: (state) => state.stressLevel,
 
     // ~~~~~ selectors for ships ~~~~~
@@ -506,6 +511,7 @@ export const {
   getElementsOnScreen,
 
   getMessages,
+  getConversationMessages,
 
   getOwnship,
   getDrones,

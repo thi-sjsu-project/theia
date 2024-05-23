@@ -33,6 +33,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
           updateListHistoryChannel({
             // @ts-ignore
             activeConversationId: element.message.conversationId,
+            activeElementId: element.id,
           }),
         );
       }
@@ -60,10 +61,14 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
       }}
     >
       {sortedElementsByPriority.map((element) => {
-        const style =
+        // style for the element which is current being hoverd over
+        const hoverStyle =
           element.id === elementInGazeId
             ? 'bg-[#444449] text-[28px] font-medium'
             : 'bg-[#323235] text-[24px]';
+
+        // style for active element (element due to which the history widget is open)
+        const activeElementStyle = '';
 
         return (
           // ListWidget enforces a certain layout and style for its Elements
@@ -71,7 +76,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
             id={element.id}
             key={element.id}
             style={{ height: 80 }}
-            className={`w-full text-white flex items-center justify-center rounded-xl p-3 ${style}`}
+            className={`w-full text-white flex items-center justify-center rounded-xl p-3 ${hoverStyle}`}
           >
             <Element element={element} styleClass="w-full h-full">
               {/* Nested children here if wanted.. */}

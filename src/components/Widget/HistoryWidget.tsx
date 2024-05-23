@@ -3,7 +3,7 @@ import TableElement from '../Element/Simple/TableElement';
 import HistoryMessageElement from '../Element/Complex/HistoryMessageElement';
 import { getListHistoryChannel } from 'src/redux/slices/componentSlice';
 import { useAppSelector } from 'src/redux/hooks';
-import { getMessages } from 'src/redux/slices/minimapSlice';
+import { getConversationMessages } from 'src/redux/slices/minimapSlice';
 
 type HistoryWidgetProps = {
   widget: HistoryWidgetType;
@@ -13,8 +13,8 @@ const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
   const { id, x, y, w, h } = widget;
 
   const { activeConversationId } = useAppSelector(getListHistoryChannel);
-  const convoMessages = useAppSelector(getMessages).filter(
-    (message) => message.conversationId === activeConversationId,
+  const convoMessages = useAppSelector((state) =>
+    getConversationMessages(state, activeConversationId),
   );
 
   // const activeElementID = useAppSelector(getSelectedElementID);

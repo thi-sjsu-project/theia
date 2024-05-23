@@ -10,6 +10,7 @@ const initialState: InitialState = {
   widgetChannels: {
     'list-history': {
       activeConversationId: '',
+      activeElementId: '',
     },
   },
 };
