@@ -17,7 +17,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
   const gazesAndKeys = useAppSelector(getGazesAndKeys);
   const { activeElementId } = useAppSelector(getListHistoryChannel);
 
-  // use this to control the UI to show if the list is overflowed or not
+  // TODO: use this to control the UI to show if the list is overflowed or not
   const [listOverflowed, setListOverflowed] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
