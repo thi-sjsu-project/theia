@@ -19,7 +19,7 @@ const BasicWidget = ({ widget }: BasicWidgetProps) => {
       }}
     >
       {widget.elements.map((element) => (
-        <Element element={element}>
+        <Element key={element.id} element={element}>
           {/* Nested children here if wanted.. */}
         </Element>
       ))}

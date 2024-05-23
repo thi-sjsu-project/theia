@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import Element from 'src/components/Element/Element';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import {
-  getListHistoryChannel,
-  updateListHistoryChannel,
-} from 'src/redux/slices/componentSlice';
+import { getChannel, updateChannel } from 'src/redux/slices/channelSlice';
 import { getElementsInGaze, getGazesAndKeys } from 'src/redux/slices/gazeSlice';
+import type { ListHistoryChannel } from 'src/types/channel';
 import type { Widget } from 'src/types/widget';
 
 type ListWidgetProps = {
@@ -15,7 +13,12 @@ type ListWidgetProps = {
 const ListWidget = ({ widget }: ListWidgetProps) => {
   const elementsInGaze = useAppSelector(getElementsInGaze);
   const gazesAndKeys = useAppSelector(getGazesAndKeys);
-  const { activeElementId } = useAppSelector(getListHistoryChannel);
+  const listHistoryChannel = useAppSelector((state) =>
+    getChannel(state, 'list-history'),
+  );
+
+  const { data: { activeElementId = '' } = {} } =
+    (listHistoryChannel as ListHistoryChannel) || {};
 
   // TODO: use this to control the UI to show if the list is overflowed or not
   const [listOverflowed, setListOverflowed] = useState<boolean>(false);
@@ -77,11 +80,14 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
         }
 
         dispatch(
-          updateListHistoryChannel({
-            // @ts-ignore
-            activeConversationId: element.message.conversationId,
-            activeElementId: element.id,
-          }),
+          updateChannel({
+            id: 'list-history',
+            data: {
+              // @ts-ignore
+              activeConversationId: element.message.conversationId,
+              activeElementId: element.id,
+            },
+          } satisfies ListHistoryChannel),
         );
       }
     });
