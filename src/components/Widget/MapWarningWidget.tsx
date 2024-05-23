@@ -23,27 +23,30 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
   const elementsInGaze = useAppSelector(getElementsInGaze);
   const dispatch = useAppDispatch();
 
-  const inGaze = elementsInGaze.some(
+  const warningIconInGaze = elementsInGaze.some(
     (element) => element.id === iconElement.id,
+  );
+  const threatInfoInGaze = elementsInGaze.some(
+    (element) => element.id === threatInfoElement.id,
   );
 
   useEffect(() => {
     // show threat info element if icon element is in gaze
-    if (inGaze && threatInfoElement.collapsed) {
+    if (warningIconInGaze && threatInfoElement.collapsed) {
       dispatch(
         updateElement(widget.id, { ...threatInfoElement, collapsed: false }),
       );
     }
-  }, [inGaze, dispatch, threatInfoElement, widget.id]);
+  }, [warningIconInGaze, dispatch, threatInfoElement, widget.id]);
 
   useEffect(() => {
-    if (inGaze && threatInfoElement.expirationIntervalMs) {
+    if (warningIconInGaze && threatInfoElement.expirationIntervalMs) {
       // update expiration even if only icon element is in gaze
       // keep displaying threat info element while we hover over the icon
       dispatch(updateElementExpiration(widget.id, threatInfoElement.id));
     }
   }, [
-    inGaze,
+    warningIconInGaze,
     dispatch,
     threatInfoElement.id,
     threatInfoElement.expirationIntervalMs,
@@ -67,7 +70,7 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
           <div style={{ height: 2, width: 75, border: '2px dashed white' }} />
           <MapThreatInfoElement
             element={threatInfoElement as InformationElementType}
-            inGaze={inGaze}
+            inGaze={warningIconInGaze || threatInfoInGaze}
           />
         </>
       )}
