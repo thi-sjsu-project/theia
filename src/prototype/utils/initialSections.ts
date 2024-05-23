@@ -61,7 +61,7 @@ const pearceScreenSections = [
     1550,
     150,
     350,
-    950,
+    900,
     10,
     'tinder',
     [],

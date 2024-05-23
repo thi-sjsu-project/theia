@@ -108,7 +108,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
         setListOverflowed(false);
       }
     }
-  }, [listOverflowed]);
+  }, [listOverflowed, widget.elements.length]);
 
   const className =
     'absolute p-2 flex flex-col gap-6 items-center overflow-scroll overflow-x-hidden overflow-y-hidden';
@@ -119,46 +119,60 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
   );
 
   return (
-    <div
-      key={widget.id}
-      id={widget.id}
-      ref={listRef}
-      className={className}
-      style={{
-        height: widget.h,
-        width: widget.w,
-        top: widget.y,
-        left: widget.x,
-      }}
-    >
-      {sortedElementsByPriority.map((element) => {
-        // style for the element which is current being hoverd over
-        const hoverStyle =
-          element.id === elementInGazeId
-            ? 'bg-[#444449] text-[28px] font-medium'
-            : 'bg-[#323235] text-[24px]';
+    <>
+      <div
+        key={widget.id}
+        id={widget.id}
+        ref={listRef}
+        className={className}
+        style={{
+          height: widget.h,
+          width: widget.w,
+          top: widget.y,
+          left: widget.x,
+        }}
+      >
+        {sortedElementsByPriority.map((element) => {
+          // style for the element which is current being hoverd over
+          const hoverStyle =
+            element.id === elementInGazeId
+              ? 'bg-[#444449] text-[28px] font-medium'
+              : 'bg-[#323235] text-[24px]';
 
-        // style for active element (element due to which the history widget is open)
-        const activeElementStyle =
-          element.id === activeElementId
-            ? 'bg-[#444449] text-[28px] font-medium border-4 border-white'
-            : '';
+          // style for active element (element due to which the history widget is open)
+          const activeElementStyle =
+            element.id === activeElementId
+              ? 'bg-[#444449] text-[28px] font-medium border-4 border-white'
+              : '';
 
-        return (
-          // ListWidget enforces a certain layout and style for its Elements
-          <div
-            id={element.id}
-            key={element.id}
-            style={{ height: 80 }}
-            className={`w-full text-white flex items-center justify-center rounded-xl p-3 ${hoverStyle} ${activeElementStyle}`}
-          >
-            <Element element={element} styleClass="w-full h-full">
-              {/* Nested children here if wanted.. */}
-            </Element>
-          </div>
-        );
-      })}
-    </div>
+          return (
+            // ListWidget enforces a certain layout and style for its Elements
+            <div
+              id={element.id}
+              key={element.id}
+              style={{ height: 80 }}
+              className={`w-full text-white flex items-center justify-center rounded-xl p-3 ${hoverStyle} ${activeElementStyle}`}
+            >
+              <Element element={element} styleClass="w-full h-full">
+                {/* Nested children here if wanted.. */}
+              </Element>
+            </div>
+          );
+        })}
+      </div>
+      {listOverflowed && (
+        <div
+          style={{
+            position: 'absolute',
+            top: widget.y + widget.h / 2 - 50,
+            left: widget.x + widget.w + 10,
+            height: 100,
+            width: 2,
+            background: 'white',
+          }}
+        ></div>
+      )}
+    </>
   );
 };
 
