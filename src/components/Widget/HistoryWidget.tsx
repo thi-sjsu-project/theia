@@ -7,7 +7,7 @@ import {
 } from 'src/redux/slices/componentSlice';
 import { useAppSelector } from 'src/redux/hooks';
 import { getMessages } from 'src/redux/slices/minimapSlice';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type HistoryWidgetProps = {
   widget: HistoryWidgetType;
@@ -22,7 +22,13 @@ const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
   );
   const activeElementID = useAppSelector(getSelectedElementID);
 
-  const highlightIndex = convoMessages.findIndex((message) => message.id === activeElementID)
+  useEffect(() => {
+    console.log('activeElementID: ', activeElementID);
+  }, [activeElementID]);
+
+  const highlightIndex = convoMessages.findIndex(
+    (message) => message.id === activeElementID,
+  );
 
   return (
     <div
