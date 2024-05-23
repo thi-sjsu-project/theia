@@ -195,16 +195,29 @@ const FRAMETIME = 1.0 / 60.0;
 
 const linInterpolate = (start: number, end: number, t: number) => start * (1 - t) + end * t;
 
-//doesn't work yet
-/*const interpolateKeyframes = (keyframe1: KeyframeParameters, keyframe2: KeyframeParameters, t: number): KeyframeParameters => {
-  let interpolatedParams: KeyframeParameters = {};
-  for (const key in keyframe1) {
-    if (Object.prototype.hasOwnProperty.call(keyframe1, key) && Object.prototype.hasOwnProperty.call(keyframe2, key)) {
-      interpolatedParams = linInterpolate(keyframe1, keyframe2, t);
-    }
-  }
-  return interpolatedParams;
-};*/
+
+const interpolateKeyframes = (keyframe1: KeyframeParameters, keyframe2: KeyframeParameters, t: number): KeyframeParameters => {
+  const interpolatedParams: KeyframeParameters = {
+    bigCircleRadius: linInterpolate(keyframe1.bigCircleRadius, keyframe2.bigCircleRadius, t),
+    bigCircleGradientStart: keyframe2.bigCircleGradientStart, 
+    bigCircleGradientEnd: keyframe2.bigCircleGradientEnd,
+    smallTurqoiseCircleRadius: linInterpolate(keyframe1.smallTurqoiseCircleRadius, keyframe2.smallTurqoiseCircleRadius, t),
+    smallTurqoiseCirclePosition: linInterpolate(keyframe1.smallTurqoiseCirclePosition, keyframe2.smallTurqoiseCirclePosition, t),
+    smallTurqoiseCircleOpacity: linInterpolate(keyframe1.smallTurqoiseCircleOpacity, keyframe2.smallTurqoiseCircleOpacity, t),
+    tinyDotOpacity: linInterpolate(keyframe1.tinyDotOpacity, keyframe2.tinyDotOpacity, t),
+    tinyDotRadius: linInterpolate(keyframe1.tinyDotRadius, keyframe2.tinyDotRadius, t),
+    approveButtonPosition: linInterpolate(keyframe1.approveButtonPosition, keyframe2.approveButtonPosition, t),
+    approveButtonOpacity: linInterpolate(keyframe1.approveButtonOpacity, keyframe2.approveButtonOpacity, t),
+    approveArrowOpacity: linInterpolate(keyframe1.approveArrowOpacity, keyframe2.approveArrowOpacity, t),
+    denyButtonPosition: linInterpolate(keyframe1.denyButtonPosition, keyframe2.denyButtonPosition, t),
+    denyButtonOpacity: linInterpolate(keyframe1.denyButtonOpacity, keyframe2.denyButtonOpacity, t),
+    denyArrowOpacity: linInterpolate(keyframe1.denyArrowOpacity, keyframe2.denyArrowOpacity, t),
+  };
+
+  return interpolatedParams; 
+}; 
+
+
 
 
 const ApproveDenyButtonElement = ({
