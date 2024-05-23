@@ -19,11 +19,13 @@ const SIZES = {
 
 type KeyframeParameters = {
   bigCircleRadius: number,
-  bigCircleGradientStart: number,
-  bigCircleGradientEnd: number,
+  bigCircleGradientStart: string,
+  bigCircleGradientEnd: string,
+  smallTurqoiseCircleRadius: number,
   smallTurqoiseCirclePosition: number,
   smallTurqoiseCircleOpacity: number,
   tinyDotOpacity: number,
+  tinyDotRadius: number,
   approveButtonPosition: number,
   approveButtonOpacity: number,
   approveArrowOpacity: number,
@@ -34,11 +36,13 @@ type KeyframeParameters = {
 
 const INITIAL_KEYFRAME: KeyframeParameters = {
   bigCircleRadius: SIZES.bigCircle,
-  bigCircleGradientStart: 0x646464,
-  bigCircleGradientEnd: 0x646464,
+  bigCircleGradientStart: "0x646464",
+  bigCircleGradientEnd: "0x646464",
+  smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
   smallTurqoiseCirclePosition: 0.5,
   smallTurqoiseCircleOpacity: 1,
   tinyDotOpacity: 0.8,
+  tinyDotRadius: SIZES.tinyWhiteDot,
   approveButtonPosition: 1,
   approveButtonOpacity: 1,
   approveArrowOpacity: 1,
@@ -56,11 +60,13 @@ const KEYFRAMES_APPROVE = [
     "time": 1,
     "params": {
       bigCircleRadius: SIZES.bigCircle,
-      bigCircleGradientStart: 0x646464,
-      bigCircleGradientEnd: 0x00C007,
+      bigCircleGradientStart: "0x646464",
+      bigCircleGradientEnd: "0x00C007",
+      smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
       smallTurqoiseCirclePosition: 0.7,
       smallTurqoiseCircleOpacity: 1,
       tinyDotOpacity: 0.8,
+      tinyDotRadius: SIZES.tinyWhiteDot,
       approveButtonPosition: 1,
       approveButtonOpacity: 1,
       approveArrowOpacity: 1,
@@ -73,11 +79,13 @@ const KEYFRAMES_APPROVE = [
     "time": 1.5,
     "params": {
       bigCircleRadius: SIZES.bigCircle,
-      bigCircleGradientStart: 0x00C007,
-      bigCircleGradientEnd: 0x00C007,
+      bigCircleGradientStart: "0x00C007",
+      bigCircleGradientEnd: "0x00C007",
+      smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
       smallTurqoiseCirclePosition: 1,
       smallTurqoiseCircleOpacity: 1,
       tinyDotOpacity: 0,
+      tinyDotRadius: SIZES.tinyWhiteDot,
       approveButtonPosition: 0.5,
       approveButtonOpacity: 1,
       approveArrowOpacity: 0,
@@ -90,11 +98,13 @@ const KEYFRAMES_APPROVE = [
     "time": 2,
     "params": {
       bigCircleRadius: SIZES.bigCircle,
-      bigCircleGradientStart: 0x00C007,
-      bigCircleGradientEnd: 0x00C007,
+      bigCircleGradientStart: "0x00C007",
+      bigCircleGradientEnd: "0x00C007",
+      smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
       smallTurqoiseCirclePosition: 1,
       smallTurqoiseCircleOpacity: 0,
       tinyDotOpacity: 0,
+      tinyDotRadius: SIZES.tinyWhiteDot,
       approveButtonPosition: 0.5,
       approveButtonOpacity: 1,
       approveArrowOpacity: 0,
@@ -114,11 +124,13 @@ const KEYFRAMES_DENY = [
     "time": 1,
     "params": {
       bigCircleRadius: SIZES.bigCircle,
-      bigCircleGradientStart: 0x646464,
-      bigCircleGradientEnd: 0xBC2503,
+      bigCircleGradientStart: "0x646464",
+      bigCircleGradientEnd: "0xBC2503",
+      smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
       smallTurqoiseCirclePosition: 0.3,
       smallTurqoiseCircleOpacity: 1,
       tinyDotOpacity: 0.8,
+      tinyDotRadius: SIZES.tinyWhiteDot,
       approveButtonPosition: 1,
       approveButtonOpacity: 1,
       approveArrowOpacity: 0.2,
@@ -131,11 +143,13 @@ const KEYFRAMES_DENY = [
     "time": 1.5,
     "params": {
       bigCircleRadius: SIZES.bigCircle,
-      bigCircleGradientStart: 0xBC2503,
-      bigCircleGradientEnd: 0xBC2503,
+      bigCircleGradientStart: "0xBC2503",
+      bigCircleGradientEnd: "0xBC2503",
+      smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
       smallTurqoiseCirclePosition: 1,
       smallTurqoiseCircleOpacity: 1,
       tinyDotOpacity: 0,
+      tinyDotRadius: SIZES.tinyWhiteDot,
       approveButtonPosition: 1,
       approveButtonOpacity: 0,
       approveArrowOpacity: 0,
@@ -148,11 +162,13 @@ const KEYFRAMES_DENY = [
     "time": 2,
     "params": {
       bigCircleRadius: SIZES.bigCircle,
-      bigCircleGradientStart: 0xBC2503,
-      bigCircleGradientEnd: 0xBC2503,
+      bigCircleGradientStart: "0xBC2503",
+      bigCircleGradientEnd: "0xBC2503",
+      smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
       smallTurqoiseCirclePosition: 1,
       smallTurqoiseCircleOpacity: 0,
       tinyDotOpacity: 0,
+      tinyDotRadius: SIZES.tinyWhiteDot,
       approveButtonPosition: 1,
       approveButtonOpacity: 0,
       approveArrowOpacity: 0,
@@ -176,6 +192,20 @@ const KEYFRAMES_DENY = [
 //   - 3: no turqoise circle, "deny" in middle of button, button red
 
 const FRAMETIME = 1.0 / 60.0;
+
+const linInterpolate = (start: number, end: number, t: number) => start * (1 - t) + end * t;
+
+//doesn't work yet
+/*const interpolateKeyframes = (keyframe1: KeyframeParameters, keyframe2: KeyframeParameters, t: number): KeyframeParameters => {
+  let interpolatedParams: KeyframeParameters = {};
+  for (const key in keyframe1) {
+    if (Object.prototype.hasOwnProperty.call(keyframe1, key) && Object.prototype.hasOwnProperty.call(keyframe2, key)) {
+      interpolatedParams = linInterpolate(keyframe1, keyframe2, t);
+    }
+  }
+  return interpolatedParams;
+};*/
+
 
 const ApproveDenyButtonElement = ({
   element,
@@ -280,12 +310,27 @@ const ApproveDenyButtonElement = ({
         <svg className="" style={{ width: w, height: w * SIZES.button, marginTop: -w * SIZES.button }}>
           <clipPath id="clip">
           </clipPath>
-          <circle cx={10} cy={10} r={state.bigCircleRadius * 100} fill="red" />
+          <linearGradient id="bigCircleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style={{ stopColor: state.bigCircleGradientStart, stopOpacity: 1 }} />
+            <stop offset="100%" style={{ stopColor: state.bigCircleGradientEnd, stopOpacity: 1 }} />
+          </linearGradient>
+          <circle cx={236} cy={29} r={state.bigCircleRadius * 250} fill="url(#bigCircleGradient)" opacity="0.15"/>
+          <circle cx={236} cy={29} r={state.tinyDotRadius * 250} fill="#FFFFFF" opacity={state.tinyDotOpacity}/>
+          <polygon points="194,29 210,16 210,42" fill="#FFFFFF" opacity={state.denyArrowOpacity} stroke="black" stroke-width="1.5"/>
+          <polygon points="278,29 262,16 262,42" fill="#FFFFFF" opacity={state.approveArrowOpacity} stroke="black" stroke-width="1.5"/>
+          <circle cx={236} cy={29} r={state.smallTurqoiseCircleRadius * 250} fill="#19DEBB" opacity={state.smallTurqoiseCircleOpacity} stroke="black" stroke-width="0.5"/>
         </svg>
       </div>
     </div>
   );
 };
+
+/* 
+      smallTurqoiseCirclePosition: 1,
+      approveButtonPosition: 0.5,
+      approveButtonOpacity: 1,
+      denyButtonPosition: 0,
+      denyButtonOpacity: 0,*/
 
 // rot: #BC2503, grün: #00C007, schwarz: #282828 90%, türkis: #19DEBB, linear gradient rot: #FFFFFF 10% & #BC2402 100%, linear gradient grün: #00C007 100% & #FFFFFF 10%
 
