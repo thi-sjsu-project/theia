@@ -43,7 +43,7 @@ const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
                   key={message.id}
                   index={convoMessages.length - index}
                   // isActive={highlightIndex === convoMessages.length - 1 - index}
-                  isActive={false}
+                  isActive={true}
                   title={`ACA-${message.data.detectedByAca}`}
                   header="Request to attack"
                   desc={`Approval for ${message.data.attackWeapon.type} attack`}
@@ -71,16 +71,16 @@ const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
               );
 
             case 'AcaDefect':
-              return;
+              return null;
 
             case 'AcaFuelLow':
-              return;
+              return null;
 
             case 'AcaHeadingToBase':
-              return;
+              return null;
 
             case 'MissileToOwnshipDetected':
-              return;
+              return null;
           }
         })}
       </div>
