@@ -23,7 +23,7 @@ const HistoryMessage = ({
         <div className="font-normal">{desc}</div>
       </div>
 
-      <div className="col-span-4 w-full">{tableContent}</div>
+      <div className="col-span-4 w-full px-5">{tableContent}</div>
     </div>
   );
 };

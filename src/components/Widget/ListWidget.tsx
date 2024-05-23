@@ -1,34 +1,51 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Element from 'src/components/Element/Element';
 import { useAppDispatch } from 'src/redux/hooks';
-import { setActiveConvoID, setSelectedElementID } from 'src/redux/slices/componentSlice';
+import {
+  setActiveConvoID,
+  setSelectedElementID,
+} from 'src/redux/slices/componentSlice';
+import { type Element as ElementType } from 'src/types/element';
 import type { Widget } from 'src/types/widget';
 
 type ListWidgetProps = {
   widget: Widget;
 };
 
+type sort = (a: ElementType, b: ElementType) => number;
+
+const sortFunctions: { [key: string]: sort } = {
+  priority: (a, b) => a?.priority! - b?.priority!,
+  time: (_a, _b) => -1,
+  gaia: (a, b) => 1,
+};
+
 const ListWidget = ({ widget }: ListWidgetProps) => {
   const className =
     'absolute p-2 flex flex-col gap-6 items-center overflow-scroll overflow-x-hidden overflow-y-hidden';
 
-  // Sort elements by priority
-  const sortedElementsByPriority = [...widget.elements].sort(
-    (a, b) => a.priority! - b.priority!,
-  );
+    const elements = useMemo(() => [...widget.elements], [widget.elements]);
 
   const [selectedElement, setSelectedElement] = useState(0);
+  const [sortMethod, setSortMethod] = useState<sort>(() => sortFunctions.priority);
+  const [sortedElements, setSortedElements] = useState<ElementType[]>(elements);
+
+  useEffect(() => {
+
+    setSortedElements([...elements].sort(sortMethod));
+    
+  }, [sortMethod, elements]);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(
       setActiveConvoID(
-        sortedElementsByPriority[selectedElement].message?.conversationId ?? '',
+        sortedElements[selectedElement].message?.conversationId ?? '',
       ),
       dispatch(
-        setSelectedElementID(sortedElementsByPriority[selectedElement].message?.id)
-      )
+        setSelectedElementID(sortedElements[selectedElement].message?.id),
+      ),
     );
   }, [selectedElement]);
 
@@ -44,7 +61,24 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
         left: widget.x,
       }}
     >
-      {sortedElementsByPriority.map((element, index) => {
+      
+      <div className="w-full text-[#bcbcbc] h-fit py-6 inline-flex gap-4 items-center justify-center">
+        {Object.entries(sortFunctions).map(([key, val]) => {
+          return (
+            <div
+              className="text-3xl"
+              onMouseEnter={() => {
+                console.log("setting sort method to", val)
+                setSortMethod(() => val);
+              }}
+            >
+              {key.substring(0, 4).toUpperCase()}
+            </div>
+          );
+        })}
+      </div>
+
+      {sortedElements.map((element, index) => {
         const style =
           selectedElement === index
             ? 'bg-[#444449] text-[28px] font-medium'
@@ -60,6 +94,8 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
           >
             <Element element={element} styleClass="w-full h-full">
               {/* Nested children here if wanted.. */}
+              Priority:{element.priority}
+              Index:{elements.findIndex(el => element)}
             </Element>
           </div>
         );
