@@ -3,56 +3,34 @@ import { type RequestApprovalElement as RequestApprovalElementType } from 'src/t
 import ButtonElement from '../Simple/ButtonElement';
 import IconElement from '../Simple/IconElement';
 import TableElement from '../Simple/TableElement';
-import { getWidgetById, getWidgetsByConversationID } from 'src/redux/slices/minimapSlice';
+import { getConversationMessages, getWidgetById } from 'src/redux/slices/minimapSlice';
 import { useAppSelector } from 'src/redux/hooks';
 import { capitalizeFirstLetter as cfl } from 'src/utils/helpers';
 import { useState } from 'react';
 
 type RequestApprovalProps = {
   element: RequestApprovalElementType;
-  requests?: RequestApprovalElementType[];
   inGaze?: boolean;
   children?: ReactNode;
 };
 
 const RequestApprovalElement = ({
-  requests,
+  element,
   inGaze,
   children,
 }: RequestApprovalProps) => {
-  const element = requests![0];
-  const {
-    id,
-    collapsed,
-    icon,
-    rightButton,
-    leftButton,
-    message: {
-      conversationId,
-      priority,
-      data: {
-        target: { location, threatLevel, type },
-        collateralDamage,
-        detectedByAca,
-      },
-    },
-  } = element;
-
-  // Get all widgets on /minimap screen and get widgets that contain the same conversationId
-  const widgets = useAppSelector((state) =>
-    getWidgetsByConversationID(state, conversationId),
+  // Getting widget to know the screen that the element is on
+  const widget = useAppSelector((state) =>
+    getWidgetById(state, element.widgetId!),
   );
+
+  const requests: any = useAppSelector((state) => getConversationMessages(state, widget!.conversationId!));
 
   // Transform threat level from a float number in a range of 0-1 to a string of low, medium, high
   const threatLevelString = (threatLevel: number) => {
     const threatLevelInteger = Math.floor(threatLevel * 3);
     return ['low', 'medium', 'high'][threatLevelInteger];
   };
-
-  // Getting widget to know the screen that the element is on
-  const widget = useAppSelector((state) =>
-    getWidgetById(state, element.widgetId!),
-  );
 
   // For now we are just going to sort the requests by priority, but later on could be more complicated
   const sortRequests = (requests: any) => {
@@ -79,8 +57,7 @@ const RequestApprovalElement = ({
 
   const renderMiniMapRequestApprovalElement = () => {
     const sortedRequests = sortRequests(requests);
-    console.log('sortedRequests: ', sortedRequests);
-    const mainRequest = sortedRequests[0].message;
+    const mainRequest = sortedRequests[0];
 
     return (
       <div
@@ -90,8 +67,7 @@ const RequestApprovalElement = ({
             : 'grid auto-row-auto gap-y-[5px] p-[15px_20px_30px_30px] text-white bg-[#282828] bg-opacity-90 rounded-xl'
         }
       >
-        {/* <div className="grid auto-row-auto gap-y-[5px] p-[15px_20px_30px_30px] text-white bg-[#282828] bg-opacity-90 rounded-xl"> */}
-        <div className="font-medium text-4xl mb-[5px]">{cfl(type)}</div>
+        <div className="font-medium text-4xl mb-[5px]">{cfl(mainRequest.data.target.type)}</div>
         <div className="grid grid-cols-[40px_1fr]">
           <div className="flex-auto bg-turquoise text-black text-2xl text-center h-fit font-semibold rounded-l-md">
             {sortedRequests.length}
@@ -144,9 +120,9 @@ const RequestApprovalElement = ({
 
   if (widget!.screen === '/pearce-screen') {
     return (
-      <div id={id} className="flex text-white items-center gap-4">
-        <IconElement element={icon} />
-        <span>{type}</span>
+      <div id={element.id} className="flex text-white items-center gap-4">
+        <IconElement element={element.icon} />
+        <span>{element.type}</span>
       </div>
     );
   } else if (widget!.screen === '/minimap') {

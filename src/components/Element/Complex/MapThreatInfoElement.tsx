@@ -18,7 +18,7 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
   const dispatch = useAppDispatch();
   // could also fetch messages from redux
   // provided there is a conversation number
-  const [informationElement, requestApprovalElement, ...rest] = elements;
+  const [informationElement, requestApprovalElement] = elements;
   const { title, message, collapsed, h, w, size, escalate, deescalate } =
     informationElement as InformationElement;
   let target;
@@ -85,7 +85,7 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
 
       case 'L':
         if (message.kind === 'RequestApprovalToAttack') {
-          return <RequestApprovalElement element={requestApprovalElement as RequestApprovalElementType} requests={[requestApprovalElement as RequestApprovalElementType, ...rest as RequestApprovalElementType[]]} inGaze={inGaze} />;
+          return <RequestApprovalElement element={requestApprovalElement as RequestApprovalElementType} inGaze={inGaze} />;
         } else {
           return (
           <div

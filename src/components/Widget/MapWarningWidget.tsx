@@ -23,13 +23,7 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
    * It would be very useful for different widgets types to specify in detail the number of elements they will have
    * as well as the type of each of those elements - Jagjit.
    */
-  const [iconElement, threatInfoElement, requestApprovalElement, ...rest] =
-    widget.elements;
-  const restRequests = rest.filter(
-    (element) => element.type === 'request-approval',
-  );
-  // console.log('restRequests: ', restRequests)
-  // console.log('widget: ', widget)
+  const [iconElement, threatInfoElement, requestApprovalElement] = widget.elements;
 
   const elementsInGaze = useAppSelector(getElementsInGaze);
   const dispatch = useAppDispatch();
@@ -91,7 +85,6 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
             elements={[
               threatInfoElement as InformationElementType,
               requestApprovalElement as RequestApprovalElementType,
-              ...restRequests,
             ]}
             inGaze={warningIconInGaze || threatInfoInGaze}
           />
