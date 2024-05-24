@@ -21,10 +21,6 @@ const Element = ({ element, styleClass, children }: ElementProps) => {
   };
 
   const renderElement = () => {
-    if (element.collapsed) {
-      // return a common collpased look?
-    }
-
     switch (element.type) {
       case 'request-approval':
         return <RequestApprovalElement element={element} />;

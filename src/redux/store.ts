@@ -7,12 +7,12 @@ import {
 } from 'redux-state-sync';
 import { minimapSlice } from './slices/minimapSlice';
 import { gazeSlice } from './slices/gazeSlice';
-import { componentSlice } from './slices/componentSlice';
+import { channelSlice } from './slices/channelSlice';
 
 // pass in slices to combine into combineSlices()
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.
-const rootReducer = combineSlices(minimapSlice, gazeSlice, componentSlice);
+const rootReducer = combineSlices(minimapSlice, gazeSlice, channelSlice);
 
 // Infer the `RootState` type from the root reducer
 type RootState = ReturnType<typeof rootReducer>;

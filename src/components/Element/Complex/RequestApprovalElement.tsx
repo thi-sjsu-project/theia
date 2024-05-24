@@ -11,14 +11,12 @@ import { useState } from 'react';
 type RequestApprovalProps = {
   element: RequestApprovalElementType;
   requests?: RequestApprovalElementType[];
-  newRequest?: RequestApprovalElementType;
   inGaze?: boolean;
   children?: ReactNode;
 };
 
 const RequestApprovalElement = ({
   requests,
-  newRequest,
   inGaze,
   children,
 }: RequestApprovalProps) => {
@@ -55,20 +53,6 @@ const RequestApprovalElement = ({
   const widget = useAppSelector((state) =>
     getWidgetById(state, element.widgetId!),
   );
-
-  // if (collapsed) {
-  //   return (
-  //     <div className="flex gap-2 items-center">
-  //       <IconElement element={icon} />
-  //       <span>Request Approval to Attack</span>
-  //     </div>
-  //   );
-  // }
-
-  // <div className="flex gap-2">
-  //   <ButtonElement element={leftButton} />
-  //   <ButtonElement element={rightButton} />
-  // </div>
 
   // For now we are just going to sort the requests by priority, but later on could be more complicated
   const sortRequests = (requests: any) => {
