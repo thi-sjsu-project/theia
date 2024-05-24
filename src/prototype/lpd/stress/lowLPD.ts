@@ -66,6 +66,23 @@ const requestApprovalToAttackMessageLow = (
       onExpiration: 'deescalate',
       widgetId: minimapWidgetId1,
     } satisfies InformationElement,
+    lpdHelper.generateRequestApprovalElement(
+      lpdHelper.generateBaseElement(uuid(), 'visual', 700, 500, message.priority),
+      message,
+      minimapWidgetId1,
+      lpdHelper.generateIconElement(
+        lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
+        mapTargetTypeToWarningIcon(message.data.target.type),
+      ),
+      lpdHelper.generateButtonElement(
+        lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80),
+        'Deny',
+      ),
+      lpdHelper.generateButtonElement(
+        lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80),
+        'Approve',
+      ),
+    ),
   ];
 
   const minimapWidgets: Widget[] = [
@@ -81,6 +98,8 @@ const requestApprovalToAttackMessageLow = (
       canOverlap: true,
       useElementLocation: false,
       maxAmount: 10,
+
+      conversationId: message.conversationId,
 
       tags: ['specify', 'map-warning'],
 

@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import type {
   IconElement as IconElementType,
   InformationElement as InformationElementType,
+  RequestApprovalElement as RequestApprovalElementType,
 } from 'src/types/element';
 import IconElement from 'src/components/Element/Simple/IconElement';
 import MapThreatInfoElement from '../Element/Complex/MapThreatInfoElement';
@@ -18,7 +19,14 @@ type MapWarningWidgetProps = {
 };
 
 const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
-  const [iconElement, threatInfoElement] = widget.elements;
+  /** We have made widgets too generic, I think. Severely restricts our ability to design different widgets differently.
+   * It would be very useful for different widgets types to specify in detail the number of elements they will have
+   * as well as the type of each of those elements - Jagjit.
+   */
+  const [iconElement, threatInfoElement, requestApprovalElement, ...rest] = widget.elements;
+  const restRequests = rest.filter((element) => element.type === 'request-approval');
+  // console.log('restRequests: ', restRequests)
+  // console.log('widget: ', widget)
 
   const elementsInGaze = useAppSelector(getElementsInGaze);
   const dispatch = useAppDispatch();
@@ -50,34 +58,41 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
     widget.id,
   ]);
 
-  return (
-    <div
-      key={widget.id}
-      id={widget.id}
-      className="absolute"
-      style={{
-        top: ~~widget.y,
-        left: ~~widget.x,
-      }}
-    >
-      <div className="inline-block">
-        <div className="flex justify-center items-center">
-          <IconElement element={iconElement as IconElementType} />
-          {!threatInfoElement.collapsed && (
-            <div style={{ height: 2, width: 75, border: '2px dashed white' }} className="inline-block align-[2.375rem]" />
-          )}
+    return (
+      <div
+        key={widget.id}
+        id={widget.id}
+        className="absolute"
+        style={{
+          top: ~~widget.y,
+          left: ~~widget.x,
+        }}
+      >
+        <div className="inline-block">
+          <div className="flex justify-center items-center">
+            <IconElement element={iconElement as IconElementType} />
+            {!threatInfoElement.collapsed && (
+              <div
+                style={{ height: 2, width: 75, border: '2px dashed white' }}
+                className="inline-block align-[2.375rem]"
+              />
+            )}
+          </div>
         </div>
+        {!threatInfoElement.collapsed && (
+          <div className="inline-block align-top mt-2">
+            <MapThreatInfoElement
+              elements={[
+                threatInfoElement as InformationElementType,
+                requestApprovalElement as RequestApprovalElementType,
+                ...restRequests,
+              ]}
+              inGaze={inGaze}
+            />
+          </div>
+        )}
       </div>
-      {!threatInfoElement.collapsed && (
-        <div className="inline-block align-top mt-2">
-          <MapThreatInfoElement
-            element={threatInfoElement as InformationElementType}
-            inGaze={inGaze}
-          />
-        </div>
-      )}
-    </div>
-  );
+    );
 };
 
 export default MapWarningWidget;

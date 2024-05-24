@@ -19,6 +19,7 @@ export type BaseWidget = {
   maxAmount: number;
 
   handledMessageIds?: string[];
+  conversationId?: string;
 
   padding?: number;
   priority?: number;

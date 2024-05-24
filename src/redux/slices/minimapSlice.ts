@@ -1,10 +1,11 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { Widget, VehicleWidget, WidgetMap } from 'src/types/widget';
+import type { Widget, VehicleWidget, WidgetMap, MapWarningWidget } from 'src/types/widget';
 import type { Screen } from 'src/types/support-types';
 import type { Message } from 'src/types/schema-types';
 import type { Element, ElementMap } from 'src/types/element';
 import type { LinkedSectionWidget, Section } from 'src/types/support-types';
+import RequestApprovalElement from 'src/components/Element/Complex/RequestApprovalElement';
 
 export type InitialMinimapState = {
   visualComplexity: number;
@@ -424,6 +425,27 @@ export const minimapSlice = createSlice({
     getWidgetById: (state, id: string) =>
       state.widgets[id] ? state.widgets[id] : null,
 
+    getWidgetsByConversationID: (state, conversationId: string) => {
+      const widgets: WidgetMap = {};
+
+      Object.values(state.widgets)
+        .filter(
+          (widget) =>
+            widget.screen === '/minimap' &&
+            widget.type === 'map-warning' &&
+            widget.elements.some(
+              (element) =>
+                element.type === 'request-approval' &&
+                widget.conversationId === conversationId,
+            ),
+        )
+        .forEach((widget) => {
+          widgets[widget.id] = widget;
+        });
+
+      return widgets;
+    },
+
     // ~~~~~ selectors for elements ~~~~~
     getAllElements: (state) => {
       const allElements: Element[] = [];
@@ -506,6 +528,7 @@ export const {
   getWidgets,
   getWidgetsOnScreen,
   getWidgetById,
+  getWidgetsByConversationID,
 
   getAllElements,
   getElementsOnScreen,
