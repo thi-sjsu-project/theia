@@ -85,7 +85,7 @@ const RequestApprovalElement = ({
             {count}
           </div>
           <div className="bg-[#252526] text-[#BCBCBC] px-[20px] py-[5px]">
-            Update: threat-level high
+            Update: priority level
           </div>
         </div>,
       );
