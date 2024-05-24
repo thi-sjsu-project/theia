@@ -57,13 +57,13 @@ const KEYFRAMES_APPROVE = [
     params: INITIAL_KEYFRAME,
   },
   {
-    time: 2,
+    time: 4,
     params: {
       bigCircleRadius: SIZES.bigCircle,
       bigCircleGradientStart: 0x646464,
       bigCircleGradientEnd: 0x00c007,
       smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
-      smallTurqoiseCirclePosition: 0.7,
+      smallTurqoiseCirclePosition: 0.63,
       smallTurqoiseCircleOpacity: 1,
       tinyDotOpacity: 0.8,
       tinyDotRadius: SIZES.tinyWhiteDot,
@@ -76,13 +76,32 @@ const KEYFRAMES_APPROVE = [
     },
   },
   {
-    time: 3,
+    time: 6,
+    params: {
+      bigCircleRadius: SIZES.bigCircle,
+      bigCircleGradientStart: 0x646464,
+      bigCircleGradientEnd: 0x00c007,
+      smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
+      smallTurqoiseCirclePosition: 0.63,
+      smallTurqoiseCircleOpacity: 1,
+      tinyDotOpacity: 0.8,
+      tinyDotRadius: SIZES.tinyWhiteDot,
+      approveButtonPosition: 1,
+      approveButtonOpacity: 1,
+      approveArrowOpacity: 1,
+      denyButtonPosition: 0,
+      denyButtonOpacity: 1,
+      denyArrowOpacity: 0.2,
+    },
+  },
+  {
+    time: 7,
     params: {
       bigCircleRadius: SIZES.bigCircle,
       bigCircleGradientStart: 0x00c007,
       bigCircleGradientEnd: 0x00c007,
       smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
-      smallTurqoiseCirclePosition: 1,
+      smallTurqoiseCirclePosition: 0.935,
       smallTurqoiseCircleOpacity: 1,
       tinyDotOpacity: 0,
       tinyDotRadius: SIZES.tinyWhiteDot,
@@ -95,13 +114,13 @@ const KEYFRAMES_APPROVE = [
     },
   },
   {
-    time: 4,
+    time: 10,
     params: {
       bigCircleRadius: SIZES.bigCircle,
       bigCircleGradientStart: 0x00c007,
       bigCircleGradientEnd: 0x00c007,
       smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
-      smallTurqoiseCirclePosition: 1,
+      smallTurqoiseCirclePosition: 0.935,
       smallTurqoiseCircleOpacity: 0,
       tinyDotOpacity: 0,
       tinyDotRadius: SIZES.tinyWhiteDot,
@@ -121,13 +140,13 @@ const KEYFRAMES_DENY = [
     params: INITIAL_KEYFRAME,
   },
   {
-    time: 2,
+    time: 4,
     params: {
       bigCircleRadius: SIZES.bigCircle,
       bigCircleGradientStart: 0x646464,
       bigCircleGradientEnd: 0xbc2503,
       smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
-      smallTurqoiseCirclePosition: 0.3,
+      smallTurqoiseCirclePosition: 0.37,
       smallTurqoiseCircleOpacity: 1,
       tinyDotOpacity: 0.8,
       tinyDotRadius: SIZES.tinyWhiteDot,
@@ -140,13 +159,32 @@ const KEYFRAMES_DENY = [
     },
   },
   {
-    time: 3,
+    time: 6,
+    params: {
+      bigCircleRadius: SIZES.bigCircle,
+      bigCircleGradientStart: 0x646464,
+      bigCircleGradientEnd: 0xbc2503,
+      smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
+      smallTurqoiseCirclePosition: 0.37,
+      smallTurqoiseCircleOpacity: 1,
+      tinyDotOpacity: 0.8,
+      tinyDotRadius: SIZES.tinyWhiteDot,
+      approveButtonPosition: 1,
+      approveButtonOpacity: 1,
+      approveArrowOpacity: 0.2,
+      denyButtonPosition: 0,
+      denyButtonOpacity: 1,
+      denyArrowOpacity: 1,
+    },
+  },
+  {
+    time: 7,
     params: {
       bigCircleRadius: SIZES.bigCircle,
       bigCircleGradientStart: 0xbc2503,
       bigCircleGradientEnd: 0xbc2503,
       smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
-      smallTurqoiseCirclePosition: 1,
+      smallTurqoiseCirclePosition: 0.065,
       smallTurqoiseCircleOpacity: 1,
       tinyDotOpacity: 0,
       tinyDotRadius: SIZES.tinyWhiteDot,
@@ -159,13 +197,13 @@ const KEYFRAMES_DENY = [
     },
   },
   {
-    time: 4,
+    time: 10,
     params: {
       bigCircleRadius: SIZES.bigCircle,
       bigCircleGradientStart: 0xbc2503,
       bigCircleGradientEnd: 0xbc2503,
       smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
-      smallTurqoiseCirclePosition: 1,
+      smallTurqoiseCirclePosition: 0.065,
       smallTurqoiseCircleOpacity: 0,
       tinyDotOpacity: 0,
       tinyDotRadius: SIZES.tinyWhiteDot,
@@ -179,20 +217,8 @@ const KEYFRAMES_DENY = [
   },
 ];
 
-// keyframes
-// - approve:
-//   - 0: pos turqoise circle center, gray background
-//   - 1: pos turqoise circle right of big circle, gray-green gradient background, arrows fade out
-//   - 2: pos turqoise circle right of entire button, "approve" in middle of button, button green
-//   - 3: no turqoise circle, "approve" in middle of button, button green, rest disappears
-// - deny:
-//   - 0: pos turqoise circle center, gray background
-//   - 1: pos turqoise circle left of big circle, gray-red gradient background, arrows fade out
-//   - 2: pos turqoise circle left of entire button, "deny" in middle of button, button red
-//   - 3: no turqoise circle, "deny" in middle of button, button red
-
 const FRAMETIME = 1.0 / 60.0;
-const SPEED = 0.1;
+const SPEED = 0.15;
 
 const formatColor = (color: number) =>
   `#${('000000' + color.toString(16)).slice(-6)}`;
@@ -350,8 +376,6 @@ const ApproveDenyButtonElement = ({
       }}
     >
       <div className="bg-[#282828] bg-opacity-90 border-2 border-black rounded-xl">
-        <div className="absolute">{time.toFixed(2)}</div>
-
         <div style={headerStyle} className="font-medium text-center">
           <div>Approve kinetic attack?</div>
         </div>
@@ -372,38 +396,22 @@ const ApproveDenyButtonElement = ({
             <stop offset="0%" style={{ stopColor: formatColor(state.bigCircleGradientStart), stopOpacity: 1 }} />
             <stop offset="100%" style={{ stopColor: formatColor(state.bigCircleGradientEnd), stopOpacity: 1 }} />
           </linearGradient>
-          <circle cx={236} cy={29} r={state.bigCircleRadius * 250} fill="url(#bigCircleGradient)" />
-          <circle cx={236} cy={29} r={state.tinyDotRadius * 250} fill="#FFFFFF" opacity={state.tinyDotOpacity} />
+          <radialGradient id="turquoiseCircleGradient">
+            <stop offset="0%" stop-color="#19debb" />
+            <stop offset="60%" stop-color="#19debb" />
+            <stop offset="75%" stop-color="#17cfad" />
+            <stop offset="90%" stop-color="#14b89a" />
+            <stop offset="100%" stop-color="#0f8a73" />
+          </radialGradient>
+          <circle cx={w * 0.5} cy={w * SIZES.button * 0.5} r={state.bigCircleRadius * 250} fill="url(#bigCircleGradient)" />
+          <circle cx={w * 0.5} cy={w * SIZES.button * 0.5} r={state.tinyDotRadius * 250} fill="#FFFFFF" opacity={state.tinyDotOpacity} />
+          <circle cx={w * state.smallTurqoiseCirclePosition} cy={w * SIZES.button * 0.5} r={w * state.smallTurqoiseCircleRadius / 2} fill="url(#turquoiseCircleGradient)" opacity={state.smallTurqoiseCircleOpacity} />
           <polygon points="194,29 210,16 210,42" fill="#FFFFFF" opacity={state.denyArrowOpacity} stroke="black" stroke-width="1.5" />
           <polygon points="278,29 262,16 262,42" fill="#FFFFFF" opacity={state.approveArrowOpacity} stroke="black" stroke-width="1.5" />
-          <circle cx={236} cy={29} r={state.smallTurqoiseCircleRadius * 250} fill="#19DEBB" opacity={state.smallTurqoiseCircleOpacity} stroke="black" stroke-width="0.5" />
         </svg>
       </div>
     </div>
   );
 };
 
-/* 
-      smallTurqoiseCirclePosition: 1,
-      approveButtonPosition: 0.5,
-      approveButtonOpacity: 1,
-      denyButtonPosition: 0,
-      denyButtonOpacity: 0,*/
-
-// rot: #BC2503, grün: #00C007, schwarz: #282828 90%, türkis: #19DEBB, linear gradient rot: #FFFFFF 10% & #BC2402 100%, linear gradient grün: #00C007 100% & #FFFFFF 10%
-
 export default ApproveDenyButtonElement;
-/* 
-background schrift: #F5F5F5;
-background: #282828E5;
-background: #19DEBB;
-background: #00C007;
-background: #BC2503;
-background: #FFFFFF;
-background: #3E3E42;
-background: #000000;
-background: linear-gradient(90deg, rgba(40, 40, 40, 0) 0%, rgba(76, 76, 76, 0.9) 30.34%, rgba(76, 76, 76, 0.9) 70%, rgba(40, 40, 40, 0) 100%);
-background: linear-gradient(270.42deg, #00C007 0.39%, rgba(255, 255, 255, 0.1) 99.67%);
-background: linear-gradient(270.42deg, rgba(255, 255, 255, 0.1) 0.39%, #BC2402 99.67%);
-background: #FFFFFF26;
-*/
