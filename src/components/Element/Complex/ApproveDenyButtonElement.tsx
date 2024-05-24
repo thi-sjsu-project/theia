@@ -18,26 +18,26 @@ const SIZES = {
 } as const;
 
 type KeyframeParameters = {
-  bigCircleRadius: number,
-  bigCircleGradientStart: string,
-  bigCircleGradientEnd: string,
-  smallTurqoiseCircleRadius: number,
-  smallTurqoiseCirclePosition: number,
-  smallTurqoiseCircleOpacity: number,
-  tinyDotOpacity: number,
-  tinyDotRadius: number,
-  approveButtonPosition: number,
-  approveButtonOpacity: number,
-  approveArrowOpacity: number,
-  denyButtonPosition: number,
-  denyButtonOpacity: number,
-  denyArrowOpacity: number,
+  bigCircleRadius: number;
+  bigCircleGradientStart: number;
+  bigCircleGradientEnd: number;
+  smallTurqoiseCircleRadius: number;
+  smallTurqoiseCirclePosition: number;
+  smallTurqoiseCircleOpacity: number;
+  tinyDotOpacity: number;
+  tinyDotRadius: number;
+  approveButtonPosition: number;
+  approveButtonOpacity: number;
+  approveArrowOpacity: number;
+  denyButtonPosition: number;
+  denyButtonOpacity: number;
+  denyArrowOpacity: number;
 };
 
 const INITIAL_KEYFRAME: KeyframeParameters = {
   bigCircleRadius: SIZES.bigCircle,
-  bigCircleGradientStart: "0x646464",
-  bigCircleGradientEnd: "0x646464",
+  bigCircleGradientStart: 0x646464,
+  bigCircleGradientEnd: 0x646464,
   smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
   smallTurqoiseCirclePosition: 0.5,
   smallTurqoiseCircleOpacity: 1,
@@ -53,15 +53,15 @@ const INITIAL_KEYFRAME: KeyframeParameters = {
 
 const KEYFRAMES_APPROVE = [
   {
-    "time": 0,
-    "params": INITIAL_KEYFRAME,
+    time: 0,
+    params: INITIAL_KEYFRAME,
   },
   {
-    "time": 1,
-    "params": {
+    time: 2,
+    params: {
       bigCircleRadius: SIZES.bigCircle,
-      bigCircleGradientStart: "0x646464",
-      bigCircleGradientEnd: "0x00C007",
+      bigCircleGradientStart: 0x646464,
+      bigCircleGradientEnd: 0x00c007,
       smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
       smallTurqoiseCirclePosition: 0.7,
       smallTurqoiseCircleOpacity: 1,
@@ -76,11 +76,11 @@ const KEYFRAMES_APPROVE = [
     },
   },
   {
-    "time": 1.5,
-    "params": {
+    time: 3,
+    params: {
       bigCircleRadius: SIZES.bigCircle,
-      bigCircleGradientStart: "0x00C007",
-      bigCircleGradientEnd: "0x00C007",
+      bigCircleGradientStart: 0x00c007,
+      bigCircleGradientEnd: 0x00c007,
       smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
       smallTurqoiseCirclePosition: 1,
       smallTurqoiseCircleOpacity: 1,
@@ -95,11 +95,11 @@ const KEYFRAMES_APPROVE = [
     },
   },
   {
-    "time": 2,
-    "params": {
+    time: 4,
+    params: {
       bigCircleRadius: SIZES.bigCircle,
-      bigCircleGradientStart: "0x00C007",
-      bigCircleGradientEnd: "0x00C007",
+      bigCircleGradientStart: 0x00c007,
+      bigCircleGradientEnd: 0x00c007,
       smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
       smallTurqoiseCirclePosition: 1,
       smallTurqoiseCircleOpacity: 0,
@@ -117,15 +117,15 @@ const KEYFRAMES_APPROVE = [
 
 const KEYFRAMES_DENY = [
   {
-    "time": 0,
-    "params": INITIAL_KEYFRAME,
+    time: 0,
+    params: INITIAL_KEYFRAME,
   },
   {
-    "time": 1,
-    "params": {
+    time: 2,
+    params: {
       bigCircleRadius: SIZES.bigCircle,
-      bigCircleGradientStart: "0x646464",
-      bigCircleGradientEnd: "0xBC2503",
+      bigCircleGradientStart: 0x646464,
+      bigCircleGradientEnd: 0xbc2503,
       smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
       smallTurqoiseCirclePosition: 0.3,
       smallTurqoiseCircleOpacity: 1,
@@ -140,11 +140,11 @@ const KEYFRAMES_DENY = [
     },
   },
   {
-    "time": 1.5,
-    "params": {
+    time: 3,
+    params: {
       bigCircleRadius: SIZES.bigCircle,
-      bigCircleGradientStart: "0xBC2503",
-      bigCircleGradientEnd: "0xBC2503",
+      bigCircleGradientStart: 0xbc2503,
+      bigCircleGradientEnd: 0xbc2503,
       smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
       smallTurqoiseCirclePosition: 1,
       smallTurqoiseCircleOpacity: 1,
@@ -159,11 +159,11 @@ const KEYFRAMES_DENY = [
     },
   },
   {
-    "time": 2,
-    "params": {
+    time: 4,
+    params: {
       bigCircleRadius: SIZES.bigCircle,
-      bigCircleGradientStart: "0xBC2503",
-      bigCircleGradientEnd: "0xBC2503",
+      bigCircleGradientStart: 0xbc2503,
+      bigCircleGradientEnd: 0xbc2503,
       smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
       smallTurqoiseCirclePosition: 1,
       smallTurqoiseCircleOpacity: 0,
@@ -192,15 +192,33 @@ const KEYFRAMES_DENY = [
 //   - 3: no turqoise circle, "deny" in middle of button, button red
 
 const FRAMETIME = 1.0 / 60.0;
+const SPEED = 0.1;
 
-const linInterpolate = (start: number, end: number, t: number) => start * (1 - t) + end * t;
+const formatColor = (color: number) =>
+  `#${('000000' + color.toString(16)).slice(-6)}`;
 
+const linInterpolate = (start: number, end: number, t: number) =>
+  start * (1 - t) + end * t;
 
+const rgbInterpolate = (start: number, end: number, t: number) => {
+  const rs = (start >> 16) & 0xff,
+    gs = (start >> 8) & 0xff,
+    bs = start & 0xff,
+    re = (end >> 16) & 0xff,
+    ge = (end >> 8) & 0xff,
+    be = end & 0xff,
+    r = (linInterpolate(rs, re, t) & 0xff) << 16,
+    g = (linInterpolate(gs, ge, t) & 0xff) << 8,
+    b = linInterpolate(bs, be, t) & 0xff;
+  return r | g | b;
+};
+
+// prettier-ignore
 const interpolateKeyframes = (keyframe1: KeyframeParameters, keyframe2: KeyframeParameters, t: number): KeyframeParameters => {
-  const interpolatedParams: KeyframeParameters = {
+  return {
     bigCircleRadius: linInterpolate(keyframe1.bigCircleRadius, keyframe2.bigCircleRadius, t),
-    bigCircleGradientStart: keyframe2.bigCircleGradientStart, 
-    bigCircleGradientEnd: keyframe2.bigCircleGradientEnd,
+    bigCircleGradientStart: rgbInterpolate(keyframe1.bigCircleGradientStart, keyframe2.bigCircleGradientStart, t), 
+    bigCircleGradientEnd: rgbInterpolate(keyframe1.bigCircleGradientEnd, keyframe2.bigCircleGradientEnd, t),
     smallTurqoiseCircleRadius: linInterpolate(keyframe1.smallTurqoiseCircleRadius, keyframe2.smallTurqoiseCircleRadius, t),
     smallTurqoiseCirclePosition: linInterpolate(keyframe1.smallTurqoiseCirclePosition, keyframe2.smallTurqoiseCirclePosition, t),
     smallTurqoiseCircleOpacity: linInterpolate(keyframe1.smallTurqoiseCircleOpacity, keyframe2.smallTurqoiseCircleOpacity, t),
@@ -213,33 +231,59 @@ const interpolateKeyframes = (keyframe1: KeyframeParameters, keyframe2: Keyframe
     denyButtonOpacity: linInterpolate(keyframe1.denyButtonOpacity, keyframe2.denyButtonOpacity, t),
     denyArrowOpacity: linInterpolate(keyframe1.denyArrowOpacity, keyframe2.denyArrowOpacity, t),
   };
-
-  return interpolatedParams; 
-}; 
-
-
-
+};
 
 const ApproveDenyButtonElement = ({
   element,
 }: ApproveDenyButtonElementProps) => {
   const { h, w, id } = element;
 
-  const headerStyle = { fontSize: w * SIZES.fontSize, height: h - w * SIZES.button, lineHeight: `${h - w * SIZES.button - 2}px` };
-  const buttonStyle = { fontSize: w * SIZES.fontSize, height: w * SIZES.button - 2, lineHeight: `${w * SIZES.button - 2}px`, width: w * SIZES.sideLabel };
+  const headerStyle = {
+    fontSize: w * SIZES.fontSize,
+    height: h - w * SIZES.button,
+    lineHeight: `${h - w * SIZES.button - 2}px`,
+  };
+  const buttonStyle = {
+    fontSize: w * SIZES.fontSize,
+    height: w * SIZES.button - 2,
+    lineHeight: `${w * SIZES.button - 2}px`,
+    width: w * SIZES.sideLabel,
+  };
 
   const [state, setState] = useState(INITIAL_KEYFRAME);
-  const [animation, setAnimation] = useState<"approve" | "deny" | undefined>(undefined);
+  const [animation, setAnimation] = useState<'approve' | 'deny' | undefined>(
+    undefined,
+  );
   const [time, setTime] = useState(0);
   const intervalRef = useRef<any>(undefined); // this is really just `number | undefined` but typescript is stoopid
 
   useEffect(() => {
-    let intervalHandle: any;
-
     const animationTick = () => {
-      setState({...state, bigCircleRadius: state.bigCircleRadius + 0.01});
-      setTime(prevTime => {
-        const newTime = prevTime + FRAMETIME;
+      let keyframes;
+      if (animation === 'approve') keyframes = KEYFRAMES_APPROVE;
+      else if (animation === 'deny') keyframes = KEYFRAMES_DENY;
+      else return stopAnimation();
+
+      let idx;
+      for (idx = 0; idx < keyframes.length; idx++) {
+        if (idx >= keyframes.length - 1) return stopAnimation();
+        if (keyframes[idx].time <= time && keyframes[idx + 1].time >= time) {
+          break;
+        }
+      }
+
+      const keyframeTimeSpan = keyframes[idx + 1].time - keyframes[idx].time;
+      const elapsedKeyframeTime = time - keyframes[idx].time;
+      setState(
+        interpolateKeyframes(
+          keyframes[idx].params,
+          keyframes[idx + 1].params,
+          elapsedKeyframeTime / keyframeTimeSpan,
+        ),
+      );
+
+      setTime((prevTime) => {
+        const newTime = prevTime + FRAMETIME * SPEED;
         if (newTime >= 1000) {
           stopAnimation();
         }
@@ -249,7 +293,7 @@ const ApproveDenyButtonElement = ({
 
     if (animation) {
       intervalRef.current = setInterval(animationTick, FRAMETIME);
-    } else  {
+    } else {
       if (intervalRef.current !== undefined) {
         clearInterval(intervalRef.current);
         intervalRef.current = undefined;
@@ -264,18 +308,6 @@ const ApproveDenyButtonElement = ({
     };
   });
 
-  //const [intervalHandle, setIntervalHandle] = useState<number | undefined>(undefined);
-  //const [time, setTime] = useState(0);
-
-  //const animationTick = (action: "approve" | "deny") => {
-  //  setTime(time + FRAMETIME);
-  //  setState({...state, bigCircleRadius: state.bigCircleRadius * 1.1})
-  //  if (time >= 1) {
-  //    setAnimation(undefined);
-  //    clearInterval(intervalHandle);
-  //  }
-  //}
-  
   const stopAnimation = () => {
     setState(INITIAL_KEYFRAME);
     setAnimation(undefined);
@@ -289,17 +321,23 @@ const ApproveDenyButtonElement = ({
   const gazeAndKeys = useAppSelector(getGazesAndKeys);
   useEffect(() => {
     for (const i of gazeAndKeys) {
-      if (animation !== "deny" && i.keyPress === "0") { // left mouse button
-        setAnimation("deny");
+      if (animation !== 'deny' && i.keyPress === '0') {
+        // left mouse button
+        setAnimation('deny');
         return;
-      } else if (animation !== "approve" && i.keyPress === "2") { // right mouse button
-        setAnimation("approve");
+      } else if (animation !== 'approve' && i.keyPress === '2') {
+        // right mouse button
+        setAnimation('approve');
         return;
       }
     }
-    if (!gazeAndKeys.some(x => x.keyPress === "0") && !gazeAndKeys.some(x => x.keyPress === "2")) {
+    if (
+      !gazeAndKeys.some((x) => x.keyPress === '0') &&
+      !gazeAndKeys.some((x) => x.keyPress === '2')
+    ) {
       stopAnimation();
     }
+    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [gazeAndKeys]);
 
   return (
@@ -312,26 +350,33 @@ const ApproveDenyButtonElement = ({
       }}
     >
       <div className="bg-[#282828] bg-opacity-90 border-2 border-black rounded-xl">
+        <div className="absolute">{time.toFixed(2)}</div>
+
         <div style={headerStyle} className="font-medium text-center">
           <div>Approve kinetic attack?</div>
         </div>
         <div style={{ height: w * SIZES.button }} className="flex">
-          <div style={buttonStyle} className="font-medium text-center">DENY</div>
+          <div style={buttonStyle} className="font-medium text-center">
+            DENY
+          </div>
           <div className="grow" />
-          <div style={buttonStyle} className="font-medium text-center">APPROVE</div>
+          <div style={buttonStyle} className="font-medium text-center">
+            APPROVE
+          </div>
         </div>
+
+        {/* prettier-ignore */}
         <svg className="" style={{ width: w, height: w * SIZES.button, marginTop: -w * SIZES.button }}>
-          <clipPath id="clip">
-          </clipPath>
+          <clipPath id="clip"></clipPath>
           <linearGradient id="bigCircleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style={{ stopColor: state.bigCircleGradientStart, stopOpacity: 1 }} />
-            <stop offset="100%" style={{ stopColor: state.bigCircleGradientEnd, stopOpacity: 1 }} />
+            <stop offset="0%" style={{ stopColor: formatColor(state.bigCircleGradientStart), stopOpacity: 1 }} />
+            <stop offset="100%" style={{ stopColor: formatColor(state.bigCircleGradientEnd), stopOpacity: 1 }} />
           </linearGradient>
-          <circle cx={236} cy={29} r={state.bigCircleRadius * 250} fill="url(#bigCircleGradient)" opacity="0.15"/>
-          <circle cx={236} cy={29} r={state.tinyDotRadius * 250} fill="#FFFFFF" opacity={state.tinyDotOpacity}/>
-          <polygon points="194,29 210,16 210,42" fill="#FFFFFF" opacity={state.denyArrowOpacity} stroke="black" stroke-width="1.5"/>
-          <polygon points="278,29 262,16 262,42" fill="#FFFFFF" opacity={state.approveArrowOpacity} stroke="black" stroke-width="1.5"/>
-          <circle cx={236} cy={29} r={state.smallTurqoiseCircleRadius * 250} fill="#19DEBB" opacity={state.smallTurqoiseCircleOpacity} stroke="black" stroke-width="0.5"/>
+          <circle cx={236} cy={29} r={state.bigCircleRadius * 250} fill="url(#bigCircleGradient)" />
+          <circle cx={236} cy={29} r={state.tinyDotRadius * 250} fill="#FFFFFF" opacity={state.tinyDotOpacity} />
+          <polygon points="194,29 210,16 210,42" fill="#FFFFFF" opacity={state.denyArrowOpacity} stroke="black" stroke-width="1.5" />
+          <polygon points="278,29 262,16 262,42" fill="#FFFFFF" opacity={state.approveArrowOpacity} stroke="black" stroke-width="1.5" />
+          <circle cx={236} cy={29} r={state.smallTurqoiseCircleRadius * 250} fill="#19DEBB" opacity={state.smallTurqoiseCircleOpacity} stroke="black" stroke-width="0.5" />
         </svg>
       </div>
     </div>
