@@ -1,10 +1,9 @@
-import { type HistoryWidget as HistoryWidgetType } from 'src/types/widget';
-import TableElement from '../Element/Simple/TableElement';
-import HistoryMessageElement from '../Element/Complex/HistoryMessageElement';
-import { getChannel } from 'src/redux/slices/channelSlice';
 import { useAppSelector } from 'src/redux/hooks';
+import { type HistoryWidget as HistoryWidgetType } from 'src/types/widget';
+import TableElement from 'src/components/Element/Simple/TableElement';
+import HistoryMessageElement from 'src/components/Element/Complex/HistoryMessageElement';
 import { getConversationMessages } from 'src/redux/slices/minimapSlice';
-import type { ListHistoryChannel } from 'src/types/channel';
+import { getCommunication } from 'src/redux/slices/communicationSlice';
 
 type HistoryWidgetProps = {
   widget: HistoryWidgetType;
@@ -12,12 +11,7 @@ type HistoryWidgetProps = {
 
 const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
   const { id, x, y, w, h } = widget;
-
-  const listHistoryChannel = useAppSelector((state) =>
-    getChannel(state, 'list-history'),
-  );
-  const { data: { activeConversationId = '' } = {} } =
-    (listHistoryChannel as ListHistoryChannel) || {};
+  const { activeConversationId } = useAppSelector(getCommunication);
 
   const convoMessages = useAppSelector((state) =>
     getConversationMessages(state, activeConversationId),

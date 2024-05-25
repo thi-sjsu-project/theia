@@ -1,9 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import Element from 'src/components/Element/Element';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { getChannel, updateChannel } from 'src/redux/slices/channelSlice';
+import {
+  updateCommunication,
+  getCommunication,
+} from 'src/redux/slices/communicationSlice';
 import { getElementsInGaze, getGazesAndKeys } from 'src/redux/slices/gazeSlice';
-import type { ListHistoryChannel } from 'src/types/channel';
 import type { Widget } from 'src/types/widget';
 
 type ListWidgetProps = {
@@ -16,11 +18,7 @@ const GAP_BETWEEN_ELEMENTS = 6;
 const ListWidget = ({ widget }: ListWidgetProps) => {
   const elementsInGaze = useAppSelector(getElementsInGaze);
   const gazesAndKeys = useAppSelector(getGazesAndKeys);
-  const listHistoryChannel = useAppSelector((state) =>
-    getChannel(state, 'list-history'),
-  );
-  const { data: { activeElementId = '' } = {} } =
-    (listHistoryChannel as ListHistoryChannel) || {};
+  const { activeElementId } = useAppSelector(getCommunication);
 
   // const listCapacity = Math.floor(
   //   widget.h / (LIST_ELEMENT_HEIGHT + GAP_BETWEEN_ELEMENTS) - 1,
@@ -85,14 +83,11 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
         }
 
         dispatch(
-          updateChannel({
-            id: 'list-history',
-            data: {
-              // @ts-ignore
-              activeConversationId: element.message.conversationId,
-              activeElementId: element.id,
-            },
-          } satisfies ListHistoryChannel),
+          updateCommunication({
+            // @ts-ignore
+            activeConversationId: element.message.conversationId,
+            activeElementId: element.id,
+          }),
         );
       }
     });
