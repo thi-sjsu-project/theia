@@ -1,21 +1,22 @@
 import { useAppSelector } from 'src/redux/hooks';
 import { type HistoryWidget as HistoryWidgetType } from 'src/types/widget';
-import TableElement from 'src/components/Element/Simple/TableElement';
-import HistoryMessageElement from 'src/components/Element/Complex/HistoryMessageElement';
+import HistoryElement from 'src/components/Element/Complex/HistoryElement';
 import { getConversationMessages } from 'src/redux/slices/minimapSlice';
 import { getCommunication } from 'src/redux/slices/communicationSlice';
+import MessageNumber from 'src/ui/history/MessageNumber';
 
 type HistoryWidgetProps = {
   widget: HistoryWidgetType;
 };
 
 const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
-  const { id, x, y, w, h } = widget;
+  const { id, x, y, w, h, elements } = widget;
   const { activeConversationId } = useAppSelector(getCommunication);
 
   const convoMessages = useAppSelector((state) =>
     getConversationMessages(state, activeConversationId),
   );
+  const numMessages = convoMessages.length;
 
   // const activeElementID = useAppSelector(getSelectedElementID);
   // const highlightIndex = convoMessages.findIndex(
@@ -24,59 +25,35 @@ const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
 
   return (
     <div
-      key={id}
-      style={{ top: y, left: x, width: w, height: h }}
-      className={`absolute text-white `}
+      style={{
+        top: y,
+        left: x,
+        width: w,
+        height: h,
+      }}
+      className="absolute bg-[#323235] text-white"
     >
       <div className="grid grid-cols-12 items-start justify-start p-4 gap-4">
-        {convoMessages.reverse().map((message, index) => {
-          switch (message.kind) {
-            case 'RequestApprovalToAttack':
-              return (
-                <HistoryMessageElement
-                  key={message.id}
-                  index={convoMessages.length - index}
-                  // isActive={highlightIndex === convoMessages.length - 1 - index}
-                  isActive={true}
-                  title={`ACA-${message.data.detectedByAca}`}
-                  header="Request to attack"
-                  desc={`Approval for ${message.data.attackWeapon.type} attack`}
-                  tableContent={
-                    <TableElement
-                      element={{
-                        id: `table:${activeConversationId}_${message}`,
-                        modality: 'visual',
-                        h: 3,
-                        w: 4,
+        {convoMessages.reverse().map((message, index) => (
+          <>
+            <div key={message.id} className="col-span-1 flex flex-col h-full">
+              <MessageNumber number={numMessages - index} glow />
 
-                        type: 'table',
-                        tableData: [
-                          ...Object.entries(message.data.target).map(
-                            ([key, value]) => {
-                              return [key, JSON.stringify(value)];
-                            },
-                          ),
-                          ['col.damage', message.data.collateralDamage],
-                        ],
-                      }}
-                    />
-                  }
-                />
-              );
+              {/* line below the number */}
+              {numMessages - index !== 1 && (
+                <div className="border-convo-bar h-full w-1/2 border-r-4 mt-4 flex flex-row items-center justify-center rounded-sm" />
+              )}
+            </div>
 
-            case 'AcaDefect':
-              return null;
-
-            case 'AcaFuelLow':
-              return null;
-
-            case 'AcaHeadingToBase':
-              return null;
-
-            case 'MissileToOwnshipDetected':
-              return null;
-          }
-        })}
+            <HistoryElement
+              key={`${message.id}-${index}`}
+              message={message}
+              index={index + 1}
+              outerDivStyleClass="col-span-11 bg-convo-bg rounded-lg p-2 h-fit
+          drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)]"
+            />
+          </>
+        ))}
       </div>
     </div>
   );
