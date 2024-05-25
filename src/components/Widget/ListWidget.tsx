@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import Element from 'src/components/Element/Element';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import {
   updateCommunication,
@@ -7,6 +6,7 @@ import {
 } from 'src/redux/slices/communicationSlice';
 import { getElementsInGaze, getGazesAndKeys } from 'src/redux/slices/gazeSlice';
 import type { Widget } from 'src/types/widget';
+import ListElement from 'src/components/Element/Complex/ListElement';
 
 type ListWidgetProps = {
   widget: Widget;
@@ -156,16 +156,15 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
             : '';
 
         return (
-          // ListWidget enforces a certain layout and style for its Elements
           <div
             id={element.id}
             key={element.id}
             style={{ height: LIST_ELEMENT_HEIGHT }}
             className={`w-full text-white flex items-center justify-center rounded-xl p-3 ${hoverStyle} ${activeElementStyle}`}
           >
-            <Element element={element} styleClass="w-full h-full">
+            <ListElement element={element} outerDivStyleClass="w-full h-full">
               {/* Nested children here if wanted.. */}
-            </Element>
+            </ListElement>
           </div>
         );
       })}
