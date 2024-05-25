@@ -34,7 +34,7 @@ const requestApprovalToAttackMessageHigh = (
         message.priority,
         'list',
       ),
-      message,
+      message.id,
       listWidgetId,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
@@ -181,7 +181,7 @@ const missileToOwnshipDetectedMessageHigh = (
         message.priority,
         'list',
       ),
-      message,
+      message.id,
       listWidgetId,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),

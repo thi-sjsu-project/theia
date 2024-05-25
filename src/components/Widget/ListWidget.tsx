@@ -7,6 +7,7 @@ import {
 import { getElementsInGaze, getGazesAndKeys } from 'src/redux/slices/gazeSlice';
 import type { Widget } from 'src/types/widget';
 import ListElement from 'src/components/Element/Complex/ListElement';
+import { getMessages } from 'src/redux/slices/minimapSlice';
 
 type ListWidgetProps = {
   widget: Widget;
@@ -16,6 +17,7 @@ const LIST_ELEMENT_HEIGHT = 80;
 const GAP_BETWEEN_ELEMENTS = 6;
 
 const ListWidget = ({ widget }: ListWidgetProps) => {
+  const messages = useAppSelector(getMessages);
   const elementsInGaze = useAppSelector(getElementsInGaze);
   const gazesAndKeys = useAppSelector(getGazesAndKeys);
   const { activeElementId } = useAppSelector(getCommunication);
@@ -75,7 +77,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
       // just pick the first element in the gaze for now
       if (element.id === mouseLeftClick.elemsInGaze[0].id) {
         // @ts-ignore
-        if (!element.message) {
+        if (!element.messageId) {
           // FIX: all elements should have a message (at least the ones in the list)
           // at the minimu, they should have a conversationId attached to them?
           console.warn('Element does not have a message', element);
@@ -85,13 +87,13 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
         dispatch(
           updateCommunication({
             // @ts-ignore
-            activeConversationId: element.message.conversationId,
+            activeConversationId: messages[element.messageId].conversationId,
             activeElementId: element.id,
           }),
         );
       }
     });
-  }, [gazesAndKeys, dispatch, elementInGazeId, widget.elements]);
+  }, [gazesAndKeys, dispatch, elementInGazeId, messages, widget.elements]);
 
   // check if the list is overflowed
   // useEffect(() => {
@@ -143,6 +145,15 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
       }}
     >
       {sortedElementsByPriority.map((element) => {
+        // don't render element if it's message is not the latest in the conversation
+        // @ts-ignore
+        const elemMessageId = element.messageId;
+        if (elemMessageId) {
+          if (!messages[elemMessageId].latestInConvo) {
+            return null;
+          }
+        }
+
         // style for the element which is current being hoverd over
         const hoverStyle =
           element.id === elementInGazeId

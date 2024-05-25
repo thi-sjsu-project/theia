@@ -1,7 +1,7 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Widget, VehicleWidget, WidgetMap } from 'src/types/widget';
-import type { Screen } from 'src/types/support-types';
+import type { MessageMap, Screen } from 'src/types/support-types';
 import type { Message } from 'src/types/schema-types';
 import type { Element, ElementMap } from 'src/types/element';
 import type { LinkedSectionWidget, Section } from 'src/types/support-types';
@@ -15,7 +15,7 @@ export type InitialMinimapState = {
   drones: VehicleWidget[];
 
   widgets: WidgetMap;
-  messages: Message[];
+  messages: MessageMap;
   sections: Section[];
 
   stressLevel: number;
@@ -26,7 +26,7 @@ const initialState: InitialMinimapState = {
   audioComplexity: 0,
   ownship: null,
   drones: [],
-  messages: [],
+  messages: {},
   widgets: {},
   sections: [],
   stressLevel: 0,
@@ -397,7 +397,19 @@ export const minimapSlice = createSlice({
     },
 
     addMessage: (state, action: PayloadAction<Message>) => {
-      state.messages.push(action.payload);
+      const updatedMessages = { ...state.messages };
+
+      // set latestInConvo to false for all messages in the same conversation
+      Object.keys(updatedMessages).forEach((id) => {
+        if (
+          updatedMessages[id].conversationId === action.payload.conversationId
+        ) {
+          updatedMessages[id].latestInConvo = false;
+        }
+      });
+
+      updatedMessages[action.payload.id] = action.payload;
+      state.messages = updatedMessages;
     },
 
     setStressLevel: (state, action: PayloadAction<number>) => {
@@ -449,10 +461,16 @@ export const minimapSlice = createSlice({
     getVisualComplexity: (state) => state.visualComplexity,
     getAudioComplexity: (state) => state.audioComplexity,
     getMessages: (state) => state.messages,
+    getMessage: (state, messageId: string) => state.messages[messageId],
     getConversationMessages: (state, conversationId: string) => {
-      return state.messages.filter(
-        (message) => message.conversationId === conversationId,
-      );
+      const messages: Message[] = [];
+      Object.keys(state.messages).forEach((messageId) => {
+        if (state.messages[messageId].conversationId === conversationId) {
+          messages.push(state.messages[messageId]);
+        }
+      });
+
+      return messages;
     },
     getStressLevel: (state) => state.stressLevel,
 
@@ -511,6 +529,7 @@ export const {
   getElementsOnScreen,
 
   getMessages,
+  getMessage,
   getConversationMessages,
 
   getOwnship,

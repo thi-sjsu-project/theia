@@ -27,7 +27,7 @@ const requestApprovalToAttackMessageLow = (
   const pearceScreenElements = [
     lpdHelper.generateRequestApprovalElement(
       lpdHelper.generateBaseElement(uuid(), 'visual', 30, 30, message.priority),
-      message,
+      message.id,
       listWidgetId,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
@@ -223,7 +223,7 @@ const missileToOwnshipDetectedMessageLow = (
         200,
         message.priority,
       ),
-      message,
+      message.id,
       listWidgetId,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),

@@ -24,8 +24,10 @@ export type BaseMessage<TKind extends string, TData extends object> = {
   priority: Priority;
   kind: TKind;
   data: TData;
+  latestInConvo?: boolean;
+  read?: boolean;
   fulfilled?: boolean;
-  tags?: string[]
+  tags?: string[];
 };
 
 export type RequestApprovalToAttack = BaseMessage<

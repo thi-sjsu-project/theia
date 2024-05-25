@@ -85,7 +85,7 @@ export type CustomElement = BaseElement & {
 
 export type RequestApprovalElement = BaseElement & {
   type: 'request-approval';
-  message: RequestApprovalToAttack;
+  messageId: string;
   icon: IconElement;
   leftButton: ButtonElement;
   rightButton: ButtonElement;
@@ -95,7 +95,7 @@ export type RequestApprovalElement = BaseElement & {
 
 export type MissileIncomingElement = BaseElement & {
   type: 'missile-incoming';
-  message: MissileToOwnshipDetected;
+  messageId: string;
   icon: IconElement;
   widgetId: string;
 };
