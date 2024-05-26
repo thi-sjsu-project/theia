@@ -34,7 +34,7 @@ type KeyframeParameters = {
   denyButtonOpacity: number;
   denyArrowOpacity: number;
   denyArrowPosition: number;
-  denyTextOpacity: number; 
+  denyTextOpacity: number;
   approveTextOpacity: number;
   approveArrowPosition: number;
 };
@@ -58,7 +58,7 @@ const INITIAL_KEYFRAME: KeyframeParameters = {
   denyArrowPosition: 194,
   denyTextOpacity: 1,
   approveTextOpacity: 1,
-  approveArrowPosition: 278, 
+  approveArrowPosition: 278,
 } as const;
 
 const KEYFRAMES_APPROVE = [
@@ -85,7 +85,7 @@ const KEYFRAMES_APPROVE = [
       denyButtonOpacity: 1,
       denyArrowOpacity: 0.2,
       denyArrowPosition: 194,
-      denyTextOpacity: 1, 
+      denyTextOpacity: 1,
       approveTextOpacity: 1,
       approveArrowPosition: 278 + 0.13 * 472,
     },
@@ -117,13 +117,13 @@ const KEYFRAMES_APPROVE = [
   {
     time: 7,
     params: {
-      bigCircleRadius: SIZES.bigCircle,
+      bigCircleRadius: 1.1,
       bigCircleGradientStart: 0x00c007,
       bigCircleGradientEnd: 0x00c007,
       lowerBarColor: 0x00c007,
       smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
       smallTurqoiseCirclePosition: 0.935,
-      smallTurqoiseCircleOpacity: 0,
+      smallTurqoiseCircleOpacity: 1,
       tinyDotOpacity: 0,
       tinyDotRadius: SIZES.tinyWhiteDot,
       approveButtonPosition: 0.5,
@@ -133,15 +133,15 @@ const KEYFRAMES_APPROVE = [
       denyButtonOpacity: 0,
       denyArrowOpacity: 0,
       denyArrowPosition: 194,
-      denyTextOpacity: 0, 
+      denyTextOpacity: 0,
       approveTextOpacity: 1,
-      approveArrowPosition: 278 + 0.13 * 472,
+      approveArrowPosition: 472,
     },
   },
   {
     time: 10,
     params: {
-      bigCircleRadius: SIZES.bigCircle,
+      bigCircleRadius: 1.1,
       bigCircleGradientStart: 0x00c007,
       bigCircleGradientEnd: 0x00c007,
       lowerBarColor: 0x00c007,
@@ -157,9 +157,33 @@ const KEYFRAMES_APPROVE = [
       denyButtonOpacity: 0,
       denyArrowOpacity: 0,
       denyArrowPosition: 194,
-      denyTextOpacity: 0, 
+      denyTextOpacity: 0,
       approveTextOpacity: 1,
-      approveArrowPosition: 278 + 0.13 * 472,
+      approveArrowPosition: 472,
+    },
+  },
+  {
+    time: 15,
+    params: {
+      bigCircleRadius: 1.1,
+      bigCircleGradientStart: 0x00c007,
+      bigCircleGradientEnd: 0x00c007,
+      lowerBarColor: 0x00c007,
+      smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
+      smallTurqoiseCirclePosition: 0.935,
+      smallTurqoiseCircleOpacity: 0,
+      tinyDotOpacity: 0,
+      tinyDotRadius: SIZES.tinyWhiteDot,
+      approveButtonPosition: 0.5,
+      approveButtonOpacity: 1,
+      approveArrowOpacity: 0,
+      denyButtonPosition: 0,
+      denyButtonOpacity: 0,
+      denyArrowOpacity: 0,
+      denyArrowPosition: 194,
+      denyTextOpacity: 0,
+      approveTextOpacity: 1,
+      approveArrowPosition: 472,
     },
   },
 ];
@@ -212,7 +236,7 @@ const KEYFRAMES_DENY = [
       denyButtonOpacity: 1,
       denyArrowOpacity: 1,
       denyArrowPosition: 194 - 0.13 * 472,
-      denyTextOpacity: 1, 
+      denyTextOpacity: 1,
       approveTextOpacity: 1,
       approveArrowPosition: 278,
     },
@@ -220,13 +244,13 @@ const KEYFRAMES_DENY = [
   {
     time: 7,
     params: {
-      bigCircleRadius: SIZES.bigCircle,
+      bigCircleRadius: 1.1,
       bigCircleGradientStart: 0xbc2503,
       bigCircleGradientEnd: 0xbc2503,
       lowerBarColor: 0xbc2503,
       smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
       smallTurqoiseCirclePosition: 0.065,
-      smallTurqoiseCircleOpacity: 0,
+      smallTurqoiseCircleOpacity: 1,
       tinyDotOpacity: 0,
       tinyDotRadius: SIZES.tinyWhiteDot,
       approveButtonPosition: 1,
@@ -235,8 +259,8 @@ const KEYFRAMES_DENY = [
       denyButtonPosition: 0.5,
       denyButtonOpacity: 1,
       denyArrowOpacity: 0,
-      denyArrowPosition: 194 - 0.13 * 472,
-      denyTextOpacity: 1, 
+      denyArrowPosition: 0,
+      denyTextOpacity: 1,
       approveTextOpacity: 0,
       approveArrowPosition: 278,
     },
@@ -244,7 +268,7 @@ const KEYFRAMES_DENY = [
   {
     time: 10,
     params: {
-      bigCircleRadius: SIZES.bigCircle,
+      bigCircleRadius: 1.1,
       bigCircleGradientStart: 0xbc2503,
       bigCircleGradientEnd: 0xbc2503,
       lowerBarColor: 0xbc2503,
@@ -259,8 +283,32 @@ const KEYFRAMES_DENY = [
       denyButtonPosition: 0.5,
       denyButtonOpacity: 1,
       denyArrowOpacity: 0,
-      denyArrowPosition: 194 - 0.13 * 472,
-      denyTextOpacity: 1, 
+      denyArrowPosition: 0,
+      denyTextOpacity: 1,
+      approveTextOpacity: 0,
+      approveArrowPosition: 278,
+    },
+  },
+  {
+    time: 15,
+    params: {
+      bigCircleRadius: 1.1,
+      bigCircleGradientStart: 0xbc2503,
+      bigCircleGradientEnd: 0xbc2503,
+      lowerBarColor: 0xbc2503,
+      smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
+      smallTurqoiseCirclePosition: 0.065,
+      smallTurqoiseCircleOpacity: 0,
+      tinyDotOpacity: 0,
+      tinyDotRadius: SIZES.tinyWhiteDot,
+      approveButtonPosition: 1,
+      approveButtonOpacity: 0,
+      approveArrowOpacity: 0,
+      denyButtonPosition: 0.5,
+      denyButtonOpacity: 1,
+      denyArrowOpacity: 0,
+      denyArrowPosition: 0,
+      denyTextOpacity: 1,
       approveTextOpacity: 0,
       approveArrowPosition: 278,
     },
@@ -334,10 +382,10 @@ const ApproveDenyButtonElement = ({
 
   const buttonStyle = {
     fontSize: w * SIZES.fontSize,
-    height: w * SIZES.button - 2,
+    height: w * SIZES.button,
     lineHeight: `${w * SIZES.button - 2}px`,
     width: w * SIZES.sideLabel,
-    backgroundColor: formatColor(state.lowerBarColor),
+    marginTop: -w * SIZES.button,
   };
 
   useEffect(() => {
@@ -436,19 +484,12 @@ const ApproveDenyButtonElement = ({
         <div style={headerStyle} className="font-medium text-center">
           <div>Approve kinetic attack?</div>
         </div>
-        <div style={{ height: w * SIZES.button }} className="flex">
-          <div style={buttonStyle} className="font-medium text-center">
-            <span style={{ opacity: state.denyTextOpacity }}>DENY</span>
-          </div>
-          <div className="grow" />
-          <div style={buttonStyle} className="font-medium text-center">
-            <span style={{ opacity: state.approveTextOpacity }}>APPROVE</span>
-          </div>
-        </div>
 
         {/* prettier-ignore */}
-        <svg className="" style={{ width: w, height: w * SIZES.button, marginTop: -w * SIZES.button }}>
-          <clipPath id="clip"></clipPath>
+        <svg className="" style={{ width: w, height: w * SIZES.button }}>
+          <clipPath id="clip">
+            <rect x={0} y={0} width={w - 2} height={w * SIZES.button} rx={12} />
+          </clipPath>
           <linearGradient id="bigCircleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" style={{ stopColor: formatColor(state.bigCircleGradientStart), stopOpacity: 1 }} />
             <stop offset="100%" style={{ stopColor: formatColor(state.bigCircleGradientEnd), stopOpacity: 1 }} />
@@ -460,12 +501,31 @@ const ApproveDenyButtonElement = ({
             <stop offset="90%" stop-color="#14b89a" />
             <stop offset="100%" stop-color="#0f8a73" />
           </radialGradient>
-          <circle cx={w * 0.5} cy={w * SIZES.button * 0.5} r={state.bigCircleRadius * 250} fill="url(#bigCircleGradient)" />
-          <circle cx={w * 0.5} cy={w * SIZES.button * 0.5} r={state.tinyDotRadius * 250} fill="#FFFFFF" opacity={state.tinyDotOpacity} />
+          <circle cx={w * 0.5} cy={w * SIZES.button * 0.5} r={state.bigCircleRadius * w * 0.5} fill="url(#bigCircleGradient)" clipPath="url(#clip)" />
+          <circle cx={w * 0.5} cy={w * SIZES.button * 0.5} r={state.tinyDotRadius * w * 0.5} fill="#FFFFFF" opacity={state.tinyDotOpacity} />
           <circle cx={w * state.smallTurqoiseCirclePosition} cy={w * SIZES.button * 0.5} r={w * state.smallTurqoiseCircleRadius / 2} fill="url(#turquoiseCircleGradient)" opacity={state.smallTurqoiseCircleOpacity} />
-          <polygon points={`${state.denyArrowPosition},29 ${state.denyArrowPosition + 16},16 ${state.denyArrowPosition + 16},42`} fill="#FFFFFF" opacity={state.denyArrowOpacity} stroke="black" stroke-width="1.5" />
-          <polygon points={`${state.approveArrowPosition},29 ${state.approveArrowPosition - 16},16 ${state.approveArrowPosition - 16},42`} fill="#FFFFFF" opacity={state.approveArrowOpacity} stroke="black" stroke-width="1.5" />
+          <polygon points={`${state.denyArrowPosition - 8},29 ${state.denyArrowPosition + 8},16 ${state.denyArrowPosition + 8},42`} fill="#FFFFFF" opacity={state.denyArrowOpacity} stroke="black" stroke-width="1.5" />
+          <polygon points={`${state.approveArrowPosition + 8},29 ${state.approveArrowPosition - 8},16 ${state.approveArrowPosition - 8},42`} fill="#FFFFFF" opacity={state.approveArrowOpacity} stroke="black" stroke-width="1.5" />
         </svg>
+
+        <div
+          style={{
+            ...buttonStyle,
+            marginLeft: (w - buttonStyle.width) * state.denyButtonPosition,
+          }}
+          className="font-medium text-center"
+        >
+          <span style={{ opacity: state.denyTextOpacity }}>DENY</span>
+        </div>
+        <div
+          style={{
+            ...buttonStyle,
+            marginLeft: (w - buttonStyle.width) * state.approveButtonPosition,
+          }}
+          className="font-medium text-center"
+        >
+          <span style={{ opacity: state.approveTextOpacity }}>APPROVE</span>
+        </div>
       </div>
     </div>
   );
