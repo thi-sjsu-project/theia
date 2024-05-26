@@ -33,8 +33,10 @@ type KeyframeParameters = {
   denyButtonPosition: number;
   denyButtonOpacity: number;
   denyArrowOpacity: number;
+  denyArrowPosition: number;
   denyTextOpacity: number; 
   approveTextOpacity: number;
+  approveArrowPosition: number;
 };
 
 const INITIAL_KEYFRAME: KeyframeParameters = {
@@ -53,8 +55,10 @@ const INITIAL_KEYFRAME: KeyframeParameters = {
   denyButtonPosition: 0,
   denyButtonOpacity: 1,
   denyArrowOpacity: 1,
+  denyArrowPosition: 194,
   denyTextOpacity: 1,
   approveTextOpacity: 1,
+  approveArrowPosition: 278, 
 } as const;
 
 const KEYFRAMES_APPROVE = [
@@ -80,8 +84,10 @@ const KEYFRAMES_APPROVE = [
       denyButtonPosition: 0,
       denyButtonOpacity: 1,
       denyArrowOpacity: 0.2,
+      denyArrowPosition: 194,
       denyTextOpacity: 1, 
       approveTextOpacity: 1,
+      approveArrowPosition: 278 + 0.13 * 472,
     },
   },
   {
@@ -101,9 +107,11 @@ const KEYFRAMES_APPROVE = [
       approveArrowOpacity: 1,
       denyButtonPosition: 0,
       denyButtonOpacity: 1,
+      denyArrowPosition: 194,
       denyArrowOpacity: 0.2,
       denyTextOpacity: 1,
       approveTextOpacity: 1,
+      approveArrowPosition: 278 + 0.13 * 472,
     },
   },
   {
@@ -115,7 +123,7 @@ const KEYFRAMES_APPROVE = [
       lowerBarColor: 0x00c007,
       smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
       smallTurqoiseCirclePosition: 0.935,
-      smallTurqoiseCircleOpacity: 1,
+      smallTurqoiseCircleOpacity: 0,
       tinyDotOpacity: 0,
       tinyDotRadius: SIZES.tinyWhiteDot,
       approveButtonPosition: 0.5,
@@ -124,8 +132,10 @@ const KEYFRAMES_APPROVE = [
       denyButtonPosition: 0,
       denyButtonOpacity: 0,
       denyArrowOpacity: 0,
+      denyArrowPosition: 194,
       denyTextOpacity: 0, 
       approveTextOpacity: 1,
+      approveArrowPosition: 278 + 0.13 * 472,
     },
   },
   {
@@ -146,8 +156,10 @@ const KEYFRAMES_APPROVE = [
       denyButtonPosition: 0,
       denyButtonOpacity: 0,
       denyArrowOpacity: 0,
+      denyArrowPosition: 194,
       denyTextOpacity: 0, 
       approveTextOpacity: 1,
+      approveArrowPosition: 278 + 0.13 * 472,
     },
   },
 ];
@@ -175,8 +187,10 @@ const KEYFRAMES_DENY = [
       denyButtonPosition: 0,
       denyButtonOpacity: 1,
       denyArrowOpacity: 1,
+      denyArrowPosition: 194 - 0.13 * 472,
       denyTextOpacity: 1,
       approveTextOpacity: 1,
+      approveArrowPosition: 278,
     },
   },
   {
@@ -197,8 +211,10 @@ const KEYFRAMES_DENY = [
       denyButtonPosition: 0,
       denyButtonOpacity: 1,
       denyArrowOpacity: 1,
+      denyArrowPosition: 194 - 0.13 * 472,
       denyTextOpacity: 1, 
       approveTextOpacity: 1,
+      approveArrowPosition: 278,
     },
   },
   {
@@ -210,7 +226,7 @@ const KEYFRAMES_DENY = [
       lowerBarColor: 0xbc2503,
       smallTurqoiseCircleRadius: SIZES.smallTurqoiseCircle,
       smallTurqoiseCirclePosition: 0.065,
-      smallTurqoiseCircleOpacity: 1,
+      smallTurqoiseCircleOpacity: 0,
       tinyDotOpacity: 0,
       tinyDotRadius: SIZES.tinyWhiteDot,
       approveButtonPosition: 1,
@@ -219,8 +235,10 @@ const KEYFRAMES_DENY = [
       denyButtonPosition: 0.5,
       denyButtonOpacity: 1,
       denyArrowOpacity: 0,
+      denyArrowPosition: 194 - 0.13 * 472,
       denyTextOpacity: 1, 
       approveTextOpacity: 0,
+      approveArrowPosition: 278,
     },
   },
   {
@@ -241,8 +259,10 @@ const KEYFRAMES_DENY = [
       denyButtonPosition: 0.5,
       denyButtonOpacity: 1,
       denyArrowOpacity: 0,
+      denyArrowPosition: 194 - 0.13 * 472,
       denyTextOpacity: 1, 
       approveTextOpacity: 0,
+      approveArrowPosition: 278,
     },
   },
 ];
@@ -287,8 +307,10 @@ const interpolateKeyframes = (keyframe1: KeyframeParameters, keyframe2: Keyframe
     denyButtonPosition: linInterpolate(keyframe1.denyButtonPosition, keyframe2.denyButtonPosition, t),
     denyButtonOpacity: linInterpolate(keyframe1.denyButtonOpacity, keyframe2.denyButtonOpacity, t),
     denyArrowOpacity: linInterpolate(keyframe1.denyArrowOpacity, keyframe2.denyArrowOpacity, t),
+    denyArrowPosition: linInterpolate(keyframe1.denyArrowPosition, keyframe2.denyArrowPosition, t),
     denyTextOpacity: linInterpolate(keyframe1.denyTextOpacity, keyframe2.denyTextOpacity, t), 
     approveTextOpacity: linInterpolate(keyframe1.approveTextOpacity, keyframe2.approveTextOpacity, t), 
+    approveArrowPosition: linInterpolate(keyframe1.approveArrowPosition, keyframe2.approveArrowPosition, t),
   };
 };
 
@@ -441,12 +463,13 @@ const ApproveDenyButtonElement = ({
           <circle cx={w * 0.5} cy={w * SIZES.button * 0.5} r={state.bigCircleRadius * 250} fill="url(#bigCircleGradient)" />
           <circle cx={w * 0.5} cy={w * SIZES.button * 0.5} r={state.tinyDotRadius * 250} fill="#FFFFFF" opacity={state.tinyDotOpacity} />
           <circle cx={w * state.smallTurqoiseCirclePosition} cy={w * SIZES.button * 0.5} r={w * state.smallTurqoiseCircleRadius / 2} fill="url(#turquoiseCircleGradient)" opacity={state.smallTurqoiseCircleOpacity} />
-          <polygon points="194,29 210,16 210,42" fill="#FFFFFF" opacity={state.denyArrowOpacity} stroke="black" stroke-width="1.5" />
-          <polygon points="278,29 262,16 262,42" fill="#FFFFFF" opacity={state.approveArrowOpacity} stroke="black" stroke-width="1.5" />
+          <polygon points={`${state.denyArrowPosition},29 ${state.denyArrowPosition + 16},16 ${state.denyArrowPosition + 16},42`} fill="#FFFFFF" opacity={state.denyArrowOpacity} stroke="black" stroke-width="1.5" />
+          <polygon points={`${state.approveArrowPosition},29 ${state.approveArrowPosition - 16},16 ${state.approveArrowPosition - 16},42`} fill="#FFFFFF" opacity={state.approveArrowOpacity} stroke="black" stroke-width="1.5" />
         </svg>
       </div>
     </div>
   );
 };
+// "194,29 210,16 210,42"
 
 export default ApproveDenyButtonElement;
