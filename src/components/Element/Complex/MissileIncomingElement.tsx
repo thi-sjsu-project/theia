@@ -1,7 +1,7 @@
 import type { MissileIncomingElement as MissileIncomingElementType } from 'src/types/element';
 import IconElement from 'src/components/Element/Simple/IconElement';
 import { useAppSelector } from 'src/redux/hooks';
-import { getMessage } from 'src/redux/slices/minimapSlice';
+import { getMessage } from 'src/redux/slices/conversationSlice';
 
 type MissileIncomingProps = {
   element: MissileIncomingElementType;

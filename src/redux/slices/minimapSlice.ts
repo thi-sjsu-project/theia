@@ -15,7 +15,6 @@ export type InitialMinimapState = {
   drones: VehicleWidget[];
 
   widgets: WidgetMap;
-  messages: MessageMap;
   sections: Section[];
 
   stressLevel: number;
@@ -26,7 +25,6 @@ const initialState: InitialMinimapState = {
   audioComplexity: 0,
   ownship: null,
   drones: [],
-  messages: {},
   widgets: {},
   sections: [],
   stressLevel: 0,
@@ -48,7 +46,6 @@ export const minimapSlice = createSlice({
       state.ownship = action.payload.ownship;
       state.drones = action.payload.drones;
       state.widgets = action.payload.widgets;
-      state.messages = action.payload.messages;
       state.sections = action.payload.sections;
     },
 
@@ -396,22 +393,6 @@ export const minimapSlice = createSlice({
       state.audioComplexity = action.payload;
     },
 
-    addMessage: (state, action: PayloadAction<Message>) => {
-      const updatedMessages = { ...state.messages };
-
-      // set latestInConvo to false for all messages in the same conversation
-      Object.keys(updatedMessages).forEach((id) => {
-        if (
-          updatedMessages[id].conversationId === action.payload.conversationId
-        ) {
-          updatedMessages[id].latestInConvo = false;
-        }
-      });
-
-      updatedMessages[action.payload.id] = action.payload;
-      state.messages = updatedMessages;
-    },
-
     setStressLevel: (state, action: PayloadAction<number>) => {
       state.stressLevel = action.payload;
     },
@@ -460,18 +441,6 @@ export const minimapSlice = createSlice({
 
     getVisualComplexity: (state) => state.visualComplexity,
     getAudioComplexity: (state) => state.audioComplexity,
-    getMessages: (state) => state.messages,
-    getMessage: (state, messageId: string) => state.messages[messageId],
-    getConversationMessages: (state, conversationId: string) => {
-      const messages: Message[] = [];
-      Object.keys(state.messages).forEach((messageId) => {
-        if (state.messages[messageId].conversationId === conversationId) {
-          messages.push(state.messages[messageId]);
-        }
-      });
-
-      return messages;
-    },
     getStressLevel: (state) => state.stressLevel,
 
     // ~~~~~ selectors for ships ~~~~~
@@ -495,7 +464,6 @@ export const {
   initializeState,
 
   addMapSection,
-  addMessage,
   addWidget,
   addHandledMessageToWidget,
   addElementsToWidget,
@@ -527,10 +495,6 @@ export const {
 
   getAllElements,
   getElementsOnScreen,
-
-  getMessages,
-  getMessage,
-  getConversationMessages,
 
   getOwnship,
   getDrones,

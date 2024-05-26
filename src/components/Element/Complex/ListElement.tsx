@@ -7,17 +7,21 @@ type ListElementProps = {
   element: Element;
   outerDivStyleClass: string;
   children?: ReactNode;
+  unreadCount?: number;
 };
 
 const ListElement = ({
   element,
   outerDivStyleClass,
   children,
+  unreadCount,
 }: ListElementProps) => {
   const renderElement = () => {
     switch (element.type) {
       case 'request-approval':
-        return <RequestApprovalElement element={element} />;
+        return (
+          <RequestApprovalElement element={element} unreadCount={unreadCount} />
+        );
       case 'missile-incoming':
         return <MissileIncomingElement element={element} />;
       default:

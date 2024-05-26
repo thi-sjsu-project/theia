@@ -211,12 +211,14 @@ const generateAudioElement = (
 const generateMissileIncomingElement = (
   baseElement: Element.BaseElement,
   messageId: string,
+  conversationId: string,
   widgetId: string,
   icon: Element.IconElement,
 ): Element.MissileIncomingElement => ({
   ...baseElement,
   type: 'missile-incoming',
   messageId,
+  conversationId,
   widgetId,
   icon,
 });
@@ -224,6 +226,7 @@ const generateMissileIncomingElement = (
 const generateRequestApprovalElement = (
   baseElement: Element.BaseElement,
   messageId: string,
+  conversationId: string,
   widgetId: string,
   icon: Element.IconElement,
   leftButton: Element.ButtonElement,
@@ -232,6 +235,7 @@ const generateRequestApprovalElement = (
   ...baseElement,
   type: 'request-approval',
   messageId,
+  conversationId,
   widgetId,
   icon,
   leftButton,

@@ -7,7 +7,10 @@ import {
 import { getElementsInGaze, getGazesAndKeys } from 'src/redux/slices/gazeSlice';
 import type { Widget } from 'src/types/widget';
 import ListElement from 'src/components/Element/Complex/ListElement';
-import { getMessages } from 'src/redux/slices/minimapSlice';
+import {
+  getConversations,
+  getMessages,
+} from 'src/redux/slices/conversationSlice';
 
 type ListWidgetProps = {
   widget: Widget;
@@ -17,7 +20,8 @@ const LIST_ELEMENT_HEIGHT = 80;
 const GAP_BETWEEN_ELEMENTS = 6;
 
 const ListWidget = ({ widget }: ListWidgetProps) => {
-  const messages = useAppSelector(getMessages);
+  const conversations = useAppSelector(getConversations);
+
   const elementsInGaze = useAppSelector(getElementsInGaze);
   const gazesAndKeys = useAppSelector(getGazesAndKeys);
   const { activeElementId } = useAppSelector(getCommunication);
@@ -87,13 +91,13 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
         dispatch(
           updateCommunication({
             // @ts-ignore
-            activeConversationId: messages[element.messageId].conversationId,
+            activeConversationId: element.conversationId,
             activeElementId: element.id,
           }),
         );
       }
     });
-  }, [gazesAndKeys, dispatch, elementInGazeId, messages, widget.elements]);
+  }, [gazesAndKeys, dispatch, elementInGazeId, widget.elements]);
 
   // check if the list is overflowed
   // useEffect(() => {
@@ -148,10 +152,15 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
         // don't render element if it's message is not the latest in the conversation
         // @ts-ignore
         const elemMessageId = element.messageId;
-        if (elemMessageId) {
-          if (!messages[elemMessageId].latestInConvo) {
-            return null;
-          }
+        // @ts-ignore
+        const elemConvoId = element.conversationId;
+        if (
+          elemMessageId &&
+          elemConvoId &&
+          conversations[elemConvoId] &&
+          conversations[elemConvoId].latestMessageId !== elemMessageId
+        ) {
+          return null;
         }
 
         // style for the element which is current being hoverd over

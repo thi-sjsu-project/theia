@@ -1,7 +1,7 @@
 import { useAppSelector } from 'src/redux/hooks';
 import { type HistoryWidget as HistoryWidgetType } from 'src/types/widget';
 import HistoryElement from 'src/components/Element/Complex/HistoryElement';
-import { getConversationMessages } from 'src/redux/slices/minimapSlice';
+import { getConversation } from 'src/redux/slices/conversationSlice';
 import { getCommunication } from 'src/redux/slices/communicationSlice';
 import MessageNumber from 'src/ui/history/MessageNumber';
 
@@ -13,10 +13,11 @@ const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
   const { id, x, y, w, h, elements } = widget;
   const { activeConversationId } = useAppSelector(getCommunication);
 
-  const convoMessages = useAppSelector((state) =>
-    getConversationMessages(state, activeConversationId),
+  const conversation = useAppSelector((state) =>
+    getConversation(state, activeConversationId),
   );
-  const numMessages = convoMessages.length;
+  const messages = conversation?.messages ? [...conversation.messages] : [];
+  const numMessages = messages.length || 0;
 
   // const activeElementID = useAppSelector(getSelectedElementID);
   // const highlightIndex = convoMessages.findIndex(
@@ -27,7 +28,7 @@ const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
     if (numMessages) {
       return (
         <div className="grid grid-cols-12 items-start justify-start p-4 gap-4">
-          {convoMessages.reverse().map((message, index) => (
+          {messages.reverse().map((message, index) => (
             <>
               <div key={message.id} className="col-span-1 flex flex-col h-full">
                 <MessageNumber number={numMessages - index} glow />

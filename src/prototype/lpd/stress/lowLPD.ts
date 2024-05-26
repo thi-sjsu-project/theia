@@ -28,6 +28,7 @@ const requestApprovalToAttackMessageLow = (
     lpdHelper.generateRequestApprovalElement(
       lpdHelper.generateBaseElement(uuid(), 'visual', 30, 30, message.priority),
       message.id,
+      message.conversationId,
       listWidgetId,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
@@ -224,6 +225,7 @@ const missileToOwnshipDetectedMessageLow = (
         message.priority,
       ),
       message.id,
+      message.conversationId,
       listWidgetId,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),

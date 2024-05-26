@@ -19,7 +19,7 @@ const useWorldSim = () => {
       if (message)
         setMessages((prevMessages) => [
           ...prevMessages,
-          { ...message, fulfilled: false, read: false, latestInConvo: true }, // newest message is latest in convo
+          { ...message, fulfilled: false, read: false }, // newest message is latest in convo
         ]);
       if (stressLevel) setStressLevel(stressLevel);
     });
