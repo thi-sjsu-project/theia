@@ -81,7 +81,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
       // just pick the first element in the gaze for now
       if (element.id === mouseLeftClick.elemsInGaze[0].id) {
         // @ts-ignore
-        if (!element.messageId) {
+        if (!element.messageId || !element.conversationId) {
           // FIX: all elements should have a message (at least the ones in the list)
           // at the minimu, they should have a conversationId attached to them?
           console.warn('Element does not have a message', element);
