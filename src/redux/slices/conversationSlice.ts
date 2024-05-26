@@ -37,6 +37,23 @@ export const conversationSlice = createSlice({
         state.conversations[conversationId].latestMessageId = message.id;
       }
     },
+    updateNumUnreadMessages: {
+      prepare: (conversationId: string, numUnreadMessages: number) => {
+        return { payload: { conversationId, numUnreadMessages } };
+      },
+
+      reducer: (
+        state,
+        action: PayloadAction<{
+          conversationId: string;
+          numUnreadMessages: number;
+        }>,
+      ) => {
+        const { conversationId, numUnreadMessages } = action.payload;
+        state.conversations[conversationId].numUnreadMessages =
+          numUnreadMessages;
+      },
+    },
   },
   selectors: {
     getMessages: (state) => {
@@ -77,7 +94,8 @@ export const conversationSlice = createSlice({
   },
 });
 
-export const { addMessage } = conversationSlice.actions;
+export const { addMessage, updateNumUnreadMessages } =
+  conversationSlice.actions;
 
 export const {
   getConversations,

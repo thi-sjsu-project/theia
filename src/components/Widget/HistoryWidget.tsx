@@ -1,9 +1,13 @@
-import { useAppSelector } from 'src/redux/hooks';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { type HistoryWidget as HistoryWidgetType } from 'src/types/widget';
 import HistoryElement from 'src/components/Element/Complex/HistoryElement';
-import { getConversation } from 'src/redux/slices/conversationSlice';
+import {
+  getConversation,
+  updateNumUnreadMessages,
+} from 'src/redux/slices/conversationSlice';
 import { getCommunication } from 'src/redux/slices/communicationSlice';
 import MessageNumber from 'src/ui/history/MessageNumber';
+import { useEffect } from 'react';
 
 type HistoryWidgetProps = {
   widget: HistoryWidgetType;
@@ -13,6 +17,7 @@ const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
   const { id, x, y, w, h, elements } = widget;
   const { activeConversationId } = useAppSelector(getCommunication);
 
+  const dispatch = useAppDispatch();
   const conversation = useAppSelector((state) =>
     getConversation(state, activeConversationId),
   );
@@ -23,6 +28,13 @@ const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
   // const highlightIndex = convoMessages.findIndex(
   //   (message) => message.id === activeElementID,
   // );
+
+  // don't show unread counter for newly arriving messages if conversation is open in history widget
+  useEffect(() => {
+    if (conversation?.numUnreadMessages > 0) {
+      dispatch(updateNumUnreadMessages(conversation.id, 0));
+    }
+  }, [conversation?.numUnreadMessages, conversation?.id, dispatch]);
 
   const renderHistory = () => {
     if (numMessages) {

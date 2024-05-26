@@ -18,13 +18,31 @@ const RequestApprovalElement = ({
   const { id, icon, messageId } = element;
   const message = useAppSelector((state) => getMessage(state, messageId));
 
-  return (
-    <div id={id} className="flex text-white items-center gap-4">
-      <IconElement element={icon} />
-      {/* @ts-ignore */}
-      <span>{message?.data?.target?.type}</span>
+  const renderUnreadCount = () => {
+    if (unreadCount && unreadCount > 0) {
+      return (
+        <div
+          className="rounded-full bg-white w-[35px] h-[35px] text-[#252526] flex 
+    items-center justify-center text-lg"
+        >
+          {unreadCount}
+        </div>
+      );
+    }
+  };
 
-      {unreadCount && unreadCount > 0 && <span>{unreadCount}</span>}
+  return (
+    <div
+      id={id}
+      className="flex text-white justify-between items-center gap-4 pr-4"
+    >
+      <div className="flex space-between items-center justify-center gap-4">
+        <IconElement element={icon} />
+        {/* @ts-ignore */}
+        <span>{message?.data?.target?.type}</span>
+      </div>
+
+      {renderUnreadCount()}
     </div>
   );
 };

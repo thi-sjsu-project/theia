@@ -9,7 +9,7 @@ import type { Widget } from 'src/types/widget';
 import ListElement from 'src/components/Element/Complex/ListElement';
 import {
   getConversations,
-  getMessages,
+  updateNumUnreadMessages,
 } from 'src/redux/slices/conversationSlice';
 
 type ListWidgetProps = {
@@ -95,6 +95,10 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
             activeElementId: element.id,
           }),
         );
+
+        // when we open a conversation, set number of unread messages to 0
+        // @ts-ignore
+        dispatch(updateNumUnreadMessages(element.conversationId, 0));
       }
     });
   }, [gazesAndKeys, dispatch, elementInGazeId, widget.elements]);
@@ -175,6 +179,9 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
             ? 'bg-[#444449] text-[28px] font-medium border-4 border-white'
             : '';
 
+        const numUnreadMessages =
+          conversations[elemConvoId]?.numUnreadMessages || 0;
+
         return (
           <div
             id={element.id}
@@ -182,7 +189,11 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
             style={{ height: LIST_ELEMENT_HEIGHT }}
             className={`w-full text-white flex items-center justify-center rounded-xl p-3 ${hoverStyle} ${activeElementStyle}`}
           >
-            <ListElement element={element} outerDivStyleClass="w-full h-full">
+            <ListElement
+              element={element}
+              outerDivStyleClass="w-full h-full"
+              unreadCount={numUnreadMessages}
+            >
               {/* Nested children here if wanted.. */}
             </ListElement>
           </div>
