@@ -104,13 +104,17 @@ const assimilator = ({
 
           //find if the current deployedWidget is the same widget type as the proposed widget
           let sameWidget = true;
-          widget.tags!.forEach((tag) => {
-            //go through every tag in the proposed wigets tags
-            if (!deployedWidget.tags!.includes(tag)) {
-              //check if the tags are in the current deployed widget
-              sameWidget = false; //the current tag was not in the current deployed widget, so it is not the same widget type
-            }
-          });
+
+          if(widget.type != deployedWidget.type){
+            sameWidget = false;
+          }
+          // widget.tags!.forEach((tag) => {
+          //   //go through every tag in the proposed wigets tags
+          //   if (!deployedWidget.tags!.includes(tag)) {
+          //     //check if the tags are in the current deployed widget
+          //     sameWidget = false; //the current tag was not in the current deployed widget, so it is not the same widget type
+          //   }
+          // });
 
           if (sameWidget) {
             //the current deployed widget is the same widget type
