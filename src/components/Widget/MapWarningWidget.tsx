@@ -1,7 +1,10 @@
 import type { MapWarningWidget as MapWarningWidgetType } from 'src/types/widget';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { getElementsInGaze } from 'src/redux/slices/gazeSlice';
-import { updateElement } from 'src/redux/slices/minimapSlice';
+import {
+  updateElement,
+  updateElementExpiration,
+} from 'src/redux/slices/minimapSlice';
 import { useEffect } from 'react';
 import type {
   IconElement as IconElementType,
@@ -15,27 +18,40 @@ type MapWarningWidgetProps = {
 };
 
 const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
-  /** We have made widgets too generic, I think. Severely restricts our ability to design different widgets differently.
-   * It would be very useful for different widgets types to specify in detail the number of elements they will have
-   * as well as the type of each of those elements - Jagjit.
-   */
   const [iconElement, threatInfoElement] = widget.elements;
 
   const elementsInGaze = useAppSelector(getElementsInGaze);
   const dispatch = useAppDispatch();
 
-  const inGaze = elementsInGaze.some(
+  const warningIconInGaze = elementsInGaze.some(
     (element) => element.id === iconElement.id,
   );
+  const threatInfoInGaze = elementsInGaze.some(
+    (element) => element.id === threatInfoElement.id,
+  );
 
-  // show threat info element if icon element is in gaze
   useEffect(() => {
-    if (inGaze && threatInfoElement.collapsed) {
+    // show threat info element if icon element is in gaze
+    if (warningIconInGaze && threatInfoElement.collapsed) {
       dispatch(
         updateElement(widget.id, { ...threatInfoElement, collapsed: false }),
       );
     }
-  }, [inGaze, dispatch, iconElement, threatInfoElement, widget.id]);
+  }, [warningIconInGaze, dispatch, threatInfoElement, widget.id]);
+
+  useEffect(() => {
+    if (warningIconInGaze && threatInfoElement.expirationIntervalMs) {
+      // update expiration even if only icon element is in gaze
+      // keep displaying threat info element while we hover over the icon
+      dispatch(updateElementExpiration(widget.id, threatInfoElement.id));
+    }
+  }, [
+    warningIconInGaze,
+    dispatch,
+    threatInfoElement.id,
+    threatInfoElement.expirationIntervalMs,
+    widget.id,
+  ]);
 
   return (
     <div
@@ -54,7 +70,7 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
           <div style={{ height: 2, width: 75, border: '2px dashed white' }} />
           <MapThreatInfoElement
             element={threatInfoElement as InformationElementType}
-            inGaze={inGaze}
+            inGaze={warningIconInGaze || threatInfoInGaze}
           />
         </>
       )}

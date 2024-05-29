@@ -42,7 +42,8 @@ const monitor = ({ dispatch }: MonitorProps) => {
     elementInGaze: ElementInGaze,
     elementInGazeIndex: number,
   ) {
-    console.log('element in gaze');
+    // add a check here to see if the element even has expirationIntervalMs property
+    // because if it does not, it means it never expires
     if (timeSomeMsAgo.toISOString() >= elementInGaze.timeEnteredGaze) {
       //has been in gaze for at least 100 ms
       console.log(
@@ -61,6 +62,8 @@ const monitor = ({ dispatch }: MonitorProps) => {
   ) {
     gazeAndKey.elemsInGaze.forEach(
       function (elementInGaze, elementInGazeIndex) {
+        // add a check here to see if the element even has expirationIntervalMs property
+        // because if it does not, it means it never expires
         dispatch(
           updateElementExpiration(elementInGaze.widgetId, elementInGaze.id),
         ); //update the time until expiration

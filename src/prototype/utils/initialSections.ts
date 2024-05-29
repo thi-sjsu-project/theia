@@ -54,7 +54,7 @@ const pearceScreenSections = [
     [],
   ),
 
-  // right screen section
+  // right screen list section
   lpdHelper.generateSection(
     uuid(),
     '/pearce-screen',

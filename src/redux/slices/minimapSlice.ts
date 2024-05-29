@@ -1,7 +1,7 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Widget, VehicleWidget, WidgetMap } from 'src/types/widget';
-import type { Screen, WidgetChannel } from 'src/types/support-types';
+import type { MessageMap, Screen } from 'src/types/support-types';
 import type { Message } from 'src/types/schema-types';
 import type { Element, ElementMap } from 'src/types/element';
 import type { LinkedSectionWidget, Section } from 'src/types/support-types';
@@ -10,17 +10,11 @@ export type InitialMinimapState = {
   visualComplexity: number;
   audioComplexity: number;
 
-  // for sharing data between widgets
-  widgetChannels: {
-    [key in WidgetChannel]: any;
-  };
-
   // read-only
   ownship: VehicleWidget | null;
   drones: VehicleWidget[];
 
   widgets: WidgetMap;
-  messages: Message[];
   sections: Section[];
 
   stressLevel: number;
@@ -29,14 +23,8 @@ export type InitialMinimapState = {
 const initialState: InitialMinimapState = {
   visualComplexity: 0,
   audioComplexity: 0,
-  widgetChannels: {
-    'list-history': {
-      activeMessageId: '',
-    },
-  },
   ownship: null,
   drones: [],
-  messages: [],
   widgets: {},
   sections: [],
   stressLevel: 0,
@@ -58,7 +46,6 @@ export const minimapSlice = createSlice({
       state.ownship = action.payload.ownship;
       state.drones = action.payload.drones;
       state.widgets = action.payload.widgets;
-      state.messages = action.payload.messages;
       state.sections = action.payload.sections;
     },
 
@@ -210,21 +197,26 @@ export const minimapSlice = createSlice({
 
         // if widget exists
         if (widget) {
-          const tempElements = state.widgets[widgetId].elements;
-          tempElements.forEach(function (element, elementIndex) {
-            if (element.id === elementId && element.expirationInterval) {
-              const newExpiration = new Date();
-              newExpiration.setSeconds(
-                newExpiration.getSeconds() + element.expirationInterval,
+          widget.elements.forEach((element) => {
+            if (element.id === elementId) {
+              // if element does not have an expiration interval, log an error
+              if (!element.expirationIntervalMs) {
+                // console.error(
+                //   `Element with id ${elementId} does not have an expiration interval`,
+                // );
+                return;
+              }
+
+              const expiration = new Date();
+              expiration.setMilliseconds(
+                expiration.getMilliseconds() + element.expirationIntervalMs,
               );
-              tempElements[elementIndex].expiration =
-                newExpiration.toISOString();
+
+              element.expiration = expiration.toISOString();
             }
           });
-          state.widgets[widgetId] = {
-            ...widget,
-            elements: tempElements,
-          };
+
+          state.widgets[widgetId] = widget;
         } else {
           console.error(`Widget with id ${widgetId} not found`);
         }
@@ -401,10 +393,6 @@ export const minimapSlice = createSlice({
       state.audioComplexity = action.payload;
     },
 
-    addMessage: (state, action: PayloadAction<Message>) => {
-      state.messages.push(action.payload);
-    },
-
     setStressLevel: (state, action: PayloadAction<number>) => {
       state.stressLevel = action.payload;
     },
@@ -453,7 +441,6 @@ export const minimapSlice = createSlice({
 
     getVisualComplexity: (state) => state.visualComplexity,
     getAudioComplexity: (state) => state.audioComplexity,
-    getMessages: (state) => state.messages,
     getStressLevel: (state) => state.stressLevel,
 
     // ~~~~~ selectors for ships ~~~~~
@@ -477,7 +464,6 @@ export const {
   initializeState,
 
   addMapSection,
-  addMessage,
   addWidget,
   addHandledMessageToWidget,
   addElementsToWidget,
@@ -495,7 +481,7 @@ export const {
   removeWidget,
   deleteElementFromWidget,
 
-  toggleElementInteraction,
+  // toggleElementInteraction,
 
   setStressLevel,
 } = minimapSlice.actions;
@@ -509,8 +495,6 @@ export const {
 
   getAllElements,
   getElementsOnScreen,
-
-  getMessages,
 
   getOwnship,
   getDrones,
