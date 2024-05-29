@@ -61,6 +61,10 @@ export type AcaHeaderWidget = BaseWidget & {
   type: 'aca-header';
 };
 
+export type PearceHeaderWidget = BaseWidget & {
+  type: 'pearce-header';
+}
+
 export type CustomWidget = BaseWidget & {
   type: 'custom';
   // additonal properties...
@@ -74,6 +78,7 @@ export type Widget =
   | GridWidget
   | HistoryWidget
   | AcaHeaderWidget
+  | PearceHeaderWidget
   | MapWarningWidget;
 
 export type WidgetMap = { [key: string]: Widget };

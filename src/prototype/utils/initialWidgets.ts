@@ -1,7 +1,8 @@
 import { v4 as uuid } from 'uuid';
 import LeftScreenMap from 'src/assets/left-bottom-map.png';
 import LeftScreenVideo from 'src/assets/left-video.png';
-import type { BasicWidget, HistoryWidget, WidgetMap } from 'src/types/widget';
+import type { BasicWidget, HistoryWidget, PearceHeaderWidget, WidgetMap } from 'src/types/widget';
+import type { ButtonElement} from 'src/types/element';
 import { type ImageElement } from 'src/types/element';
 import {
   initialShips,
@@ -13,6 +14,7 @@ import { initialAcaHeaderWidget } from 'src/prototype/utils/initialAcaHeader';
 const videoBoxUuid = uuid();
 const mapBoxUuid = uuid();
 const historyBoxUuid = uuid();
+const pearceHeaderUuid = uuid();
 
 const initialLeftScreenWidgets: WidgetMap = {
   // left video box widget
@@ -85,6 +87,24 @@ const initialLeftScreenWidgets: WidgetMap = {
     elements: [],
     maxAmount: 1,
   } satisfies HistoryWidget,
+
+
+
+  [pearceHeaderUuid]: {
+    id: pearceHeaderUuid,
+    type: 'pearce-header',
+    screen: '/pearce-screen',
+    sectionType: 'top-bar',
+    x: 0,
+    y: 0,
+    w: 1920,
+    h: 100,
+    canOverlap: false,
+    useElementLocation: false,
+    priority: 10,
+    elements: [],
+    maxAmount: 1,
+  } satisfies PearceHeaderWidget,
 };
 
 const initialMinimapWidgets: WidgetMap = {

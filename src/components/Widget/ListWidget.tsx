@@ -24,16 +24,16 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
   const className =
     'absolute p-2 flex flex-col gap-6 items-center overflow-scroll overflow-x-hidden overflow-y-hidden';
 
-    const elements = useMemo(() => [...widget.elements], [widget.elements]);
+  const elements = useMemo(() => [...widget.elements], [widget.elements]);
 
   const [selectedElement, setSelectedElement] = useState(0);
-  const [sortMethod, setSortMethod] = useState<sort>(() => sortFunctions.priority);
+  const [sortMethod, setSortMethod] = useState<sort>(
+    () => sortFunctions.priority,
+  );
   const [sortedElements, setSortedElements] = useState<ElementType[]>(elements);
 
   useEffect(() => {
-
     setSortedElements([...elements].sort(sortMethod));
-    
   }, [sortMethod, elements]);
 
   const dispatch = useAppDispatch();
@@ -61,23 +61,6 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
         left: widget.x,
       }}
     >
-      
-      <div className="w-full text-[#bcbcbc] h-fit py-6 inline-flex gap-4 items-center justify-center">
-        {Object.entries(sortFunctions).map(([key, val]) => {
-          return (
-            <div
-              className="text-3xl"
-              onMouseEnter={() => {
-                console.log("setting sort method to", val)
-                setSortMethod(() => val);
-              }}
-            >
-              {key.substring(0, 4).toUpperCase()}
-            </div>
-          );
-        })}
-      </div>
-
       {sortedElements.map((element, index) => {
         const style =
           selectedElement === index
@@ -95,7 +78,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
             <Element element={element} styleClass="w-full h-full">
               {/* Nested children here if wanted.. */}
               Priority:{element.priority}
-              Index:{elements.findIndex(el => element)}
+              Index:{elements.findIndex((el) => element)}
             </Element>
           </div>
         );

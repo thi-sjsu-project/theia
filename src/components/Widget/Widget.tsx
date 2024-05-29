@@ -5,6 +5,7 @@ import MapWarningWidget from 'src/components/Widget/MapWarningWidget';
 import HistoryWidget from 'src/components/Widget/HistoryWidget';
 import AcaHeaderWidget from 'src/components/Widget/AcaHeaderWidget';
 import BasicWidget from './BasicWidget';
+import PearceHeader from './PearceHeader';
 
 type WidgetProps = {
   widget: WidgetType;
@@ -25,6 +26,8 @@ const Widget = ({ widget }: WidgetProps) => {
         return <HistoryWidget widget={widget} />;
       case 'aca-header':
         return <AcaHeaderWidget widget={widget} />;
+      case 'pearce-header':
+        return <PearceHeader widget={widget} />;
       default:
         return <div>Unknown Widget</div>;
     }
