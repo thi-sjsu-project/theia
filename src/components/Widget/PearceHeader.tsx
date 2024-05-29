@@ -1,29 +1,42 @@
 import { useState } from 'react';
-import type { SortMethod } from 'src/types/sortMethod';
+import type { SortMethod, SortTypes } from 'src/types/sortMethod';
 import type { Widget } from 'src/types/widget';
 import SortElement from '../Element/Complex/SortElement';
+import { useAppSelector } from 'src/redux/hooks';
+import { getActiveConversationId } from 'src/redux/slices/communicationSlice';
+import { getConversation } from 'src/redux/slices/conversationSlice';
 
 type SortWidgetProps = {
   widget: Widget;
 };
 
-const sortFunctions: { [key: string]: SortMethod } = {
-  priority: (a, b) => a?.priority! - b?.priority!,
-  time: (_a, _b) => -1,
-  gaia: (a, b) => 1,
+const sortFunctions: { [key: string]: { name: string; func: SortMethod } } = {
+  gaia: {
+    name: 'gaia',
+    func: (a, b) => 1,
+  },
+  priority: {
+    name: 'priority',
+    func: (a, b) => a?.priority! - b?.priority!,
+  },
+  time: {
+    name: 'time',
+    func: (_a, _b) => -1,
+  },
 };
 
 const PearceHeader = ({ widget }: SortWidgetProps) => {
-  const [sortMethod, setSortMethod] = useState<SortMethod>(
-    () => sortFunctions.priority,
-  );
+  const [sortMethod, setSortMethod] = useState<SortTypes>('priority');
 
-  const toggleSort = (val: SortMethod) => {
+  const toggleSort = (val: SortTypes) => {
     console.log('setting sort method to', val);
     setSortMethod(val);
   };
 
-  console.log('hereS');
+  const activeConvoID = useAppSelector(getActiveConversationId);
+  const activeConvo = useAppSelector((state) =>
+    getConversation(state, activeConvoID),
+  );
 
   return (
     <div
@@ -37,16 +50,27 @@ const PearceHeader = ({ widget }: SortWidgetProps) => {
         left: widget.x,
       }}
     >
-      <span className="h-full flex flex-row justify-center items-center text-6xl text-white">
-        title
+      <span className="h-full text-6xl text-white flex flex-row items-center justify-center">
+        {(activeConvo && activeConvo.id) ?? 'title'}
       </span>
 
       <div
-        className="absolute h-full flex flex-row gap-4 items-center justify-center p-3"
-        style={{ width: '300px', top: '0px', left: '1550px' }}
+        className="absolute bg-[#1e1e1e] flex flex-row items-center justify-center rounded-2xl p-1"
+        style={{ width: '300px', height: '80px', top: '10px', left: '1550px' }}
       >
-        {Object.entries(sortFunctions).map(([key, val]) => {
-          return <SortElement isActive={false} name={key} sortMethod={val} />;
+        {Object.entries(sortFunctions).map(([key, val], index) => {
+          return (
+            <div
+              className="h-full"
+              onMouseEnter={() => setSortMethod(val.name)}
+            >
+              <SortElement
+                isActive={val.name === sortMethod}
+                name={key}
+                sortMethod={val.func}
+              />
+            </div>
+          );
         })}
       </div>
     </div>
