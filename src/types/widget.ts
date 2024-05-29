@@ -68,6 +68,11 @@ export type CustomWidget = BaseWidget & {
   // additonal properties...
 };
 
+export type EscalationModeWidget = BaseWidget & {
+  type: 'escalation';
+  // additional properties...
+}
+
 export type Widget =
   | CustomWidget
   | VehicleWidget
@@ -76,7 +81,8 @@ export type Widget =
   | GridWidget
   | HistoryWidget
   | AcaHeaderWidget
-  | MapWarningWidget;
+  | MapWarningWidget
+  | EscalationModeWidget;
 
 export type WidgetMap = { [key: string]: Widget };
 

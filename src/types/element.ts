@@ -124,6 +124,10 @@ export type ApproveDenyButtonElement = BaseElement & {
   type: 'approve-deny-button';
 };
 
+export type EscalationModeElement = BaseElement & {
+  type: 'escalation';
+}
+
 // Simple elements have no nested elements and no children
 export type SimpleElement =
   | TableElement
@@ -140,7 +144,8 @@ export type ComplexElement =
   | RequestApprovalElement
   | CustomElement
   | InformationElement
-  | ApproveDenyButtonElement;
+  | ApproveDenyButtonElement
+  | EscalationModeElement;
 
 export type Element = SimpleElement | ComplexElement;
 
