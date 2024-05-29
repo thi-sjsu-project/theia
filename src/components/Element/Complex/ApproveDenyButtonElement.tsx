@@ -300,7 +300,7 @@ const interpolateKeyframes = (keyframe1: KeyframeParameters, keyframe2: Keyframe
 const ApproveDenyButtonElement = ({
   element,
 }: ApproveDenyButtonElementProps) => {
-  const { h, w, id } = element;
+  const { h, w, id, onAction } = element;
 
   const headerStyle = {
     fontSize: w * SIZES.fontSize,
@@ -332,7 +332,10 @@ const ApproveDenyButtonElement = ({
 
       let idx;
       for (idx = 0; idx < keyframes.length; idx++) {
-        if (idx >= keyframes.length - 1) return stopAnimation();
+        if (idx >= keyframes.length - 1) {
+          onAction(animation);
+          return stopAnimation();
+        }
         if (keyframes[idx].time <= time && keyframes[idx + 1].time >= time) {
           break;
         }
