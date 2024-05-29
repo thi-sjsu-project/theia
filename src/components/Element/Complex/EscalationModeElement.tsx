@@ -1,33 +1,54 @@
 import { useEffect, useState } from 'react';
+import { v4 as uuid } from 'uuid';
 import { useAppSelector } from 'src/redux/hooks';
 import { getGazesAndKeys } from 'src/redux/slices/gazeSlice';
-import INITIAL_KEYFRAME from "./ApproveDenyButtonElement"
-import SIZES from "./ApproveDenyButtonElement"
-import type { EscalationModeElement as EscalationModeElementType } from 'src/types/element';
 import ApproveDenyButtonElement from './ApproveDenyButtonElement';
+import type { ApproveDenyButtonElement as ApproveDenyButtonElementType, EscalationModeElement as EscalationModeElementType } from 'src/types/element';
 
-type EscalationModeElementProps= {
+type EscalationModeElementProps = {
   element: EscalationModeElementType;
 };
 
 const EscalationModeElement = ({ element }: EscalationModeElementProps) => {
-  //const [keyframe, setKeyframe] = useState(INITIAL_KEYFRAME);
   const gazesAndKeys = useAppSelector(getGazesAndKeys);
+  const approveDenyButtonElement = {
+    id: uuid(),
+    h: 100,
+    w: 200,
+    modality: 'visual',
+    type: 'approve-deny-button'
+  } satisfies ApproveDenyButtonElementType
 
   useEffect(() => {
-    // Effekt, um den Keyframe zu aktualisieren basierend auf gazesAndKeys oder anderen Bedingungen
   }, [gazesAndKeys]);
 
   return (
-    <div className="alert-element bg-white border border-gray-300 rounded-lg shadow-lg p-4 relative" style={{ width: '300px', height: 'auto' }}>
-      <h2 className="text-xl font-bold mb-2">Alert Title</h2>
-      <p className="text-gray-700 mb-4">This is the alert message that gives more information to the user.</p>
-      <div style={{ transform: 'scale(1.5)', transformOrigin: 'center' }}>
-        <EscalationModeElement element={element} />
+    <div className="alert-element bg-gray-900 text-white rounded-lg shadow-lg p-4 relative" style={{ width: '300px', height: 'auto' }}>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-bold">ALERT</h2>
       </div>
-      <button className="mt-4 px-4 py-2 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-700">
-        Close
-      </button>
+      <div className="mb-4">
+        <h3 className="text-lg font-semibold">Missile Heading Towards Ownship!</h3>
+        <p>ACA-7 detected launch</p>
+        <p>Time to Impact: 45 seconds</p>
+        <p>Missile Type: SAM</p>
+      </div>
+      <ApproveDenyButtonElement element={approveDenyButtonElement} /> {/* Vergrößere das ApproveDenyButtonElement um das 1.5-fache */}
+      <div className="mt-4">
+        <h4 className="font-semibold">Additional Information</h4>
+        <p>reporter: ACA-7</p>
+        <p>threat: SA_4</p>
+        <p>location: 34° N, 118° W</p>
+        <p>distance: 620 mi</p>
+        <p>altitude: 20,000 ft</p>
+        <p>time to impact: 45 sec</p>
+        <p>priority: high</p>
+        <p>threat-level: high</p>
+        <p>survivability: 80%</p>
+        <p>col. damage: 29%</p>
+        <p>missile type: SAM</p>
+        <p>safe zone dist.: 115 mi</p>
+      </div>
     </div>
   );
 };
