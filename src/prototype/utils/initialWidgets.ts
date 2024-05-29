@@ -107,6 +107,7 @@ const initialLeftScreenWidgets: WidgetMap = {
     useElementLocation: false,
     priority: 10,
     elements: [],
+    tags: ['pearce-header'],
     maxAmount: 1,
   } satisfies PearceHeaderWidget,
 };
