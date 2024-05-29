@@ -88,6 +88,17 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
         setSelectedElement(convoElements[currSelectedElemIndex + 1]);
 
         // scroll down here if needed?
+        const domElem = document.getElementById(
+          convoElements[currSelectedElemIndex - 1]?.id,
+        );
+        if (!domElem) return;
+
+        const rect = domElem?.getBoundingClientRect();
+        const { top, bottom } = rect;
+
+        if (bottom > widget.h) {
+          listRef.current?.scrollBy(0, 100);
+        }
       }
     } else if (
       gazesAndKeys.some((gazeAndKey) => gazeAndKey.keyPress === 'KeyW')
@@ -100,10 +111,20 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
       if (currSelectedElemIndex > 0) {
         setSelectedElement(convoElements[currSelectedElemIndex - 1]);
 
-        // scroll up here if needed?
+        const domElem = document.getElementById(
+          convoElements[currSelectedElemIndex - 1]?.id,
+        );
+        if (!domElem) return;
+
+        const rect = domElem?.getBoundingClientRect();
+        const { top, bottom } = rect;
+
+        if (top < widget.y) {
+          listRef.current?.scrollBy(0, -100);
+        }
       }
     }
-  }, [gazesAndKeys, convoElements]);
+  }, [gazesAndKeys, convoElements, widget.y, widget.h]);
 
   useEffect(() => {
     if (gazesAndKeys.some((gazeAndKey) => gazeAndKey.keyPress === 'KeyQ')) {
