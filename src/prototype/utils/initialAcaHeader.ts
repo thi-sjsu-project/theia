@@ -14,6 +14,7 @@ const aca1: AcaStatusElement = {
   id: uuid(),
   modality: 'visual',
   widgetId: 'aca-header',
+  messages: [],
 };
 const aca2: AcaStatusElement = {
   type: 'aca-status',
@@ -27,6 +28,17 @@ const aca2: AcaStatusElement = {
   id: uuid(),
   modality: 'visual',
   widgetId: 'aca-header',
+  messages: [
+    {
+      id: uuid(),
+      modality: 'visual',
+      h: 72,
+      w: 160,
+      widgetId: 'aca-header',
+      canOverlap: true,
+      text: 'foo',
+    },
+  ],
 };
 const aca3: AcaStatusElement = {
   type: 'aca-status',
@@ -40,6 +52,7 @@ const aca3: AcaStatusElement = {
   id: uuid(),
   modality: 'visual',
   widgetId: 'aca-header',
+  messages: [],
 };
 const aca4: AcaStatusElement = {
   type: 'aca-status',
@@ -53,6 +66,7 @@ const aca4: AcaStatusElement = {
   id: uuid(),
   modality: 'visual',
   widgetId: 'aca-header',
+  messages: [],
 };
 const aca5: AcaStatusElement = {
   type: 'aca-status',
@@ -66,6 +80,7 @@ const aca5: AcaStatusElement = {
   id: uuid(),
   modality: 'visual',
   widgetId: 'aca-header',
+  messages: [],
 };
 const aca6: AcaStatusElement = {
   type: 'aca-status',
@@ -79,6 +94,7 @@ const aca6: AcaStatusElement = {
   id: uuid(),
   modality: 'visual',
   widgetId: 'aca-header',
+  messages: [],
 };
 const aca7: AcaStatusElement = {
   type: 'aca-status',
@@ -92,6 +108,7 @@ const aca7: AcaStatusElement = {
   id: uuid(),
   modality: 'visual',
   widgetId: 'aca-header',
+  messages: [],
 };
 const aca8: AcaStatusElement = {
   type: 'aca-status',
@@ -105,6 +122,7 @@ const aca8: AcaStatusElement = {
   id: uuid(),
   modality: 'visual',
   widgetId: 'aca-header',
+  messages: [],
 };
 
 const acaHeaderElements: AcaStatusElement[] = [
