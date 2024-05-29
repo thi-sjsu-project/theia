@@ -2,6 +2,11 @@ import type { AcaHeaderWidget as AcaHeaderWidgetType } from 'src/types/widget';
 import type { AcaStatusElement as AcaStatusElementType } from 'src/types/element';
 import AcaStatusElement from 'src/components/Element/Complex/AcaStatusElement';
 import NOTCH from 'src/assets/icons/Ownship Notch.svg';
+import REACTION from 'src/assets/icons/Action Required Notch.svg';
+import ALERT from 'src/assets/icons/Alert Notch.svg';
+import { useAppSelector } from 'src/redux/hooks';
+import { getMessages } from 'src/redux/slices/conversationSlice';
+
 
 type AcaHeaderWidgetProps = {
   widget: AcaHeaderWidgetType;
@@ -12,6 +17,27 @@ const AcaHeaderWidget = ({ widget }: AcaHeaderWidgetProps) => {
 
   var firstElements = structuredClone(elements);
   const lastElements = firstElements.splice(4);
+  const messages = useAppSelector(getMessages);
+
+  const getNotch = () => {
+    const latestMessage = messages[messages.length-1];
+    
+    if (latestMessage.kind == 'RequestApprovalToAttack'){
+      return REACTION;
+    }
+    else if(latestMessage.kind == 'MissileToOwnshipDetected'){
+      return ALERT;
+    }
+    else{
+     return NOTCH;
+    }
+
+  };
+
+  const notch = getNotch();
+
+
+
 
   return (
     <div
@@ -30,7 +56,7 @@ const AcaHeaderWidget = ({ widget }: AcaHeaderWidgetProps) => {
         />
       ))}
       <div>
-        <img src={NOTCH} alt="notch" className="-mt-4" />
+        <img src={notch} alt="notch" className="-mt-4" />
       </div>
 
       <div className="grow" />
