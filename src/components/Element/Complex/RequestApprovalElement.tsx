@@ -30,41 +30,6 @@ const RequestApprovalElement = ({
     return ['low', 'medium', 'high'][threatLevelInteger];
   };
 
-  // Just returns the categories, but not the actual values of the differences, which could be added later
-  const findDifferenceInRequests = (request1: any, request2: any) => {
-    const differences: string[] = [];
-    if (request1.data.target.location.x !== request2.data.target.location.x) {
-      differences.push('location');
-    } else if (request1.priority !== request2.priority) {
-      differences.push('priority');
-    } else if (request1.data.target.threatLevel !== request2.data.target.threatLevel) {
-      differences.push('threat-level');
-    } else if (request1.data.collateralDamage !== request2.data.collateralDamage) {
-      differences.push('col.damage');
-    }
-
-    return differences;
-  }
-
-  const addMoreRequests = (requestsLength: number, requests: any) => {
-    let uiElements: any = [];
-    let count = requestsLength;
-    while (--count > 0) {
-      uiElements.push(
-        <div className="grid grid-cols-[40px_1fr]">
-          <div className="flex-auto bg-[#3E3E42] text-white/50 text-2xl text-center h-fit font-normal rounded-l-md">
-            {count}
-          </div>
-          <div className="bg-[#252526] text-[#BCBCBC] px-[20px] py-[5px]">
-            {/* {findDifferenceInRequests(requests[0], requests[count]).join(', ')} */}
-            Update: priority level changed
-          </div>
-        </div>,
-      );
-    }
-    return uiElements;
-  }
-
   const renderMiniMapRequestApprovalElement = () => {
     const mainRequest = requests[0];
 
@@ -122,7 +87,6 @@ const RequestApprovalElement = ({
             </div>
           </div>
         </div>
-        {addMoreRequests(requests.length, requests).map((element: any) => element)}
       </div>
     );
   };
