@@ -38,6 +38,7 @@ const ownship: Widget = {
           'ownship',
         ),
       ],
+      ['ownship'],
     ),
     0,
     1.5,
@@ -73,6 +74,7 @@ const drones: Widget[] = [
             'ACA-1',
           ),
         ],
+        ['specify', 'aca', 'aca-1']
       ),
       1,
       Math.random() * 0.5 + 0.25,
@@ -106,6 +108,7 @@ const drones: Widget[] = [
             'ACA-2',
           ),
         ],
+        ['specify', 'aca', 'aca-2'],
       ),
       2,
       Math.random() * 0.5 + 0.25,
@@ -139,6 +142,7 @@ const drones: Widget[] = [
             'ACA-3',
           ),
         ],
+        ['specify', 'aca', 'aca-3']
       ),
       3,
       Math.random() * 0.5 + 0.25,
@@ -172,6 +176,7 @@ const drones: Widget[] = [
             'ACA-4',
           ),
         ],
+        ['specify', 'aca', 'aca-4']
       ),
       4,
       Math.random() * 0.5 + 0.25,
@@ -205,6 +210,7 @@ const drones: Widget[] = [
             'ACA-5',
           ),
         ],
+        ['specify', 'aca', 'aca-5']
       ),
       5,
       Math.random() * 0.5 + 0.25,

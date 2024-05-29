@@ -50,6 +50,7 @@ const generateBaseWidget = (
   useElementLocation: boolean,
   maxAmount: number,
   elements: Element.Element[],
+  tags: string[],
   padding?: number,
   priority?: number,
   style?: Properties,
@@ -68,6 +69,7 @@ const generateBaseWidget = (
   priority,
   style,
   elements,
+  tags,
 });
 
 // Generate the different widget types
@@ -120,7 +122,7 @@ const generateBaseElement = (
   priority?: number,
   widgetId?: string,
   collapsed?: boolean,
-  expirationInterval?: number,
+  expirationIntervalMs?: number,
   expiration?: string,
   onExpiration?: 'delete' | 'escalate' | 'deescalate',
   interacted?: boolean,
@@ -134,7 +136,7 @@ const generateBaseElement = (
   widgetId,
   priority,
   collapsed,
-  expirationInterval,
+  expirationIntervalMs,
   expiration,
   onExpiration,
   interacted,
@@ -208,25 +210,33 @@ const generateAudioElement = (
 // Generate complex elements
 const generateMissileIncomingElement = (
   baseElement: Element.BaseElement,
-  message: MissileToOwnshipDetected,
+  messageId: string,
+  conversationId: string,
+  widgetId: string,
   icon: Element.IconElement,
 ): Element.MissileIncomingElement => ({
   ...baseElement,
   type: 'missile-incoming',
-  message,
+  messageId,
+  conversationId,
+  widgetId,
   icon,
 });
 
 const generateRequestApprovalElement = (
   baseElement: Element.BaseElement,
-  message: RequestApprovalToAttack,
+  messageId: string,
+  conversationId: string,
+  widgetId: string,
   icon: Element.IconElement,
   leftButton: Element.ButtonElement,
   rightButton: Element.ButtonElement,
 ): Element.RequestApprovalElement => ({
   ...baseElement,
   type: 'request-approval',
-  message,
+  messageId,
+  conversationId,
+  widgetId,
   icon,
   leftButton,
   rightButton,

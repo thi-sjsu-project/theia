@@ -5,10 +5,10 @@ import {
   type InitialMinimapState,
   getWidgets,
   initializeState,
-  addMessage,
   getStressLevel,
   setStressLevel,
 } from 'src/redux/slices/minimapSlice';
+import { addMessage } from 'src/redux/slices/conversationSlice';
 // ~~~~~~~ Cusdom Hooks ~~~~~~~
 import useWorldSim from 'src/hooks/useWorldSim';
 // ~~~~~~~ Prototype ~~~~~~~
@@ -75,16 +75,11 @@ const Prototype = () => {
         stressLevel: stressLevel,
       });
 
-      // console.log('allwiidgets', allWidgetsInNewStressLPD);
-      let allWidgetsInNewStressLPDIds: string[] = allWidgetsInNewStressLPD.map(
-        (a) => a.id,
-      ); // get all widget ids from new stress level LPD and initial LPD
-
       stressChangeHandler({
         dispatch: dispatch,
-        allWidgetIds: Object.keys(widgets),
+        allWidgets: Object.values(widgets),
         allMessages: messages,
-        allWidgetsInNewStressLPDIds: allWidgetsInNewStressLPDIds,
+        allWidgetsInNewStressLPD: allWidgetsInNewStressLPD,
         stressLevel,
       });
     }

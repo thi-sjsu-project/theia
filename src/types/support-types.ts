@@ -1,4 +1,5 @@
 import { type Widget } from 'src/types/widget';
+import { type Message } from 'src/types/schema-types';
 
 export type Cell = {
   widgetIDs: string[];
@@ -46,4 +47,6 @@ export type WidgetCluster = {
   actions?: string[];
 };
 
-export type WidgetChannel = 'list-history'; 
+export type MessageMap = {
+  [key: string]: Message;
+};

@@ -1,83 +1,90 @@
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { type HistoryWidget as HistoryWidgetType } from 'src/types/widget';
-import TableElement from '../Element/Simple/TableElement';
-import HistoryMessageElement from '../Element/Complex/HistoryMessageElement';
+import HistoryElement from 'src/components/Element/Complex/HistoryElement';
 import {
-  getActiveConvoID,
-  getSelectedElementID,
-} from 'src/redux/slices/componentSlice';
-import { useAppSelector } from 'src/redux/hooks';
-import { getMessages } from 'src/redux/slices/minimapSlice';
-import { useState } from 'react';
+  getConversation,
+  updateNumUnreadMessages,
+} from 'src/redux/slices/conversationSlice';
+import { getCommunication } from 'src/redux/slices/communicationSlice';
+import MessageNumber from 'src/ui/history/MessageNumber';
+import { useEffect } from 'react';
 
 type HistoryWidgetProps = {
   widget: HistoryWidgetType;
 };
 
 const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
-  const { id, x, y, w, h } = widget;
+  const { id, x, y, w, h, elements } = widget;
+  const { activeConversationId } = useAppSelector(getCommunication);
 
-  const convoID = useAppSelector(getActiveConvoID);
-  const convoMessages = useAppSelector(getMessages).filter(
-    (message) => message.conversationId === convoID,
+  const dispatch = useAppDispatch();
+  const conversation = useAppSelector((state) =>
+    getConversation(state, activeConversationId),
   );
-  const activeElementID = useAppSelector(getSelectedElementID);
+  const messages = conversation?.messages ? [...conversation.messages] : [];
+  const numMessages = messages.length || 0;
 
-  const highlightIndex = convoMessages.findIndex((message) => message.id === activeElementID)
+  // const activeElementID = useAppSelector(getSelectedElementID);
+  // const highlightIndex = convoMessages.findIndex(
+  //   (message) => message.id === activeElementID,
+  // );
+
+  // don't show unread counter for newly arriving messages if conversation is open in history widget
+  useEffect(() => {
+    if (conversation?.numUnreadMessages > 0) {
+      dispatch(updateNumUnreadMessages(conversation.id, 0));
+    }
+  }, [conversation?.numUnreadMessages, conversation?.id, dispatch]);
+
+  const renderHistory = () => {
+    if (numMessages) {
+      return (
+        <div className="grid grid-cols-12 items-start justify-start p-4 gap-4">
+          {messages.reverse().map((message, index) => (
+            <>
+              <div key={message.id} className="col-span-1 flex flex-col h-full">
+                <MessageNumber
+                  number={numMessages - index}
+                  glow={index === 0}
+                />
+
+                {/* line below the number */}
+                {numMessages - index !== 1 && (
+                  <div className="border-convo-bar h-full w-1/2 border-r-4 mt-4 flex flex-row items-center justify-center rounded-sm" />
+                )}
+              </div>
+
+              <HistoryElement
+                key={`${message.id}-${index}`}
+                message={message}
+                index={index + 1}
+                outerDivStyleClass="col-span-11 bg-convo-bg rounded-lg p-2 h-fit
+          drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)]"
+              />
+            </>
+          ))}
+        </div>
+      );
+    }
+
+    return (
+      <div className="flex items-center justify-center h-full w-full text-xl">
+        Select a conversation to view messages
+      </div>
+    );
+  };
 
   return (
     <div
-      key={id}
-      style={{ top: y, left: x, width: w, height: h }}
-      className={`absolute text-white `}
+      style={{
+        top: y,
+        left: x,
+        width: w,
+        height: h,
+      }}
+      className="absolute bg-[#323235] text-white"
     >
-      <div className="grid grid-cols-12 items-start justify-start p-4 gap-4">
-        {convoMessages.reverse().map((message, index) => {
-          switch (message.kind) {
-            case 'RequestApprovalToAttack':
-              return (
-                <HistoryMessageElement
-                  index={convoMessages.length - index}
-                  isActive={highlightIndex === convoMessages.length - 1 - index}
-                  title={`ACA-${message.data.detectedByAca}`}
-                  header="Request to attack"
-                  desc={`Approval for ${message.data.attackWeapon.type} attack`}
-                  tableContent={
-                    <TableElement
-                      element={{
-                        id: `table:${convoID}_${message}`,
-                        modality: 'visual',
-                        h: 3,
-                        w: 4,
-
-                        type: 'table',
-                        tableData: [
-                          ...Object.entries(message.data.target).map(
-                            ([key, value]) => {
-                              return [key, JSON.stringify(value)];
-                            },
-                          ),
-                          ['col.damage', message.data.collateralDamage],
-                        ],
-                      }}
-                    />
-                  }
-                />
-              );
-
-            case 'AcaDefect':
-              return;
-
-            case 'AcaFuelLow':
-              return;
-
-            case 'AcaHeadingToBase':
-              return;
-
-            case 'MissileToOwnshipDetected':
-              return;
-          }
-        })}
-      </div>
+      {renderHistory()}
     </div>
   );
 };

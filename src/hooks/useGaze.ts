@@ -40,7 +40,6 @@ const useGaze = ({ screen }: GazeProps) => {
 
         const divId = div.id;
 
-        // TODO: just a little off when cursor on left or right side of the div
         // find the closest point in the div to the mouse
         const closestX =
           mouseX < divLeft ? divLeft : mouseX > divRight ? divRight : mouseX;

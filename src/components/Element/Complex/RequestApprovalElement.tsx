@@ -1,53 +1,48 @@
-import type { ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { type RequestApprovalElement as RequestApprovalElementType } from 'src/types/element';
-import ButtonElement from '../Simple/ButtonElement';
 import IconElement from '../Simple/IconElement';
+import { useAppSelector } from 'src/redux/hooks';
+import { getMessage } from 'src/redux/slices/conversationSlice';
 
 type RequestApprovalProps = {
   element: RequestApprovalElementType;
   children?: ReactNode;
+  unreadCount?: number;
 };
 
 const RequestApprovalElement = ({
   element,
   children,
+  unreadCount,
 }: RequestApprovalProps) => {
-  const {
-    id,
-    collapsed,
-    icon,
-    rightButton,
-    leftButton,
-    message: {
-      priority,
-      data: {
-        target,
-        detectedByAca,
-        choiceWeight,
-        attackWeapon,
-        collateralDamage,
-      },
-    },
-  } = element;
+  const { id, icon, messageId } = element;
+  const message = useAppSelector((state) => getMessage(state, messageId));
 
-  // if (collapsed) {
-  //   return (
-  //     <div className="flex gap-2 items-center">
-  //       <IconElement element={icon} />
-  //       <span>Request Approval to Attack</span>
-  //     </div>
-  //   );
-  // }
-
-  // <div className="flex gap-2">
-  //   <ButtonElement element={leftButton} />
-  //   <ButtonElement element={rightButton} />
-  // </div>
+  const renderUnreadCount = () => {
+    if (unreadCount && unreadCount > 0) {
+      return (
+        <div
+          className="rounded-full bg-white w-[35px] h-[35px] text-[#252526] flex 
+    items-center justify-center text-lg"
+        >
+          {unreadCount}
+        </div>
+      );
+    }
+  };
 
   return (
-    <div id={id} className="flex text-white items-center gap-4">
-      <IconElement element={icon} />
-      <span>{target.type}</span>
+    <div
+      id={id}
+      className="flex text-white justify-between items-center gap-4 pr-4"
+    >
+      <div className="flex space-between items-center justify-center gap-4">
+        <IconElement element={icon} />
+        {/* @ts-ignore */}
+        <span>{message?.data?.target?.type}</span>
+      </div>
+
+      {renderUnreadCount()}
     </div>
   );
 };

@@ -23,6 +23,8 @@ export type BaseWidget = {
   padding?: number;
   priority?: number;
   style?: Properties;
+
+  tags?: string[];
 };
 
 // widget without any bells and whistles when you really only want to place some static stuff

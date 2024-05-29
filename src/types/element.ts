@@ -20,7 +20,7 @@ export type BaseElement = {
   priority?: number;
   collapsed?: boolean;
 
-  expirationInterval?: number;
+  expirationIntervalMs?: number; // should be in ms
   expiration?: string;
   onExpiration?: 'delete' | 'escalate' | 'deescalate';
   escalate?: boolean;
@@ -85,24 +85,31 @@ export type CustomElement = BaseElement & {
 
 export type RequestApprovalElement = BaseElement & {
   type: 'request-approval';
-  message: RequestApprovalToAttack;
+  messageId: string;
+  conversationId: string;
   icon: IconElement;
   leftButton: ButtonElement;
   rightButton: ButtonElement;
+  widgetId: string;
   // children?: ReactNode;
 };
 
 export type MissileIncomingElement = BaseElement & {
   type: 'missile-incoming';
-  message: MissileToOwnshipDetected;
+  messageId: string;
+  conversationId: string;
   icon: IconElement;
+  widgetId: string;
 };
 
 export type AcaStatusElement = BaseElement & {
   type: 'aca-status';
   acaId: Id;
   fuelLevel: Range<0, 1>;
-  weaponLoad: Range<0, 1>;
+  weaponLoad1: Range<0, 1>;
+  weaponLoad2: Range<0, 1>;
+  widgetId: string;
+  isDead: boolean;
 };
 
 export type InformationElement = BaseElement & {
@@ -110,6 +117,7 @@ export type InformationElement = BaseElement & {
   size: 'S' | 'M' | 'L';
   title?: string;
   message: RequestApprovalToAttack | MissileToOwnshipDetected;
+  widgetId: string;
 };
 
 // Simple elements have no nested elements and no children

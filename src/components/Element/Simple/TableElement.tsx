@@ -11,6 +11,7 @@ type TableElementProps = {
   evenAlternatingColor?: string;
   oddAlternatingColor?: string;
   leftLabelColor?: string;
+  fontSize?: number;
 };
 
 const TableElement = ({
@@ -20,6 +21,7 @@ const TableElement = ({
   evenAlternatingColor = 'bg-[#202021]',
   oddAlternatingColor = 'bg-[rgba(0,0,0,0)]',
   leftLabelColor = 'text-[#bcbcbc]',
+  fontSize = 24,
 }: TableElementProps) => {
   const { tableData } = element;
 
@@ -28,7 +30,7 @@ const TableElement = ({
 
   const renderTable = () => {
     return (
-      <table className="border-collapse w-full">
+      <table className="border-collapse w-full" style={{ fontSize }}>
         <tbody>
           {Array.from({ length: rows }).map((_, i) => (
             <tr
