@@ -21,16 +21,34 @@ const AcaHeaderWidget = ({ widget }: AcaHeaderWidgetProps) => {
 
   const getNotch = () => {
     const latestMessage = messages[messages.length-1];
-    
-    if (latestMessage.kind == 'RequestApprovalToAttack'){
+    let action = '';
+
+    for(let message of messages){
+      if (message.fulfilled == false){
+        if (message.kind == 'RequestApprovalToAttack' && action != 'ALERT'){
+          action = 'REACTION';
+        }
+        if(message.kind == 'MissileToOwnshipDetected'){
+          action ='ALERT';
+        }
+
+      }
+    }
+
+    if(action == 'REACTION'){
       return REACTION;
     }
-    else if(latestMessage.kind == 'MissileToOwnshipDetected'){
+    else if(action == 'ALERT'){
       return ALERT;
     }
     else{
-     return NOTCH;
+      return NOTCH;
     }
+
+    
+    
+
+
 
   };
 
