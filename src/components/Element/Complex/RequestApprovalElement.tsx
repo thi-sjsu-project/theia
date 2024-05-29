@@ -1,12 +1,10 @@
 import type { ReactNode } from 'react';
 import { type RequestApprovalElement as RequestApprovalElementType } from 'src/types/element';
-import ButtonElement from '../Simple/ButtonElement';
 import IconElement from '../Simple/IconElement';
 import TableElement from '../Simple/TableElement';
 import { getConversationMessages, getWidgetById } from 'src/redux/slices/minimapSlice';
 import { useAppSelector } from 'src/redux/hooks';
 import { capitalizeFirstLetter as cfl } from 'src/utils/helpers';
-import { useState } from 'react';
 
 type RequestApprovalProps = {
   element: RequestApprovalElementType;
@@ -32,11 +30,6 @@ const RequestApprovalElement = ({
     return ['low', 'medium', 'high'][threatLevelInteger];
   };
 
-  // For now we are just going to sort the requests by priority, but later on could be more complicated
-  const sortRequests = (requests: any) => {
-    return requests.sort((a: any, b: any) => a.priority - b.priority);
-  };
-
   const addMoreRequests = (requestsLength: number) => {
     let uiElements: any = [];
     let count = requestsLength;
@@ -56,8 +49,7 @@ const RequestApprovalElement = ({
   }
 
   const renderMiniMapRequestApprovalElement = () => {
-    const sortedRequests = sortRequests(requests);
-    const mainRequest = sortedRequests[0];
+    const mainRequest = requests[0];
 
     return (
       <div
@@ -70,7 +62,7 @@ const RequestApprovalElement = ({
         <div className="font-medium text-4xl mb-[5px]">{cfl(mainRequest.data.target.type)}</div>
         <div className="grid grid-cols-[40px_1fr]">
           <div className="flex-auto bg-turquoise text-black text-2xl text-center h-fit font-semibold rounded-l-md">
-            {sortedRequests.length}
+            {requests.length}
           </div>
 
           <div className="bg-convo-bg h-fit p-4 rounded-lg drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)]">
@@ -113,7 +105,7 @@ const RequestApprovalElement = ({
             </div>
           </div>
         </div>
-        {addMoreRequests(sortedRequests.length).map((element: any) => element)}
+        {addMoreRequests(requests.length).map((element: any) => element)}
       </div>
     );
   };
