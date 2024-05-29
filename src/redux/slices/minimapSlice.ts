@@ -398,7 +398,7 @@ export const minimapSlice = createSlice({
     },
 
     addMessage: (state, action: PayloadAction<Message>) => {
-      state.messages.push(action.payload);
+      state.messages.unshift(action.payload);
     },
 
     setStressLevel: (state, action: PayloadAction<number>) => {

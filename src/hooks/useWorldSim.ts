@@ -18,8 +18,8 @@ const useWorldSim = () => {
       const { message, stressLevel }: SimToCmMessage = JSON.parse(event.data);
       if (message)
         setMessages((prevMessages) => [
-          ...prevMessages,
           { ...message, fulfilled: false },
+          ...prevMessages,
         ]);
       if (stressLevel) setStressLevel(stressLevel);
     });

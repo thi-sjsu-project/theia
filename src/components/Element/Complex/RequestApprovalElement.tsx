@@ -23,6 +23,7 @@ const RequestApprovalElement = ({
   );
 
   const requests: any = useAppSelector((state) => getConversationMessages(state, widget!.conversationId!));
+  console.log(requests);
 
   // Transform threat level from a float number in a range of 0-1 to a string of low, medium, high
   const threatLevelString = (threatLevel: number) => {

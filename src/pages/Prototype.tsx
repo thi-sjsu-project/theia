@@ -60,8 +60,8 @@ const Prototype = () => {
   useEffect(() => {
     if (messages.length === 0) return;
 
-    // latest message in the last one in the list
-    const currentMessage = messages[messages.length - 1];
+    // latest message in the first one in the list
+    const currentMessage = messages[0];
 
     dispatch(addMessage(currentMessage));
     reactToMessage({ dispatch, currentMessage, stressLevel });
