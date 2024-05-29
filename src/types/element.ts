@@ -122,7 +122,6 @@ export type InformationElement = BaseElement & {
 
 export type ApproveDenyButtonElement = BaseElement & {
   type: 'approve-deny-button';
-  onAction: (action: 'approve' | 'deny') => void;
 };
 
 // Simple elements have no nested elements and no children

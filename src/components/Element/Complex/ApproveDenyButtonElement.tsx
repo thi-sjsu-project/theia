@@ -3,8 +3,26 @@ import { useAppSelector } from 'src/redux/hooks';
 import { getGazesAndKeys } from 'src/redux/slices/gazeSlice';
 import type { ApproveDenyButtonElement as ApproveDenyButtonElementType } from 'src/types/element';
 
+// XXX: When including the approve / deny button in a widget, do NOT add it as a
+// regular element that will be rendered via Element.tsx. Instead, put it in
+// directly without the Element abstraction, so that you can actually pass the
+// onAction prop to it:
+//
+//   const MyWidget = () => {
+//     ...
+//     callback = (action) => console.log(`action: ${action}`);
+//     ...
+//     return <>
+//       <ApproveDenyButtonElement element={approveDenyElement} onAction={callback}>
+//     </>;
+//   }
+//
+// It should only be called using the Element abstraction when you do not need a
+// callback when the button is pressed.
+
 type ApproveDenyButtonElementProps = {
   element: ApproveDenyButtonElementType;
+  onAction?: (action: 'approve' | 'deny') => void;
 };
 
 const SIZES = {
@@ -299,8 +317,9 @@ const interpolateKeyframes = (keyframe1: KeyframeParameters, keyframe2: Keyframe
 
 const ApproveDenyButtonElement = ({
   element,
+  onAction,
 }: ApproveDenyButtonElementProps) => {
-  const { h, w, id, onAction } = element;
+  const { h, w, id } = element;
 
   const headerStyle = {
     fontSize: w * SIZES.fontSize,
@@ -333,7 +352,7 @@ const ApproveDenyButtonElement = ({
       let idx;
       for (idx = 0; idx < keyframes.length; idx++) {
         if (idx >= keyframes.length - 1) {
-          onAction(animation);
+          if (onAction) onAction(animation);
           return stopAnimation();
         }
         if (keyframes[idx].time <= time && keyframes[idx + 1].time >= time) {
