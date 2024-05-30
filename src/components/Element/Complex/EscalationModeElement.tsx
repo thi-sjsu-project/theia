@@ -17,15 +17,25 @@ const EscalationModeElement = ({ element }: EscalationModeElementProps) => {
     h: 156,
     w: 476,
     modality: 'visual',
-    type: 'approve-deny-button'
+    type: 'approve-deny-button',
+    //text: 'Switch to AUTO Mode?'
   } satisfies ApproveDenyButtonElementType
 
-  const tablestyle = {
+  const tablestyleLeftRow = {
     fontSize: '32px',
-    border: '1px solid white',
+    border: '1px solid #585864',
     padding: '8px', 
     color: '#C1C1C1',
+    borderLeft: '0px', 
   };
+
+  const tablestyleRightRow = {
+    fontSize: '32px',
+    border: '1px solid #585864', 
+    padding: '8px',
+    color: '#DEDEDE',
+    borderRight: '0px'
+  }
 
   useEffect(() => {
   }, [gazesAndKeys]);
@@ -39,15 +49,15 @@ const EscalationModeElement = ({ element }: EscalationModeElementProps) => {
                     <h3 className="text-lg font-semibold" style={{ fontSize: '64px', marginBottom: '40px', height: '128px', width: '488px',lineHeight: '64px', marginTop: '80px' }}>Missile Heading Towards Ownship!</h3>
                   </div>
                   <p style={{ fontSize: '38px', marginBottom: '70px' , height: '39px', width: '421px', color: '#BCBCBC', marginLeft: '43px'}}>ACA-7 detected launch</p>
-                  <table className="table-auto mb-4" style={{ fontSize: '38px',  width: '708px', height: '120px', marginLeft: '15px'}}>
+                  <table className="table-auto mb-4 no-outer-border" style={{ fontSize: '38px',  width: '708px', height: '120px', marginLeft: '15px', borderCollapse: 'collapse'}}>
                     <tbody>
-                        <tr>
-                        <td style={{ border: '1px solid white', padding: '8px', color: '#BCBCBC' }}>Time to Impact:</td>
-                        <td style={{ border: '1px solid white', padding: '8px', fontSize: '38px' }} className="text-lg font-bold">45 seconds</td>
+                        <tr style={{background: '#151515'}}>
+                        <td style={{ border: '1px solid #585864', padding: '8px', color: '#BCBCBC', borderLeft: '0px' }}>Time to Impact:</td>
+                        <td style={{ border: '1px solid #585864', padding: '8px', fontSize: '38px', borderRight: '0px' }} className="text-lg font-bold">45 seconds</td>
                         </tr>
                         <tr>
-                        <td style={{ border: '1px solid white', padding: '8px', color: '#BCBCBC' }}>Missile Type:</td>
-                        <td style={{ border: '1px solid white', padding: '8px', fontSize: '38px' }} className="text-lg font-bold">SAM</td>
+                        <td style={{ border: '1px solid #585864', padding: '8px', color: '#BCBCBC', borderLeft: '0px' }}>Missile Type:</td>
+                        <td style={{ border: '1px solid #585864', padding: '8px', fontSize: '38px', borderRight: '0px' }} className="text-lg font-bold">SAM</td>
                         </tr>
                     </tbody>
                   </table>
@@ -58,56 +68,56 @@ const EscalationModeElement = ({ element }: EscalationModeElementProps) => {
           </div>
       </div><div className="alert-element bg-#252526 text-white shadow-lg p-4" style={{ width: '560px', height: '985px' }}>
               <div className="w-1/2 pl-4">
-                  <h4 className="font-semibold" style={{ fontSize: '38px', height: '39px', width: '421px', marginBottom: '30px' }}>Additional Information</h4>
-                  <table className="table-auto" style={{ fontSize: '32px', height: '711px', width: '443px' }}>
+                  <h4 className="font-semibold" style={{ fontSize: '38px', height: '39px', width: '421px', marginBottom: '30px', marginTop: '50px', color: '#B7B7B7' }}>Additional Information</h4>
+                  <table className="table-auto" style={{ fontSize: '32px', height: '711px', width: '443px', borderCollapse: 'collapse' }}>
                       <tbody>
-                          <tr>
-                              <td className="pr-4" style={tablestyle}>reporter:</td>
-                              <td style={{ border: '1px solid white', padding: '8px' }}>ACA-7</td>
+                          <tr style={{background: '#151515'}}>
+                              <td className="pr-4" style={tablestyleLeftRow}>reporter:</td>
+                              <td style={tablestyleRightRow}>ACA-7</td>
                           </tr>
                           <tr>
-                              <td className="pr-4" style={tablestyle}>threat:</td>
-                              <td style={{ border: '1px solid white', padding: '8px' }}>SA_4</td>
+                              <td className="pr-4" style={tablestyleLeftRow}>threat:</td>
+                              <td style={tablestyleRightRow}>SA_4</td>
+                          </tr>
+                          <tr style={{background: '#151515'}}>
+                              <td className="pr-4" style={tablestyleLeftRow}>location:</td>
+                              <td style={tablestyleRightRow}>34° N, 118° W</td>
                           </tr>
                           <tr>
-                              <td className="pr-4" style={tablestyle}>location:</td>
-                              <td style={{ border: '1px solid white', padding: '8px' }}>34° N, 118° W</td>
+                              <td className="pr-4" style={tablestyleLeftRow}>distance:</td>
+                              <td style={tablestyleRightRow}>620 mi</td>
+                          </tr>
+                          <tr style={{background: '#151515'}}>
+                              <td className="pr-4" style={tablestyleLeftRow}>altitude:</td>
+                              <td style={tablestyleRightRow}>20,000 ft</td>
                           </tr>
                           <tr>
-                              <td className="pr-4" style={tablestyle}>distance:</td>
-                              <td style={{ border: '1px solid white', padding: '8px' }}>620 mi</td>
+                              <td className="pr-4" style={tablestyleLeftRow}>time to impact:</td>
+                              <td style={tablestyleRightRow}>45 sec</td>
+                          </tr>
+                          <tr style={{background: '#151515'}}>
+                              <td className="pr-4" style={tablestyleLeftRow}>priority:</td>
+                              <td style={tablestyleRightRow}>high</td>
                           </tr>
                           <tr>
-                              <td className="pr-4" style={tablestyle}>altitude:</td>
-                              <td style={{ border: '1px solid white', padding: '8px' }}>20,000 ft</td>
+                              <td className="pr-4" style={tablestyleLeftRow}>threat-level:</td>
+                              <td style={tablestyleRightRow}>high</td>
+                          </tr>
+                          <tr style={{background: '#151515'}}>
+                              <td className="pr-4" style={tablestyleLeftRow}>survivability:</td>
+                              <td style={tablestyleRightRow}>80%</td>
                           </tr>
                           <tr>
-                              <td className="pr-4" style={tablestyle}>time to impact:</td>
-                              <td style={{ border: '1px solid white', padding: '8px' }}>45 sec</td>
+                              <td className="pr-4" style={tablestyleLeftRow}>col. damage:</td>
+                              <td style={tablestyleRightRow}>29%</td>
+                          </tr>
+                          <tr style={{background: '#151515'}}>
+                              <td className="pr-4" style={tablestyleLeftRow}>missile type:</td>
+                              <td style={tablestyleRightRow}>SAM</td>
                           </tr>
                           <tr>
-                              <td className="pr-4" style={tablestyle}>priority:</td>
-                              <td style={{ border: '1px solid white', padding: '8px' }}>high</td>
-                          </tr>
-                          <tr>
-                              <td className="pr-4" style={tablestyle}>threat-level:</td>
-                              <td style={{ border: '1px solid white', padding: '8px' }}>high</td>
-                          </tr>
-                          <tr>
-                              <td className="pr-4" style={tablestyle}>survivability:</td>
-                              <td style={{ border: '1px solid white', padding: '8px' }}>80%</td>
-                          </tr>
-                          <tr>
-                              <td className="pr-4" style={tablestyle}>col. damage:</td>
-                              <td style={{ border: '1px solid white', padding: '8px' }}>29%</td>
-                          </tr>
-                          <tr>
-                              <td className="pr-4" style={tablestyle}>missile type:</td>
-                              <td style={{ border: '1px solid white', padding: '8px' }}>SAM</td>
-                          </tr>
-                          <tr>
-                              <td className="pr-4" style={tablestyle}>safe zone dist.:</td>
-                              <td style={{ border: '1px solid white', padding: '8px' }}>115 mi</td>
+                              <td className="pr-4" style={tablestyleLeftRow}>safe zone dist.:</td>
+                              <td style={tablestyleRightRow}>115 mi</td>
                           </tr>
                       </tbody>
                   </table>
