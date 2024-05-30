@@ -14,6 +14,11 @@ const LeftScreen = () => {
 
   const elementsInGaze = useAppSelector(getElementsInGaze);
 
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') 
+      e.preventDefault();
+  });
+
   // useEffect(() => {
   //   console.log('elementsInGaze: ', elementsInGaze);
   // }, [elementsInGaze]);

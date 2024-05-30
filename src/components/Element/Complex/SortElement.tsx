@@ -29,8 +29,8 @@ const SortElement = ({ options }: SortElementProps) => {
   }, [sortMethodIndex]);
 
   useEffect(() => {
-    // use f key for "filter"; option goes from left to right and wraps around
-    if (gazesAndKeys.some((action) => action.keyPress === 'KeyF'))
+    // use tab for toggling between options; option goes from left to right and wraps around
+    if (gazesAndKeys.some((action) => action.keyPress === 'Tab'))
       updateMethodIndex(sortMethodIndex + 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gazesAndKeys]);
