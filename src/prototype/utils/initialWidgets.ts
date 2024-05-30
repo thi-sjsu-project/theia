@@ -48,6 +48,7 @@ const initialLeftScreenWidgets: WidgetMap = {
         h: 112,
         showMoreInfoButton: true,
         showUpButton: true,
+        title: 'Approve kinetic attack?'
       },
     ],
     maxAmount: 1,

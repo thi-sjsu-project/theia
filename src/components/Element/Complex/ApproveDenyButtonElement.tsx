@@ -386,6 +386,7 @@ const ApproveDenyButtonElement = ({
   const [animation, setAnimation] = useState<'approve' | 'deny' | 'moreInfo' | 'up' | undefined>(
     undefined,
   );
+  const [moreInfoButtonActive, setMoreInfoButtonActive] = useState(element.showMoreInfoButton);
   const [time, setTime] = useState(0);
   const intervalRef = useRef<any>(undefined); // this is really just `number | undefined` but typescript is stoopid
 
@@ -410,6 +411,7 @@ const ApproveDenyButtonElement = ({
       for (idx = 0; idx < keyframes.length; idx++) {
         if (idx >= keyframes.length - 1) {
           if (onAction) onAction(animation);
+          if (animation === 'moreInfo') setMoreInfoButtonActive(false);
           return stopAnimation();
         }
         if (keyframes[idx].time <= time && keyframes[idx + 1].time >= time) {
@@ -467,19 +469,21 @@ const ApproveDenyButtonElement = ({
   useEffect(() => {
     for (const i of gazeAndKeys) {
       if (animation !== 'deny' && i.keyPress === 'KeyH') { // left mouse button
-        setAnimation('deny'); // TODO change to '0'
-      } else if (animation !== 'approve' && i.keyPress === 'KeyL') { // '2'
+        setAnimation('deny'); // TODO change to '0' - also a few lines further down !!!
+      } else if (animation !== 'approve' && i.keyPress === 'KeyL') { // right mouse button
         setAnimation('approve'); // TODO change to '2'
-      } else if (animation !== 'moreInfo' && i.keyPress === 'KeyJ') { // '1'
+      } else if (animation !== 'moreInfo' && i.keyPress === 'KeyJ' && moreInfoButtonActive) { // middle mouse button
         setAnimation('moreInfo'); // TODO change to '1'
-      } else if (animation !== 'up' && i.keyPress === 'KeyK') { // k
+      } else if (animation !== 'up' && i.keyPress === 'KeyK' && element.showUpButton) { // k
         setAnimation('up');
       } else continue;
       return;
     }
     if (
-      !gazeAndKeys.some((x) => x.keyPress === '0') &&
-      !gazeAndKeys.some((x) => x.keyPress === '2')
+      !gazeAndKeys.some((x) => x.keyPress === 'KeyH') &&
+      !gazeAndKeys.some((x) => x.keyPress === 'KeyJ') &&
+      !gazeAndKeys.some((x) => x.keyPress === 'KeyK') &&
+      !gazeAndKeys.some((x) => x.keyPress === 'KeyL')
     ) {
       stopAnimation();
     }
@@ -496,9 +500,12 @@ const ApproveDenyButtonElement = ({
       }}
     >
       <div className="bg-[#282828] bg-opacity-90 border-2 border-black rounded-xl">
-        <div style={headerStyle} className="font-medium text-center">
-          <div>Approve kinetic attack?</div>
-        </div>
+        {element.title
+          ? <div style={headerStyle} className="font-medium text-center">
+              <div>Approve kinetic attack?</div>
+            </div>
+          : <></>
+        }
 
         {/* prettier-ignore */}
         <div style={{ height: w * SIZES.button }}>
@@ -529,7 +536,7 @@ const ApproveDenyButtonElement = ({
               <stop offset="100%" stop-color="#0f8a73" />
             </radialGradient>
 
-            <rect x={w * 0.5 * (1 - SIZES.moreInfoButton)} y={w * (SIZES.button + 0.01)} width={w * SIZES.moreInfoButton} height={w * SIZES.moreInfoButtonHeight} fill="#282828" rx={10} opacity={0.9} stroke="black" strokeWidth={2} />
+            {moreInfoButtonActive ? <rect x={w * 0.5 * (1 - SIZES.moreInfoButton)} y={w * (SIZES.button + 0.01)} width={w * SIZES.moreInfoButton} height={w * SIZES.moreInfoButtonHeight} fill="#282828" rx={10} opacity={0.9} stroke="black" strokeWidth={2} /> : <></>}
 
             <circle cx={w * 0.5} cy={w * SIZES.button * 0.5} r={state.bigCircleRadius * w * 0.5} fill="url(#bigCircleGradient)" clipPath="url(#clip)" />
             <circle cx={w * 0.5} cy={w * SIZES.button * 0.5} r={SIZES.tinyWhiteDot * w * 0.5} fill="#FFFFFF" opacity={state.tinyDotOpacity} />
@@ -543,7 +550,7 @@ const ApproveDenyButtonElement = ({
               points={`${w * (state.approveArrowPosition + 0.125 * SIZES.triangle)},${0.5 * w * SIZES.button} ` +
                       `${w * (state.approveArrowPosition - 0.375 * SIZES.triangle)},${0.5 * w * (SIZES.button - SIZES.triangle)} ` +
                       `${w * (state.approveArrowPosition - 0.375 * SIZES.triangle)},${0.5 * w * (SIZES.button + SIZES.triangle)}`} />
-            {element.showMoreInfoButton ? <polygon fill="#FFFFFF" opacity={state.downArrowOpacity} stroke="black" stroke-width="1.5"
+            {moreInfoButtonActive ? <polygon fill="#FFFFFF" opacity={state.downArrowOpacity} stroke="black" stroke-width="1.5"
               points={`${0.5 * w * (1 - SIZES.triangle)},${0.5 * w * (SIZES.button + SIZES.smallTurquoiseCircle + state.downArrowPosition + 0.05)} ` +
                       `${0.5 * w * (1 + SIZES.triangle)},${0.5 * w * (SIZES.button + SIZES.smallTurquoiseCircle + state.downArrowPosition + 0.05)} ` +
                       `${0.5 * w},${0.5 * w * (SIZES.button + SIZES.smallTurquoiseCircle + state.downArrowPosition + 0.05 + SIZES.triangle)}`} /> : <></>}
@@ -574,7 +581,7 @@ const ApproveDenyButtonElement = ({
           <span style={{ opacity: state.approveTextOpacity }}>APPROVE</span>
         </div>
 
-        {element.showMoreInfoButton
+        {moreInfoButtonActive
           ?
             <div
               style={{

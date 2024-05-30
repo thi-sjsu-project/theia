@@ -122,6 +122,7 @@ export type InformationElement = BaseElement & {
 
 export type ApproveDenyButtonElement = BaseElement & {
   type: 'approve-deny-button';
+  title?: string,
   showMoreInfoButton: boolean;
   showUpButton: boolean;
 };
