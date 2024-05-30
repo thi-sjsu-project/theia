@@ -1,6 +1,8 @@
 import { type AcaStatusElement as AcaStatusElementType } from 'src/types/element';
 import WEAPON_ICON_1 from 'src/assets/icons/weapon1.svg';
 import WEAPON_ICON_2 from 'src/assets/icons/weapon2.svg';
+import { getMessages } from 'src/redux/slices/conversationSlice';
+import { useAppSelector } from 'src/redux/hooks';
 
 type PropsType = {
   element: AcaStatusElementType;
@@ -9,6 +11,32 @@ type PropsType = {
 const AcaStatusElement = ({ element }: PropsType) => {
   const { id, acaId, fuelLevel, h, w, weaponLoad1, weaponLoad2, isDead } =
     element;
+
+  // let border = false;
+
+  const messages = useAppSelector(getMessages);
+  // console.log(messages);
+  
+  const getAcaDotStatus = () => {
+    
+    const latestMessage = messages[messages.length-1];
+    // && (latestMessage.kind == 'AcaDefect' || latestMessage.kind == 'AcaFuelLow')
+
+    /*@ts-ignore*/
+    if(latestMessage?.tags?.includes(`aca-${acaId}`) && (latestMessage.kind == 'AcaDefect' || latestMessage.kind == 'AcaFuelLow' || latestMessage.kind == 'AcaHeadingToBase')){
+      return {color: 'bg-[#FCA700]', border: 'border-0'};
+    }
+    else{
+    return {color: 'bg-[#323235]', border:'border-2'}; 
+    }
+  }
+
+  const {color, border} = getAcaDotStatus();
+  console.log(`Applied classes: color=${color}, border=${border}`);
+
+
+
+    
 
   return (
     <div
@@ -35,7 +63,7 @@ const AcaStatusElement = ({ element }: PropsType) => {
       </svg>
 
       <div>
-        <div className="inline-block w-4 h-4 rounded-full bg-transparent border-2 border-[#f5f5f5] mr-2"></div>
+        <div className={`inline-block w-4 h-4 rounded-full  ${border}  ${color} mr-2`}></div>
         <span className="text-[#f5f5f5] text-[20px]">ACA-{acaId}</span>
       </div>
 
