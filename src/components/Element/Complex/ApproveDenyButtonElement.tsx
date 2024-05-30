@@ -403,7 +403,7 @@ const ApproveDenyButtonElement = ({
       if (animation === 'approve') keyframes = KEYFRAMES_APPROVE;
       else if (animation === 'deny') keyframes = KEYFRAMES_DENY;
       else if (animation === 'moreInfo') keyframes = KEYFRAMES_MORE_INFO;
-      else if (animation === 'up') keyframes = KEYFRAMES_DENY;
+      else if (animation === 'up') return stopAnimation();
       else return stopAnimation();
 
       let idx;
@@ -502,7 +502,12 @@ const ApproveDenyButtonElement = ({
 
         {/* prettier-ignore */}
         <div style={{ height: w * SIZES.button }}>
-          <svg style={{ width: w, height: 1.5 * w, position: "absolute", marginTop: -w }} viewBox={`0 ${-0.5 * w} ${w} ${0.5 * w}`}>
+          <div style={{
+            height: w * SIZES.button,
+            width: w,
+            background: "linear-gradient(90deg, rgba(40, 40, 40, 0.00) 0%, rgba(76, 76, 76, 0.90) 40%, rgba(76, 76, 76, 0.90) 60%, rgba(40, 40, 40, 0.00) 100%)"
+          }}></div>
+          <svg style={{ width: w, height: 1.5 * w, position: "absolute", marginTop: -w * (1 + SIZES.button) }} viewBox={`0 ${-0.5 * w} ${w} ${0.5 * w}`}>
             <clipPath id="clip">
               <rect x={0} y={0} width={w - 2} height={w * SIZES.button} rx={12} />
             </clipPath>
