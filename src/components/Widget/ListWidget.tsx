@@ -17,7 +17,7 @@ type ListWidgetProps = {
   widget: Widget;
 };
 
-const LIST_ELEMENT_HEIGHT = 90;
+const LIST_ELEMENT_HEIGHT = 80;
 const GAP_BETWEEN_ELEMENTS = 6;
 
 const ListWidget = ({ widget }: ListWidgetProps) => {
@@ -247,6 +247,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
         scrollbarWidth: 'thin',
         scrollbarColor: '#97979D #e0e0e0',
         scrollbarGutter: 'stable',
+        overflow: 'hidden',
       }}
     >
       {convoElements.map((element, index) => {
@@ -262,7 +263,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
         // style for active element (element due to which the history widget is open)
         const activeElementStyle =
           element.id === selectedElement?.id
-            ? 'bg-[#444449] text-[28px] font-medium border-4 border-white'
+            ? 'bg-[#444449] text-[28px] font-medium border-4 border-white p-0'
             : '';
 
         const numUnreadMessages =
@@ -272,12 +273,12 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
           <div
             id={element.id}
             key={element.id}
-            style={{ height: LIST_ELEMENT_HEIGHT }}
-            className={`w-full text-white flex items-center justify-center rounded-xl p-3 ${hoverStyle} ${activeElementStyle}`}
+            style={{ height: LIST_ELEMENT_HEIGHT, width: 340 }}
+            className={`text-white flex items-center justify-center p-3 pb-2 rounded-xl ${hoverStyle} ${activeElementStyle}`}
           >
             <ListElement
               element={element}
-              outerDivStyleClass="w-full h-full"
+              outerDivStyleClass="w-full h-full px-4 rounded-full "
               unreadCount={numUnreadMessages}
             >
               {/* Nested children here if wanted.. */}

@@ -43,7 +43,7 @@ const RequestApprovalElement = ({
       return (
         <div
           className="rounded-full bg-white w-[35px] h-[35px] text-[#252526] flex 
-    items-center justify-center text-lg"
+    items-center justify-center text-lg rounded-full"
         >
           {unreadCount}
         </div>
@@ -54,18 +54,18 @@ const RequestApprovalElement = ({
   return (
     <div
       id={id}
-      className="flex text-white justify-between items-center gap-4 pr-4"
+      className="flex text-white justify-between items-center gap-4 pr-4 rounded-full"
     >
       <div className="flex flex-col">
-        <div className="flex space-between items-center justify-center gap-4">
+        <div className="flex space-between items-center justify-center gap-4 rounded-full">
           <div className="flex">
             <IconElement element={icon} />
           </div>
 
           <div>
             {/* @ts-ignore */}
-            <span>{message?.data?.target?.type}</span>
-            <div className="flex flex-col text-sm">
+            <span className ="text-[24px]">{message?.data?.target?.type}</span>
+            <div className="flex flex-col text-sm text-[#BCBCBC] text-[20px] pb-2">
             <div>{getMessageText()}</div>
           </div>
           </div>
