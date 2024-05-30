@@ -114,6 +114,7 @@ export type AcaStatusElement = BaseElement & {
 };
 
 export type AcaMessageElement = BaseElement & {
+  type: 'aca-message';
   text: string;
 };
 

@@ -6,7 +6,7 @@ import REACTION from 'src/assets/icons/Action Required Notch.svg';
 import ALERT from 'src/assets/icons/Alert Notch.svg';
 import { useAppSelector } from 'src/redux/hooks';
 import { getMessages } from 'src/redux/slices/conversationSlice';
-
+import { useEffect } from 'react';
 
 type AcaHeaderWidgetProps = {
   widget: AcaHeaderWidgetType;
@@ -20,42 +20,44 @@ const AcaHeaderWidget = ({ widget }: AcaHeaderWidgetProps) => {
   const messages = useAppSelector(getMessages);
 
   const getNotch = () => {
-    const latestMessage = messages[messages.length-1];
+    const latestMessage = messages[messages.length - 1];
     let action = '';
 
-    for(let message of messages){
-      if (message.fulfilled == false){
-        if (message.kind == 'RequestApprovalToAttack' && action != 'ALERT'){
+    for (let message of messages) {
+      if (message.fulfilled === false) {
+        if (message.kind === 'RequestApprovalToAttack' && action !== 'ALERT') {
           action = 'REACTION';
         }
-        if(message.kind == 'MissileToOwnshipDetected'){
-          action ='ALERT';
+        if (message.kind === 'MissileToOwnshipDetected') {
+          action = 'ALERT';
         }
-
       }
     }
 
-    if(action == 'REACTION'){
+    if (action === 'REACTION') {
       return REACTION;
-    }
-    else if(action == 'ALERT'){
+    } else if (action === 'ALERT') {
       return ALERT;
-    }
-    else{
+    } else {
       return NOTCH;
     }
-
-    
-    
-
-
-
   };
 
+  useEffect(() => {
+    const latestMessage = messages[messages.length - 1];
+    const acaId = Number(
+      latestMessage.tags?.find((tag) => tag.startsWith('aca-'))?.split('-')[1],
+    );
+
+    if (!acaId) return;
+
+    // @ts-ignore
+    const aca = elements.find((element) => element.acaId === acaId);
+
+    console.log(aca);
+  }, [messages]);
+
   const notch = getNotch();
-
-
-
 
   return (
     <div

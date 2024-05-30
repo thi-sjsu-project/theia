@@ -2,6 +2,9 @@ import { type AcaStatusElement as AcaStatusElementType } from 'src/types/element
 import WEAPON_ICON_1 from 'src/assets/icons/weapon1.svg';
 import WEAPON_ICON_2 from 'src/assets/icons/weapon2.svg';
 import AcaMessageElement from './AcaMessageElement';
+import { useAppSelector } from 'src/redux/hooks';
+import { getMessages } from 'src/redux/slices/conversationSlice';
+import { useEffect } from 'react';
 
 type PropsType = {
   element: AcaStatusElementType;

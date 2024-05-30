@@ -28,17 +28,7 @@ const aca2: AcaStatusElement = {
   id: uuid(),
   modality: 'visual',
   widgetId: 'aca-header',
-  messages: [
-    {
-      id: uuid(),
-      modality: 'visual',
-      h: 72,
-      w: 160,
-      widgetId: 'aca-header',
-      canOverlap: true,
-      text: 'foo',
-    },
-  ],
+  messages: [],
 };
 const aca3: AcaStatusElement = {
   type: 'aca-status',
