@@ -124,47 +124,51 @@ const requestApprovalToAttackMessageHigh = (
 };
 
 const acaFuelLowMessageHigh = (message: Message) => {
-  const elements: Element[] = [];
-  elements.push(
-    lpdHelper.generateTableElement(
-      lpdHelper.generateBaseElement(
-        uuid(),
-        'visual',
-        50,
-        200,
-        message.priority,
-        'list',
-      ),
-      2,
-      2,
-      [
-        ['Fuel', 'Low'],
-        ['Altitude', 'Low'],
-      ],
-    ),
-  );
+  // const elements: Element[] = [];
+  // elements.push(
+  //   lpdHelper.generateTableElement(
+  //     lpdHelper.generateBaseElement(
+  //       uuid(),
+  //       'visual',
+  //       50,
+  //       200,
+  //       message.priority,
+  //       'list',
+  //     ),
+  //     2,
+  //     2,
+  //     [
+  //       ['Fuel', 'Low'],
+  //       ['Altitude', 'Low'],
+  //     ],
+  //   ),
+  // );
+  // return {
+  //   sections: [],
+  //   possibleClusters: [
+  //     generateCluster([
+  //       lpdHelper.generateListWidget(
+  //         lpdHelper.generateBaseWidget(
+  //           uuid(),
+  //           'tinder',
+  //           500,
+  //           500,
+  //           LIST_WIDGET_WIDTH,
+  //           LIST_WIDGET_HEIGHT,
+  //           '/pearce-screen',
+  //           false,
+  //           false,
+  //           1,
+  //           [...elements],
+  //           ['message'],
+  //         ),
+  //       ),
+  //     ]),
+  //   ],
+  // };
   return {
     sections: [],
-    possibleClusters: [
-      generateCluster([
-        lpdHelper.generateListWidget(
-          lpdHelper.generateBaseWidget(
-            uuid(),
-            'tinder',
-            500,
-            500,
-            LIST_WIDGET_WIDTH,
-            LIST_WIDGET_HEIGHT,
-            '/pearce-screen',
-            false,
-            false,
-            1,
-            [...elements],
-            ['message'],
-          ),
-        ),
-      ]),
-    ],
+    possibleClusters: [],
   };
 };
 
@@ -267,87 +271,95 @@ const missileToOwnshipDetectedMessageHigh = (
 };
 
 const acaDefectMessageHigh = (message: Message) => {
-  const elements: Element[] = [];
-  elements.push(
-    lpdHelper.generateTableElement(
-      lpdHelper.generateBaseElement(
-        uuid(),
-        'visual',
-        50,
-        200,
-        message.priority,
-        'list',
-      ),
-      2,
-      2,
-      [
-        ['Defect', 'Engine'],
-        ['Altitude', 'Low'],
-      ],
-    ),
-  );
+  // const elements: Element[] = [];
+  // elements.push(
+  //   lpdHelper.generateTableElement(
+  //     lpdHelper.generateBaseElement(
+  //       uuid(),
+  //       'visual',
+  //       50,
+  //       200,
+  //       message.priority,
+  //       'list',
+  //     ),
+  //     2,
+  //     2,
+  //     [
+  //       ['Defect', 'Engine'],
+  //       ['Altitude', 'Low'],
+  //     ],
+  //   ),
+  // );
+  // return {
+  //   sections: [],
+  //   possibleClusters: [
+  //     generateCluster([
+  //       lpdHelper.generateListWidget(
+  //         lpdHelper.generateBaseWidget(
+  //           uuid(),
+  //           'minimap',
+  //           500,
+  //           500,
+  //           LIST_WIDGET_WIDTH,
+  //           LIST_WIDGET_HEIGHT,
+  //           '/pearce-screen',
+  //           false,
+  //           true,
+  //           1,
+  //           [...elements],
+  //           ['aca-defect'],
+  //         ),
+  //       ),
+  //     ]),
+  //   ],
+  // };
   return {
     sections: [],
-    possibleClusters: [
-      generateCluster([
-        lpdHelper.generateListWidget(
-          lpdHelper.generateBaseWidget(
-            uuid(),
-            'minimap',
-            500,
-            500,
-            LIST_WIDGET_WIDTH,
-            LIST_WIDGET_HEIGHT,
-            '/pearce-screen',
-            false,
-            true,
-            1,
-            [...elements],
-            ['aca-defect'],
-          ),
-        ),
-      ]),
-    ],
+    possibleClusters: [],
   };
 };
 
 const acaHeadingToBaseMessageHigh = (message: Message) => {
-  const elements: Element[] = [];
-  elements.push(
-    lpdHelper.generateTextElement(
-      lpdHelper.generateBaseElement(
-        uuid(),
-        'visual',
-        30,
-        200,
-        message.priority,
-        'list',
-      ),
-      'Aircraft heading to base',
-    ),
-  );
+  // const elements: Element[] = [];
+  // elements.push(
+  //   lpdHelper.generateTextElement(
+  //     lpdHelper.generateBaseElement(
+  //       uuid(),
+  //       'visual',
+  //       30,
+  //       200,
+  //       message.priority,
+  //       'list',
+  //     ),
+  //     'Aircraft heading to base',
+  //   ),
+  // );
+  // return {
+  //   sections: [],
+  //   possibleClusters: [
+  //     generateCluster([
+  //       lpdHelper.generateListWidget(
+  //         lpdHelper.generateBaseWidget(
+  //           uuid(),
+  //           'tinder',
+  //           500,
+  //           500,
+  //           LIST_WIDGET_WIDTH,
+  //           LIST_WIDGET_HEIGHT,
+  //           '/pearce-screen',
+  //           false,
+  //           true,
+  //           1,
+  //           [...elements],
+  //           ['message'],
+  //         ),
+  //       ),
+  //     ]),
+  //   ],
+  // };
   return {
     sections: [],
-    possibleClusters: [
-      generateCluster([
-        lpdHelper.generateListWidget(
-          lpdHelper.generateBaseWidget(
-            uuid(),
-            'tinder',
-            500,
-            500,
-            LIST_WIDGET_WIDTH,
-            LIST_WIDGET_HEIGHT,
-            '/pearce-screen',
-            false,
-            true,
-            1,
-            [...elements],
-            ['message'],
-          ),
-        ),
-      ]),
-    ],
+    possibleClusters: [],
   };
 };
 
