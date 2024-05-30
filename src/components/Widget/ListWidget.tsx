@@ -17,7 +17,7 @@ type ListWidgetProps = {
   widget: Widget;
 };
 
-const LIST_ELEMENT_HEIGHT = 80;
+const LIST_ELEMENT_HEIGHT = 90;
 const GAP_BETWEEN_ELEMENTS = 6;
 
 const ListWidget = ({ widget }: ListWidgetProps) => {

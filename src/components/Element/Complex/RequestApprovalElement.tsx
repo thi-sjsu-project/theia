@@ -10,6 +10,9 @@ type RequestApprovalProps = {
   unreadCount?: number;
 };
 
+
+
+
 const RequestApprovalElement = ({
   element,
   children,
@@ -17,6 +20,23 @@ const RequestApprovalElement = ({
 }: RequestApprovalProps) => {
   const { id, icon, messageId } = element;
   const message = useAppSelector((state) => getMessage(state, messageId));
+
+
+  const getMessageText = () =>{
+
+
+    // console.log("I am being fired!")
+    /*@ts-ignore*/
+    if(message.kind == 'RequestApprovalToAttack') {
+      return 'Request to Attack'
+
+    }
+    /*@ts-ignore*/
+    // else if(message.kind == 'MissileToOwnshipDetected'){
+    //   return 'Missile Incoming'
+    // }
+  
+  }
 
   const renderUnreadCount = () => {
     if (unreadCount && unreadCount > 0) {
@@ -36,10 +56,22 @@ const RequestApprovalElement = ({
       id={id}
       className="flex text-white justify-between items-center gap-4 pr-4"
     >
-      <div className="flex space-between items-center justify-center gap-4">
-        <IconElement element={icon} />
-        {/* @ts-ignore */}
-        <span>{message?.data?.target?.type}</span>
+      <div className="flex flex-col">
+        <div className="flex space-between items-center justify-center gap-4">
+          <div className="flex">
+            <IconElement element={icon} />
+          </div>
+
+          <div>
+            {/* @ts-ignore */}
+            <span>{message?.data?.target?.type}</span>
+            <div className="flex flex-col text-sm">
+            <div>{getMessageText()}</div>
+          </div>
+          </div>
+
+        </div>
+
       </div>
 
       {renderUnreadCount()}
