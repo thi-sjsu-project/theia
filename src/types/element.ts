@@ -115,7 +115,9 @@ export type AcaStatusElement = BaseElement & {
 
 export type AcaMessageElement = BaseElement & {
   type: 'aca-message';
+  statusElementId: string;
   text: string;
+  show?: boolean;
 };
 
 export type InformationElement = BaseElement & {

@@ -126,7 +126,6 @@ const initialMinimapWidgets: WidgetMap = {
 };
 
 const initialWidgets = {
-  // ...initialWarnings,
   ...initialLeftScreenWidgets,
   ...initialMinimapWidgets,
 };

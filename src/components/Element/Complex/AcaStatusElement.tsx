@@ -1,4 +1,7 @@
-import { type AcaStatusElement as AcaStatusElementType } from 'src/types/element';
+import {
+  type AcaMessageElement as AcaMessageElementType,
+  type AcaStatusElement as AcaStatusElementType,
+} from 'src/types/element';
 import WEAPON_ICON_1 from 'src/assets/icons/weapon1.svg';
 import WEAPON_ICON_2 from 'src/assets/icons/weapon2.svg';
 import AcaMessageElement from './AcaMessageElement';
@@ -8,9 +11,10 @@ import { useEffect } from 'react';
 
 type PropsType = {
   element: AcaStatusElementType;
+  notification?: AcaMessageElementType;
 };
 
-const AcaStatusElement = ({ element }: PropsType) => {
+const AcaStatusElement = ({ element, notification }: PropsType) => {
   const {
     id,
     acaId,
@@ -67,9 +71,10 @@ const AcaStatusElement = ({ element }: PropsType) => {
         </div>
       </div>
 
-      {messages.map((message) => (
+      {/* {messages.map((message) => (
         <AcaMessageElement element={message} />
-      ))}
+      ))} */}
+      {notification ? <AcaMessageElement element={notification} /> : null}
     </div>
   );
 };
