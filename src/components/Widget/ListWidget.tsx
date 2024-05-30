@@ -274,7 +274,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
             id={element.id}
             key={element.id}
             style={{ height: LIST_ELEMENT_HEIGHT, width: 340 }}
-            className={`text-white flex items-center justify-center p-3 pb-2 rounded-xl ${hoverStyle} ${activeElementStyle}`}
+            className={`text-white flex items-center justify-center p-3 rounded-xl ${hoverStyle} ${activeElementStyle}`}
           >
             <ListElement
               element={element}
