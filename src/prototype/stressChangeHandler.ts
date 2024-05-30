@@ -1,4 +1,4 @@
-import { removeWidget } from 'src/redux/slices/minimapSlice';
+import { removeWidget, updateWidget } from 'src/redux/slices/minimapSlice';
 import type { AppDispatch } from 'src/redux/store';
 import type { Message } from 'src/types/schema-types';
 import reactToMessage from 'src/prototype/reactToMessage';
@@ -43,6 +43,16 @@ const stressChangeHandler = ({
         });
 
         if (hasAllTags) {
+          // dispatch(
+          //   updateWidget({
+          //     ...widgetInStress,
+          //     id: widget.id,
+          //     elements: widget.elements,
+          //     x: widget.x,
+          //     y: widget.y,
+          //     handledMessageIds: widget.handledMessageIds,
+          //   }),
+          // );
           //if the widget has all the tags that the new stress widget does, then this widget exists in the new stress LPD
           widgetIsInNewStressLPD = true; //so lets say that it exists
         }
