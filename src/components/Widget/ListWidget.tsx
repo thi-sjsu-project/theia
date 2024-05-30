@@ -27,15 +27,15 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
 
   const elementsInGaze = useAppSelector(getElementsInGaze);
   const gazesAndKeys = useAppSelector(getGazesAndKeys);
-  const { activeElementId, activeConversationId } =
-    useAppSelector(getCommunication);
+  const conversation = useAppSelector(getCommunication);
+
+  const { activeConversationId } = conversation;
 
   const sortType = useAppSelector(getSortMethod);
 
   const [convoElements, setConvoElements] = useState<Element[]>([]);
   const [selectedElement, setSelectedElement] = useState<Element>();
 
-  
   const sortMethod = getSortFunc(sortType);
 
   // const listCapacity = Math.floor(
@@ -147,6 +147,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
             // @ts-ignore
             activeConversationId: selectedElement.conversationId,
             activeElementId: selectedElement.id,
+            sortMethod: conversation.sortMethod,
           }),
         );
       }
