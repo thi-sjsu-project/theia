@@ -4,6 +4,7 @@ import VehicleWidget from 'src/components/Widget/VehicleWidget';
 import MapWarningWidget from 'src/components/Widget/MapWarningWidget';
 import HistoryWidget from 'src/components/Widget/HistoryWidget';
 import AcaHeaderWidget from 'src/components/Widget/AcaHeaderWidget';
+import EscalationModeWidget from 'src/components/Widget/EscalationWidget'
 import BasicWidget from './BasicWidget';
 
 type WidgetProps = {
@@ -25,6 +26,8 @@ const Widget = ({ widget }: WidgetProps) => {
         return <HistoryWidget widget={widget} />;
       case 'aca-header':
         return <AcaHeaderWidget widget={widget} />;
+      case 'escalation':
+        return <EscalationModeWidget widget={widget} />;
       default:
         return <div>Unknown Widget</div>;
     }
