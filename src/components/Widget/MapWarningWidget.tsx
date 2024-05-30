@@ -62,7 +62,7 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
     <div
       key={widget.id}
       id={widget.id}
-      className="absolute"
+      className="absolute min-w-[600px]"
       style={{
         top: ~~widget.y,
         left: ~~widget.x,
