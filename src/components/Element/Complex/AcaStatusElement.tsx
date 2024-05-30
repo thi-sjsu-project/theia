@@ -22,6 +22,10 @@ const AcaStatusElement = ({ element }: PropsType) => {
     const latestMessage = messages[messages.length-1];
     // && (latestMessage.kind == 'AcaDefect' || latestMessage.kind == 'AcaFuelLow')
 
+    if(isDead){
+      return {color: 'bg-[#000000]', border:'border-0'}
+    }
+
     /*@ts-ignore*/
     if(latestMessage?.tags?.includes(`aca-${acaId}`) && (latestMessage.kind == 'AcaDefect' || latestMessage.kind == 'AcaFuelLow' || latestMessage.kind == 'AcaHeadingToBase')){
       return {color: 'bg-[#FCA700]', border: 'border-0'};
