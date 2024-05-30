@@ -1,9 +1,12 @@
 import { useEffect } from 'react';
 import { useAppDispatch } from 'src/redux/hooks';
 import { updateElement } from 'src/redux/slices/minimapSlice';
-import type { Element, InformationElement, RequestApprovalElement as RequestApprovalElementType } from 'src/types/element';
+import type {
+  Element,
+  InformationElement,
+  RequestApprovalElement as RequestApprovalElementType,
+} from 'src/types/element';
 import { capitalizeFirstLetter as cfl } from 'src/utils/helpers';
-import TableElement from '../Simple/TableElement';
 import RequestApprovalElement from './RequestApprovalElement';
 
 type Props = {
@@ -85,22 +88,27 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
 
       case 'L':
         if (message.kind === 'RequestApprovalToAttack') {
-          return <RequestApprovalElement element={requestApprovalElement as RequestApprovalElementType} inGaze={inGaze} />;
+          return (
+            <RequestApprovalElement
+              element={requestApprovalElement as RequestApprovalElementType}
+              inGaze={inGaze}
+            />
+          );
         } else {
           return (
-          <div
-            id={informationElement.id}
-            className='inline-block align-middle mt-3'
-            style={{
-              height: h,
-              width: w,
-              fontSize: 24,
-              backgroundColor: 'turquoise',
-              opacity: 0.8,
-            }}
-          >
-            LARGE: {cfl(target)}
-          </div>
+            <div
+              id={informationElement.id}
+              className="inline-block align-middle mt-3"
+              style={{
+                height: h,
+                width: w,
+                fontSize: 24,
+                backgroundColor: 'turquoise',
+                opacity: 0.8,
+              }}
+            >
+              LARGE: {cfl(target)}
+            </div>
           );
         }
     }
@@ -130,10 +138,10 @@ const GazeHighlight = () => {
 
 const GazeHighlightL = () => {
   return (
-      <div
-        className="w-auto rounded-xl border-[#19DEBB] border-x-[5px]"
-        style={{ height: L_HEIGHT - 4, marginTop: -L_HEIGHT }}
-      ></div>
+    <div
+      className="w-auto rounded-xl border-[#19DEBB] border-x-[5px]"
+      style={{ height: L_HEIGHT - 4, marginTop: -L_HEIGHT }}
+    ></div>
   );
 };
 
