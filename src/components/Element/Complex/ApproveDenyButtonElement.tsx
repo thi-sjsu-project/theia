@@ -493,13 +493,15 @@ const ApproveDenyButtonElement = ({
   return (
     <div
       id={id}
-      className="absolute mt-[-100%] text-[#f5f5f5]"
+      className="absolute mt-[-100%] text-[#f5f5f5] border-2 border-[#282828] rounded-xl"
       style={{
-        height: h,
-        width: w,
+        height: h + 3,
+        width: w + 3,
+        marginLeft: -3,
+        marginTop: -3,
       }}
     >
-      <div className="bg-[#282828] bg-opacity-90 border-2 border-black rounded-xl">
+      <div className="bg-[#282828] bg-opacity-90 border-black rounded-xl" style={{ borderWidth: 3 }}>
         {element.title
           ? <div style={headerStyle} className="font-medium text-center">
               <div>Approve kinetic attack?</div>
