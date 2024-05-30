@@ -504,7 +504,7 @@ const ApproveDenyButtonElement = ({
       <div className="bg-[#282828] bg-opacity-90 border-black rounded-xl" style={{ borderWidth: 3 }}>
         {element.title
           ? <div style={headerStyle} className="font-medium text-center">
-              <div>Approve kinetic attack?</div>
+              <div>{element.title}</div>
             </div>
           : <></>
         }

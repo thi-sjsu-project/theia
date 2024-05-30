@@ -18,7 +18,9 @@ const EscalationModeElement = ({ element }: EscalationModeElementProps) => {
     w: 476,
     modality: 'visual',
     type: 'approve-deny-button',
-    //text: 'Switch to AUTO Mode?'
+    title: 'Switch to AUTO Mode?',
+    showMoreInfoButton: false,
+    showUpButton: false,
   } satisfies ApproveDenyButtonElementType
 
   const tablestyleLeftRow = {
@@ -61,7 +63,7 @@ const EscalationModeElement = ({ element }: EscalationModeElementProps) => {
                         </tr>
                     </tbody>
                   </table>
-                  <div style={{ transform: 'scale(1.5)', marginTop: '55px', marginLeft: '106px'}}>
+                  <div style={{ transform: 'scale(1.5)', marginTop: '100px', marginLeft: '106px'}}>
                         <ApproveDenyButtonElement element={approveDenyButtonElement} />
                   </div>
               </div>

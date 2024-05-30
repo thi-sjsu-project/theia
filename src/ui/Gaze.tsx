@@ -21,6 +21,7 @@ const Gaze = ({ mousePosition }: GazeProps) => {
         height: GAZE_RADIUS * 2,
         top: y - GAZE_RADIUS,
         left: x - GAZE_RADIUS,
+        zIndex: '2000'
       }}
     />
   );

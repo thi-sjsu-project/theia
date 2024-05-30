@@ -64,6 +64,7 @@ const AcaHeaderWidget = ({ widget }: AcaHeaderWidgetProps) => {
         left: x,
         width: w,
         height: h,
+        zIndex: '1500',
       }}
       className="absolute bg-[#252526] flex gap-4 px-4 py-2"
     >
