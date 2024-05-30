@@ -70,7 +70,7 @@ const EscalationModeElement = ({ element }: EscalationModeElementProps) => {
           </div>
       </div><div className="alert-element bg-#252526 text-white shadow-lg p-4" style={{ width: '560px', height: '985px' }}>
               <div className="w-1/2 pl-4">
-                  <h4 className="font-semibold" style={{ fontSize: '38px', height: '39px', width: '421px', marginBottom: '30px', marginTop: '50px', color: '#B7B7B7' }}>Additional Information</h4>
+                  <h4 style={{ fontSize: '38px', height: '39px', width: '421px', marginBottom: '30px', marginTop: '50px', color: '#B7B7B7' }}>Additional Information</h4>
                   <table className="table-auto" style={{ fontSize: '32px', height: '711px', width: '443px', borderCollapse: 'collapse' }}>
                       <tbody>
                           <tr style={{background: '#151515'}}>
