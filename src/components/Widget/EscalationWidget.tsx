@@ -20,7 +20,7 @@ const EscalationWidget = ({ widget}: EscalationWidgetProps) => {
                 width: w,
                 height: h,
             }}
-            className="absolute bg-[#252526] flex gap-4 px-4 py-2"
+            className="absolute bg-[#252526] flex gap-4 py-2 z-1000"
         >
             {firstElements.map((element) => (
                 <EscalationModeElement

@@ -409,7 +409,7 @@ const ApproveDenyButtonElement = ({
   return (
     <div
       id={id}
-      className="absolute mt-[-100%] text-[#f5f5f5]"
+      className="absolute text-[#f5f5f5]"
       style={{
         height: h,
         width: w,
