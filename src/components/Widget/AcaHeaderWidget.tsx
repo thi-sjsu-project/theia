@@ -58,33 +58,35 @@ const AcaHeaderWidget = ({ widget }: AcaHeaderWidgetProps) => {
 
 
   return (
-    <div
-      style={{
-        top: y,
-        left: x,
-        width: w,
-        height: h,
-      }}
-      className="absolute bg-[#252526] flex gap-4 px-4 py-2"
-    >
-      {firstElements.map((element) => (
-        <AcaStatusElement
-          key={element.id}
-          element={element as AcaStatusElementType}
-        />
-      ))}
-      <div>
-        <img src={notch} alt="notch" className="-mt-4" />
-      </div>
+    <>
+      <div
+        style={{
+          top: y,
+          left: x,
+          width: w,
+          height: h,
+        }}
+        className="absolute bg-[#252526] flex gap-4 px-4 py-2"
+      >
+        {firstElements.map((element) => (
+          <AcaStatusElement
+            key={element.id}
+            element={element as AcaStatusElementType}
+          />
+        ))}
 
-      <div className="grow" />
-      {lastElements.map((element) => (
-        <AcaStatusElement
-          key={element.id}
-          element={element as AcaStatusElementType}
-        />
-      ))}
-    </div>
+        <div className="grow" />
+        {lastElements.map((element) => (
+          <AcaStatusElement
+            key={element.id}
+            element={element as AcaStatusElementType}
+          />
+        ))}
+      </div>
+      <div style={{ width: w }} className="text-center absolute">
+        <img src={notch} alt="notch" className="inline-block" />
+      </div>
+    </>
   );
 };
 
