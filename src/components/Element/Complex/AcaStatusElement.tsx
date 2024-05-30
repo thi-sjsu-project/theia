@@ -26,6 +26,9 @@ const AcaStatusElement = ({ element }: PropsType) => {
     if(latestMessage?.tags?.includes(`aca-${acaId}`) && (latestMessage.kind == 'AcaDefect' || latestMessage.kind == 'AcaFuelLow' || latestMessage.kind == 'AcaHeadingToBase')){
       return {color: 'bg-[#FCA700]', border: 'border-0'};
     }
+    else if(latestMessage?.tags?.includes(`aca-${acaId}`) &&!(latestMessage.kind == 'AcaDefect' || latestMessage.kind == 'AcaFuelLow' || latestMessage.kind == 'AcaHeadingToBase' )){
+      return {color: 'bg-[#19DEBB]', border: 'border-0'};
+    }
     else{
     return {color: 'bg-[#323235]', border:'border-2'}; 
     }
