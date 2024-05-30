@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import {
   updateCommunication,
   getCommunication,
+  getSortMethod,
 } from 'src/redux/slices/communicationSlice';
 import { getElementsInGaze, getGazesAndKeys } from 'src/redux/slices/gazeSlice';
 import type { Widget } from 'src/types/widget';
@@ -12,6 +13,7 @@ import {
   getConversations,
   updateNumUnreadMessages,
 } from 'src/redux/slices/conversationSlice';
+import { getSortFunc } from 'src/scripts/sort/SortScripts';
 
 type ListWidgetProps = {
   widget: Widget;
@@ -27,8 +29,13 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
   const gazesAndKeys = useAppSelector(getGazesAndKeys);
   const { activeElementId } = useAppSelector(getCommunication);
 
+  const sortType = useAppSelector(getSortMethod);
+
   const [convoElements, setConvoElements] = useState<Element[]>([]);
   const [selectedElementId, setSelectedElementId] = useState<string>('');
+
+  
+  const sortMethod = getSortFunc(sortType);
 
   // const listCapacity = Math.floor(
   //   widget.h / (LIST_ELEMENT_HEIGHT + GAP_BETWEEN_ELEMENTS) - 1,
@@ -71,9 +78,9 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
     });
 
     // Sort elements by priority
-    newConvoElements.sort((a, b) => a.priority! - b.priority!);
+    newConvoElements.sort(sortMethod);
     setConvoElements(newConvoElements);
-  }, [widget.elements, conversations]);
+  }, [widget.elements, conversations, sortMethod]);
 
   // change selected element in list of arrow up or arrow down
   useEffect(() => {

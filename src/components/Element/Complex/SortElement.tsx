@@ -1,18 +1,53 @@
-import type { SortMethod } from 'src/types/sortMethod';
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { getGazesAndKeys } from 'src/redux/slices/gazeSlice';
+import type { Element } from 'src/types/element';
+import { DEFAULT_SORT, sortFunctions } from 'src/utils/constants';
+import type { SortElement as SortElementType } from 'src/types/element';
+import SortToggle from 'src/ui/sort/SortToggle';
+import { updateSortMethod } from 'src/redux/slices/communicationSlice';
+import { findSortIndex } from 'src/scripts/sort/SortScripts';
 
 type SortElementProps = {
-  isActive: boolean;
-  name: string;
-  sortMethod: SortMethod;
+  options: Element[];
 };
 
-const SortElement = ({ isActive, name, sortMethod }: SortElementProps) => {
+const SortElement = ({ options }: SortElementProps) => {
+  const gazesAndKeys = useAppSelector(getGazesAndKeys);
+  const dispatch = useAppDispatch();
+
+  const [sortMethodIndex, setSortMethodIndex] = useState<number>(
+    findSortIndex(DEFAULT_SORT),
+  );
+
+  const updateMethodIndex = (index: number) =>
+    setSortMethodIndex(index % sortFunctions.length);
+
+  useEffect(() => {
+    dispatch(updateSortMethod(sortFunctions[sortMethodIndex].name));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortMethodIndex]);
+
+  useEffect(() => {
+    // use f key for "filter"; option goes from left to right and wraps around
+    if (gazesAndKeys.some((action) => action.keyPress === 'KeyF'))
+      updateMethodIndex(sortMethodIndex + 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gazesAndKeys]);
+
   return (
-    <div
-      className={`text-3xl rounded-lg px-4 h-full flex flex-col items-center justify-center w-full ${isActive ? 'bg-[#444449] text-white font-semibold' : 'bg-transparent text-[#bcbcbc]'}`}
-      onMouseEnter={() => console.log('setting sort method to ', sortMethod)}
-    >
-      {name.substring(0, 4).toUpperCase()}
+    <div className="text-white flex flex-row items-center justify-center h-full">
+      {options.map((element, index) => {
+        const el = element as SortElementType;
+        return (
+          <div className="h-full" id={el.id}>
+            <SortToggle
+              isActive={index === sortMethodIndex}
+              name={el.sortType}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 };

@@ -7,6 +7,7 @@ import type {
 } from 'src/types/schema-types';
 import type { Properties } from 'csstype';
 import type { Id, Range } from 'src/types/schema-types';
+import { SortTypes } from './sortMethod';
 
 export type BaseElement = {
   id: string;
@@ -120,6 +121,12 @@ export type InformationElement = BaseElement & {
   widgetId: string;
 };
 
+export type SortElement = BaseElement & {
+  type: 'sort';
+  sortType: SortTypes;
+  active: boolean;
+};
+
 // Simple elements have no nested elements and no children
 export type SimpleElement =
   | TableElement
@@ -135,6 +142,7 @@ export type ComplexElement =
   | MissileIncomingElement
   | RequestApprovalElement
   | CustomElement
+  | SortElement
   | InformationElement;
 
 export type Element = SimpleElement | ComplexElement;

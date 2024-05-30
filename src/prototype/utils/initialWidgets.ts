@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid';
 import LeftScreenMap from 'src/assets/left-bottom-map.png';
 import LeftScreenVideo from 'src/assets/left-video.png';
 import type { BasicWidget, HistoryWidget, PearceHeaderWidget, WidgetMap } from 'src/types/widget';
-import type { ButtonElement} from 'src/types/element';
+import type { ButtonElement, SortElement} from 'src/types/element';
 import { type ImageElement } from 'src/types/element';
 import {
   initialShips,
@@ -106,7 +106,35 @@ const initialLeftScreenWidgets: WidgetMap = {
     canOverlap: false,
     useElementLocation: false,
     priority: 10,
-    elements: [],
+    elements: [
+      {
+        id: uuid(),
+        type: 'sort',
+        modality: 'visual',
+        h: 50,
+        w: 80,
+        sortType: 'gaia',
+        active: false,
+      } satisfies SortElement,
+      {
+        id: uuid(),
+        type: 'sort',
+        modality: 'visual',
+        h: 50,
+        w: 80,
+        sortType: 'priority',
+        active: true,
+      } satisfies SortElement,
+      {
+        id: uuid(),
+        type: 'sort',
+        modality: 'visual',
+        h: 50,
+        w: 80,
+        sortType: 'time',
+        active: false,
+      } satisfies SortElement,
+    ],
     tags: ['pearce-header'],
     maxAmount: 1,
   } satisfies PearceHeaderWidget,
