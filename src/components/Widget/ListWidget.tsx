@@ -27,12 +27,13 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
 
   const elementsInGaze = useAppSelector(getElementsInGaze);
   const gazesAndKeys = useAppSelector(getGazesAndKeys);
-  const { activeElementId } = useAppSelector(getCommunication);
+  const { activeElementId, activeConversationId } =
+    useAppSelector(getCommunication);
 
   const sortType = useAppSelector(getSortMethod);
 
   const [convoElements, setConvoElements] = useState<Element[]>([]);
-  const [selectedElementId, setSelectedElementId] = useState<string>('');
+  const [selectedElement, setSelectedElement] = useState<Element>();
 
   
   const sortMethod = getSortFunc(sortType);
@@ -84,34 +85,73 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
 
   // change selected element in list of arrow up or arrow down
   useEffect(() => {
-    if (
-      gazesAndKeys.some((gazeAndKey) => gazeAndKey.keyPress === 'ArrowDown')
-    ) {
+    if (gazesAndKeys.some((gazeAndKey) => gazeAndKey.keyPress === 'KeyS')) {
       const currSelectedElemIndex =
         convoElements.findIndex(
-          (element) => element.id === selectedElementId,
+          (element) => element.id === selectedElement?.id,
         ) || 0;
 
       if (currSelectedElemIndex < convoElements.length - 1) {
-        setSelectedElementId(convoElements[currSelectedElemIndex + 1].id);
+        setSelectedElement(convoElements[currSelectedElemIndex + 1]);
 
         // scroll down here if needed?
+        const domElem = document.getElementById(
+          convoElements[currSelectedElemIndex - 1]?.id,
+        );
+        if (!domElem) return;
+
+        const rect = domElem?.getBoundingClientRect();
+        const { top, bottom } = rect;
+
+        if (bottom > widget.h) {
+          listRef.current?.scrollBy(0, 100);
+        }
       }
     } else if (
-      gazesAndKeys.some((gazeAndKey) => gazeAndKey.keyPress === 'ArrowUp')
+      gazesAndKeys.some((gazeAndKey) => gazeAndKey.keyPress === 'KeyW')
     ) {
       const currSelectedElemIndex =
         convoElements.findIndex(
-          (element) => element.id === selectedElementId,
+          (element) => element.id === selectedElement?.id,
         ) || 0;
 
       if (currSelectedElemIndex > 0) {
-        setSelectedElementId(convoElements[currSelectedElemIndex - 1].id);
+        setSelectedElement(convoElements[currSelectedElemIndex - 1]);
 
-        // scroll up here if needed?
+        const domElem = document.getElementById(
+          convoElements[currSelectedElemIndex - 1]?.id,
+        );
+        if (!domElem) return;
+
+        const rect = domElem?.getBoundingClientRect();
+        const { top, bottom } = rect;
+
+        if (top < widget.y) {
+          listRef.current?.scrollBy(0, -100);
+        }
       }
     }
-  }, [gazesAndKeys, convoElements]);
+  }, [gazesAndKeys, convoElements, widget.y, widget.h]);
+
+  useEffect(() => {
+    if (gazesAndKeys.some((gazeAndKey) => gazeAndKey.keyPress === 'KeyQ')) {
+      if (
+        selectedElement &&
+        // @ts-ignore
+        selectedElement.conversationId &&
+        // @ts-ignore
+        selectedElement.conversation !== activeConversationId
+      ) {
+        dispatch(
+          updateCommunication({
+            // @ts-ignore
+            activeConversationId: selectedElement.conversationId,
+            activeElementId: selectedElement.id,
+          }),
+        );
+      }
+    }
+  }, [gazesAndKeys, selectedElement, activeConversationId, dispatch]);
 
   // scrolling the list
   // useEffect(() => {
@@ -214,6 +254,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
         scrollbarWidth: 'thin',
         scrollbarColor: '#97979D #e0e0e0',
         scrollbarGutter: 'stable',
+        overflow: 'hidden',
       }}
     >
       {convoElements.map((element, index) => {
@@ -228,8 +269,8 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
 
         // style for active element (element due to which the history widget is open)
         const activeElementStyle =
-          element.id === selectedElementId
-            ? 'bg-[#444449] text-[28px] font-medium border-4 border-white'
+          element.id === selectedElement?.id
+            ? 'bg-[#444449] text-[28px] font-medium border-4 border-white p-0'
             : '';
 
         const numUnreadMessages =
@@ -239,12 +280,12 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
           <div
             id={element.id}
             key={element.id}
-            style={{ height: LIST_ELEMENT_HEIGHT }}
-            className={`w-full text-white flex items-center justify-center rounded-xl p-3 ${hoverStyle} ${activeElementStyle}`}
+            style={{ height: LIST_ELEMENT_HEIGHT, width: 340 }}
+            className={`text-white flex items-center justify-center p-3 rounded-xl ${hoverStyle} ${activeElementStyle}`}
           >
             <ListElement
               element={element}
-              outerDivStyleClass="w-full h-full"
+              outerDivStyleClass="w-full h-full px-4 rounded-full "
               unreadCount={numUnreadMessages}
             >
               {/* Nested children here if wanted.. */}
