@@ -46,6 +46,8 @@ const initialLeftScreenWidgets: WidgetMap = {
         modality: 'visual',
         w: 472,
         h: 112,
+        showMoreInfoButton: true,
+        showUpButton: true,
       },
     ],
     maxAmount: 1,

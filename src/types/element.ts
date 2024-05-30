@@ -122,6 +122,8 @@ export type InformationElement = BaseElement & {
 
 export type ApproveDenyButtonElement = BaseElement & {
   type: 'approve-deny-button';
+  showMoreInfoButton: boolean;
+  showUpButton: boolean;
 };
 
 // Simple elements have no nested elements and no children
