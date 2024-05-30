@@ -37,18 +37,18 @@ const getAcaMessageText = (kind: Message['kind']) => {
 const AcaHeaderWidget = ({ widget }: AcaHeaderWidgetProps) => {
   const { x, y, h, w, elements } = widget;
 
+  // 4 first and 4 last elements
   var firstElements = structuredClone(elements);
   const lastElements = firstElements.splice(NUM_ACAS / 2);
-  const notifElements = lastElements.splice(NUM_ACAS / 2);
 
-  console.log(firstElements, lastElements, notifElements);
+  // rest are notification elements
+  const notifElements = lastElements.splice(NUM_ACAS / 2);
 
   const messages = useAppSelector(getMessages);
 
   const dispatch = useAppDispatch();
 
   const getNotch = () => {
-    const latestMessage = messages[messages.length - 1];
     let action = '';
 
     for (let message of messages) {

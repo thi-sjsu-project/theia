@@ -38,12 +38,6 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
 
   const sortMethod = getSortFunc(sortType);
 
-  // const listCapacity = Math.floor(
-  //   widget.h / (LIST_ELEMENT_HEIGHT + GAP_BETWEEN_ELEMENTS) - 1,
-  // );
-  // TODO: use this to control the UI to show if the list is overflowed or not
-  // const [listOverflowed, setListOverflowed] = useState<boolean>(false);
-
   const dispatch = useAppDispatch();
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -154,91 +148,6 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
     }
   }, [gazesAndKeys, selectedElement, activeConversationId, dispatch]);
 
-  // scrolling the list
-  // useEffect(() => {
-  //   // don't scroll if the list is not in gaze
-  //   if (!listInGaze) return;
-
-  //   // check if any key is 'S' or 'ArrowDown' and scroll down
-  //   if (
-  //     gazesAndKeys.some(
-  //       (gazeAndKey) =>
-  //         gazeAndKey.keyPress === 'KeyS' || gazeAndKey.keyPress === 'ArrowDown',
-  //     )
-  //   ) {
-  //     listRef.current?.scrollBy(0, 100);
-  //   }
-  //   // check if any key is 'W' or 'ArrowUp' and scroll up
-  //   else if (
-  //     gazesAndKeys.some(
-  //       (gazeAndKey) =>
-  //         gazeAndKey.keyPress === 'KeyW' || gazeAndKey.keyPress === 'ArrowUp',
-  //     )
-  //   ) {
-  //     listRef.current?.scrollBy(0, -100);
-  //   }
-  // }, [listInGaze, gazesAndKeys]);
-
-  // update the active conversation and element in the list-history channel on mouse left-click
-  // useEffect(() => {
-  //   const mouseLeftClick = gazesAndKeys.find(
-  //     (gazeAndKey) => gazeAndKey.keyPress === '0',
-  //   );
-
-  //   if (!mouseLeftClick || !mouseLeftClick.elemsInGaze.length) return;
-
-  //   widget.elements.forEach((element) => {
-  //     // just pick the first element in the gaze for now
-  //     if (element.id === mouseLeftClick.elemsInGaze[0].id) {
-  //       // @ts-ignore
-  //       if (!element.messageId || !element.conversationId) {
-  //         // FIX: all elements should have a message (at least the ones in the list)
-  //         // at the minimu, they should have a conversationId attached to them?
-  //         console.warn('Element does not have a message', element);
-  //         return;
-  //       }
-
-  //       dispatch(
-  //         updateCommunication({
-  //           // @ts-ignore
-  //           activeConversationId: element.conversationId,
-  //           activeElementId: element.id,
-  //         }),
-  //       );
-
-  //       // when we open a conversation, set number of unread messages to 0
-  //       // @ts-ignore
-  //       dispatch(updateNumUnreadMessages(element.conversationId, 0));
-  //     }
-  //   });
-  // }, [gazesAndKeys, dispatch, elementInGazeId, widget.elements]);
-
-  // check if the list is overflowed
-  // useEffect(() => {
-  //   if (widget.elements.length > listCapacity && !listOverflowed) {
-  //     setListOverflowed(true);
-  //   } else if (widget.elements.length <= listCapacity && listOverflowed) {
-  //     setListOverflowed(false);
-  //   }
-  // }, [listOverflowed, listCapacity, widget.elements.length]);
-
-  // check if the list is overflowed (alternative to the above method)
-  //  useEffect(() => {
-  //   if (listRef.current) {
-  //     if (
-  //       listRef.current.offsetHeight < listRef.current.scrollHeight &&
-  //       !listOverflowed
-  //     ) {
-  //       setListOverflowed(true);
-  //     } else if (
-  //       listRef.current.offsetHeight >= listRef.current.scrollHeight &&
-  //       listOverflowed
-  //     ) {
-  //       setListOverflowed(false);
-  //     }
-  //   }
-  // }, [listOverflowed]);
-
   const className = `absolute p-2 flex flex-col gap-6 items-center overflow-x-hidden overflow-y-auto`;
 
   return (
@@ -286,7 +195,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
           >
             <ListElement
               element={element}
-              outerDivStyleClass="w-full h-full px-4 rounded-full "
+              outerDivStyleClass="w-full h-full px-4 rounded-full"
               unreadCount={numUnreadMessages}
             >
               {/* Nested children here if wanted.. */}

@@ -1,4 +1,4 @@
-import type { AcaMessageElement as AcaMessageElementType } from './../../../types/element';
+import type { AcaMessageElement as AcaMessageElementType } from 'src/types/element';
 
 type AcaMessageElementProps = {
   element: AcaMessageElementType;

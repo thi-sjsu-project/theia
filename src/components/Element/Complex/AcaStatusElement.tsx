@@ -7,7 +7,6 @@ import WEAPON_ICON_2 from 'src/assets/icons/weapon2.svg';
 import AcaMessageElement from './AcaMessageElement';
 import { useAppSelector } from 'src/redux/hooks';
 import { getMessages } from 'src/redux/slices/conversationSlice';
-import { useEffect } from 'react';
 
 type PropsType = {
   element: AcaStatusElementType;
@@ -15,26 +14,11 @@ type PropsType = {
 };
 
 const AcaStatusElement = ({ element, notification }: PropsType) => {
-  const {
-    id,
-    acaId,
-    fuelLevel,
-    h,
-    w,
-    weaponLoad1,
-    weaponLoad2,
-    isDead,
-    messages,
-  } = element;
-
-  // let border = false;
-
-  const messages = useAppSelector(getMessages);
-  // console.log(messages);
+  const { id, acaId, fuelLevel, h, w, weaponLoad1, weaponLoad2, isDead } =
+    element;
 
   const getAcaDotStatus = () => {
     const latestMessage = messages[messages.length - 1];
-    // && (latestMessage.kind == 'AcaDefect' || latestMessage.kind == 'AcaFuelLow')
 
     if (isDead) {
       return { color: 'bg-[#000000]', border: 'border-0' };
@@ -43,17 +27,17 @@ const AcaStatusElement = ({ element, notification }: PropsType) => {
     /*@ts-ignore*/
     if (
       latestMessage?.tags?.includes(`aca-${acaId}`) &&
-      (latestMessage.kind == 'AcaDefect' ||
-        latestMessage.kind == 'AcaFuelLow' ||
-        latestMessage.kind == 'AcaHeadingToBase')
+      (latestMessage.kind === 'AcaDefect' ||
+        latestMessage.kind === 'AcaFuelLow' ||
+        latestMessage.kind === 'AcaHeadingToBase')
     ) {
       return { color: 'bg-[#FCA700]', border: 'border-0' };
     } else if (
       latestMessage?.tags?.includes(`aca-${acaId}`) &&
       !(
-        latestMessage.kind == 'AcaDefect' ||
-        latestMessage.kind == 'AcaFuelLow' ||
-        latestMessage.kind == 'AcaHeadingToBase'
+        latestMessage.kind === 'AcaDefect' ||
+        latestMessage.kind === 'AcaFuelLow' ||
+        latestMessage.kind === 'AcaHeadingToBase'
       )
     ) {
       return { color: 'bg-[#19DEBB]', border: 'border-0' };
@@ -61,47 +45,10 @@ const AcaStatusElement = ({ element, notification }: PropsType) => {
       return { color: 'bg-[#323235]', border: 'border-2' };
     }
   };
-
-  const { color, border } = getAcaDotStatus();
-  console.log(`Applied classes: color=${color}, border=${border}`);
-
-  // let border = false;
 
   const messages = useAppSelector(getMessages);
-  // console.log(messages);
-
-  const getAcaDotStatus = () => {
-    const latestMessage = messages[messages.length - 1];
-    // && (latestMessage.kind == 'AcaDefect' || latestMessage.kind == 'AcaFuelLow')
-
-    if (isDead) {
-      return { color: 'bg-[#000000]', border: 'border-0' };
-    }
-
-    /*@ts-ignore*/
-    if (
-      latestMessage?.tags?.includes(`aca-${acaId}`) &&
-      (latestMessage.kind == 'AcaDefect' ||
-        latestMessage.kind == 'AcaFuelLow' ||
-        latestMessage.kind == 'AcaHeadingToBase')
-    ) {
-      return { color: 'bg-[#FCA700]', border: 'border-0' };
-    } else if (
-      latestMessage?.tags?.includes(`aca-${acaId}`) &&
-      !(
-        latestMessage.kind == 'AcaDefect' ||
-        latestMessage.kind == 'AcaFuelLow' ||
-        latestMessage.kind == 'AcaHeadingToBase'
-      )
-    ) {
-      return { color: 'bg-[#19DEBB]', border: 'border-0' };
-    } else {
-      return { color: 'bg-[#323235]', border: 'border-2' };
-    }
-  };
 
   const { color, border } = getAcaDotStatus();
-  console.log(`Applied classes: color=${color}, border=${border}`);
 
   return (
     <div style={{ width: w }}>
@@ -149,9 +96,6 @@ const AcaStatusElement = ({ element, notification }: PropsType) => {
         </div>
       </div>
 
-      {/* {messages.map((message) => (
-        <AcaMessageElement element={message} />
-      ))} */}
       {notification ? <AcaMessageElement element={notification} /> : null}
     </div>
   );
