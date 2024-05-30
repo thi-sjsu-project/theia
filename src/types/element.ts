@@ -111,6 +111,14 @@ export type AcaStatusElement = BaseElement & {
   weaponLoad2: Range<0, 1>;
   widgetId: string;
   isDead: boolean;
+  messages: Array<AcaMessageElement>;
+};
+
+export type AcaMessageElement = BaseElement & {
+  type: 'aca-message';
+  statusElementId: string;
+  text: string;
+  show?: boolean;
 };
 
 export type InformationElement = BaseElement & {
@@ -134,8 +142,7 @@ export type SimpleElement =
   | TextElement
   | ImageElement
   | AudioElement
-  | IconElement
-  | AcaStatusElement;
+  | IconElement;
 
 // Complex elements may have nested elements and children
 export type ComplexElement =
@@ -143,7 +150,9 @@ export type ComplexElement =
   | RequestApprovalElement
   | CustomElement
   | SortElement
-  | InformationElement;
+  | InformationElement
+  | AcaStatusElement
+  | AcaMessageElement;
 
 export type Element = SimpleElement | ComplexElement;
 
