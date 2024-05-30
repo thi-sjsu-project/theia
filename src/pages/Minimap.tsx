@@ -5,7 +5,7 @@ import useMoveShips from 'src/hooks/useMoveShips';
 import useGaze from 'src/hooks/useGaze';
 import { getElementsInGaze } from 'src/redux/slices/gazeSlice';
 import { useEffect } from 'react';
-import background from 'src/assets/minimap-bg.jpg';
+import background from 'src/assets/minimap-bg-upscaled.png';
 import StressLevelIndicator from 'src/components/StressLevelIndicator';
 
 const Minimap = () => {
@@ -26,7 +26,7 @@ const Minimap = () => {
   return (
     <>
       <div
-        className="bg-stone-200 w-[1920px] h-[1080px]"
+        className="bg-stone-200 w-[1920px] h-[1080px] bg-cover"
         style={{ backgroundImage: `url(${background})` }}
       >
         {Object.keys(widgets).map((widgetId) => (
