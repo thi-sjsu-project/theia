@@ -5,7 +5,10 @@ import {
   getConversation,
   updateNumUnreadMessages,
 } from 'src/redux/slices/conversationSlice';
-import { getCommunication } from 'src/redux/slices/communicationSlice';
+import {
+  getActiveConversationId,
+  getCommunication,
+} from 'src/redux/slices/communicationSlice';
 import MessageNumber from 'src/ui/history/MessageNumber';
 import { useEffect } from 'react';
 
@@ -15,7 +18,7 @@ type HistoryWidgetProps = {
 
 const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
   const { id, x, y, w, h, elements } = widget;
-  const { activeConversationId } = useAppSelector(getCommunication);
+  const activeConversationId = useAppSelector(getActiveConversationId);
 
   const dispatch = useAppDispatch();
   const conversation = useAppSelector((state) =>
@@ -23,6 +26,11 @@ const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
   );
   const messages = conversation?.messages ? [...conversation.messages] : [];
   const numMessages = messages.length || 0;
+
+  // useEffect(() => {
+  //   console.log(activeConversationId);
+  //   console.log(conversation);
+  // }, [activeConversationId, conversation]);
 
   // const activeElementID = useAppSelector(getSelectedElementID);
   // const highlightIndex = convoMessages.findIndex(
