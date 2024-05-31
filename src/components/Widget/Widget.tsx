@@ -4,6 +4,7 @@ import VehicleWidget from 'src/components/Widget/VehicleWidget';
 import MapWarningWidget from 'src/components/Widget/MapWarningWidget';
 import HistoryWidget from 'src/components/Widget/HistoryWidget';
 import AcaHeaderWidget from 'src/components/Widget/AcaHeaderWidget';
+import VideoWidget from 'src/components/Widget/VideoWidget';
 import BasicWidget from './BasicWidget';
 
 type WidgetProps = {
@@ -25,6 +26,8 @@ const Widget = ({ widget }: WidgetProps) => {
         return <HistoryWidget widget={widget} />;
       case 'aca-header':
         return <AcaHeaderWidget widget={widget} />;
+      case 'video-footage':
+        return <VideoWidget widget={widget} />
       default:
         return <div>Unknown Widget</div>;
     }

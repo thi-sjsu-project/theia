@@ -68,6 +68,10 @@ export type CustomWidget = BaseWidget & {
   // additonal properties...
 };
 
+export type VideoWidget = BaseWidget & {
+  type: 'video-footage'
+}
+
 export type Widget =
   | CustomWidget
   | VehicleWidget
@@ -76,7 +80,8 @@ export type Widget =
   | GridWidget
   | HistoryWidget
   | AcaHeaderWidget
-  | MapWarningWidget;
+  | MapWarningWidget
+  | VideoWidget;
 
 export type WidgetMap = { [key: string]: Widget };
 
