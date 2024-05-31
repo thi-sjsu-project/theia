@@ -9,6 +9,7 @@ import type {
   Element,
   IconElement,
   InformationElement,
+  ApproveDenyButtonElement,
 } from 'src/types/element';
 import DANGER_ICON from 'src/assets/icons/threats/missile-sm-emph.svg';
 import type { MapWarningWidget, Widget } from 'src/types/widget';
@@ -55,7 +56,7 @@ const requestApprovalToAttackMessageLow = (
       w: 80,
       widgetId: minimapWidgetId1,
       src: mapTargetTypeToWarningIcon(message.data.target.type),
-      expirationIntervalMs: 3000,
+      expirationIntervalMs: 10000000,
       onExpiration: 'escalate',
     } satisfies IconElement,
     {
@@ -67,12 +68,18 @@ const requestApprovalToAttackMessageLow = (
       message,
       size: 'L', // size L when stress is low
       collapsed: true, // initially, the information elemnt is not displayed
-      expirationIntervalMs: 3000,
+      expirationIntervalMs: 100000000,
       onExpiration: 'deescalate',
       widgetId: minimapWidgetId1,
     } satisfies InformationElement,
     lpdHelper.generateRequestApprovalElement(
-      lpdHelper.generateBaseElement(uuid(), 'visual', 700, 500, message.priority),
+      lpdHelper.generateBaseElement(
+        uuid(),
+        'visual',
+        700,
+        500,
+        message.priority,
+      ),
       message.id,
       message.conversationId,
       minimapWidgetId1,
@@ -89,6 +96,16 @@ const requestApprovalToAttackMessageLow = (
         'Approve',
       ),
     ),
+    {
+      id: uuid(),
+      h: 156,
+      w: 476,
+      modality: 'visual',
+      type: 'approve-deny-button',
+      title: '',
+      showMoreInfoButton: true,
+      showUpButton: true,
+    } satisfies ApproveDenyButtonElement,
   ];
 
   const minimapWidgets: Widget[] = [

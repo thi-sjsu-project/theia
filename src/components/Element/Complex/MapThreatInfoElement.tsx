@@ -5,6 +5,7 @@ import type {
   Element,
   InformationElement,
   RequestApprovalElement as RequestApprovalElementType,
+  ApproveDenyButtonElement as ApproveDenyButtonElementType,
 } from 'src/types/element';
 import { capitalizeFirstLetter as cfl } from 'src/utils/helpers';
 import RequestApprovalElement from './RequestApprovalElement';
@@ -21,7 +22,7 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
   const dispatch = useAppDispatch();
   // could also fetch messages from redux
   // provided there is a conversation number
-  const [informationElement, requestApprovalElement] = elements;
+  const [informationElement, requestApprovalElement, approveDenyButtonElement] = elements;
   const { title, message, collapsed, h, w, size, escalate, deescalate } =
     informationElement as InformationElement;
   let target;
@@ -92,6 +93,7 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
             <RequestApprovalElement
               element={requestApprovalElement as RequestApprovalElementType}
               inGaze={inGaze}
+              approveDenyButton={approveDenyButtonElement as ApproveDenyButtonElementType}
             />
           );
         } else {
