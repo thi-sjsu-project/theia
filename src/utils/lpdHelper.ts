@@ -210,20 +210,23 @@ const generateAudioElement = (
 // Generate complex elements
 const generateMissileIncomingElement = (
   baseElement: Element.BaseElement,
-  message: MissileToOwnshipDetected,
+  messageId: string,
+  conversationId: string,
   widgetId: string,
   icon: Element.IconElement,
 ): Element.MissileIncomingElement => ({
   ...baseElement,
   type: 'missile-incoming',
-  message,
+  messageId,
+  conversationId,
   widgetId,
   icon,
 });
 
 const generateRequestApprovalElement = (
   baseElement: Element.BaseElement,
-  message: RequestApprovalToAttack,
+  messageId: string,
+  conversationId: string,
   widgetId: string,
   icon: Element.IconElement,
   leftButton: Element.ButtonElement,
@@ -231,7 +234,8 @@ const generateRequestApprovalElement = (
 ): Element.RequestApprovalElement => ({
   ...baseElement,
   type: 'request-approval',
-  message,
+  messageId,
+  conversationId,
   widgetId,
   icon,
   leftButton,

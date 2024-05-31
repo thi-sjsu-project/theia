@@ -1,32 +1,37 @@
-import type { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { type RequestApprovalElement as RequestApprovalElementType } from 'src/types/element';
 import IconElement from '../Simple/IconElement';
 import TableElement from '../Simple/TableElement';
 import {
-  getConversationMessages,
   getWidgetById,
 } from 'src/redux/slices/minimapSlice';
 import { useAppSelector } from 'src/redux/hooks';
 import { capitalizeFirstLetter as cfl } from 'src/utils/helpers';
+import { getMessage, getConversationOfMessage } from 'src/redux/slices/conversationSlice';
 
 type RequestApprovalProps = {
   element: RequestApprovalElementType;
   inGaze?: boolean;
   children?: ReactNode;
+  unreadCount?: number;
 };
 
 const RequestApprovalElement = ({
   element,
   inGaze,
   children,
+  unreadCount,
 }: RequestApprovalProps) => {
+  const { id, icon, messageId } = element;
+  const message = useAppSelector((state) => getMessage(state, messageId));
+
   // Getting widget to know the screen that the element is on
   const widget = useAppSelector((state) =>
     getWidgetById(state, element.widgetId!),
   );
 
   const requests: any = useAppSelector((state) =>
-    getConversationMessages(state, widget!.conversationId!),
+    getConversationOfMessage(state, messageId),
   );
   console.log(requests);
 
@@ -141,10 +146,38 @@ const RequestApprovalElement = ({
   };
 
   if (widget!.screen === '/pearce-screen') {
+    // return (
+    //   <div id={element.id} className="flex text-white items-center gap-4">
+    //     <IconElement element={element.icon} />
+    //     <span>{element.type}</span>
+    //   </div>
+    // );
+
+    const renderUnreadCount = () => {
+      if (unreadCount && unreadCount > 0) {
+        return (
+          <div
+            className="rounded-full bg-white w-[35px] h-[35px] text-[#252526] flex 
+    items-center justify-center text-lg"
+          >
+            {unreadCount}
+          </div>
+        );
+      }
+    };
+
     return (
-      <div id={element.id} className="flex text-white items-center gap-4">
-        <IconElement element={element.icon} />
-        <span>{element.type}</span>
+      <div
+        id={id}
+        className="flex text-white justify-between items-center gap-4 pr-4"
+      >
+        <div className="flex space-between items-center justify-center gap-4">
+          <IconElement element={icon} />
+          {/* @ts-ignore */}
+          <span>{message?.data?.target?.type}</span>
+        </div>
+
+        {renderUnreadCount()}
       </div>
     );
   } else if (widget!.screen === '/minimap') {

@@ -85,7 +85,8 @@ export type CustomElement = BaseElement & {
 
 export type RequestApprovalElement = BaseElement & {
   type: 'request-approval';
-  message: RequestApprovalToAttack;
+  messageId: string;
+  conversationId: string;
   icon: IconElement;
   leftButton: ButtonElement;
   rightButton: ButtonElement;
@@ -95,7 +96,8 @@ export type RequestApprovalElement = BaseElement & {
 
 export type MissileIncomingElement = BaseElement & {
   type: 'missile-incoming';
-  message: MissileToOwnshipDetected;
+  messageId: string;
+  conversationId: string;
   icon: IconElement;
   widgetId: string;
 };
@@ -118,6 +120,17 @@ export type InformationElement = BaseElement & {
   widgetId: string;
 };
 
+export type ApproveDenyButtonElement = BaseElement & {
+  type: 'approve-deny-button';
+  title?: string,
+  showMoreInfoButton: boolean;
+  showUpButton: boolean;
+};
+
+export type EscalationModeElement = BaseElement & {
+  type: 'escalation';
+}
+
 // Simple elements have no nested elements and no children
 export type SimpleElement =
   | TableElement
@@ -133,7 +146,9 @@ export type ComplexElement =
   | MissileIncomingElement
   | RequestApprovalElement
   | CustomElement
-  | InformationElement;
+  | InformationElement
+  | ApproveDenyButtonElement
+  | EscalationModeElement;
 
 export type Element = SimpleElement | ComplexElement;
 

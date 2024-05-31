@@ -8,6 +8,7 @@ import lpdHelper from 'src/utils/lpdHelper';
 import DANGER_ICON from 'src/assets/icons/threats/missile-sm-emph.svg';
 import type {
   Element,
+  EscalationModeElement,
   IconElement,
   InformationElement,
 } from 'src/types/element';
@@ -34,7 +35,8 @@ const requestApprovalToAttackMessageHigh = (
         message.priority,
         'list',
       ),
-      message,
+      message.id,
+      message.conversationId,
       listWidgetId,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
@@ -181,7 +183,8 @@ const missileToOwnshipDetectedMessageHigh = (
         message.priority,
         'list',
       ),
-      message,
+      message.id,
+      message.conversationId,
       listWidgetId,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
@@ -206,16 +209,14 @@ const missileToOwnshipDetectedMessageHigh = (
     {
       id: uuid(),
       modality: 'visual',
-      type: 'information',
-      h: 70,
-      w: 150,
-      message,
-      size: 'M', // size L when stress is low
-      collapsed: true, // initially, the information elemnt is not displayed
-      expirationIntervalMs: 3000,
-      onExpiration: 'deescalate',
+      type: 'escalation',
+      h: 1080,
+      w: 1360,
+      collapsed: undefined,
+      expirationIntervalMs: undefined,
+      onExpiration: undefined,
       widgetId: minimapWidgetId1,
-    } satisfies InformationElement,
+    } satisfies EscalationModeElement,
   ];
 
   const minimapWidgets: Widget[] = [

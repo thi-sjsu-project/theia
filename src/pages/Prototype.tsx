@@ -5,10 +5,10 @@ import {
   type InitialMinimapState,
   getWidgets,
   initializeState,
-  addMessage,
   getStressLevel,
   setStressLevel,
 } from 'src/redux/slices/minimapSlice';
+import { addMessage } from 'src/redux/slices/conversationSlice';
 // ~~~~~~~ Cusdom Hooks ~~~~~~~
 import useWorldSim from 'src/hooks/useWorldSim';
 // ~~~~~~~ Prototype ~~~~~~~

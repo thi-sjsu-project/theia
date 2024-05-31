@@ -27,7 +27,8 @@ const requestApprovalToAttackMessageLow = (
   const pearceScreenElements = [
     lpdHelper.generateRequestApprovalElement(
       lpdHelper.generateBaseElement(uuid(), 'visual', 30, 30, message.priority),
-      message,
+      message.id,
+      message.conversationId,
       listWidgetId,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
@@ -72,7 +73,8 @@ const requestApprovalToAttackMessageLow = (
     } satisfies InformationElement,
     lpdHelper.generateRequestApprovalElement(
       lpdHelper.generateBaseElement(uuid(), 'visual', 700, 500, message.priority),
-      message,
+      message.id,
+      message.conversationId,
       minimapWidgetId1,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
@@ -102,8 +104,6 @@ const requestApprovalToAttackMessageLow = (
       canOverlap: true,
       useElementLocation: false,
       maxAmount: 10,
-
-      conversationId: message.conversationId,
 
       tags: ['specify', 'map-warning'],
 
@@ -242,7 +242,8 @@ const missileToOwnshipDetectedMessageLow = (
         200,
         message.priority,
       ),
-      message,
+      message.id,
+      message.conversationId,
       listWidgetId,
       lpdHelper.generateIconElement(
         lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),

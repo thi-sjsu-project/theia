@@ -5,8 +5,18 @@ import LeftScreen from 'src/pages/LeftScreen';
 import RightScreen from 'src/pages/RightScreen';
 import Layout from 'src/pages/Layout';
 import Prototype from 'src/pages/Prototype';
+import { useEffect } from 'react';
 
 const App = () => {
+  useEffect(() => {
+    document.addEventListener('contextmenu', (event) => event.preventDefault());
+
+    return () =>
+      document.removeEventListener('contentmenu', (event) =>
+        event.preventDefault(),
+      );
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>

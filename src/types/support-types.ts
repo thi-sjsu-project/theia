@@ -1,4 +1,5 @@
 import { type Widget } from 'src/types/widget';
+import { type Message } from 'src/types/schema-types';
 
 export type Cell = {
   widgetIDs: string[];
@@ -44,4 +45,8 @@ export type WidgetCluster = {
   widgets: Widget[];
   sectionIds?: LinkedSectionWidget[];
   actions?: string[];
+};
+
+export type MessageMap = {
+  [key: string]: Message;
 };

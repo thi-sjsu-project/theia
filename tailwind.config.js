@@ -8,6 +8,31 @@ const config = {
       //   default: 'url(https://i.stack.imgur.com/UOvLJ.png), default',
       //   pointer: 'url(https://i.stack.imgur.com/UOvLJ.png), pointer',
       // },
+      animation: {
+        "slide-in-left": 'slide-in-left 10s ease-out'
+      },
+      keyframes: {
+        "slide-in-left": {
+          '0%': {
+            transform: 'translateX(100%)'
+          },
+          '25%': {
+            transform: 'translateX(0)'
+          },
+          '50%': {
+            opacity: 0.75
+          },
+          '75%': {
+            opacity: 0.50
+          },
+          '87%': {
+            opacity: 0.25
+          },
+          '100%': {
+            opacity: 0
+          }
+        }
+      }
     },
     fontFamily: {
       sans: ['Roboto Condensed', 'system-ui', 'sans-serif'],
