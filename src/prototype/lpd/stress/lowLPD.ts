@@ -56,7 +56,7 @@ const requestApprovalToAttackMessageLow = (
       w: 80,
       widgetId: minimapWidgetId1,
       src: mapTargetTypeToWarningIcon(message.data.target.type),
-      expirationIntervalMs: 10000000,
+      expirationIntervalMs: 3000,
       onExpiration: 'escalate',
     } satisfies IconElement,
     {
@@ -68,7 +68,7 @@ const requestApprovalToAttackMessageLow = (
       message,
       size: 'L', // size L when stress is low
       collapsed: true, // initially, the information elemnt is not displayed
-      expirationIntervalMs: 100000000,
+      expirationIntervalMs: 3000,
       onExpiration: 'deescalate',
       widgetId: minimapWidgetId1,
     } satisfies InformationElement,
