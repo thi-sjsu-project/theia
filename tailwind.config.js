@@ -4,7 +4,7 @@ const config = {
     extend: {
       animation: {
         "slide-in-right": 'slide-in-right 2s ease-out forwards',
-        "blur-away": 'blur-away 7s ease-out forwards',
+        "blur-away": 'blur-away 9s ease-out forwards',
       },
       keyframes: {
         "slide-in-right": {
@@ -13,7 +13,7 @@ const config = {
             opacity: 0,
           },
           '100%': {
-            transform: 'translateX(560px)',
+            transform: 'translateX(0%)',
             opacity: 1,
           },
         },
@@ -21,11 +21,11 @@ const config = {
           '0%': {
             opacity: 1,
           },
-          '20%': {
+          '80%': {
             opacity: 1,
           },
           '100%': {
-            opacity: 1,
+            opacity: 0,
           },
         },
       },

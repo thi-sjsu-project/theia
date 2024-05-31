@@ -222,10 +222,10 @@ const missileToOwnshipDetectedMessageHigh = (
       id: minimapWidgetId1, // this should be something static?
       sectionType: 'minimap',
       type: 'escalation',
-      x: 560,
+      x: 0,
       y: 85,
       h: 979,
-      w: 1360,
+      w: 1919,
       screen: '/minimap',
       canOverlap: false,
       useElementLocation: false,
