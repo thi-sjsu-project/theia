@@ -1,8 +1,8 @@
 import { v4 as uuid } from 'uuid';
 import LeftScreenMap from 'src/assets/left-bottom-map.png';
 import LeftScreenVideo from 'src/assets/left-video.png';
-import type { BasicWidget, EscalationModeWidget, HistoryWidget, WidgetMap } from 'src/types/widget';
-import type { ImageElement, EscalationModeElement } from 'src/types/element';
+import type { BasicWidget, HistoryWidget, WidgetMap } from 'src/types/widget';
+import type { ImageElement} from 'src/types/element';
 import {
   initialShips,
   drones,
@@ -15,7 +15,6 @@ import SCALE_ORIENTATION_SVG from 'src/assets/scale-and-orientation.svg';
 const videoBoxUuid = uuid();
 const mapBoxUuid = uuid();
 const historyBoxUuid = uuid();
-const EscalationModeUuid = uuid();
 
 const initialLeftScreenWidgets: WidgetMap = {
   // left video box widget
@@ -133,32 +132,6 @@ const scaleOrientationWidget: BasicWidget = {
 };
 
 const initialMinimapWidgets: WidgetMap = {
-  [EscalationModeUuid]: {
-    id: EscalationModeUuid,
-    type: 'escalation',
-    screen: '/minimap',
-    sectionType: 'minimap',
-    x: 560,
-    y: 85,
-    w: 1360,
-    h: 995,
-    canOverlap: false,
-    useElementLocation: false,
-    priority: 10,
-    elements: [
-      {
-        id: uuid(),
-        modality: 'visual',
-        widgetId: EscalationModeUuid,
-        h: 1080,
-        w: 1360,
-        canOverlap: false,
-        type: 'escalation'
-      } satisfies EscalationModeElement,
-    ],
-    maxAmount: 1,
-    tags: ['video'],
-  } satisfies EscalationModeWidget,
   [initialAcaHeaderWidget.id]: initialAcaHeaderWidget,
   [scaleOrientationWidget.id]: scaleOrientationWidget,
   ...initialShips,
