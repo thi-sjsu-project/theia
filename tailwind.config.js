@@ -1,34 +1,34 @@
-/** @type {import('tailwindcss').Config} */
-
 const config = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       animation: {
-        "slide-in-left": 'slide-in-left 10s ease-out forwards'
+        "slide-in-right": 'slide-in-right 2s ease-out forwards',
+        "blur-away": 'blur-away 7s ease-out forwards',
       },
       keyframes: {
-        "slide-in-left": {
+        "slide-in-right": {
           '0%': {
             transform: 'translateX(100%)',
-            opacity: 1,
-          },
-          '50%': {
-            transform: 'translateX(50%)',
-            opacity: 0.75,
-          },
-          '75%': {
-            opacity: 0.50,
-          },
-          '87%': {
-            opacity: 0.25,
+            opacity: 0,
           },
           '100%': {
             transform: 'translateX(560px)',
-            opacity: 0,
+            opacity: 1,
           },
-        }
-      }
+        },
+        "blur-away": {
+          '0%': {
+            opacity: 1,
+          },
+          '20%': {
+            opacity: 1,
+          },
+          '100%': {
+            opacity: 1,
+          },
+        },
+      },
     },
     fontFamily: {
       sans: ['Roboto Condensed', 'system-ui', 'sans-serif'],

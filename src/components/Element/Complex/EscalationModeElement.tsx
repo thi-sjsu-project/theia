@@ -1,4 +1,4 @@
-import { Key, useEffect, useState, useRef } from 'react';
+import { Key, useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { useAppSelector } from 'src/redux/hooks';
 import { getGazesAndKeys } from 'src/redux/slices/gazeSlice';
@@ -8,6 +8,7 @@ import MissileIcon from 'src/assets/icons/threats/missile-lg-emph.svg';
 
 type EscalationModeElementProps = {
   element: EscalationModeElementType;
+  onAction?: (action: 'approve' | 'deny') => void;
 };
 
 
@@ -15,6 +16,8 @@ const EscalationModeElement = ({
     element, 
 }: EscalationModeElementProps) => {
 
+  const [animation, setAnimation] = useState<'approve' | 'deny' | 'moreInfo' | 'up' | undefined>(undefined,);
+  const [animationClass, setAnimationClass] = useState('animate-slide-in-right');
 
   const gazesAndKeys = useAppSelector(getGazesAndKeys);
   const approveDenyButtonElement = {
@@ -45,11 +48,31 @@ const EscalationModeElement = ({
   }
 
   useEffect(() => {
-}, [gazesAndKeys]);
+    if (animation === 'approve' || animation === 'deny') {
+      setAnimationClass('animate-blur-away');
+    }
+
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (animation !== 'deny' && e.key === 'h') { // left mouse button
+        setAnimation('deny');
+        onAction?.('deny');
+      } else if (animation !== 'approve' && e.key === 'l') { // right mouse button
+        setAnimation('approve');
+        onAction?.('approve');
+      }
+    };
+
+    window.addEventListener('keypress', handleKeyPress);
+
+    return () => {
+      window.removeEventListener('keypress', handleKeyPress);
+    };
+  }, [animation, onAction]);
+
 
 
   return (
-    <><div className="alert-element bg-#1E1E1E text-white shadow-lg p-7" style={{ width: '800px', height: '985px', boxShadow: '8px 0px 60px 0px #000000', zIndex: 1000}}>
+    <><div className={`alert-element bg-#1E1E1E text-white shadow-lg p-7 ${animationClass}`}  style={{ width: '800px', height: '985px', boxShadow: '8px 0px 60px 0px #000000', zIndex: 1000}}>
           <div className="w-1/2 pr-4">
               <div className="mb-4" style={{ width: '488px', height: '128px' }}>
                   <div className="flex items-center mb-4" style={{ width: '800px' }}>
@@ -75,7 +98,7 @@ const EscalationModeElement = ({
               </div>
           </div>
       </div>
-      <div className="alert-element bg-#252526 text-white shadow-lg p-4" style={{ width: '560px', height: '985px' }}>
+      <div className={`alert-element bg-#1E1E1E text-white shadow-lg p-7 ${animationClass}`}  style={{ width: '560px', height: '985px' }}>
               <div className="w-1/2 pl-4">
                   <h4 style={{ fontSize: '38px', height: '39px', width: '421px', marginBottom: '30px', marginTop: '50px', color: '#B7B7B7' }}>Additional Information</h4>
                   <table className="table-auto" style={{ fontSize: '32px', height: '711px', width: '443px', borderCollapse: 'collapse' }}>
@@ -137,3 +160,7 @@ const EscalationModeElement = ({
 };
 
 export default EscalationModeElement;
+
+function onAction(arg0: string) {
+    throw new Error('Function not implemented.');
+}

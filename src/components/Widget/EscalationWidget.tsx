@@ -11,7 +11,6 @@ const EscalationWidget = ({ widget}: EscalationWidgetProps) => {
     const { x, y, h, w, elements } = widget;
 
     var firstElements = structuredClone(elements);
-    console.log('elements: ' + elements)
 
     return(
         <div
@@ -28,6 +27,9 @@ const EscalationWidget = ({ widget}: EscalationWidgetProps) => {
                 <EscalationModeElement
                     key={element.id}
                     element={element as EscalationModeElementType}
+                    onAction={(action) => {
+                        // Handle any additional logic when action is taken, e.g., logging, state updates
+                      }}
             />
                 ))}
         </div>
