@@ -119,12 +119,10 @@ const assimilator = ({
             if (widget.tags!.includes('specify')) {
               //if the proposed widget has 'specify', that means there could be multiple widget instances with the same widget type
               //go through every tag in the message and see if the current deployed widget has the same tags
-              //Paul: Added another check if the current deployed widget has the same conversation id (Handles multiple requests for the same event/conversation)
-              //which means the widget should be updated not created
               if (
                 !deployedWidget.tags!.includes(
                   findSpecifierTag(widget.tags!, message.tags!),
-                ) && deployedWidget.conversationId !== widget.conversationId
+                )
               ) {
                 hasSameSpecifier = false;
               }

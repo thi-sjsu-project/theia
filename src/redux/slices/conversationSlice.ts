@@ -32,7 +32,7 @@ export const conversationSlice = createSlice({
           latestMessageId: message.id,
         };
       } else {
-        state.conversations[conversationId].messages.push(message);
+        state.conversations[conversationId].messages.unshift(message);
         state.conversations[conversationId].numUnreadMessages++;
         state.conversations[conversationId].latestMessageId = message.id;
       }

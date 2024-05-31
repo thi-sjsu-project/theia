@@ -133,32 +133,32 @@ const scaleOrientationWidget: BasicWidget = {
 };
 
 const initialMinimapWidgets: WidgetMap = {
-  [EscalationModeUuid]: {
-    id: EscalationModeUuid,
-    type: 'escalation',
-    screen: '/minimap',
-    sectionType: 'minimap',
-    x: 560,
-    y: 85,
-    w: 1360,
-    h: 995,
-    canOverlap: false,
-    useElementLocation: false,
-    priority: 10,
-    elements: [
-      {
-        id: uuid(),
-        modality: 'visual',
-        widgetId: EscalationModeUuid,
-        h: 1080,
-        w: 1360,
-        canOverlap: false,
-        type: 'escalation'
-      } satisfies EscalationModeElement,
-    ],
-    maxAmount: 1,
-    tags: ['video'],
-  } satisfies EscalationModeWidget,
+  // [EscalationModeUuid]: {
+  //   id: EscalationModeUuid,
+  //   type: 'escalation',
+  //   screen: '/minimap',
+  //   sectionType: 'minimap',
+  //   x: 560,
+  //   y: 85,
+  //   w: 1360,
+  //   h: 995,
+  //   canOverlap: false,
+  //   useElementLocation: false,
+  //   priority: 10,
+  //   elements: [
+  //     {
+  //       id: uuid(),
+  //       modality: 'visual',
+  //       widgetId: EscalationModeUuid,
+  //       h: 1080,
+  //       w: 1360,
+  //       canOverlap: false,
+  //       type: 'escalation'
+  //     } satisfies EscalationModeElement,
+  //   ],
+  //   maxAmount: 1,
+  //   tags: ['video'],
+  // } satisfies EscalationModeWidget,
   [initialAcaHeaderWidget.id]: initialAcaHeaderWidget,
   [scaleOrientationWidget.id]: scaleOrientationWidget,
   ...initialShips,

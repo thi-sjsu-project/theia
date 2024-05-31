@@ -7,7 +7,7 @@ import {
 } from 'src/redux/slices/minimapSlice';
 import { useAppSelector } from 'src/redux/hooks';
 import { capitalizeFirstLetter as cfl } from 'src/utils/helpers';
-import { getMessage, getConversationOfMessage } from 'src/redux/slices/conversationSlice';
+import { getMessage, getConversationOfMessage, getConversation } from 'src/redux/slices/conversationSlice';
 
 type RequestApprovalProps = {
   element: RequestApprovalElementType;
@@ -22,7 +22,7 @@ const RequestApprovalElement = ({
   children,
   unreadCount,
 }: RequestApprovalProps) => {
-  const { id, icon, messageId } = element;
+  const { id, icon, messageId, conversationId } = element;
   const message = useAppSelector((state) => getMessage(state, messageId));
 
   // Getting widget to know the screen that the element is on
@@ -30,10 +30,11 @@ const RequestApprovalElement = ({
     getWidgetById(state, element.widgetId!),
   );
 
-  const requests: any = useAppSelector((state) =>
-    getConversationOfMessage(state, messageId),
-  );
-  console.log(requests);
+  const conversation: any = useAppSelector((state) =>
+    getConversation(state, conversationId),
+  )
+
+  const requests = conversation.messages
 
   // Transform threat level from a float number in a range of 0-1 to a string of low, medium, high
   const threatLevelString = (threatLevel: number) => {
@@ -146,13 +147,6 @@ const RequestApprovalElement = ({
   };
 
   if (widget!.screen === '/pearce-screen') {
-    // return (
-    //   <div id={element.id} className="flex text-white items-center gap-4">
-    //     <IconElement element={element.icon} />
-    //     <span>{element.type}</span>
-    //   </div>
-    // );
-
     const renderUnreadCount = () => {
       if (unreadCount && unreadCount > 0) {
         return (
