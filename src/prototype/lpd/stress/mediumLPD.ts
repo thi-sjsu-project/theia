@@ -2,16 +2,19 @@ import type {
   Message,
   MissileToOwnshipDetected,
   RequestApprovalToAttack,
+  ThreatDetected,
 } from 'src/types/schema-types';
 import lpdHelper from 'src/utils/lpdHelper';
 import { v4 as uuid } from 'uuid';
 import DANGER_ICON from 'src/assets/icons/threats/missile-sm-emph.svg';
-import type { Widget, MapWarningWidget } from 'src/types/widget';
+import type { Widget, MapWarningWidget, ListWidget } from 'src/types/widget';
 import type { WidgetCluster } from 'src/types/support-types';
 import type {
   Element,
   IconElement,
   InformationElement,
+  RequestApprovalElement,
+  ThreatDetectedElement,
 } from 'src/types/element';
 import { mapTargetTypeToWarningIcon } from 'src/prototype/utils/helpers';
 import {
@@ -19,30 +22,44 @@ import {
   LIST_WIDGET_WIDTH,
 } from 'src/prototype/utils/constants';
 
-// Functions to create widgets, elements, and sections for each message type
-const requestApprovalToAttackMessageMedium = (
-  message: RequestApprovalToAttack,
-) => {
+const threatDetectedMessageMedium = (message: ThreatDetected) => {
   const listWidgetId = uuid();
-  const pearceScreenElements: Element[] = [
-    lpdHelper.generateRequestApprovalElement(
-      lpdHelper.generateBaseElement(uuid(), 'visual', 30, 30, message.priority),
-      message.id,
-      message.conversationId,
-      listWidgetId,
-      lpdHelper.generateIconElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
-        mapTargetTypeToWarningIcon(message.data.target.type),
-      ),
-      lpdHelper.generateButtonElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80),
-        'Deny',
-      ),
-      lpdHelper.generateButtonElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80),
-        'Approve',
-      ),
-    ),
+  const pearceScreenElements = [
+    {
+      id: uuid(),
+      widgetId: listWidgetId,
+      type: 'threat-detected',
+      messageType: message.kind,
+      modality: 'visual',
+      h: 100,
+      w: 100,
+      icon: {
+        id: uuid(),
+        modality: 'visual',
+        type: 'icon',
+        h: 56,
+        w: 56,
+        src: mapTargetTypeToWarningIcon(message.data.target.type),
+      },
+      messageId: message.id,
+      conversationId: message.conversationId,
+    } satisfies ThreatDetectedElement,
+  ];
+  const pearceScreenWidgets = [
+    {
+      id: listWidgetId,
+      type: 'list',
+      sectionType: 'tinder',
+      x: 100,
+      y: 100,
+      w: LIST_WIDGET_WIDTH,
+      h: LIST_WIDGET_HEIGHT,
+      canOverlap: false,
+      useElementLocation: false,
+      elements: pearceScreenElements,
+      tags: ['message'],
+      screen: '/pearce-screen',
+    } satisfies ListWidget,
   ];
 
   const minimapWidgetId1 = uuid();
@@ -55,6 +72,8 @@ const requestApprovalToAttackMessageMedium = (
       w: 80,
       widgetId: minimapWidgetId1,
       src: mapTargetTypeToWarningIcon(message.data.target.type),
+      expirationIntervalMs: 3000,
+      onExpiration: 'escalate',
     } satisfies IconElement,
     {
       id: uuid(),
@@ -63,7 +82,7 @@ const requestApprovalToAttackMessageMedium = (
       h: 70,
       w: 150,
       message,
-      size: 'M', // size L when stress is low
+      size: 'L', // size L when stress is low
       collapsed: true, // initially, the information elemnt is not displayed
       expirationIntervalMs: 3000,
       onExpiration: 'deescalate',
@@ -94,70 +113,105 @@ const requestApprovalToAttackMessageMedium = (
   return {
     sections: [],
     possibleClusters: [
-      generateCluster([
-        lpdHelper.generateListWidget(
-          lpdHelper.generateBaseWidget(
-            listWidgetId,
-            'tinder',
-            100,
-            100,
-            LIST_WIDGET_WIDTH,
-            LIST_WIDGET_HEIGHT,
-            '/pearce-screen',
-            false,
-            false,
-            1,
-            [...pearceScreenElements],
-            ['message'],
-          ),
-        ),
-        ...minimapWidgets,
-      ]),
+      generateCluster([...pearceScreenWidgets, ...minimapWidgets]),
     ],
   };
 };
 
-const acaFuelLowMessageMedium = (message: Message) => {
-  const elements: Element[] = [];
-  elements.push(
-    lpdHelper.generateTableElement(
-      lpdHelper.generateBaseElement(
-        uuid(),
-        'visual',
-        50,
-        200,
-        message.priority,
-      ),
-      2,
-      2,
-      [
-        ['Fuel', 'Low'],
-        ['Altitude', 'Low'],
-      ],
-    ),
-  );
+// Functions to create widgets, elements, and sections for each message type
+const requestApprovalToAttackMessageMedium = (
+  message: RequestApprovalToAttack,
+) => {
+  const listWidgetId = uuid();
+  const pearceScreenElements = [
+    {
+      id: uuid(),
+      modality: 'visual',
+      type: 'request-approval',
+      messageType: message.kind,
+      h: 30,
+      w: 30,
+      widgetId: listWidgetId,
+      messageId: message.id,
+      conversationId: message.conversationId,
+      icon: {
+        id: uuid(),
+        modality: 'visual',
+        type: 'icon',
+        h: 56,
+        w: 56,
+        src: mapTargetTypeToWarningIcon(message.data.target.type),
+      },
+    } satisfies RequestApprovalElement,
+  ];
+  const pearceScreenWidgets = [
+    {
+      id: listWidgetId,
+      type: 'list',
+      sectionType: 'tinder',
+      x: 100,
+      y: 100,
+      w: LIST_WIDGET_WIDTH,
+      h: LIST_WIDGET_HEIGHT,
+      canOverlap: false,
+      useElementLocation: false,
+      elements: pearceScreenElements,
+      tags: ['message'],
+      screen: '/pearce-screen',
+    } satisfies ListWidget,
+  ];
+
   return {
     sections: [],
-    possibleClusters: [
-      generateCluster([
-        lpdHelper.generateListWidget(
-          lpdHelper.generateBaseWidget(
-            uuid(),
-            'tinder',
-            500,
-            500,
-            LIST_WIDGET_WIDTH,
-            LIST_WIDGET_HEIGHT,
-            '/pearce-screen',
-            false,
-            false,
-            1,
-            [...elements],
-            ['message'],
-          ),
-        ),
-      ]),
-    ],
+    possibleClusters: [generateCluster([...pearceScreenWidgets])],
+  };
+};
+
+const acaFuelLowMessageMedium = (message: Message) => {
+  // const elements: Element[] = [];
+  // elements.push(
+  //   lpdHelper.generateTableElement(
+  //     lpdHelper.generateBaseElement(
+  //       uuid(),
+  //       'visual',
+  //       50,
+  //       200,
+  //       message.priority,
+  //     ),
+  //     2,
+  //     2,
+  //     [
+  //       ['Fuel', 'Low'],
+  //       ['Altitude', 'Low'],
+  //     ],
+  //   ),
+  // );
+  // return {
+  //   sections: [],
+  //   possibleClusters: [
+  //     generateCluster([
+  //       lpdHelper.generateListWidget(
+  //         lpdHelper.generateBaseWidget(
+  //           uuid(),
+  //           'tinder',
+  //           500,
+  //           500,
+  //           LIST_WIDGET_WIDTH,
+  //           LIST_WIDGET_HEIGHT,
+  //           '/pearce-screen',
+  //           false,
+  //           false,
+  //           1,
+  //           [...elements],
+  //           ['message'],
+  //         ),
+  //       ),
+  //     ]),
+  //   ],
+  // };
+  return {
+    sections: [],
+    possibleClusters: [],
   };
 };
 
@@ -258,85 +312,93 @@ const missileToOwnshipDetectedMessageMedium = (
 };
 
 const acaDefectMessageMedium = (message: Message) => {
-  const elements: Element[] = [];
-  elements.push(
-    lpdHelper.generateTableElement(
-      lpdHelper.generateBaseElement(
-        uuid(),
-        'visual',
-        50,
-        200,
-        message.priority,
-      ),
-      2,
-      2,
-      [
-        ['Defect', 'Engine'],
-        ['Altitude', 'Low'],
-      ],
-    ),
-  );
+  // const elements: Element[] = [];
+  // elements.push(
+  //   lpdHelper.generateTableElement(
+  //     lpdHelper.generateBaseElement(
+  //       uuid(),
+  //       'visual',
+  //       50,
+  //       200,
+  //       message.priority,
+  //     ),
+  //     2,
+  //     2,
+  //     [
+  //       ['Defect', 'Engine'],
+  //       ['Altitude', 'Low'],
+  //     ],
+  //   ),
+  // );
+  // return {
+  //   sections: [],
+  //   possibleClusters: [
+  //     generateCluster([
+  //       lpdHelper.generateListWidget(
+  //         lpdHelper.generateBaseWidget(
+  //           uuid(),
+  //           'tinder',
+  //           500,
+  //           500,
+  //           LIST_WIDGET_WIDTH,
+  //           LIST_WIDGET_HEIGHT,
+  //           '/pearce-screen',
+  //           false,
+  //           true,
+  //           1,
+  //           [...elements],
+  //           ['message'],
+  //         ),
+  //       ),
+  //     ]),
+  //   ],
+  // };
   return {
     sections: [],
-    possibleClusters: [
-      generateCluster([
-        lpdHelper.generateListWidget(
-          lpdHelper.generateBaseWidget(
-            uuid(),
-            'tinder',
-            500,
-            500,
-            LIST_WIDGET_WIDTH,
-            LIST_WIDGET_HEIGHT,
-            '/pearce-screen',
-            false,
-            true,
-            1,
-            [...elements],
-            ['message'],
-          ),
-        ),
-      ]),
-    ],
+    possibleClusters: [],
   };
 };
 
 const acaHeadingToBaseMessageMedium = (message: Message) => {
-  const elements: Element[] = [];
-  elements.push(
-    lpdHelper.generateTextElement(
-      lpdHelper.generateBaseElement(
-        uuid(),
-        'visual',
-        30,
-        200,
-        message.priority,
-      ),
-      'Aircraft heading to base',
-    ),
-  );
+  // const elements: Element[] = [];
+  // elements.push(
+  //   lpdHelper.generateTextElement(
+  //     lpdHelper.generateBaseElement(
+  //       uuid(),
+  //       'visual',
+  //       30,
+  //       200,
+  //       message.priority,
+  //     ),
+  //     'Aircraft heading to base',
+  //   ),
+  // );
+  // return {
+  //   sections: [],
+  //   possibleClusters: [
+  //     generateCluster([
+  //       lpdHelper.generateListWidget(
+  //         lpdHelper.generateBaseWidget(
+  //           uuid(),
+  //           'tinder',
+  //           500,
+  //           500,
+  //           LIST_WIDGET_WIDTH,
+  //           LIST_WIDGET_HEIGHT,
+  //           '/pearce-screen',
+  //           false,
+  //           true,
+  //           1,
+  //           [...elements],
+  //           ['message'],
+  //         ),
+  //       ),
+  //     ]),
+  //   ],
+  // };
   return {
     sections: [],
-    possibleClusters: [
-      generateCluster([
-        lpdHelper.generateListWidget(
-          lpdHelper.generateBaseWidget(
-            uuid(),
-            'tinder',
-            500,
-            500,
-            LIST_WIDGET_WIDTH,
-            LIST_WIDGET_HEIGHT,
-            '/pearce-screen',
-            false,
-            true,
-            1,
-            [...elements],
-            ['message'],
-          ),
-        ),
-      ]),
-    ],
+    possibleClusters: [],
   };
 };
 
@@ -346,6 +408,7 @@ const generateCluster = (widgets: Widget[]): WidgetCluster => ({
 
 // Map each message type to its corresponding LPD function
 const mediumLPDMessageFunctions: any = {
+  ThreatDetected: threatDetectedMessageMedium,
   RequestApprovalToAttack: requestApprovalToAttackMessageMedium,
   AcaFuelLow: acaFuelLowMessageMedium,
   AcaDefect: acaDefectMessageMedium,
@@ -383,6 +446,7 @@ const mediumLPD = (message: Message) => {
     'AcaDefect',
     'AcaHeadingToBase',
     'MissileToOwnshipDetected',
+    'ThreatDetected',
   ];
 
   //get all widgets as list of widgets instead of list of clusters

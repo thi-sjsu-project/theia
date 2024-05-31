@@ -1,7 +1,14 @@
 import { v4 as uuid } from 'uuid';
 import LeftScreenMap from 'src/assets/left-bottom-map.png';
 import LeftScreenVideo from 'src/assets/left-video.png';
-import type { BasicWidget, EscalationModeWidget, HistoryWidget, WidgetMap } from 'src/types/widget';
+import type {
+  BasicWidget,
+  EscalationModeWidget,
+  HistoryWidget,
+  PearceHeaderWidget,
+  WidgetMap,
+} from 'src/types/widget';
+import type { ButtonElement, SortElement } from 'src/types/element';
 import type { ImageElement, EscalationModeElement } from 'src/types/element';
 import {
   initialShips,
@@ -16,6 +23,7 @@ const videoBoxUuid = uuid();
 const mapBoxUuid = uuid();
 const historyBoxUuid = uuid();
 const EscalationModeUuid = uuid();
+const pearceHeaderUuid = uuid();
 
 const initialLeftScreenWidgets: WidgetMap = {
   // left video box widget
@@ -50,7 +58,7 @@ const initialLeftScreenWidgets: WidgetMap = {
         h: 112,
         showMoreInfoButton: true,
         showUpButton: true,
-        title: 'Approve kinetic attack?'
+        title: 'Approve kinetic attack?',
       },
     ],
     maxAmount: 1,
@@ -102,6 +110,51 @@ const initialLeftScreenWidgets: WidgetMap = {
     maxAmount: 1,
     tags: ['history'],
   } satisfies HistoryWidget,
+
+  [pearceHeaderUuid]: {
+    id: pearceHeaderUuid,
+    type: 'pearce-header',
+    screen: '/pearce-screen',
+    sectionType: 'top-bar',
+    x: 0,
+    y: 0,
+    w: 1920,
+    h: 100,
+    canOverlap: false,
+    useElementLocation: false,
+    priority: 10,
+    elements: [
+      {
+        id: uuid(),
+        type: 'sort',
+        modality: 'visual',
+        h: 50,
+        w: 80,
+        sortType: 'gaia',
+        active: false,
+      } satisfies SortElement,
+      {
+        id: uuid(),
+        type: 'sort',
+        modality: 'visual',
+        h: 50,
+        w: 80,
+        sortType: 'priority',
+        active: true,
+      } satisfies SortElement,
+      {
+        id: uuid(),
+        type: 'sort',
+        modality: 'visual',
+        h: 50,
+        w: 80,
+        sortType: 'time',
+        active: false,
+      } satisfies SortElement,
+    ],
+    tags: ['pearce-header'],
+    maxAmount: 1,
+  } satisfies PearceHeaderWidget,
 };
 
 const scaleOrientationWidgetId = uuid();
@@ -165,7 +218,6 @@ const initialMinimapWidgets: WidgetMap = {
 };
 
 const initialWidgets = {
-  // ...initialWarnings,
   ...initialLeftScreenWidgets,
   ...initialMinimapWidgets,
 };

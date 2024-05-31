@@ -1,12 +1,12 @@
 import type { Modality } from 'src/types/modality';
 import type {
-  Conversation,
-  Message,
   MissileToOwnshipDetected,
   RequestApprovalToAttack,
+  ThreatDetected,
 } from 'src/types/schema-types';
 import type { Properties } from 'csstype';
-import type { Id, Range } from 'src/types/schema-types';
+import type { Id, Range, Message } from 'src/types/schema-types';
+import { type SortTypes } from './sortMethod';
 
 export type BaseElement = {
   id: string;
@@ -85,13 +85,20 @@ export type CustomElement = BaseElement & {
 
 export type RequestApprovalElement = BaseElement & {
   type: 'request-approval';
+  messageType: 'RequestApprovalToAttack';
   messageId: string;
   conversationId: string;
   icon: IconElement;
-  leftButton: ButtonElement;
-  rightButton: ButtonElement;
   widgetId: string;
-  // children?: ReactNode;
+};
+
+export type ThreatDetectedElement = BaseElement & {
+  type: 'threat-detected';
+  messageType: 'ThreatDetected';
+  messageId: string;
+  conversationId: string;
+  icon: IconElement;
+  widgetId: string;
 };
 
 export type MissileIncomingElement = BaseElement & {
@@ -110,26 +117,40 @@ export type AcaStatusElement = BaseElement & {
   weaponLoad2: Range<0, 1>;
   widgetId: string;
   isDead: boolean;
+  messages: Array<AcaMessageElement>;
+};
+
+export type AcaMessageElement = BaseElement & {
+  type: 'aca-message';
+  statusElementId: string;
+  text: string;
+  show?: boolean;
 };
 
 export type InformationElement = BaseElement & {
   type: 'information';
   size: 'S' | 'M' | 'L';
   title?: string;
-  message: RequestApprovalToAttack | MissileToOwnshipDetected;
+  message: RequestApprovalToAttack | MissileToOwnshipDetected | ThreatDetected;
   widgetId: string;
 };
 
 export type ApproveDenyButtonElement = BaseElement & {
   type: 'approve-deny-button';
-  title?: string,
+  title?: string;
   showMoreInfoButton: boolean;
   showUpButton: boolean;
 };
 
 export type EscalationModeElement = BaseElement & {
   type: 'escalation';
-}
+};
+
+export type SortElement = BaseElement & {
+  type: 'sort';
+  sortType: SortTypes;
+  active: boolean;
+};
 
 // Simple elements have no nested elements and no children
 export type SimpleElement =
@@ -138,17 +159,20 @@ export type SimpleElement =
   | TextElement
   | ImageElement
   | AudioElement
-  | IconElement
-  | AcaStatusElement;
+  | IconElement;
 
 // Complex elements may have nested elements and children
 export type ComplexElement =
   | MissileIncomingElement
   | RequestApprovalElement
+  | ThreatDetectedElement
   | CustomElement
+  | SortElement
   | InformationElement
   | ApproveDenyButtonElement
-  | EscalationModeElement;
+  | EscalationModeElement
+  | AcaStatusElement
+  | AcaMessageElement;
 
 export type Element = SimpleElement | ComplexElement;
 

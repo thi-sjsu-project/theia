@@ -13,7 +13,7 @@ import type {
   RequestApprovalElement as RequestApprovalElementType,
 } from 'src/types/element';
 import IconElement from 'src/components/Element/Simple/IconElement';
-import MapThreatInfoElement from '../Element/Complex/MapThreatInfoElement';
+import MapThreatInfoElement from 'src/components/Element/Complex/MapThreatInfoElement';
 
 type MapWarningWidgetProps = {
   widget: MapWarningWidgetType;

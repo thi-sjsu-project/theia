@@ -1,7 +1,6 @@
 import type { TableElement as TableElementType } from 'src/types/element';
 import type { Message } from 'src/types/schema-types';
 import TableElement from 'src/components/Element/Simple/TableElement';
-import { capitalizeFirstLetter as cfl } from 'src/utils/helpers';
 
 const getTableContent = (message: Message) => {
   const content = {
@@ -11,6 +10,11 @@ const getTableContent = (message: Message) => {
   };
 
   switch (message.kind) {
+    case 'ThreatDetected':
+      content.title = `ACA-${message.data.detectedByAca}`;
+      content.header = 'Threat Detected';
+      content.description = '';
+      break;
     case 'RequestApprovalToAttack':
       content.title = `ACA-${message.data.detectedByAca}`;
       content.header = 'Request to attack';
@@ -40,11 +44,30 @@ const HistoryElement = ({
   const renderTable = () => {
     switch (message.kind) {
       case 'RequestApprovalToAttack': {
+        const { x, y } = message.data.target.location;
         const tableData = [
-          ...Object.entries(message.data.target).map(([key, value]) => {
-            return [cfl(key), JSON.stringify(value)];
-          }),
+          ['Location', `x: ${x}, y: ${y}`],
+          ['Priority', message.priority.toString()],
           ['Collatoral Damage', message.data.collateralDamage],
+        ];
+
+        const element: TableElementType = {
+          id: `table:${index}_${message.id}`,
+          type: 'table',
+          modality: 'visual',
+          h: tableData.length,
+          w: tableData[0].length,
+          tableData,
+        };
+
+        return <TableElement element={element} />;
+      }
+
+      case 'ThreatDetected': {
+        const { x, y } = message.data.target.location;
+        const tableData = [
+          ['Location', `x: ${x}, y: ${y}`],
+          ['Priority', message.priority.toString()],
         ];
 
         const element: TableElementType = {

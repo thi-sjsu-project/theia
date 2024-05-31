@@ -2,6 +2,7 @@ import { type ReactNode } from 'react';
 import type { Element } from 'src/types/element';
 import RequestApprovalElement from './RequestApprovalElement';
 import MissileIncomingElement from './MissileIncomingElement';
+import ThreatDetectedElement from './ThreatDetectedElement';
 
 type ListElementProps = {
   element: Element;
@@ -22,6 +23,8 @@ const ListElement = ({
         return (
           <RequestApprovalElement element={element} unreadCount={unreadCount} />
         );
+      case 'threat-detected':
+        return <ThreatDetectedElement element={element} />;
       case 'missile-incoming':
         return <MissileIncomingElement element={element} />;
       default:

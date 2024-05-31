@@ -16,7 +16,7 @@ export type BaseWidget = {
 
   canOverlap: boolean;
   useElementLocation: boolean;
-  maxAmount: number;
+  maxAmount?: number;
 
   handledMessageIds?: string[];
 
@@ -63,6 +63,10 @@ export type AcaHeaderWidget = BaseWidget & {
   type: 'aca-header';
 };
 
+export type PearceHeaderWidget = BaseWidget & {
+  type: 'pearce-header';
+};
+
 export type CustomWidget = BaseWidget & {
   type: 'custom';
   // additonal properties...
@@ -71,7 +75,7 @@ export type CustomWidget = BaseWidget & {
 export type EscalationModeWidget = BaseWidget & {
   type: 'escalation';
   // additional properties...
-}
+};
 
 export type Widget =
   | CustomWidget
@@ -81,6 +85,7 @@ export type Widget =
   | GridWidget
   | HistoryWidget
   | AcaHeaderWidget
+  | PearceHeaderWidget
   | MapWarningWidget
   | EscalationModeWidget;
 

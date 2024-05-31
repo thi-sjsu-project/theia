@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import {
   updateCommunication,
   getCommunication,
+  getSortMethod,
 } from 'src/redux/slices/communicationSlice';
 import { getElementsInGaze, getGazesAndKeys } from 'src/redux/slices/gazeSlice';
 import type { Widget } from 'src/types/widget';
@@ -12,6 +13,7 @@ import {
   getConversations,
   updateNumUnreadMessages,
 } from 'src/redux/slices/conversationSlice';
+import { getSortFunc } from 'src/scripts/sort/SortScripts';
 
 type ListWidgetProps = {
   widget: Widget;
@@ -25,17 +27,16 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
 
   const elementsInGaze = useAppSelector(getElementsInGaze);
   const gazesAndKeys = useAppSelector(getGazesAndKeys);
-  const { activeElementId, activeConversationId } =
-    useAppSelector(getCommunication);
+  const conversation = useAppSelector(getCommunication);
+
+  const { activeConversationId } = conversation;
+
+  const sortType = useAppSelector(getSortMethod);
 
   const [convoElements, setConvoElements] = useState<Element[]>([]);
   const [selectedElement, setSelectedElement] = useState<Element>();
 
-  // const listCapacity = Math.floor(
-  //   widget.h / (LIST_ELEMENT_HEIGHT + GAP_BETWEEN_ELEMENTS) - 1,
-  // );
-  // TODO: use this to control the UI to show if the list is overflowed or not
-  // const [listOverflowed, setListOverflowed] = useState<boolean>(false);
+  const sortMethod = getSortFunc(sortType);
 
   const dispatch = useAppDispatch();
   const listRef = useRef<HTMLDivElement>(null);
@@ -72,9 +73,9 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
     });
 
     // Sort elements by priority
-    newConvoElements.sort((a, b) => a.priority! - b.priority!);
+    newConvoElements.sort(sortMethod);
     setConvoElements(newConvoElements);
-  }, [widget.elements, conversations]);
+  }, [widget.elements, conversations, sortMethod]);
 
   // change selected element in list of arrow up or arrow down
   useEffect(() => {
@@ -140,96 +141,12 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
             // @ts-ignore
             activeConversationId: selectedElement.conversationId,
             activeElementId: selectedElement.id,
+            sortMethod: conversation.sortMethod,
           }),
         );
       }
     }
   }, [gazesAndKeys, selectedElement, activeConversationId, dispatch]);
-
-  // scrolling the list
-  // useEffect(() => {
-  //   // don't scroll if the list is not in gaze
-  //   if (!listInGaze) return;
-
-  //   // check if any key is 'S' or 'ArrowDown' and scroll down
-  //   if (
-  //     gazesAndKeys.some(
-  //       (gazeAndKey) =>
-  //         gazeAndKey.keyPress === 'KeyS' || gazeAndKey.keyPress === 'ArrowDown',
-  //     )
-  //   ) {
-  //     listRef.current?.scrollBy(0, 100);
-  //   }
-  //   // check if any key is 'W' or 'ArrowUp' and scroll up
-  //   else if (
-  //     gazesAndKeys.some(
-  //       (gazeAndKey) =>
-  //         gazeAndKey.keyPress === 'KeyW' || gazeAndKey.keyPress === 'ArrowUp',
-  //     )
-  //   ) {
-  //     listRef.current?.scrollBy(0, -100);
-  //   }
-  // }, [listInGaze, gazesAndKeys]);
-
-  // update the active conversation and element in the list-history channel on mouse left-click
-  // useEffect(() => {
-  //   const mouseLeftClick = gazesAndKeys.find(
-  //     (gazeAndKey) => gazeAndKey.keyPress === '0',
-  //   );
-
-  //   if (!mouseLeftClick || !mouseLeftClick.elemsInGaze.length) return;
-
-  //   widget.elements.forEach((element) => {
-  //     // just pick the first element in the gaze for now
-  //     if (element.id === mouseLeftClick.elemsInGaze[0].id) {
-  //       // @ts-ignore
-  //       if (!element.messageId || !element.conversationId) {
-  //         // FIX: all elements should have a message (at least the ones in the list)
-  //         // at the minimu, they should have a conversationId attached to them?
-  //         console.warn('Element does not have a message', element);
-  //         return;
-  //       }
-
-  //       dispatch(
-  //         updateCommunication({
-  //           // @ts-ignore
-  //           activeConversationId: element.conversationId,
-  //           activeElementId: element.id,
-  //         }),
-  //       );
-
-  //       // when we open a conversation, set number of unread messages to 0
-  //       // @ts-ignore
-  //       dispatch(updateNumUnreadMessages(element.conversationId, 0));
-  //     }
-  //   });
-  // }, [gazesAndKeys, dispatch, elementInGazeId, widget.elements]);
-
-  // check if the list is overflowed
-  // useEffect(() => {
-  //   if (widget.elements.length > listCapacity && !listOverflowed) {
-  //     setListOverflowed(true);
-  //   } else if (widget.elements.length <= listCapacity && listOverflowed) {
-  //     setListOverflowed(false);
-  //   }
-  // }, [listOverflowed, listCapacity, widget.elements.length]);
-
-  // check if the list is overflowed (alternative to the above method)
-  //  useEffect(() => {
-  //   if (listRef.current) {
-  //     if (
-  //       listRef.current.offsetHeight < listRef.current.scrollHeight &&
-  //       !listOverflowed
-  //     ) {
-  //       setListOverflowed(true);
-  //     } else if (
-  //       listRef.current.offsetHeight >= listRef.current.scrollHeight &&
-  //       listOverflowed
-  //     ) {
-  //       setListOverflowed(false);
-  //     }
-  //   }
-  // }, [listOverflowed]);
 
   const className = `absolute p-2 flex flex-col gap-6 items-center overflow-x-hidden overflow-y-auto`;
 
@@ -247,6 +164,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
         scrollbarWidth: 'thin',
         scrollbarColor: '#97979D #e0e0e0',
         scrollbarGutter: 'stable',
+        overflow: 'hidden',
       }}
     >
       {convoElements.map((element, index) => {
@@ -262,7 +180,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
         // style for active element (element due to which the history widget is open)
         const activeElementStyle =
           element.id === selectedElement?.id
-            ? 'bg-[#444449] text-[28px] font-medium border-4 border-white'
+            ? 'bg-[#444449] text-[28px] font-medium border-4 border-white p-0'
             : '';
 
         const numUnreadMessages =
@@ -272,12 +190,12 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
           <div
             id={element.id}
             key={element.id}
-            style={{ height: LIST_ELEMENT_HEIGHT }}
-            className={`w-full text-white flex items-center justify-center rounded-xl p-3 ${hoverStyle} ${activeElementStyle}`}
+            style={{ height: LIST_ELEMENT_HEIGHT, width: 340 }}
+            className={`text-white flex items-center justify-center p-3 rounded-xl ${hoverStyle} ${activeElementStyle}`}
           >
             <ListElement
               element={element}
-              outerDivStyleClass="w-full h-full"
+              outerDivStyleClass="w-full h-full px-4 rounded-full"
               unreadCount={numUnreadMessages}
             >
               {/* Nested children here if wanted.. */}

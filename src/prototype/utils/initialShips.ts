@@ -10,6 +10,7 @@ const droneUuid2 = uuid();
 const droneUuid3 = uuid();
 const droneUuid4 = uuid();
 const droneUuid5 = uuid();
+const droneUuid7 = uuid();
 
 const ownship: Widget = {
   ...lpdHelper.generateVehicleWidget(
@@ -74,7 +75,7 @@ const drones: Widget[] = [
             'ACA-1',
           ),
         ],
-        ['specify', 'aca', 'aca-1']
+        ['specify', 'aca', 'aca-1'],
       ),
       1,
       Math.random() * 0.5 + 0.25,
@@ -142,7 +143,7 @@ const drones: Widget[] = [
             'ACA-3',
           ),
         ],
-        ['specify', 'aca', 'aca-3']
+        ['specify', 'aca', 'aca-3'],
       ),
       3,
       Math.random() * 0.5 + 0.25,
@@ -176,7 +177,7 @@ const drones: Widget[] = [
             'ACA-4',
           ),
         ],
-        ['specify', 'aca', 'aca-4']
+        ['specify', 'aca', 'aca-4'],
       ),
       4,
       Math.random() * 0.5 + 0.25,
@@ -210,7 +211,41 @@ const drones: Widget[] = [
             'ACA-5',
           ),
         ],
-        ['specify', 'aca', 'aca-5']
+        ['specify', 'aca', 'aca-5'],
+      ),
+      5,
+      Math.random() * 0.5 + 0.25,
+      Math.random() * Math.PI,
+    ),
+  },
+  {
+    ...lpdHelper.generateVehicleWidget(
+      lpdHelper.generateBaseWidget(
+        droneUuid7,
+        'minimap',
+        500,
+        750,
+        80,
+        80,
+        '/minimap',
+        false,
+        false,
+        10,
+        [
+          lpdHelper.generateIconElement(
+            lpdHelper.generateBaseElement(
+              uuid(),
+              'visual',
+              50,
+              50,
+              undefined,
+              droneUuid7,
+            ),
+            DRONE_LOGO,
+            'ACA-7',
+          ),
+        ],
+        ['specify', 'aca', 'aca-7'],
       ),
       5,
       Math.random() * 0.5 + 0.25,
@@ -226,6 +261,7 @@ const initialShips: WidgetMap = {
   [drones[2].id]: drones[2],
   [drones[3].id]: drones[3],
   [drones[4].id]: drones[4],
+  [drones[5].id]: drones[5],
 };
 
 export { ownship, drones, initialShips };

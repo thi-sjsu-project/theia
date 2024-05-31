@@ -1,13 +1,18 @@
 import { type ReactNode } from 'react';
-import { type RequestApprovalElement as RequestApprovalElementType, type ApproveDenyButtonElement as ApproveDenyButtonElementType } from 'src/types/element';
+import {
+  type RequestApprovalElement as RequestApprovalElementType,
+  type ApproveDenyButtonElement as ApproveDenyButtonElementType,
+} from 'src/types/element';
 import IconElement from '../Simple/IconElement';
 import TableElement from '../Simple/TableElement';
-import {
-  getWidgetById,
-} from 'src/redux/slices/minimapSlice';
+import { getWidgetById } from 'src/redux/slices/minimapSlice';
 import { useAppSelector } from 'src/redux/hooks';
 import { capitalizeFirstLetter as cfl } from 'src/utils/helpers';
-import { getMessage, getConversationOfMessage, getConversation } from 'src/redux/slices/conversationSlice';
+import {
+  getMessage,
+  getConversationOfMessage,
+  getConversation,
+} from 'src/redux/slices/conversationSlice';
 import { v4 as uuid } from 'uuid';
 import ApproveDenyButtonElement from './ApproveDenyButtonElement';
 
@@ -29,6 +34,18 @@ const RequestApprovalElement = ({
   const { id, icon, messageId, conversationId } = element;
   const message = useAppSelector((state) => getMessage(state, messageId));
 
+  const getMessageText = () => {
+    // console.log("I am being fired!")
+    /*@ts-ignore*/
+    if (message.kind === 'RequestApprovalToAttack') {
+      return 'Request to Attack';
+    }
+    /*@ts-ignore*/
+    // else if(message.kind == 'MissileToOwnshipDetected'){
+    //   return 'Missile Incoming'
+    // }
+  };
+
   // Getting widget to know the screen that the element is on
   const widget = useAppSelector((state) =>
     getWidgetById(state, element.widgetId!),
@@ -36,9 +53,9 @@ const RequestApprovalElement = ({
 
   const conversation: any = useAppSelector((state) =>
     getConversation(state, conversationId),
-  )
+  );
 
-  const requests = conversation.messages
+  const requests = conversation.messages;
 
   // Transform threat level from a float number in a range of 0-1 to a string of low, medium, high
   const threatLevelString = (threatLevel: number) => {
@@ -61,7 +78,7 @@ const RequestApprovalElement = ({
     const mainRequest = requests[0];
 
     return (
-      <div className='grid auto-row-auto gap-y-[5px]'>
+      <div className="grid auto-row-auto gap-y-[5px]">
         <div
           className={
             inGaze
@@ -161,7 +178,7 @@ const RequestApprovalElement = ({
         return (
           <div
             className="rounded-full bg-white w-[35px] h-[35px] text-[#252526] flex 
-    items-center justify-center text-lg"
+    items-center justify-center text-lg rounded-full"
           >
             {unreadCount}
           </div>
@@ -172,12 +189,22 @@ const RequestApprovalElement = ({
     return (
       <div
         id={id}
-        className="flex text-white justify-between items-center gap-4 pr-4"
+        className="flex text-white justify-between items-center gap-4 pr-4 rounded-full"
       >
-        <div className="flex space-between items-center justify-center gap-4">
-          <IconElement element={icon} />
-          {/* @ts-ignore */}
-          <span>{message?.data?.target?.type}</span>
+        <div className="flex flex-col">
+          <div className="flex space-between items-center justify-center gap-4 rounded-full">
+            <div className="flex">
+              <IconElement element={icon} />
+            </div>
+
+            <div>
+              {/* @ts-ignore */}
+              <span className="text-[24px]">{message?.data?.target?.type}</span>
+              <div className="flex flex-col text-sm text-[#BCBCBC] text-[20px] pb-2">
+                <div>{getMessageText()}</div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {renderUnreadCount()}

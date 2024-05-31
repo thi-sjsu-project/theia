@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useAppDispatch } from 'src/redux/hooks';
-import { updateElement } from 'src/redux/slices/minimapSlice';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { getStressLevel, updateElement } from 'src/redux/slices/minimapSlice';
 import type {
   Element,
   InformationElement,
@@ -18,16 +18,19 @@ type Props = {
 const M_HEIGHT = 60;
 const L_HEIGHT = 488;
 
-const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
+const MapThreatInfoElement = ({ element, inGaze }: Props) => {
+  const stressLevel = useAppSelector(getStressLevel);
+
   const dispatch = useAppDispatch();
   // could also fetch messages from redux
   // provided there is a conversation number
-  const [informationElement, requestApprovalElement, approveDenyButtonElement] = elements;
+  const [informationElement, requestApprovalElement, approveDenyButtonElement] =
+    elements;
   const { title, message, collapsed, h, w, size, escalate, deescalate } =
     informationElement as InformationElement;
   let target;
 
-  if (message.kind === 'RequestApprovalToAttack') {
+  if (message.kind === 'ThreatDetected') {
     target = message.data.target.type;
   } else {
     target = 'missile';
@@ -50,50 +53,16 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
   if (collapsed) return null;
 
   const renderElement = () => {
-    switch (size) {
-      case 'S':
-        return (
-          <div
-            id={informationElement.id}
-            style={{
-              height: h,
-              width: w,
-              fontSize: 24,
-              backgroundColor: 'turquoise',
-              opacity: 0.8,
-            }}
-          >
-            SMALL: {cfl(target)}
-          </div>
-        );
-
-      case 'M':
-        return (
-          <div
-            id={informationElement.id}
-            className="rounded-xl bg-[#282828] bg-opacity-80 text-[#f5f5f5] border-black border-2 text-[24px]"
-            style={{
-              height: M_HEIGHT,
-              width: 'auto',
-            }}
-          >
-            <div
-              className="px-5 py-2.5 font-medium"
-              style={{ height: M_HEIGHT }}
-            >
-              {cfl(target)}
-            </div>
-            {inGaze ? <GazeHighlight /> : <></>}
-          </div>
-        );
-
-      case 'L':
+    switch (stressLevel) {
+      case 0:
         if (message.kind === 'RequestApprovalToAttack') {
           return (
             <RequestApprovalElement
               element={requestApprovalElement as RequestApprovalElementType}
               inGaze={inGaze}
-              approveDenyButton={approveDenyButtonElement as ApproveDenyButtonElementType}
+              approveDenyButton={
+                approveDenyButtonElement as ApproveDenyButtonElementType
+              }
             />
           );
         } else {
@@ -113,6 +82,44 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
             </div>
           );
         }
+      case 1:
+        return (
+          <div
+            id={informationElement.id}
+            className="rounded-xl bg-[#282828] bg-opacity-80 text-[#f5f5f5] border-black border-2 text-[24px]"
+            style={{
+              height: M_HEIGHT,
+              width: 'auto',
+            }}
+          >
+            <div
+              className="px-5 py-2.5 font-medium"
+              style={{ height: M_HEIGHT }}
+            >
+              {cfl(target)}
+            </div>
+            {inGaze ? <GazeHighlight /> : <></>}
+          </div>
+        );
+      case 2:
+        return (
+          <div
+            id={informationElement.id}
+            className="rounded-xl bg-[#282828] bg-opacity-80 text-[#f5f5f5] border-black border-2 text-[24px]"
+            style={{
+              height: M_HEIGHT,
+              width: 'auto',
+            }}
+          >
+            <div
+              className="px-5 py-2.5 font-medium"
+              style={{ height: M_HEIGHT }}
+            >
+              {cfl(target)}
+            </div>
+            {inGaze ? <GazeHighlight /> : <></>}
+          </div>
+        );
     }
   };
 
@@ -138,13 +145,13 @@ const GazeHighlight = () => {
   );
 };
 
-const GazeHighlightL = () => {
-  return (
-    <div
-      className="w-auto rounded-xl border-[#19DEBB] border-x-[5px]"
-      style={{ height: L_HEIGHT - 4, marginTop: -L_HEIGHT }}
-    ></div>
-  );
-};
+// const GazeHighlightL = () => {
+//   return (
+//     <div
+//       className="w-auto rounded-xl border-[#19DEBB] border-x-[5px]"
+//       style={{ height: L_HEIGHT - 4, marginTop: -L_HEIGHT }}
+//     ></div>
+//   );
+// };
 
 export default MapThreatInfoElement;
