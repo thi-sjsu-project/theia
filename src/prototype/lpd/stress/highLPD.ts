@@ -210,8 +210,8 @@ const missileToOwnshipDetectedMessageHigh = (
       id: uuid(),
       modality: 'visual',
       type: 'escalation',
-      h: 1080,
-      w: 1360,
+      h: 979, // 980
+      w: 1360, // 1920
       canOverlap: false,
       widgetId: minimapWidgetId1,
     } satisfies EscalationModeElement,
@@ -224,7 +224,7 @@ const missileToOwnshipDetectedMessageHigh = (
       type: 'escalation',
       x: 560,
       y: 85,
-      h: 1080,
+      h: 979,
       w: 1360,
       screen: '/minimap',
       canOverlap: false,
