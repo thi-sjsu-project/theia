@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useAppDispatch } from 'src/redux/hooks';
-import { updateElement } from 'src/redux/slices/minimapSlice';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
+import { getStressLevel, updateElement } from 'src/redux/slices/minimapSlice';
 import type { InformationElement } from 'src/types/element';
 import { capitalizeFirstLetter as cfl } from 'src/utils/helpers';
 
@@ -12,6 +12,8 @@ type Props = {
 const M_HEIGHT = 60;
 
 const MapThreatInfoElement = ({ element, inGaze }: Props) => {
+  const stressLevel = useAppSelector(getStressLevel);
+
   const dispatch = useAppDispatch();
   // could also fetch messages from redux
   // provided there is a conversation number
@@ -42,8 +44,8 @@ const MapThreatInfoElement = ({ element, inGaze }: Props) => {
   if (collapsed) return null;
 
   const renderElement = () => {
-    switch (size) {
-      case 'S':
+    switch (stressLevel) {
+      case 0:
         return (
           <div
             id={element.id}
@@ -55,10 +57,10 @@ const MapThreatInfoElement = ({ element, inGaze }: Props) => {
               opacity: 0.8,
             }}
           >
-            SMALL: {cfl(target)}
+            LARGE: {cfl(target)}
           </div>
         );
-      case 'M':
+      case 1:
         return (
           <div
             id={element.id}
@@ -77,19 +79,23 @@ const MapThreatInfoElement = ({ element, inGaze }: Props) => {
             {inGaze ? <GazeHighlight /> : <></>}
           </div>
         );
-      case 'L':
+      case 2:
         return (
           <div
             id={element.id}
+            className="rounded-xl bg-[#282828] bg-opacity-80 text-[#f5f5f5] border-black border-2 text-[24px]"
             style={{
-              height: h,
-              width: w,
-              fontSize: 24,
-              backgroundColor: 'turquoise',
-              opacity: 0.8,
+              height: M_HEIGHT,
+              width: 'auto',
             }}
           >
-            LARGE: {cfl(target)}
+            <div
+              className="px-5 py-2.5 font-medium"
+              style={{ height: M_HEIGHT }}
+            >
+              {cfl(target)}
+            </div>
+            {inGaze ? <GazeHighlight /> : <></>}
           </div>
         );
     }

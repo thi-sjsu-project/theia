@@ -43,16 +43,6 @@ const stressChangeHandler = ({
         });
 
         if (hasAllTags) {
-          // dispatch(
-          //   updateWidget({
-          //     ...widgetInStress,
-          //     id: widget.id,
-          //     elements: widget.elements,
-          //     x: widget.x,
-          //     y: widget.y,
-          //     handledMessageIds: widget.handledMessageIds,
-          //   }),
-          // );
           //if the widget has all the tags that the new stress widget does, then this widget exists in the new stress LPD
           widgetIsInNewStressLPD = true; //so lets say that it exists
         }
