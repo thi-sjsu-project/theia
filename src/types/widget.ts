@@ -16,7 +16,7 @@ export type BaseWidget = {
 
   canOverlap: boolean;
   useElementLocation: boolean;
-  maxAmount: number;
+  maxAmount?: number;
 
   handledMessageIds?: string[];
 
@@ -65,7 +65,7 @@ export type AcaHeaderWidget = BaseWidget & {
 
 export type PearceHeaderWidget = BaseWidget & {
   type: 'pearce-header';
-}
+};
 
 export type CustomWidget = BaseWidget & {
   type: 'custom';

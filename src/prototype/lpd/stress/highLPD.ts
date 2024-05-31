@@ -2,6 +2,7 @@ import type {
   Message,
   MissileToOwnshipDetected,
   RequestApprovalToAttack,
+  ThreatDetected,
 } from 'src/types/schema-types';
 import { v4 as uuid } from 'uuid';
 import lpdHelper from 'src/utils/lpdHelper';
@@ -10,8 +11,10 @@ import type {
   Element,
   IconElement,
   InformationElement,
+  RequestApprovalElement,
+  ThreatDetectedElement,
 } from 'src/types/element';
-import type { Widget, MapWarningWidget } from 'src/types/widget';
+import type { Widget, MapWarningWidget, ListWidget } from 'src/types/widget';
 import type { WidgetCluster } from 'src/types/support-types';
 import { mapTargetTypeToWarningIcon } from 'src/prototype/utils/helpers';
 import {
@@ -19,37 +22,44 @@ import {
   LIST_WIDGET_WIDTH,
 } from 'src/prototype/utils/constants';
 
-// Functions to create widgets, elements, and sections for each message type
-const requestApprovalToAttackMessageHigh = (
-  message: RequestApprovalToAttack,
-) => {
+const threatDetectedMessageHigh = (message: ThreatDetected) => {
   const listWidgetId = uuid();
-  const pearceScreenElements: Element[] = [
-    lpdHelper.generateRequestApprovalElement(
-      lpdHelper.generateBaseElement(
-        uuid(),
-        'visual',
-        30,
-        30,
-        message.priority,
-        'list',
-      ),
-      message.id,
-      message.conversationId,
-      listWidgetId,
-      lpdHelper.generateIconElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
-        mapTargetTypeToWarningIcon(message.data.target.type),
-      ),
-      lpdHelper.generateButtonElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80),
-        'Deny',
-      ),
-      lpdHelper.generateButtonElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 30, 80),
-        'Approve',
-      ),
-    ),
+  const pearceScreenElements = [
+    {
+      id: uuid(),
+      widgetId: listWidgetId,
+      type: 'threat-detected',
+      messageType: message.kind,
+      modality: 'visual',
+      h: 100,
+      w: 100,
+      icon: {
+        id: uuid(),
+        modality: 'visual',
+        type: 'icon',
+        h: 56,
+        w: 56,
+        src: mapTargetTypeToWarningIcon(message.data.target.type),
+      },
+      messageId: message.id,
+      conversationId: message.conversationId,
+    } satisfies ThreatDetectedElement,
+  ];
+  const pearceScreenWidgets = [
+    {
+      id: listWidgetId,
+      type: 'list',
+      sectionType: 'tinder',
+      x: 100,
+      y: 100,
+      w: LIST_WIDGET_WIDTH,
+      h: LIST_WIDGET_HEIGHT,
+      canOverlap: false,
+      useElementLocation: false,
+      elements: pearceScreenElements,
+      tags: ['message'],
+      screen: '/pearce-screen',
+    } satisfies ListWidget,
   ];
 
   const minimapWidgetId1 = uuid();
@@ -62,6 +72,8 @@ const requestApprovalToAttackMessageHigh = (
       w: 80,
       widgetId: minimapWidgetId1,
       src: mapTargetTypeToWarningIcon(message.data.target.type),
+      expirationIntervalMs: 3000,
+      onExpiration: 'escalate',
     } satisfies IconElement,
     {
       id: uuid(),
@@ -91,6 +103,7 @@ const requestApprovalToAttackMessageHigh = (
       canOverlap: true,
       useElementLocation: false,
       maxAmount: 10,
+
       tags: ['specify', 'map-warning'],
 
       elements: minimapElements,
@@ -100,26 +113,57 @@ const requestApprovalToAttackMessageHigh = (
   return {
     sections: [],
     possibleClusters: [
-      generateCluster([
-        lpdHelper.generateListWidget(
-          lpdHelper.generateBaseWidget(
-            listWidgetId,
-            'tinder',
-            100,
-            100,
-            LIST_WIDGET_WIDTH,
-            LIST_WIDGET_HEIGHT,
-            '/pearce-screen',
-            false,
-            false,
-            1,
-            [...pearceScreenElements],
-            ['message'],
-          ),
-        ),
-        ...minimapWidgets,
-      ]),
+      generateCluster([...pearceScreenWidgets, ...minimapWidgets]),
     ],
+  };
+};
+
+// Functions to create widgets, elements, and sections for each message type
+const requestApprovalToAttackMessageHigh = (
+  message: RequestApprovalToAttack,
+) => {
+  const listWidgetId = uuid();
+  const pearceScreenElements = [
+    {
+      id: uuid(),
+      modality: 'visual',
+      type: 'request-approval',
+      messageType: message.kind,
+      h: 30,
+      w: 30,
+      widgetId: listWidgetId,
+      messageId: message.id,
+      conversationId: message.conversationId,
+      icon: {
+        id: uuid(),
+        modality: 'visual',
+        type: 'icon',
+        h: 56,
+        w: 56,
+        src: mapTargetTypeToWarningIcon(message.data.target.type),
+      },
+    } satisfies RequestApprovalElement,
+  ];
+  const pearceScreenWidgets = [
+    {
+      id: listWidgetId,
+      type: 'list',
+      sectionType: 'tinder',
+      x: 100,
+      y: 100,
+      w: LIST_WIDGET_WIDTH,
+      h: LIST_WIDGET_HEIGHT,
+      canOverlap: false,
+      useElementLocation: false,
+      elements: pearceScreenElements,
+      tags: ['message'],
+      screen: '/pearce-screen',
+    } satisfies ListWidget,
+  ];
+
+  return {
+    sections: [],
+    possibleClusters: [generateCluster([...pearceScreenWidgets])],
   };
 };
 
@@ -369,6 +413,7 @@ const generateCluster = (widgets: Widget[]): WidgetCluster => ({
 
 // Map each message type to its corresponding LPD function
 const highLPDMessageFunctions: any = {
+  ThreatDetected: threatDetectedMessageHigh,
   RequestApprovalToAttack: requestApprovalToAttackMessageHigh,
   AcaFuelLow: acaFuelLowMessageHigh,
   MissileToOwnshipDetected: missileToOwnshipDetectedMessageHigh,
@@ -406,6 +451,7 @@ const highLPD = (message: Message) => {
     'AcaDefect',
     'AcaHeadingToBase',
     'MissileToOwnshipDetected',
+    'ThreatDetected',
   ];
 
   //get all widgets as list of widgets instead of list of clusters

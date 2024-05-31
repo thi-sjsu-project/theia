@@ -21,7 +21,7 @@ const MapThreatInfoElement = ({ element, inGaze }: Props) => {
     element;
   let target;
 
-  if (message.kind === 'RequestApprovalToAttack') {
+  if (message.kind === 'ThreatDetected') {
     target = message.data.target.type;
   } else {
     target = 'missile';

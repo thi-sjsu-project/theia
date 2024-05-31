@@ -11,8 +11,13 @@ const getTableContent = (message: Message) => {
   };
 
   switch (message.kind) {
-    case 'RequestApprovalToAttack':
+    case 'ThreatDetected':
       content.title = `ACA-${message.data.detectedByAca}`;
+      content.header = 'Threat Detected';
+      content.description = '';
+      break;
+    case 'RequestApprovalToAttack':
+      content.title = `ACA`;
       content.header = 'Request to attack';
       content.description = `Approval for ${message.data.attackWeapon.type} attack`;
       break;
@@ -41,10 +46,26 @@ const HistoryElement = ({
     switch (message.kind) {
       case 'RequestApprovalToAttack': {
         const tableData = [
-          ...Object.entries(message.data.target).map(([key, value]) => {
-            return [cfl(key), JSON.stringify(value)];
-          }),
+          ['Priority', message.priority.toString()],
           ['Collatoral Damage', message.data.collateralDamage],
+        ];
+
+        const element: TableElementType = {
+          id: `table:${index}_${message.id}`,
+          type: 'table',
+          modality: 'visual',
+          h: tableData.length,
+          w: tableData[0].length,
+          tableData,
+        };
+
+        return <TableElement element={element} />;
+      }
+
+      case 'ThreatDetected': {
+        const tableData = [
+          ['Location', message.data.target.location.toString()],
+          ['Priority', message.priority.toString()],
         ];
 
         const element: TableElementType = {

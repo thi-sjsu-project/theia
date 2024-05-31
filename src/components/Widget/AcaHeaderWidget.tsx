@@ -74,6 +74,8 @@ const AcaHeaderWidget = ({ widget }: AcaHeaderWidgetProps) => {
   useEffect(() => {
     const latestMessage = messages[messages.length - 1];
 
+    if (!latestMessage) return;
+
     if (
       latestMessage.kind !== 'AcaDefect' &&
       latestMessage.kind !== 'AcaFuelLow' &&

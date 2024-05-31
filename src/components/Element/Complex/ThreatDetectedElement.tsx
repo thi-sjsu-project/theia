@@ -1,33 +1,30 @@
-import { useEffect, type ReactNode } from 'react';
-import { type RequestApprovalElement as RequestApprovalElementType } from 'src/types/element';
-import IconElement from '../Simple/IconElement';
+import { type ReactNode } from 'react';
 import { useAppSelector } from 'src/redux/hooks';
 import { getMessage } from 'src/redux/slices/conversationSlice';
+import type { ThreatDetectedElement as ThreatDetectedElementType } from 'src/types/element';
+import IconElement from '../Simple/IconElement';
 
-type RequestApprovalProps = {
-  element: RequestApprovalElementType;
+type Props = {
+  element: ThreatDetectedElementType;
   children?: ReactNode;
   unreadCount?: number;
 };
 
-const RequestApprovalElement = ({
-  element,
-  children,
-  unreadCount,
-}: RequestApprovalProps) => {
+const ThreatDetectedElement = ({ element, children, unreadCount }: Props) => {
   const { id, icon, messageId } = element;
   const message = useAppSelector((state) => getMessage(state, messageId));
 
   const getMessageText = () => {
     // console.log("I am being fired!")
     /*@ts-ignore*/
-    if (message.kind === 'RequestApprovalToAttack') {
-      return 'Request to Attack';
+    if (message.kind === 'ThreatDetected') {
+      return 'Threat Detected';
     }
     /*@ts-ignore*/
     // else if(message.kind == 'MissileToOwnshipDetected'){
     //   return 'Missile Incoming'
     // }
+    return 'error';
   };
 
   const renderUnreadCount = () => {
@@ -69,4 +66,4 @@ const RequestApprovalElement = ({
   );
 };
 
-export default RequestApprovalElement;
+export default ThreatDetectedElement;

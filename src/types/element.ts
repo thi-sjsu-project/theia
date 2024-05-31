@@ -1,13 +1,12 @@
 import type { Modality } from 'src/types/modality';
 import type {
-  Conversation,
-  Message,
   MissileToOwnshipDetected,
   RequestApprovalToAttack,
+  ThreatDetected,
 } from 'src/types/schema-types';
 import type { Properties } from 'csstype';
-import type { Id, Range } from 'src/types/schema-types';
-import { SortTypes } from './sortMethod';
+import type { Id, Range, Message } from 'src/types/schema-types';
+import { type SortTypes } from './sortMethod';
 
 export type BaseElement = {
   id: string;
@@ -86,13 +85,20 @@ export type CustomElement = BaseElement & {
 
 export type RequestApprovalElement = BaseElement & {
   type: 'request-approval';
+  messageType: 'RequestApprovalToAttack';
   messageId: string;
   conversationId: string;
   icon: IconElement;
-  leftButton: ButtonElement;
-  rightButton: ButtonElement;
   widgetId: string;
-  // children?: ReactNode;
+};
+
+export type ThreatDetectedElement = BaseElement & {
+  type: 'threat-detected';
+  messageType: 'ThreatDetected';
+  messageId: string;
+  conversationId: string;
+  icon: IconElement;
+  widgetId: string;
 };
 
 export type MissileIncomingElement = BaseElement & {
@@ -125,7 +131,7 @@ export type InformationElement = BaseElement & {
   type: 'information';
   size: 'S' | 'M' | 'L';
   title?: string;
-  message: RequestApprovalToAttack | MissileToOwnshipDetected;
+  message: RequestApprovalToAttack | MissileToOwnshipDetected | ThreatDetected;
   widgetId: string;
 };
 
@@ -148,6 +154,7 @@ export type SimpleElement =
 export type ComplexElement =
   | MissileIncomingElement
   | RequestApprovalElement
+  | ThreatDetectedElement
   | CustomElement
   | SortElement
   | InformationElement
