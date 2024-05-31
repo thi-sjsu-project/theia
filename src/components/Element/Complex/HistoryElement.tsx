@@ -1,7 +1,6 @@
 import type { TableElement as TableElementType } from 'src/types/element';
 import type { Message } from 'src/types/schema-types';
 import TableElement from 'src/components/Element/Simple/TableElement';
-import { capitalizeFirstLetter as cfl } from 'src/utils/helpers';
 
 const getTableContent = (message: Message) => {
   const content = {
@@ -17,7 +16,7 @@ const getTableContent = (message: Message) => {
       content.description = '';
       break;
     case 'RequestApprovalToAttack':
-      content.title = `ACA`;
+      content.title = `ACA-${message.data.detectedByAca}`;
       content.header = 'Request to attack';
       content.description = `Approval for ${message.data.attackWeapon.type} attack`;
       break;
@@ -45,7 +44,9 @@ const HistoryElement = ({
   const renderTable = () => {
     switch (message.kind) {
       case 'RequestApprovalToAttack': {
+        const { x, y } = message.data.target.location;
         const tableData = [
+          ['Location', `x: ${x}, y: ${y}`],
           ['Priority', message.priority.toString()],
           ['Collatoral Damage', message.data.collateralDamage],
         ];
@@ -63,8 +64,9 @@ const HistoryElement = ({
       }
 
       case 'ThreatDetected': {
+        const { x, y } = message.data.target.location;
         const tableData = [
-          ['Location', message.data.target.location.toString()],
+          ['Location', `x: ${x}, y: ${y}`],
           ['Priority', message.priority.toString()],
         ];
 
