@@ -14,6 +14,7 @@ import {
 } from 'src/redux/slices/conversationSlice';
 import { getAllElements } from 'src/redux/slices/minimapSlice';
 
+
 type ListWidgetProps = {
   widget: Widget;
 };
@@ -81,26 +82,25 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
 
 
 
-  useEffect(() => {
-  for(let gk of gazesAndKeys){
-    if(gk.keyPress === "1"){
-      for(let element of allElements){
-          if(element === undefined || gk.elemsInGaze[0] === undefined){
-              break;
-          }
-          if(element.id == gk.elemsInGaze[0].id && element.type == 'information'){
-          console.log(element);
-          dispatch(updateCommunication({
-            //@ts-ignore 
-            activeConversationId: element.conversationId,
-            activeElementId: element.id
-
-          }));
-          }
-      }
-    }
-  }
-}, [gazesAndKeys]);
+//   useEffect(() => {
+//   for(let gk of gazesAndKeys){
+//     if(gk.keyPress === "1"){
+//       for(let element of allElements){
+//           if(element === undefined || gk.elemsInGaze[0] === undefined){
+//               break;
+//           }
+//           if(element.id == gk.elemsInGaze[0].id && element.type == 'information'){
+//           console.log(element);
+//           dispatch(updateCommunication({
+//             //@ts-ignore 
+//             activeConversationId: element.conversationId,
+//             activeElementId: element.id
+//           }));
+//           }
+//       }
+//     }
+//   }
+// }, [gazesAndKeys]);
   
   useEffect(() => {
 // change selected element in list of arrow up or arrow down

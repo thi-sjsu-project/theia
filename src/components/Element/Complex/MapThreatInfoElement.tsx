@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
-import { useAppDispatch } from 'src/redux/hooks';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { updateElement } from 'src/redux/slices/minimapSlice';
 import type { InformationElement } from 'src/types/element';
 import { capitalizeFirstLetter as cfl } from 'src/utils/helpers';
+import {getElementsInGaze, getGazesAndKeys } from 'src/redux/slices/gazeSlice';
+import { getCommunication, updateCommunication } from 'src/redux/slices/communicationSlice';
 
 type Props = {
   element: InformationElement;
@@ -12,7 +14,9 @@ type Props = {
 const M_HEIGHT = 60;
 
 const MapThreatInfoElement = ({ element, inGaze }: Props) => {
+  const communications = useAppSelector(getCommunication);
   const dispatch = useAppDispatch();
+  const gazesAndKeys = useAppSelector(getGazesAndKeys);
   // could also fetch messages from redux
   // provided there is a conversation number
   const { title, message, collapsed, h, w, size, escalate, deescalate } =
@@ -25,6 +29,27 @@ const MapThreatInfoElement = ({ element, inGaze }: Props) => {
     target = 'missile';
   }
 
+
+  useEffect(() => {
+    for(let gk of gazesAndKeys){
+      if(gk.keyPress === "1"){
+            if(element === undefined || gk.elemsInGaze[0] === undefined){
+                break;
+            }
+            if(element.id == gk.elemsInGaze[0].id && element.type == 'information'){
+            console.log(element);
+            dispatch(updateCommunication({
+              ...communications,
+              //@ts-ignore 
+              activeConversationId: element.message.conversationId,
+            }));
+            }
+      }
+    }
+  }, [gazesAndKeys]);
+    
+  
+  
   useEffect(() => {
     // react to deescalation
     if (deescalate) {
