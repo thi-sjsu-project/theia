@@ -10,6 +10,7 @@ import DANGER_ICON from 'src/assets/icons/threats/missile-sm-emph.svg';
 import type { Widget, MapWarningWidget, ListWidget } from 'src/types/widget';
 import type { WidgetCluster } from 'src/types/support-types';
 import type {
+  ButtonElement,
   Element,
   IconElement,
   InformationElement,
@@ -142,6 +143,22 @@ const requestApprovalToAttackMessageMedium = (
         w: 56,
         src: mapTargetTypeToWarningIcon(message.data.target.type),
       },
+      leftButton: {
+        id: uuid(),
+        modality: 'visual',
+        type: 'button',
+        h: 50,
+        w: 30,
+        text: 'Deny',
+      } satisfies ButtonElement,
+      rightButton: {
+        id: uuid(),
+        modality: 'visual',
+        type: 'button',
+        h: 50,
+        w: 30,
+        text: 'Approve',
+      } satisfies ButtonElement,
     } satisfies RequestApprovalElement,
   ];
   const pearceScreenWidgets = [

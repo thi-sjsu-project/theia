@@ -85,16 +85,18 @@ export type CustomElement = BaseElement & {
 
 export type RequestApprovalElement = BaseElement & {
   type: 'request-approval';
-  messageType: 'RequestApprovalToAttack';
+  messageType?: 'RequestApprovalToAttack';
   messageId: string;
   conversationId: string;
   icon: IconElement;
   widgetId: string;
+  leftButton: ButtonElement;
+  rightButton: ButtonElement;
 };
 
 export type ThreatDetectedElement = BaseElement & {
   type: 'threat-detected';
-  messageType: 'ThreatDetected';
+  messageType?: 'ThreatDetected';
   messageId: string;
   conversationId: string;
   icon: IconElement;

@@ -143,6 +143,22 @@ const requestApprovalToAttackMessageHigh = (
         w: 56,
         src: mapTargetTypeToWarningIcon(message.data.target.type),
       },
+      leftButton: {
+        id: uuid(),
+        modality: 'visual',
+        type: 'button',
+        h: 50,
+        w: 30,
+        text: 'Deny',
+      },
+      rightButton: {
+        id: uuid(),
+        modality: 'visual',
+        type: 'button',
+        h: 50,
+        w: 30,
+        text: 'Approve',
+      },
     } satisfies RequestApprovalElement,
   ];
   const pearceScreenWidgets = [

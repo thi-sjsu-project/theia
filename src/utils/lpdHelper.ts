@@ -223,6 +223,25 @@ const generateMissileIncomingElement = (
   icon,
 });
 
+const generateRequestApprovalElement = (
+  baseElement: Element.BaseElement,
+  messageId: string,
+  conversationId: string,
+  widgetId: string,
+  icon: Element.IconElement,
+  leftButton: Element.ButtonElement,
+  rightButton: Element.ButtonElement,
+): Element.RequestApprovalElement => ({
+  ...baseElement,
+  type: 'request-approval',
+  messageId,
+  conversationId,
+  widgetId,
+  icon,
+  leftButton,
+  rightButton,
+});
+
 const lpdHelper = {
   generateBaseWidget,
   generateListWidget,
@@ -238,6 +257,7 @@ const lpdHelper = {
   generateImageElement,
   generateAudioElement,
   generateMissileIncomingElement,
+  generateRequestApprovalElement,
 };
 
 export default lpdHelper;

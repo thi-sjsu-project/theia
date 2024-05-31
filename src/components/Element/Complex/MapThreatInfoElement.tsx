@@ -18,7 +18,7 @@ type Props = {
 const M_HEIGHT = 60;
 const L_HEIGHT = 488;
 
-const MapThreatInfoElement = ({ element, inGaze }: Props) => {
+const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
   const stressLevel = useAppSelector(getStressLevel);
 
   const dispatch = useAppDispatch();
