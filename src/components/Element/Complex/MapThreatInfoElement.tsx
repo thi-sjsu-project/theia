@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { getStressLevel, updateElement } from 'src/redux/slices/cmSlice';
 import type {
@@ -8,7 +8,7 @@ import type {
   ApproveDenyButtonElement as ApproveDenyButtonElementType,
 } from 'src/types/element';
 import { capitalizeFirstLetter as cfl } from 'src/utils/helpers';
-import RequestApprovalElement from './RequestApprovalElement';
+import RequestApprovalElement from 'src/components/Element/Complex/RequestApprovalElement';
 import { getConversation } from 'src/redux/slices/conversationSlice';
 import { getElementsInGaze, getGazesAndKeys } from 'src/redux/slices/gazeSlice';
 import {
@@ -24,6 +24,19 @@ type Props = {
 const M_HEIGHT = 60;
 const L_HEIGHT = 488;
 
+const mapStressToSize = (stressLevel: number) => {
+  switch (stressLevel) {
+    case 0:
+      return 'L';
+    case 1:
+      return 'L';
+    case 2:
+      return 'M';
+    default:
+      return 'L';
+  }
+};
+
 const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
   const stressLevel = useAppSelector(getStressLevel);
 
@@ -31,6 +44,11 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
   const dispatch = useAppDispatch();
   const gazesAndKeys = useAppSelector(getGazesAndKeys);
   const elementsInGaze = useAppSelector(getElementsInGaze);
+
+  const [respondToStressLevel, setRespondToStressLevel] = useState(true);
+  const [displayState, setDisplayState] = useState<'S' | 'M' | 'L'>(
+    mapStressToSize(stressLevel),
+  );
 
   // could also fetch messages from redux
   // provided there is a conversation number
@@ -51,9 +69,17 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
   }
 
   useEffect(() => {
+    if (respondToStressLevel) setDisplayState(mapStressToSize(stressLevel));
+  }, [stressLevel, respondToStressLevel]);
+
+  useEffect(() => {
     if (
       gazesAndKeys.some((gk) => gk.keyPress === '1') &&
-      elementsInGaze.some((element) => element.id === informationElement.id)
+      elementsInGaze.some(
+        (element) =>
+          element.id === informationElement.id ||
+          element.id === requestApprovalElement?.id,
+      )
     ) {
       dispatch(
         updateCommunication({
@@ -74,6 +100,32 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
   ]);
 
   useEffect(() => {
+    if (
+      gazesAndKeys.some((gk) => gk.keyPress === 'KeyS') &&
+      elementsInGaze.some((element) => element.id === informationElement.id)
+    ) {
+      if (displayState !== 'L') {
+        setDisplayState('L');
+        setRespondToStressLevel(false);
+      }
+    } else if (
+      gazesAndKeys.some((gk) => gk.keyPress === 'KeyW') &&
+      requestApprovalElement &&
+      elementsInGaze.some((element) => element.id === requestApprovalElement.id)
+    ) {
+      setRespondToStressLevel(false);
+      setDisplayState('S');
+    }
+  }, [
+    gazesAndKeys,
+    elementsInGaze,
+    informationElement,
+    displayState,
+    requestApprovalElement,
+    messages,
+  ]);
+
+  useEffect(() => {
     // react to deescalation
     if (deescalate) {
       dispatch(
@@ -90,20 +142,22 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
   if (collapsed) return null;
 
   const renderElement = () => {
-    switch (stressLevel) {
-      case 0:
+    switch (displayState) {
+      case 'L':
         if (
           messages[0].kind === 'RequestApprovalToAttack' &&
           requestApprovalElement
         ) {
           return (
-            <RequestApprovalElement
-              element={requestApprovalElement as RequestApprovalElementType}
-              inGaze={inGaze}
-              approveDenyButton={
-                approveDenyButtonElement as ApproveDenyButtonElementType
-              }
-            />
+            <div id={requestApprovalElement.id}>
+              <RequestApprovalElement
+                element={requestApprovalElement as RequestApprovalElementType}
+                inGaze={inGaze}
+                approveDenyButton={
+                  approveDenyButtonElement as ApproveDenyButtonElementType
+                }
+              />
+            </div>
           );
         } else {
           return (
@@ -125,7 +179,7 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
             </div>
           );
         }
-      case 1:
+      case 'M':
         return (
           <div
             id={informationElement.id}
@@ -144,7 +198,7 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
             {inGaze ? <GazeHighlight /> : <></>}
           </div>
         );
-      case 2:
+      case 'S':
         return (
           <div
             id={informationElement.id}

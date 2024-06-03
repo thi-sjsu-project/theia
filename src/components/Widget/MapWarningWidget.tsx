@@ -64,6 +64,20 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
     widget.id,
   ]);
 
+  useEffect(() => {
+    if (warningIconInGaze && requestApprovalElement?.expirationIntervalMs) {
+      // update expiration even if only icon element is in gaze
+      // keep displaying threat info element while we hover over the icon
+      dispatch(updateElementExpiration(widget.id, requestApprovalElement.id));
+    }
+  }, [
+    warningIconInGaze,
+    dispatch,
+    requestApprovalElement?.id,
+    requestApprovalElement?.expirationIntervalMs,
+    widget.id,
+  ]);
+
   return (
     <div
       key={widget.id}
