@@ -6,8 +6,10 @@ import type {
   HistoryWidget,
   PearceHeaderWidget,
   WidgetMap,
+  VideoWidget,
+  LeftCornerMapWidget,
 } from 'src/types/widget';
-import type { ButtonElement, SortElement } from 'src/types/element';
+import type { SortElement } from 'src/types/element';
 import type { ImageElement } from 'src/types/element';
 import {
   initialShips,
@@ -28,7 +30,7 @@ const initialLeftScreenWidgets: WidgetMap = {
   // left video box widget
   [videoBoxUuid]: {
     id: videoBoxUuid,
-    type: 'basic',
+    type: 'video-footage',
     screen: '/pearce-screen',
     sectionType: 'map-video',
     x: 50,
@@ -51,12 +53,12 @@ const initialLeftScreenWidgets: WidgetMap = {
     ],
     maxAmount: 1,
     tags: ['video'],
-  } satisfies BasicWidget,
+  } satisfies VideoWidget,
 
   // left map box widget
   [mapBoxUuid]: {
     id: mapBoxUuid,
-    type: 'basic',
+    type: 'left-corner-map',
     screen: '/pearce-screen',
     sectionType: 'map-video',
     x: 50,
@@ -79,7 +81,7 @@ const initialLeftScreenWidgets: WidgetMap = {
     ],
     maxAmount: 1,
     tags: ['map'],
-  } satisfies BasicWidget,
+  } satisfies LeftCornerMapWidget,
 
   // center box widget
   [historyBoxUuid]: {

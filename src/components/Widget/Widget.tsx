@@ -5,6 +5,8 @@ import MapWarningWidget from 'src/components/Widget/MapWarningWidget';
 import HistoryWidget from 'src/components/Widget/HistoryWidget';
 import AcaHeaderWidget from 'src/components/Widget/AcaHeaderWidget';
 import EscalationModeWidget from 'src/components/Widget/EscalationWidget';
+import VideoWidget from 'src/components/Widget/VideoWidget';
+import LeftCornerMapWidget from 'src/components/Widget/LeftCornerMapWidget';
 import BasicWidget from './BasicWidget';
 import PearceHeader from './PearceHeader';
 
@@ -31,6 +33,10 @@ const Widget = ({ widget }: WidgetProps) => {
         return <EscalationModeWidget widget={widget} />;
       case 'pearce-header':
         return <PearceHeader widget={widget} />;
+      case 'video-footage':
+        return <VideoWidget widget={widget} />;
+      case 'left-corner-map':
+        return <LeftCornerMapWidget widget={widget} />;
       default:
         return <div>Unknown Widget</div>;
     }

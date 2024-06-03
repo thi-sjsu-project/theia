@@ -10,6 +10,11 @@ import type {
 import { capitalizeFirstLetter as cfl } from 'src/utils/helpers';
 import RequestApprovalElement from './RequestApprovalElement';
 import { getConversation } from 'src/redux/slices/conversationSlice';
+import { getElementsInGaze, getGazesAndKeys } from 'src/redux/slices/gazeSlice';
+import {
+  getCommunication,
+  updateCommunication,
+} from 'src/redux/slices/communicationSlice';
 
 type Props = {
   elements: Element[];
@@ -22,7 +27,11 @@ const L_HEIGHT = 488;
 const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
   const stressLevel = useAppSelector(getStressLevel);
 
+  const communication = useAppSelector(getCommunication);
   const dispatch = useAppDispatch();
+  const gazesAndKeys = useAppSelector(getGazesAndKeys);
+  const elementsInGaze = useAppSelector(getElementsInGaze);
+
   // could also fetch messages from redux
   // provided there is a conversation number
   const [informationElement, requestApprovalElement, approveDenyButtonElement] =
@@ -40,6 +49,29 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
   } else {
     target = 'missile';
   }
+
+  useEffect(() => {
+    if (
+      gazesAndKeys.some((gk) => gk.keyPress === '1') &&
+      elementsInGaze.some((element) => element.id === informationElement.id)
+    ) {
+      dispatch(
+        updateCommunication({
+          ...communication,
+          activeConversationId: (informationElement as InformationElement)
+            .message.conversationId,
+          videoRequestConversationId: (informationElement as InformationElement)
+            .message.conversationId,
+        }),
+      );
+    }
+  }, [
+    informationElement.id,
+    gazesAndKeys,
+    elementsInGaze,
+    dispatch,
+    informationElement,
+  ]);
 
   useEffect(() => {
     // react to deescalation
@@ -155,14 +187,5 @@ const GazeHighlight = () => {
     </>
   );
 };
-
-// const GazeHighlightL = () => {
-//   return (
-//     <div
-//       className="w-auto rounded-xl border-[#19DEBB] border-x-[5px]"
-//       style={{ height: L_HEIGHT - 4, marginTop: -L_HEIGHT }}
-//     ></div>
-//   );
-// };
 
 export default MapThreatInfoElement;

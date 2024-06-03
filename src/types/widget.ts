@@ -77,6 +77,14 @@ export type EscalationModeWidget = BaseWidget & {
   // additional properties...
 };
 
+export type VideoWidget = BaseWidget & {
+  type: 'video-footage';
+};
+
+export type LeftCornerMapWidget = BaseWidget & {
+  type: 'left-corner-map';
+};
+
 export type Widget =
   | CustomWidget
   | VehicleWidget
@@ -87,56 +95,8 @@ export type Widget =
   | AcaHeaderWidget
   | PearceHeaderWidget
   | MapWarningWidget
-  | EscalationModeWidget;
+  | EscalationModeWidget
+  | LeftCornerMapWidget
+  | VideoWidget;
 
 export type WidgetMap = { [key: string]: Widget };
-
-/* export type BaseWidget<TType extends string, TData extends object> = {
-  id: string;
-  x: number;
-  y: number;
-  type: TType;
-
-  element: Element[];
-  canOverlap: boolean;
-  useElementLocation: boolean;
-  maxAmount: number; // what does this refer to?
-
-  data: TData;
-};
-
-export type MessageWidget = BaseWidget<
-  'message',
-  {
-    // additional properties
-  }
->;
-
-export type HighWarningWidget = BaseWidget<
-  'highWarning',
-  {
-    // additional properties here
-  }
->;
-
-export type LowWarningWidget = BaseWidget<
-  'lowWarning',
-  {
-    // additional properties here
-  }
->;
-
-export type RequestWidget = BaseWidget<
-  'request',
-  {
-    // additional properties here
-  }
->;
-
-export type Widget =
-  | MessageWidget
-  | HighWarningWidget
-  | LowWarningWidget
-  | RequestWidget;
-
-  */

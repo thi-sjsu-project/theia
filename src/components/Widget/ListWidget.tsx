@@ -17,7 +17,6 @@ type ListWidgetProps = {
 };
 
 const LIST_ELEMENT_HEIGHT = 80;
-const GAP_BETWEEN_ELEMENTS = 6;
 
 const ListWidget = ({ widget }: ListWidgetProps) => {
   const conversations = useAppSelector(getConversations);
@@ -74,8 +73,8 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
     setConvoElements(newConvoElements);
   }, [widget.elements, conversations, sortMethod]);
 
-  // change selected element in list of arrow up or arrow down
   useEffect(() => {
+    // change selected element in list of arrow up or arrow down
     if (gazesAndKeys.some((gazeAndKey) => gazeAndKey.keyPress === 'KeyS')) {
       const currSelectedElemIndex =
         convoElements.findIndex(
@@ -139,6 +138,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
             activeConversationId: selectedElement.conversationId,
             activeElementId: selectedElement.id,
             sortMethod: conversation.sortMethod,
+            videoRequestConversationId: '',
           }),
         );
       }
