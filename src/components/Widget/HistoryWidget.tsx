@@ -48,17 +48,18 @@ const HistoryWidget = ({ widget }: HistoryWidgetProps) => {
     if (numMessages) {
       return (
         <div className="grid grid-cols-12 items-start justify-start p-4 gap-4">
-          {messages.reverse().map((message, index) => (
+          {messages.map((message, index) => (
             <>
               <div key={message.id} className="col-span-1 flex flex-col h-full">
                 <MessageNumber
+                  key={`${message.id}-number`}
                   number={numMessages - index}
                   glow={index === 0}
                 />
 
                 {/* line below the number */}
                 {numMessages - index !== 1 && (
-                  <div className="border-convo-bar h-full w-1/2 border-r-4 mt-4 flex flex-row items-center justify-center rounded-sm" />
+                  <div key={`${message.id}-line`} className="border-convo-bar h-full w-1/2 border-r-4 mt-4 flex flex-row items-center justify-center rounded-sm" />
                 )}
               </div>
 

@@ -40,7 +40,7 @@ const SortElement = ({ options }: SortElementProps) => {
       {options.map((element, index) => {
         const el = element as SortElementType;
         return (
-          <div className="h-full" id={el.id}>
+          <div key={el.id} className="h-full" id={el.id}>
             <SortToggle
               isActive={index === sortMethodIndex}
               name={el.sortType}
