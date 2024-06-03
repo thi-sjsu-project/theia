@@ -1,4 +1,4 @@
-import { Key, useEffect, useState, useRef } from 'react';
+import { type Dispatch, Key, type SetStateAction, useEffect, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { useAppSelector } from 'src/redux/hooks';
 import { getGazesAndKeys } from 'src/redux/slices/gazeSlice';
@@ -8,13 +8,22 @@ import MissileIcon from 'src/assets/icons/threats/missile-lg-emph.svg';
 
 type EscalationModeElementProps = {
   element: EscalationModeElementType;
+  animation: string
+  animationClass: string
+  setAnimation: (action: 'approve' | 'deny') => void;
+  setAnimationClass: Dispatch<SetStateAction<string>>
+  onAction?: (action: 'approve' | 'deny') => void;
 };
 
 
 const EscalationModeElement = ({ 
     element, 
+    onAction,
+    setAnimation,
+    setAnimationClass,
+    animation,
+    animationClass
 }: EscalationModeElementProps) => {
-
 
   const gazesAndKeys = useAppSelector(getGazesAndKeys);
   const approveDenyButtonElement = {
@@ -45,11 +54,32 @@ const EscalationModeElement = ({
   }
 
   useEffect(() => {
-}, [gazesAndKeys]);
+    if (animation === 'approve' || animation === 'deny') {
+      setAnimationClass('animate-blur-away');
+    }
+
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (animation !== 'deny' && e.key === 'h') { // left mouse button
+        setAnimation('deny');
+        onAction?.('deny');
+      } else if (animation !== 'approve' && e.key === 'l') { // right mouse button
+        setAnimation('approve');
+        onAction?.('approve');
+      }
+    };
+
+    window.addEventListener('keypress', handleKeyPress);
+
+    return () => {
+      window.removeEventListener('keypress', handleKeyPress);
+    };
+  }, [animation, onAction]);
+
 
 
   return (
-    <><div className="alert-element bg-#1E1E1E text-white shadow-lg p-7" style={{ width: '800px', height: '985px', boxShadow: '8px 0px 60px 0px #000000', zIndex: 1000}}>
+    <><div  style={{width: '560px'}}></div>
+    <><div className={`alert-element text-white shadow-lg p-7 ${animationClass}`} style={{width: '800px', height: '985px', boxShadow: '8px 0px 60px 0px #000000', zIndex: 1000, visibility: 'visible', backgroundColor: '#1E1E1E' }}>
           <div className="w-1/2 pr-4">
               <div className="mb-4" style={{ width: '488px', height: '128px' }}>
                   <div className="flex items-center mb-4" style={{ width: '800px' }}>
@@ -75,7 +105,7 @@ const EscalationModeElement = ({
               </div>
           </div>
       </div>
-      <div className="alert-element bg-#252526 text-white shadow-lg p-4" style={{ width: '560px', height: '985px' }}>
+          <div className={`alert-element text-white shadow-lg p-7 ${animationClass}`} style={{ width: '560px', height: '985px', visibility: 'visible', backgroundColor: '#1E1E1E' }}>
               <div className="w-1/2 pl-4">
                   <h4 style={{ fontSize: '38px', height: '39px', width: '421px', marginBottom: '30px', marginTop: '50px', color: '#B7B7B7' }}>Additional Information</h4>
                   <table className="table-auto" style={{ fontSize: '32px', height: '711px', width: '443px', borderCollapse: 'collapse' }}>
@@ -131,7 +161,7 @@ const EscalationModeElement = ({
                       </tbody>
                   </table>
               </div>
-          </div></>
+          </div></></>
   );
   
 };

@@ -3,13 +3,12 @@ import LeftScreenMap from 'src/assets/left-bottom-map.png';
 import LeftScreenVideo from 'src/assets/left-video.png';
 import type {
   BasicWidget,
-  EscalationModeWidget,
   HistoryWidget,
   PearceHeaderWidget,
   WidgetMap,
 } from 'src/types/widget';
 import type { ButtonElement, SortElement } from 'src/types/element';
-import type { ImageElement, EscalationModeElement } from 'src/types/element';
+import type { ImageElement } from 'src/types/element';
 import {
   initialShips,
   drones,

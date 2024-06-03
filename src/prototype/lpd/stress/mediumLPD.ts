@@ -7,11 +7,17 @@ import type {
 import lpdHelper from 'src/utils/lpdHelper';
 import { v4 as uuid } from 'uuid';
 import DANGER_ICON from 'src/assets/icons/threats/missile-sm-emph.svg';
-import type { Widget, MapWarningWidget, ListWidget } from 'src/types/widget';
+import type {
+  Widget,
+  MapWarningWidget,
+  ListWidget,
+  EscalationModeWidget,
+} from 'src/types/widget';
 import type { WidgetCluster } from 'src/types/support-types';
 import type {
   ButtonElement,
   Element,
+  EscalationModeElement,
   IconElement,
   InformationElement,
   RequestApprovalElement,
@@ -257,49 +263,45 @@ const missileToOwnshipDetectedMessageMedium = (
 
   const minimapWidgetId1 = uuid();
   const minimapElements: Element[] = [
+    // {
+    //   id: uuid(),
+    //   modality: 'visual',
+    //   type: 'icon',
+    //   h: 128,
+    //   w: 128,
+    //   widgetId: minimapWidgetId1,
+    //   src: mapTargetTypeToWarningIcon('missile'),
+    //   onExpiration: 'escalate',
+    // } satisfies IconElement,
     {
       id: uuid(),
       modality: 'visual',
-      type: 'icon',
-      h: 128,
-      w: 128,
+      type: 'escalation',
+      h: 979,
+      w: 1360,
+      canOverlap: false,
       widgetId: minimapWidgetId1,
-      src: mapTargetTypeToWarningIcon('missile'),
-      onExpiration: 'escalate',
-    } satisfies IconElement,
-    {
-      id: uuid(),
-      modality: 'visual',
-      type: 'information',
-      h: 70,
-      w: 150,
-      message,
-      size: 'M', // size L when stress is medium
-      collapsed: true, // initially, the information elemnt is not displayed
-      expirationIntervalMs: 3000,
-      onExpiration: 'deescalate',
-      widgetId: minimapWidgetId1,
-    } satisfies InformationElement,
+    } satisfies EscalationModeElement,
   ];
 
   const minimapWidgets: Widget[] = [
     {
       id: minimapWidgetId1, // this should be something static?
       sectionType: 'minimap',
-      type: 'map-warning',
-      x: message.data.missileLocation.x,
-      y: message.data.missileLocation.y,
-      w: 128,
-      h: 128,
+      type: 'escalation',
+      x: 560,
+      y: 85,
+      h: 979,
+      w: 1360,
       screen: '/minimap',
-      canOverlap: true,
+      canOverlap: false,
       useElementLocation: false,
       maxAmount: 10,
 
-      tags: ['specify', 'map-warning'],
+      tags: ['specify', 'escalation'],
 
       elements: minimapElements,
-    } satisfies MapWarningWidget,
+    } satisfies EscalationModeWidget,
   ];
 
   return {

@@ -15,7 +15,12 @@ import type {
   RequestApprovalElement,
   ThreatDetectedElement,
 } from 'src/types/element';
-import type { Widget, MapWarningWidget, ListWidget } from 'src/types/widget';
+import type {
+  Widget,
+  MapWarningWidget,
+  ListWidget,
+  EscalationModeWidget,
+} from 'src/types/widget';
 import type { WidgetCluster } from 'src/types/support-types';
 import { mapTargetTypeToWarningIcon } from 'src/prototype/utils/helpers';
 import {
@@ -259,26 +264,24 @@ const missileToOwnshipDetectedMessageHigh = (
 
   const minimapWidgetId1 = uuid();
   const minimapElements: Element[] = [
-    {
-      id: uuid(),
-      modality: 'visual',
-      type: 'icon',
-      h: 128,
-      w: 128,
-      widgetId: minimapWidgetId1,
-      src: mapTargetTypeToWarningIcon('missile'),
-      expirationIntervalMs: 5000,
-      onExpiration: 'escalate',
-    } satisfies IconElement,
+    // {
+    //   id: uuid(),
+    //   modality: 'visual',
+    //   type: 'icon',
+    //   h: 128,
+    //   w: 128,
+    //   widgetId: minimapWidgetId1,
+    //   src: mapTargetTypeToWarningIcon('missile'),
+    //   expirationIntervalMs: 5000,
+    //   onExpiration: 'escalate',
+    // } satisfies IconElement,
     {
       id: uuid(),
       modality: 'visual',
       type: 'escalation',
-      h: 1080,
-      w: 1360,
-      collapsed: undefined,
-      expirationIntervalMs: undefined,
-      onExpiration: undefined,
+      h: 979, // 980
+      w: 1360, // 1920
+      canOverlap: false,
       widgetId: minimapWidgetId1,
     } satisfies EscalationModeElement,
   ];
@@ -287,20 +290,20 @@ const missileToOwnshipDetectedMessageHigh = (
     {
       id: minimapWidgetId1, // this should be something static?
       sectionType: 'minimap',
-      type: 'map-warning',
-      x: message.data.missileLocation.x,
-      y: message.data.missileLocation.y,
-      w: 128,
-      h: 128,
+      type: 'escalation',
+      x: 0,
+      y: 85,
+      h: 979,
+      w: 1919,
       screen: '/minimap',
-      canOverlap: true,
+      canOverlap: false,
       useElementLocation: false,
       maxAmount: 10,
 
-      tags: ['specify', 'map-warning'],
+      tags: ['specify', 'escalation'],
 
       elements: minimapElements,
-    } satisfies MapWarningWidget,
+    } satisfies EscalationModeWidget,
   ];
 
   return {

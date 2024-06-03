@@ -1,38 +1,34 @@
-/** @type {import('tailwindcss').Config} */
-
 const config = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
-      // cursor: {
-      //   default: 'url(https://i.stack.imgur.com/UOvLJ.png), default',
-      //   pointer: 'url(https://i.stack.imgur.com/UOvLJ.png), pointer',
-      // },
       animation: {
-        "slide-in-left": 'slide-in-left 10s ease-out'
+        "slide-in-right": 'slide-in-right 2s ease-out forwards',
+        "blur-away": 'blur-away 9s ease-out forwards',
       },
       keyframes: {
-        "slide-in-left": {
+        "slide-in-right": {
           '0%': {
-            transform: 'translateX(100%)'
-          },
-          '25%': {
-            transform: 'translateX(0)'
-          },
-          '50%': {
-            opacity: 0.75
-          },
-          '75%': {
-            opacity: 0.50
-          },
-          '87%': {
-            opacity: 0.25
+            transform: 'translateX(100%)',
+            opacity: 0,
           },
           '100%': {
-            opacity: 0
-          }
-        }
-      }
+            transform: 'translateX(0%)',
+            opacity: 1,
+          },
+        },
+        "blur-away": {
+          '0%': {
+            opacity: 1,
+          },
+          '80%': {
+            opacity: 1,
+          },
+          '100%': {
+            opacity: 0,
+          },
+        },
+      },
     },
     fontFamily: {
       sans: ['Roboto Condensed', 'system-ui', 'sans-serif'],
