@@ -9,11 +9,8 @@ import REACTION from 'src/assets/icons/Action Required Notch.svg';
 import ALERT from 'src/assets/icons/Alert Notch.svg';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { getMessages } from 'src/redux/slices/conversationSlice';
-import { useEffect, useState } from 'react';
-import {
-  addElementsToWidget,
-  updateElement,
-} from 'src/redux/slices/minimapSlice';
+import { useEffect } from 'react';
+import { addElementsToWidget } from 'src/redux/slices/minimapSlice';
 import type { Message } from 'src/types/schema-types';
 import { NUM_ACAS } from 'src/prototype/utils/constants';
 
@@ -126,46 +123,47 @@ const AcaHeaderWidget = ({ widget }: AcaHeaderWidgetProps) => {
   const notch = getNotch();
 
   return (
-    <div
-      style={{
-        top: y,
-        left: x,
-        width: w,
-        height: h,
-        zIndex: '1500',
-      }}
-      className="absolute bg-[#252526] flex gap-4 px-4 py-2"
-    >
-      {firstElements.map((element) => (
-        <AcaStatusElement
-          key={element.id}
-          element={element as AcaStatusElementType}
-          notification={
-            notifElements.find(
-              // @ts-ignore
-              (notif) => notif.statusElementId === element.id,
-            ) as AcaMessageElement
-          }
-        />
-      ))}
-      <div>
-        <img src={notch} alt="notch" className="-mt-4" />
-      </div>
+    <>
+      <div
+        style={{
+          top: y,
+          left: x,
+          width: w,
+          height: h,
+        }}
+        className="absolute bg-[#252526] flex gap-4 px-4 py-2"
+      >
+        {firstElements.map((element) => (
+          <AcaStatusElement
+            key={element.id}
+            element={element as AcaStatusElementType}
+            notification={
+              notifElements.find(
+                // @ts-ignore
+                (notif) => notif.statusElementId === element.id,
+              ) as AcaMessageElement
+            }
+          />
+        ))}
 
-      <div className="grow" />
-      {lastElements.map((element) => (
-        <AcaStatusElement
-          key={element.id}
-          element={element as AcaStatusElementType}
-          notification={
-            notifElements.find(
-              // @ts-ignore
-              (notif) => notif.statusElementId === element.id,
-            ) as AcaMessageElement
-          }
-        />
-      ))}
-    </div>
+        <div className="grow" />
+        {lastElements.map((element) => (
+          <AcaStatusElement
+            key={element.id}
+            element={element as AcaStatusElementType}
+            notification={
+              notifElements.find(
+                // @ts-ignore
+                (notif) => notif.statusElementId === element.id,
+              ) as AcaMessageElement
+            }
+          />
+        ))}
+      </div>
+      <div style={{ width: w }} className="text-center absolute">
+        <img src={notch} alt="notch" className="inline-block" />
+      </div>
+    </>
   );
 };
 
