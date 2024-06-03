@@ -31,6 +31,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
   const sortType = useAppSelector(getSortMethod);
 
   const [convoElements, setConvoElements] = useState<Element[]>([]);
+  const [hoverElement, setHoverElement] = useState<Element>();
   const [selectedElement, setSelectedElement] = useState<Element>();
 
   const sortMethod = getSortFunc(sortType);
@@ -78,12 +79,12 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
   useEffect(() => {
     if (gazesAndKeys.some((gazeAndKey) => gazeAndKey.keyPress === 'KeyS')) {
       const currSelectedElemIndex =
-        convoElements.findIndex(
-          (element) => element.id === selectedElement?.id,
-        ) || 0;
+        convoElements.findIndex((element) => element.id === hoverElement?.id) ||
+        0;
 
       if (currSelectedElemIndex < convoElements.length - 1) {
-        setSelectedElement(convoElements[currSelectedElemIndex + 1]);
+        // setSelectedElement(convoElements[currSelectedElemIndex + 1]);
+        setHoverElement(convoElements[currSelectedElemIndex + 1]);
 
         // scroll down here if needed?
         const domElem = document.getElementById(
@@ -102,12 +103,12 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
       gazesAndKeys.some((gazeAndKey) => gazeAndKey.keyPress === 'KeyW')
     ) {
       const currSelectedElemIndex =
-        convoElements.findIndex(
-          (element) => element.id === selectedElement?.id,
-        ) || 0;
+        convoElements.findIndex((element) => element.id === hoverElement?.id) ||
+        0;
 
       if (currSelectedElemIndex > 0) {
-        setSelectedElement(convoElements[currSelectedElemIndex - 1]);
+        // setSelectedElement(convoElements[currSelectedElemIndex - 1]);
+        setHoverElement(convoElements[currSelectedElemIndex - 1]);
 
         const domElem = document.getElementById(
           convoElements[currSelectedElemIndex - 1]?.id,
@@ -127,23 +128,24 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
   useEffect(() => {
     if (gazesAndKeys.some((gazeAndKey) => gazeAndKey.keyPress === 'KeyQ')) {
       if (
-        selectedElement &&
+        hoverElement &&
         // @ts-ignore
-        selectedElement.conversationId &&
+        hoverElement.conversationId &&
         // @ts-ignore
-        selectedElement.conversation !== activeConversationId
+        hoverElement.conversation !== activeConversationId
       ) {
+        setSelectedElement(hoverElement);
         dispatch(
           updateCommunication({
             // @ts-ignore
-            activeConversationId: selectedElement.conversationId,
-            activeElementId: selectedElement.id,
+            activeConversationId: hoverElement.conversationId,
+            activeElementId: hoverElement.id,
             sortMethod: conversation.sortMethod,
           }),
         );
       }
     }
-  }, [gazesAndKeys, selectedElement, activeConversationId, dispatch]);
+  }, [gazesAndKeys, hoverElement, activeConversationId, dispatch]);
 
   const className = `absolute p-2 flex flex-col gap-6 items-center overflow-x-hidden overflow-y-auto`;
 
@@ -168,17 +170,19 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
         // @ts-ignore
         const elemConvoId = element.conversationId;
 
-        // style for the element which is current being hoverd over
-        const hoverStyle =
-          element.id === elementInGazeId
-            ? 'bg-[#444449] text-[28px] font-medium'
-            : 'bg-[#323235] text-[24px]';
+        const elementStyle = () => {
+          let style = '';
+          if (element.id === elementInGazeId) {
+            style = 'bg-[#444449] text-[28px] font-medium';
+          }
 
-        // style for active element (element due to which the history widget is open)
-        const activeElementStyle =
-          element.id === selectedElement?.id
-            ? 'bg-[#444449] text-[28px] font-medium border-4 border-white p-0'
-            : '';
+          if (element.id === selectedElement?.id) {
+            style = 'text-[28px] font-medium border-4 border-white rounded-xl p-0';
+          } else if (element.id === hoverElement?.id) {
+            style = 'text-[28px] font-medium border-4 border-[#A5A5A5] rounded-3xl';
+          }
+          return style;
+        }
 
         const numUnreadMessages =
           conversations[elemConvoId]?.numUnreadMessages || 0;
@@ -188,7 +192,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
             id={element.id}
             key={element.id}
             style={{ height: LIST_ELEMENT_HEIGHT, width: 340 }}
-            className={`text-white flex items-center justify-center p-3 rounded-xl ${hoverStyle} ${activeElementStyle}`}
+            className={`text-white flex items-center justify-center p-3 ${elementStyle()}`}
           >
             <ListElement
               element={element}
