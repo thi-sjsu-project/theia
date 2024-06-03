@@ -72,6 +72,10 @@ export type VideoWidget = BaseWidget & {
   type: 'video-footage'
 }
 
+export type LeftCornerMapWidget = BaseWidget & {
+  type: 'left-corner-map'
+}
+
 export type Widget =
   | CustomWidget
   | VehicleWidget
@@ -81,6 +85,7 @@ export type Widget =
   | HistoryWidget
   | AcaHeaderWidget
   | MapWarningWidget
+  | LeftCornerMapWidget
   | VideoWidget;
 
 export type WidgetMap = { [key: string]: Widget };

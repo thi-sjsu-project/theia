@@ -5,6 +5,7 @@ import MapWarningWidget from 'src/components/Widget/MapWarningWidget';
 import HistoryWidget from 'src/components/Widget/HistoryWidget';
 import AcaHeaderWidget from 'src/components/Widget/AcaHeaderWidget';
 import VideoWidget from 'src/components/Widget/VideoWidget';
+import LeftCornerMapWidget from 'src/components/Widget/LeftCornerMapWidget';
 import BasicWidget from './BasicWidget';
 
 type WidgetProps = {
@@ -28,6 +29,8 @@ const Widget = ({ widget }: WidgetProps) => {
         return <AcaHeaderWidget widget={widget} />;
       case 'video-footage':
         return <VideoWidget widget={widget} />
+      case 'left-corner-map':
+        return <LeftCornerMapWidget widget={widget} />;
       default:
         return <div>Unknown Widget</div>;
     }
