@@ -283,6 +283,8 @@ const missileToOwnshipDetectedMessageHigh = (
       w: 1360, // 1920
       canOverlap: false,
       widgetId: minimapWidgetId1,
+      messageId: message.id,
+      conversationId: message.conversationId,
     } satisfies EscalationModeElement,
   ];
 

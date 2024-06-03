@@ -22,7 +22,7 @@ import type { ApproveDenyButtonElement as ApproveDenyButtonElementType } from 's
 
 type ApproveDenyButtonElementProps = {
   element: ApproveDenyButtonElementType;
-  onAction?: (action: 'approve' | 'deny' | 'moreInfo' | "up") => void;
+  onAction?: (action: 'approve' | 'deny' | 'moreInfo' | 'up') => void;
 };
 
 const SIZES = {
@@ -383,10 +383,12 @@ const ApproveDenyButtonElement = ({
   };
 
   const [state, setState] = useState(INITIAL_KEYFRAME);
-  const [animation, setAnimation] = useState<'approve' | 'deny' | 'moreInfo' | 'up' | undefined>(
-    undefined,
+  const [animation, setAnimation] = useState<
+    'approve' | 'deny' | 'moreInfo' | 'up' | undefined
+  >(undefined);
+  const [moreInfoButtonActive, setMoreInfoButtonActive] = useState(
+    element.showMoreInfoButton,
   );
-  const [moreInfoButtonActive, setMoreInfoButtonActive] = useState(element.showMoreInfoButton);
   const [time, setTime] = useState(0);
   const intervalRef = useRef<any>(undefined); // this is really just `number | undefined` but typescript is stoopid
 
@@ -468,13 +470,25 @@ const ApproveDenyButtonElement = ({
   const gazeAndKeys = useAppSelector(getGazesAndKeys);
   useEffect(() => {
     for (const i of gazeAndKeys) {
-      if (animation !== 'deny' && i.keyPress === 'KeyH') { // left mouse button
+      if (animation !== 'deny' && i.keyPress === 'KeyH') {
+        // left mouse button
         setAnimation('deny'); // TODO change to '0' - also a few lines further down !!!
-      } else if (animation !== 'approve' && i.keyPress === 'KeyL') { // right mouse button
+      } else if (animation !== 'approve' && i.keyPress === 'KeyL') {
+        // right mouse button
         setAnimation('approve'); // TODO change to '2'
-      } else if (animation !== 'moreInfo' && i.keyPress === 'KeyJ' && moreInfoButtonActive) { // middle mouse button
+      } else if (
+        animation !== 'moreInfo' &&
+        i.keyPress === 'KeyJ' &&
+        moreInfoButtonActive
+      ) {
+        // middle mouse button
         setAnimation('moreInfo'); // TODO change to '1'
-      } else if (animation !== 'up' && i.keyPress === 'KeyK' && element.showUpButton) { // k
+      } else if (
+        animation !== 'up' &&
+        i.keyPress === 'KeyK' &&
+        element.showUpButton
+      ) {
+        // k
         setAnimation('up');
       } else continue;
       return;
@@ -500,13 +514,17 @@ const ApproveDenyButtonElement = ({
         marginTop: -3,
       }}
     >
-      <div className="bg-[#282828] bg-opacity-90 border-black rounded-xl" style={{ borderWidth: 3 }}>
-        {element.title
-          ? <div style={headerStyle} className="font-medium text-center">
-              <div>{element.title}</div>
-            </div>
-          : <></>
-        }
+      <div
+        className="bg-[#282828] bg-opacity-90 border-black rounded-xl"
+        style={{ borderWidth: 3 }}
+      >
+        {element.title ? (
+          <div style={headerStyle} className="font-medium text-center">
+            <div>{element.title}</div>
+          </div>
+        ) : (
+          <></>
+        )}
 
         {/* prettier-ignore */}
         <div style={{ height: w * SIZES.button }}>
@@ -582,20 +600,20 @@ const ApproveDenyButtonElement = ({
           <span style={{ opacity: state.approveTextOpacity }}>APPROVE</span>
         </div>
 
-        {moreInfoButtonActive
-          ?
-            <div
-              style={{
-                fontSize: w * SIZES.smallFontSize,
-                width: w,
-                marginTop: w * 0.025,
-              }}
-              className="absolute font-medium text-center absolute"
-            >
-              REQUEST VIDEO
-            </div>
-          : <></>
-        }
+        {moreInfoButtonActive ? (
+          <div
+            style={{
+              fontSize: w * SIZES.smallFontSize,
+              width: w,
+              marginTop: w * 0.025,
+            }}
+            className="absolute font-medium text-center"
+          >
+            REQUEST VIDEO
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

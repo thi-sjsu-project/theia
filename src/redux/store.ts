@@ -5,7 +5,7 @@ import {
   withReduxStateSync,
   type Config,
 } from 'redux-state-sync';
-import { minimapSlice } from './slices/cmSlice';
+import { cmSlice } from './slices/cmSlice';
 import { gazeSlice } from './slices/gazeSlice';
 import { communicationSlice } from './slices/communicationSlice';
 import { conversationSlice } from './slices/conversationSlice';
@@ -14,7 +14,7 @@ import { conversationSlice } from './slices/conversationSlice';
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.
 const rootReducer = combineSlices(
-  minimapSlice,
+  cmSlice,
   gazeSlice,
   communicationSlice,
   conversationSlice,
@@ -25,7 +25,7 @@ type RootState = ReturnType<typeof rootReducer>;
 
 const reduxStateSyncConfig: Config = {
   // blacklist actions that should not be synced
-  blacklist: [minimapSlice.actions.initializeState.type],
+  blacklist: [cmSlice.actions.initializeState.type],
 };
 const stateSyncMiddleware = createStateSyncMiddleware(reduxStateSyncConfig);
 

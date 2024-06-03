@@ -31,7 +31,7 @@ const initialState: InitialMinimapState = {
   stressLevel: 0,
 };
 
-export const minimapSlice = createSlice({
+export const cmSlice = createSlice({
   name: 'minimap',
   initialState,
   reducers: {
@@ -485,7 +485,7 @@ export const {
   // toggleElementInteraction,
 
   setStressLevel,
-} = minimapSlice.actions;
+} = cmSlice.actions;
 
 export const {
   getSections,
@@ -504,4 +504,4 @@ export const {
   getAudioComplexity,
 
   getStressLevel,
-} = minimapSlice.selectors;
+} = cmSlice.selectors;

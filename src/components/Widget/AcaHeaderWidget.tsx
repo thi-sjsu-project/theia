@@ -53,7 +53,7 @@ const AcaHeaderWidget = ({ widget }: AcaHeaderWidgetProps) => {
         if (message.kind === 'RequestApprovalToAttack' && action !== 'ALERT') {
           action = 'REACTION';
         }
-        if (message.kind === 'MissileToOwnshipDetected') {
+        if (message.kind === 'MissileToOwnshipDetected' && !message.fulfilled) {
           action = 'ALERT';
         }
       }

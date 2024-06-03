@@ -1,10 +1,4 @@
-import {
-  type Dispatch,
-  Key,
-  type SetStateAction,
-  useEffect,
-  useState,
-} from 'react';
+import { type Dispatch, type SetStateAction, useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 import { useAppSelector } from 'src/redux/hooks';
 import { getGazesAndKeys } from 'src/redux/slices/gazeSlice';

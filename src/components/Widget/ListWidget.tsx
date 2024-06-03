@@ -9,10 +9,7 @@ import { getElementsInGaze, getGazesAndKeys } from 'src/redux/slices/gazeSlice';
 import type { Widget } from 'src/types/widget';
 import type { Element } from 'src/types/element';
 import ListElement from 'src/components/Element/Complex/ListElement';
-import {
-  getConversations,
-  updateNumUnreadMessages,
-} from 'src/redux/slices/conversationSlice';
+import { getConversations } from 'src/redux/slices/conversationSlice';
 import { getSortFunc } from 'src/scripts/sort/SortScripts';
 
 type ListWidgetProps = {

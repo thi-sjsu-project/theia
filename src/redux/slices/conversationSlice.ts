@@ -37,6 +37,22 @@ export const conversationSlice = createSlice({
         state.conversations[conversationId].latestMessageId = message.id;
       }
     },
+    fulfillMessage: (state, action: PayloadAction<string>) => {
+      let fulfilled = false;
+      const messageId = action.payload;
+      Object.values(state.conversations).forEach((conversation) => {
+        conversation.messages.forEach((message) => {
+          if (message.id === messageId) {
+            message.fulfilled = true;
+            fulfilled = true;
+          }
+        });
+      });
+
+      if (!fulfilled) {
+        console.error(`Message with id ${messageId} not found`);
+      }
+    },
     updateNumUnreadMessages: {
       prepare: (conversationId: string, numUnreadMessages: number) => {
         return { payload: { conversationId, numUnreadMessages } };
@@ -94,7 +110,7 @@ export const conversationSlice = createSlice({
   },
 });
 
-export const { addMessage, updateNumUnreadMessages } =
+export const { addMessage, fulfillMessage, updateNumUnreadMessages } =
   conversationSlice.actions;
 
 export const {

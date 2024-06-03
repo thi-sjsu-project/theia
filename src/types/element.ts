@@ -146,6 +146,8 @@ export type ApproveDenyButtonElement = BaseElement & {
 
 export type EscalationModeElement = BaseElement & {
   type: 'escalation';
+  messageId: string;
+  conversationId: string;
 };
 
 export type SortElement = BaseElement & {
