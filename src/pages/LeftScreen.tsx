@@ -3,7 +3,7 @@ import Widget from 'src/components/Widget/Widget';
 import useGaze from 'src/hooks/useGaze';
 import { useAppSelector } from 'src/redux/hooks';
 import { getElementsInGaze } from 'src/redux/slices/gazeSlice';
-import { getWidgetsOnScreen } from 'src/redux/slices/minimapSlice';
+import { getWidgetsOnScreen } from 'src/redux/slices/cmSlice';
 
 const LeftScreen = () => {
   const widgets = useAppSelector((state) =>
@@ -15,8 +15,7 @@ const LeftScreen = () => {
   const elementsInGaze = useAppSelector(getElementsInGaze);
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Tab') 
-      e.preventDefault();
+    if (e.key === 'Tab') e.preventDefault();
   });
 
   // useEffect(() => {

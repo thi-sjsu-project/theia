@@ -8,7 +8,7 @@ import {
   addHandledMessageToWidget,
   addWidget,
   addWidgetToSection,
-} from 'src/redux/slices/minimapSlice';
+} from 'src/redux/slices/cmSlice';
 import restrainer from './restrainer';
 import type { Widget } from 'src/types/widget';
 

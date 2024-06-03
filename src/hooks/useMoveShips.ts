@@ -4,7 +4,7 @@ import {
   getDrones,
   getOwnship,
   updateShipPosition,
-} from 'src/redux/slices/minimapSlice';
+} from 'src/redux/slices/cmSlice';
 import type { VehicleWidget } from 'src/types/widget';
 import { SHIP_BOUNDS } from 'src/utils/constants';
 

@@ -5,7 +5,7 @@ import {
 } from 'src/types/element';
 import IconElement from '../Simple/IconElement';
 import TableElement from '../Simple/TableElement';
-import { getWidgetById } from 'src/redux/slices/minimapSlice';
+import { getWidgetById } from 'src/redux/slices/cmSlice';
 import { useAppSelector } from 'src/redux/hooks';
 import { capitalizeFirstLetter as cfl } from 'src/utils/helpers';
 import {

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { getStressLevel, updateElement } from 'src/redux/slices/minimapSlice';
+import { getStressLevel, updateElement } from 'src/redux/slices/cmSlice';
 import type {
   Element,
   InformationElement,

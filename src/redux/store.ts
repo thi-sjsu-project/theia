@@ -5,7 +5,7 @@ import {
   withReduxStateSync,
   type Config,
 } from 'redux-state-sync';
-import { minimapSlice } from './slices/minimapSlice';
+import { minimapSlice } from './slices/cmSlice';
 import { gazeSlice } from './slices/gazeSlice';
 import { communicationSlice } from './slices/communicationSlice';
 import { conversationSlice } from './slices/conversationSlice';

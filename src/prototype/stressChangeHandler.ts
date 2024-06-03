@@ -1,4 +1,4 @@
-import { removeWidget, updateWidget } from 'src/redux/slices/minimapSlice';
+import { removeWidget, updateWidget } from 'src/redux/slices/cmSlice';
 import type { AppDispatch } from 'src/redux/store';
 import type { Message } from 'src/types/schema-types';
 import reactToMessage from 'src/prototype/reactToMessage';

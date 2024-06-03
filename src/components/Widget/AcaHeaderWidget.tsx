@@ -10,7 +10,7 @@ import ALERT from 'src/assets/icons/Alert Notch.svg';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { getMessages } from 'src/redux/slices/conversationSlice';
 import { useEffect } from 'react';
-import { addElementsToWidget } from 'src/redux/slices/minimapSlice';
+import { addElementsToWidget } from 'src/redux/slices/cmSlice';
 import type { Message } from 'src/types/schema-types';
 import { NUM_ACAS } from 'src/prototype/utils/constants';
 

@@ -7,7 +7,7 @@ import {
   initializeState,
   getStressLevel,
   setStressLevel,
-} from 'src/redux/slices/minimapSlice';
+} from 'src/redux/slices/cmSlice';
 import { addMessage } from 'src/redux/slices/conversationSlice';
 // ~~~~~~~ Cusdom Hooks ~~~~~~~
 import useWorldSim from 'src/hooks/useWorldSim';

@@ -4,7 +4,7 @@ import { getElementsInGaze } from 'src/redux/slices/gazeSlice';
 import {
   updateElement,
   updateElementExpiration,
-} from 'src/redux/slices/minimapSlice';
+} from 'src/redux/slices/cmSlice';
 import { useEffect } from 'react';
 import type {
   ApproveDenyButtonElement as ApproveDenyButtonElementType,
@@ -24,7 +24,12 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
    * It would be very useful for different widgets types to specify in detail the number of elements they will have
    * as well as the type of each of those elements - Jagjit.
    */
-  const [iconElement, threatInfoElement, requestApprovalElement, approveDenyButtonElement] = widget.elements;
+  const [
+    iconElement,
+    threatInfoElement,
+    requestApprovalElement,
+    approveDenyButtonElement,
+  ] = widget.elements;
 
   const elementsInGaze = useAppSelector(getElementsInGaze);
   const dispatch = useAppDispatch();

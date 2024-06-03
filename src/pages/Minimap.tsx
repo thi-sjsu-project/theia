@@ -1,6 +1,6 @@
 import Widget from 'src/components/Widget/Widget';
 import { useAppSelector } from 'src/redux/hooks';
-import { getWidgetsOnScreen } from 'src/redux/slices/minimapSlice';
+import { getWidgetsOnScreen } from 'src/redux/slices/cmSlice';
 import useMoveShips from 'src/hooks/useMoveShips';
 import useGaze from 'src/hooks/useGaze';
 import { getElementsInGaze } from 'src/redux/slices/gazeSlice';

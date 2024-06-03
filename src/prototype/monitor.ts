@@ -5,7 +5,7 @@ import {
   updateElementExpiration,
   escalateElement,
   deescalateElement,
-} from 'src/redux/slices/minimapSlice';
+} from 'src/redux/slices/cmSlice';
 import store from 'src/redux/store';
 import type { ElementInGaze, GazeAndKey } from 'src/redux/slices/gazeSlice';
 import type { BaseElement } from 'src/types/element';

@@ -6,7 +6,7 @@ import {
 import { GAZE_RADIUS } from 'src/utils/constants';
 import { type Screen } from 'src/types/support-types';
 import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
-import { getElementsOnScreen } from 'src/redux/slices/minimapSlice';
+import { getElementsOnScreen } from 'src/redux/slices/cmSlice';
 
 type GazeProps = {
   screen: Screen;

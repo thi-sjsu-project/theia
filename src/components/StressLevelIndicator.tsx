@@ -1,5 +1,5 @@
 import { useAppSelector } from 'src/redux/hooks';
-import { getStressLevel } from 'src/redux/slices/minimapSlice';
+import { getStressLevel } from 'src/redux/slices/cmSlice';
 
 const StressLevelIndicator = () => {
   const stressLevel = useAppSelector(getStressLevel);
