@@ -1,7 +1,5 @@
 import type {LeftCornerMapWidget as LeftCornerMapWidgetType } from 'src/types/widget';
 import { useAppSelector } from 'src/redux/hooks';
-import droneFootage from 'src/assets/DroneFootage_small.gif';
-import defaultVideoScreen from 'src/assets/RequestVideoDefault.png';
 import leftMapZero from 'src/assets/pearce-maps/left_map_0.png';
 import leftMapOne from 'src/assets/pearce-maps/left_map_1.png';
 import leftMapTwo from 'src/assets/pearce-maps/left_map_2.png';
@@ -29,10 +27,6 @@ const LeftCornerMapWidget = ({ widget }: LeftCornerMapWidgetProps) => {
   const { x, y, h, w, elements } = widget;
 
   
-  
-  
-  var gifImage = new Image();
-  gifImage.src = droneFootage;
 
   var defaultImage = new Image();
   defaultImage.src = blankMap;
@@ -60,43 +54,43 @@ const LeftCornerMapWidget = ({ widget }: LeftCornerMapWidgetProps) => {
 
     switch(randomValue){
         case 0:
-            img.src = leftMapZero
+            img.src = leftMapZero;
             break;
         case 1:
-            img.src = leftMapOne
+            img.src = leftMapOne;
             break;
         case 2:
-            img.src = leftMapTwo
+            img.src = leftMapTwo;
             break;
         case 3:
-            img.src = leftMapThree
+            img.src = leftMapThree;
             break;
         case 4:
-            img.src = leftMapFour
+            img.src = leftMapFour;
             break;
         case 5:
-            img.src = leftMapFive
+            img.src = leftMapFive;
             break;
         case 6:
-            img.src = leftMapSix
+            img.src = leftMapSix;
             break;
         case 7:
-            img.src = leftMapSeven
+            img.src = leftMapSeven;
             break;
         case 8:
-            img.src = leftMapEight
+            img.src = leftMapEight;
             break;
         case 9:
-            img.src = leftMapNine
+            img.src = leftMapNine;
             break;
         case 10:
-            img.src = leftMapTen
+            img.src = leftMapTen;
             break;
         case 11:
-            img.src = leftMapEleven
+            img.src = leftMapEleven;
             break;
         default:
-            img.src = defaultVideoScreen
+            img.src = defaultImage.src;
             break;
     }
 
