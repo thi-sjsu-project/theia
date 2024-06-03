@@ -324,7 +324,7 @@ const missileToOwnshipDetectedMessageMedium = (
             ['message'],
           ),
         ),
-        // ...minimapWidgets,
+        ...minimapWidgets,
       ]),
     ],
   };

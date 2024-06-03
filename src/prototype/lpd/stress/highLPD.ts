@@ -326,7 +326,7 @@ const missileToOwnshipDetectedMessageHigh = (
             ['message'],
           ),
         ),
-        // ...minimapWidgets,
+        ...minimapWidgets,
       ]),
     ],
   };

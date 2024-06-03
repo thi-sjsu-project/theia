@@ -359,7 +359,7 @@ const missileToOwnshipDetectedMessageLow = (
             ['message'],
           ),
         ),
-        // ...minimapWidgets,
+        ...minimapWidgets,
       ]),
     ],
   };
