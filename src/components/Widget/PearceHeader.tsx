@@ -16,6 +16,15 @@ const PearceHeader = ({ widget }: SortWidgetProps) => {
     getConversation(state, activeConvoID),
   );
 
+  let title = 'Title';
+  if (activeConvo) {
+    if (activeConvo.messages[0].kind === 'RequestApprovalToAttack') {
+      title = 'Request Approval To Attack';
+    } else {
+      title = 'Threat Detected';
+    }
+  }
+
   return (
     <div
       key={widget.id}
@@ -29,7 +38,7 @@ const PearceHeader = ({ widget }: SortWidgetProps) => {
       }}
     >
       <span className="h-full text-6xl text-white flex flex-row items-center justify-center">
-        {(activeConvo && activeConvo.id) ?? 'title'}
+        {title}
       </span>
       <div
         className="absolute bg-[#1e1e1e]  rounded-2xl p-1"

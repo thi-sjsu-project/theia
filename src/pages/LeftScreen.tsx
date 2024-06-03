@@ -12,15 +12,9 @@ const LeftScreen = () => {
 
   useGaze({ screen: '/pearce-screen' });
 
-  const elementsInGaze = useAppSelector(getElementsInGaze);
-
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Tab') e.preventDefault();
   });
-
-  // useEffect(() => {
-  //   console.log('elementsInGaze: ', elementsInGaze);
-  // }, [elementsInGaze]);
 
   return (
     <div className="absolute top-0 left-0 bg-[#1E1E1E] w-[1920px] h-[1080px] hover:cursor-pointer">
