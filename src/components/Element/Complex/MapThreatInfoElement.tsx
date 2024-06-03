@@ -31,7 +31,9 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
     informationElement as InformationElement;
   let target;
 
-  const conversation = useAppSelector((state) => getConversation(state, message.conversationId))
+  const conversation = useAppSelector((state) =>
+    getConversation(state, message.conversationId),
+  );
   const messages = conversation.messages;
   if (message.kind === 'ThreatDetected') {
     target = message.data.target.type;
@@ -58,7 +60,10 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
   const renderElement = () => {
     switch (stressLevel) {
       case 0:
-        if (messages[0].kind === 'RequestApprovalToAttack' && requestApprovalElement) {
+        if (
+          messages[0].kind === 'RequestApprovalToAttack' &&
+          requestApprovalElement
+        ) {
           return (
             <RequestApprovalElement
               element={requestApprovalElement as RequestApprovalElementType}
@@ -72,16 +77,19 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
           return (
             <div
               id={informationElement.id}
-              className="inline-block align-middle mt-3"
+              className="rounded-xl bg-[#282828] bg-opacity-80 text-[#f5f5f5] border-black border-2 text-[24px]"
               style={{
-                height: h,
-                width: w,
-                fontSize: 24,
-                backgroundColor: 'turquoise',
-                opacity: 0.8,
+                height: M_HEIGHT,
+                width: 'auto',
               }}
             >
-              LARGE: {cfl(target)}
+              <div
+                className="px-5 py-2.5 font-medium"
+                style={{ height: M_HEIGHT }}
+              >
+                {cfl(target)}
+              </div>
+              {inGaze ? <GazeHighlight /> : <></>}
             </div>
           );
         }
