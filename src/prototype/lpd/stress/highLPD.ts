@@ -281,7 +281,7 @@ const missileToOwnshipDetectedMessageHigh = (
       type: 'escalation',
       h: 950, // 980
       w: 1360, // 1920
-      canOverlap: false,
+      canOverlap: true,
       widgetId: minimapWidgetId1,
       messageId: message.id,
       conversationId: message.conversationId,
@@ -298,7 +298,7 @@ const missileToOwnshipDetectedMessageHigh = (
       h: 950,
       w: 1919,
       screen: '/minimap',
-      canOverlap: false,
+      canOverlap: true,
       useElementLocation: false,
       maxAmount: 10,
 
