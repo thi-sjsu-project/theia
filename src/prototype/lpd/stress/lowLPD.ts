@@ -319,46 +319,46 @@ const missileToOwnshipDetectedMessageLow = (
     } satisfies EscalationModeWidget,
   ];
 
-  const listWidgetId = uuid();
-  const pearceScreenElements: Element[] = [
-    lpdHelper.generateMissileIncomingElement(
-      lpdHelper.generateBaseElement(
-        elementId,
-        'visual',
-        50,
-        200,
-        message.priority,
-      ),
-      message.id,
-      message.conversationId,
-      listWidgetId,
-      lpdHelper.generateIconElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
-        DANGER_ICON,
-      ),
-    ),
-  ];
+  // const listWidgetId = uuid();
+  // const pearceScreenElements: Element[] = [
+  //   lpdHelper.generateMissileIncomingElement(
+  //     lpdHelper.generateBaseElement(
+  //       elementId,
+  //       'visual',
+  //       50,
+  //       200,
+  //       message.priority,
+  //     ),
+  //     message.id,
+  //     message.conversationId,
+  //     listWidgetId,
+  //     lpdHelper.generateIconElement(
+  //       lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
+  //       DANGER_ICON,
+  //     ),
+  //   ),
+  // ];
 
   return {
     sections: [],
     possibleClusters: [
       generateCluster([
-        lpdHelper.generateListWidget(
-          lpdHelper.generateBaseWidget(
-            listWidgetId,
-            'tinder',
-            100,
-            100,
-            LIST_WIDGET_WIDTH,
-            LIST_WIDGET_HEIGHT,
-            '/pearce-screen',
-            false,
-            true,
-            1,
-            [...pearceScreenElements],
-            ['message'],
-          ),
-        ),
+        // lpdHelper.generateListWidget(
+        //   lpdHelper.generateBaseWidget(
+        //     listWidgetId,
+        //     'tinder',
+        //     100,
+        //     100,
+        //     LIST_WIDGET_WIDTH,
+        //     LIST_WIDGET_HEIGHT,
+        //     '/pearce-screen',
+        //     false,
+        //     true,
+        //     1,
+        //     [...pearceScreenElements],
+        //     ['message'],
+        //   ),
+        // ),
         ...minimapWidgets,
       ]),
     ],

@@ -241,26 +241,26 @@ const acaFuelLowMessageHigh = (message: Message) => {
 const missileToOwnshipDetectedMessageHigh = (
   message: MissileToOwnshipDetected,
 ) => {
-  const listWidgetId = uuid();
-  const pearceScreenElements: Element[] = [
-    lpdHelper.generateMissileIncomingElement(
-      lpdHelper.generateBaseElement(
-        uuid(),
-        'visual',
-        50,
-        200,
-        message.priority,
-        'list',
-      ),
-      message.id,
-      message.conversationId,
-      listWidgetId,
-      lpdHelper.generateIconElement(
-        lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
-        DANGER_ICON,
-      ),
-    ),
-  ];
+  // const listWidgetId = uuid();
+  // const pearceScreenElements: Element[] = [
+  //   lpdHelper.generateMissileIncomingElement(
+  //     lpdHelper.generateBaseElement(
+  //       uuid(),
+  //       'visual',
+  //       50,
+  //       200,
+  //       message.priority,
+  //       'list',
+  //     ),
+  //     message.id,
+  //     message.conversationId,
+  //     listWidgetId,
+  //     lpdHelper.generateIconElement(
+  //       lpdHelper.generateBaseElement(uuid(), 'visual', 56, 56),
+  //       DANGER_ICON,
+  //     ),
+  //   ),
+  // ];
 
   const minimapWidgetId1 = uuid();
   const minimapElements: Element[] = [
@@ -310,22 +310,22 @@ const missileToOwnshipDetectedMessageHigh = (
     sections: [],
     possibleClusters: [
       generateCluster([
-        lpdHelper.generateListWidget(
-          lpdHelper.generateBaseWidget(
-            listWidgetId,
-            'tinder',
-            100,
-            100,
-            LIST_WIDGET_WIDTH,
-            LIST_WIDGET_HEIGHT,
-            '/pearce-screen',
-            false,
-            true,
-            1,
-            [...pearceScreenElements],
-            ['message'],
-          ),
-        ),
+        // lpdHelper.generateListWidget(
+        //   lpdHelper.generateBaseWidget(
+        //     listWidgetId,
+        //     'tinder',
+        //     100,
+        //     100,
+        //     LIST_WIDGET_WIDTH,
+        //     LIST_WIDGET_HEIGHT,
+        //     '/pearce-screen',
+        //     false,
+        //     true,
+        //     1,
+        //     [...pearceScreenElements],
+        //     ['message'],
+        //   ),
+        // ),
         ...minimapWidgets,
       ]),
     ],
