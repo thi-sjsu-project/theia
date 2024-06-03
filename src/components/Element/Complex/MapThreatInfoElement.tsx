@@ -9,6 +9,7 @@ import type {
 } from 'src/types/element';
 import { capitalizeFirstLetter as cfl } from 'src/utils/helpers';
 import RequestApprovalElement from './RequestApprovalElement';
+import { getConversation } from 'src/redux/slices/conversationSlice';
 
 type Props = {
   elements: Element[];
@@ -30,6 +31,8 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
     informationElement as InformationElement;
   let target;
 
+  const conversation = useAppSelector((state) => getConversation(state, message.conversationId))
+  const messages = conversation.messages;
   if (message.kind === 'ThreatDetected') {
     target = message.data.target.type;
   } else {
@@ -55,7 +58,7 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
   const renderElement = () => {
     switch (stressLevel) {
       case 0:
-        if (message.kind === 'RequestApprovalToAttack') {
+        if (messages[0].kind === 'RequestApprovalToAttack' && requestApprovalElement) {
           return (
             <RequestApprovalElement
               element={requestApprovalElement as RequestApprovalElementType}

@@ -32,7 +32,7 @@ const selector = ({ message, stressLevel }: SelectorProps = {}) => {
       allWidgets.push(widget);
     }
 
-    stressLevel = Math.floor(stressLevel! * 3); //get stress level as int
+    stressLevel = Math.min(Math.floor(stressLevel! * 3), 2); //get stress level as int
     const tempMessage = {
       //dummy message to put into LPD function
       priority: -1,
@@ -42,7 +42,7 @@ const selector = ({ message, stressLevel }: SelectorProps = {}) => {
     return allWidgets.concat(stressLevelLPDFunctions[stressLevel](tempMessage));
   } else {
     // Transform range of stress levels from 0-1 to 0-2 only returning integers
-    stressLevel = Math.floor(stressLevel! * 3);
+    stressLevel = Math.min(Math.floor(stressLevel! * 3), 2); //get stress level as int
     return stressLevelLPDFunctions[stressLevel](message!);
   }
 };
