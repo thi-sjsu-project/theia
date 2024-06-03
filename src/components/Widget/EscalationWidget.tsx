@@ -40,8 +40,8 @@ const EscalationWidget = ({ widget }: EscalationWidgetProps) => {
   return (
     <div
       style={{
-        top: y,
-        left: x,
+        top: 100,
+        left: 550,
         width: w,
         height: h,
         zIndex: '1000',

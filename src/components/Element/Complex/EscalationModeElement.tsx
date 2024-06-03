@@ -94,7 +94,7 @@ const EscalationModeElement = ({
           }}
         >
           <div className="w-1/2 pr-4">
-            <div className="mb-4" style={{ width: '488px', height: '128px' }}>
+            <div className="mb-4" style={{ width: '800px', height: '128px' }}>
               <div
                 className="flex items-center mb-4"
                 style={{ width: '800px' }}
@@ -200,7 +200,7 @@ const EscalationModeElement = ({
                 style={{
                   transform: 'scale(1.5)',
                   marginTop: '100px',
-                  marginLeft: '106px',
+                  marginLeft: '175px',
                 }}
               >
                 <ApproveDenyButtonElement element={approveDenyButtonElement} />
