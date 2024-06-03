@@ -24,7 +24,9 @@ const ListElement = ({
           <RequestApprovalElement element={element} unreadCount={unreadCount} />
         );
       case 'threat-detected':
-        return <ThreatDetectedElement element={element} />;
+        return (
+          <ThreatDetectedElement element={element} unreadCount={unreadCount} />
+        );
       case 'missile-incoming':
         return <MissileIncomingElement element={element} />;
       default:
