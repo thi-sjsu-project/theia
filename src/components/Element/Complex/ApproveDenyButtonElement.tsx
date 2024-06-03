@@ -322,7 +322,7 @@ const KEYFRAMES_MORE_INFO = [
 ];
 
 const FRAMETIME = 1.0 / 60.0;
-const SPEED = 0.15;
+const SPEED = 0.2;
 
 const formatColor = (color: number) =>
   `#${('000000' + color.toString(16)).slice(-6)}`;
@@ -515,8 +515,8 @@ const ApproveDenyButtonElement = ({
             width: w,
             background: "linear-gradient(90deg, rgba(40, 40, 40, 0.00) 0%, rgba(76, 76, 76, 0.90) 40%, rgba(76, 76, 76, 0.90) 60%, rgba(40, 40, 40, 0.00) 100%)"
           }}></div>
-          <svg style={{ width: w, height: 1.5 * w, position: "absolute", marginTop: -w * (1 + SIZES.button) }} viewBox={`0 ${-0.5 * w} ${w} ${0.5 * w}`}>
-            <clipPath id="clip">
+          <svg style={{ width: w, height: 1.5 * w + 1, position: "absolute", marginTop: -w * (1 + SIZES.button) - 1 }} viewBox={`0 ${-0.5 * w} ${w} ${0.5 * w}`}>
+            <clipPath id="clippy">
               <rect x={0} y={0} width={w - 2} height={w * SIZES.button} rx={12} />
             </clipPath>
 
@@ -539,7 +539,7 @@ const ApproveDenyButtonElement = ({
 
             {moreInfoButtonActive ? <rect x={w * 0.5 * (1 - SIZES.moreInfoButton)} y={w * (SIZES.button + 0.01)} width={w * SIZES.moreInfoButton} height={w * SIZES.moreInfoButtonHeight} fill="#282828" rx={10} opacity={0.9} stroke="black" strokeWidth={2} /> : <></>}
 
-            <circle cx={w * 0.5} cy={w * SIZES.button * 0.5} r={state.bigCircleRadius * w * 0.5} fill="url(#bigCircleGradient)" clipPath="url(#clip)" />
+            <circle cx={w * 0.5} cy={w * SIZES.button * 0.5} r={state.bigCircleRadius * w * 0.5} fill="url(#bigCircleGradient)" clipPath="url(#clippy)" />
             <circle cx={w * 0.5} cy={w * SIZES.button * 0.5} r={SIZES.tinyWhiteDot * w * 0.5} fill="#FFFFFF" opacity={state.tinyDotOpacity} />
             <circle cx={w * state.smallTurquoiseCirclePositionX} cy={w * (SIZES.button * 0.5 + state.smallTurquoiseCirclePositionY)} r={w * state.smallTurquoiseCircleRadius / 2} fill="url(#turquoiseCircleGradient)" opacity={state.smallTurquoiseCircleOpacity} clipPath={state.moreInfoClip ? 'url(#moreInfoClip)' : undefined} />
 
