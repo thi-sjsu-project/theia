@@ -177,7 +177,7 @@ const ListWidget = ({ widget }: ListWidgetProps) => {
           }
 
           if (element.id === selectedElement?.id) {
-            style = 'text-[28px] font-medium border-4 border-white rounded-xl p-0';
+            style = 'bg-[#323235] text-[28px] font-medium border-4 border-white rounded-xl p-0';
           } else if (element.id === hoverElement?.id) {
             style = 'text-[28px] font-medium border-4 border-[#A5A5A5] rounded-3xl';
           }
