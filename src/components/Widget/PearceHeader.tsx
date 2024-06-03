@@ -3,6 +3,7 @@ import SortElement from '../Element/Complex/SortElement';
 import { useAppSelector } from 'src/redux/hooks';
 import { getActiveConversationId } from 'src/redux/slices/communicationSlice';
 import { getConversation } from 'src/redux/slices/conversationSlice';
+import { capitalizeFirstLetter as cfl } from 'src/utils/helpers';
 
 type SortWidgetProps = {
   widget: Widget;
@@ -19,9 +20,11 @@ const PearceHeader = ({ widget }: SortWidgetProps) => {
   let title = 'Title';
   if (activeConvo) {
     if (activeConvo.messages[0].kind === 'RequestApprovalToAttack') {
-      title = 'Request Approval To Attack';
+      // @ts-ignore
+      title = cfl(activeConvo.messages[0].data.target.type);
     } else {
-      title = 'Threat Detected';
+      // @ts-ignore
+      title = cfl(activeConvo.messages[0].data.target.type);
     }
   }
 
