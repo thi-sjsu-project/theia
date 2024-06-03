@@ -30,6 +30,9 @@ const EscalationWidget = ({ widget }: EscalationWidgetProps) => {
         width: w,
         height: h,
         zIndex: '1000',
+        visibility: 'hidden',
+        flexDirection: 'row', 
+        gap: '0px'
       }}
       className={`absolute bg-[#252526] flex gap-4 py-2 ${animationClass}`}
     >

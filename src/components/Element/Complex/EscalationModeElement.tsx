@@ -53,16 +53,6 @@ const EscalationModeElement = ({
     borderRight: '0px'
   }
 
-  const handleApprove = () => {
-    setAnimation('approve');
-    if (onAction) onAction('approve');
-  };
-
-  const handleDeny = () => {
-    setAnimation('deny');
-    if (onAction) onAction('deny');
-  };
-
   useEffect(() => {
     if (animation === 'approve' || animation === 'deny') {
       setAnimationClass('animate-blur-away');
@@ -88,8 +78,8 @@ const EscalationModeElement = ({
 
 
   return (
-    <><div className='bg-[rgba(37,37,38,0.5)] text-white shadow-lg p-7' style={{opacity:0, width: '560px' }}></div>
-    <><div className={`alert-element bg-#1E1E1E text-white shadow-lg p-7 ${animationClass}`} style={{ width: '800px', height: '985px', boxShadow: '8px 0px 60px 0px #000000', zIndex: 1000 }}>
+    <><div  style={{width: '560px'}}></div>
+    <><div className={`alert-element text-white shadow-lg p-7 ${animationClass}`} style={{width: '800px', height: '985px', boxShadow: '8px 0px 60px 0px #000000', zIndex: 1000, visibility: 'visible', backgroundColor: '#1E1E1E' }}>
           <div className="w-1/2 pr-4">
               <div className="mb-4" style={{ width: '488px', height: '128px' }}>
                   <div className="flex items-center mb-4" style={{ width: '800px' }}>
@@ -115,7 +105,7 @@ const EscalationModeElement = ({
               </div>
           </div>
       </div>
-          <div className={`alert-element bg-#1E1E1E text-white shadow-lg p-7 ${animationClass}`} style={{ width: '560px', height: '985px' }}>
+          <div className={`alert-element text-white shadow-lg p-7 ${animationClass}`} style={{ width: '560px', height: '985px', visibility: 'visible', backgroundColor: '#1E1E1E' }}>
               <div className="w-1/2 pl-4">
                   <h4 style={{ fontSize: '38px', height: '39px', width: '421px', marginBottom: '30px', marginTop: '50px', color: '#B7B7B7' }}>Additional Information</h4>
                   <table className="table-auto" style={{ fontSize: '32px', height: '711px', width: '443px', borderCollapse: 'collapse' }}>
@@ -177,7 +167,3 @@ const EscalationModeElement = ({
 };
 
 export default EscalationModeElement;
-
-function onAction(arg0: string) {
-    throw new Error('Function not implemented.');
-}
