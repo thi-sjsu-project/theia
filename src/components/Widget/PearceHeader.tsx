@@ -17,7 +17,7 @@ const PearceHeader = ({ widget }: SortWidgetProps) => {
     getConversation(state, activeConvoID),
   );
 
-  let title = 'Title';
+  let title = '';
   if (activeConvo) {
     if (activeConvo.messages[0].kind === 'RequestApprovalToAttack') {
       // @ts-ignore
