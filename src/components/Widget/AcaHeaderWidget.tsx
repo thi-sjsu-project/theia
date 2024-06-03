@@ -116,6 +116,7 @@ const AcaHeaderWidget = ({ widget }: AcaHeaderWidgetProps) => {
               expiration: fiveSecondsIntoFuture.toISOString(),
               onExpiration: 'delete',
               text: getAcaMessageText(latestMessage.kind),
+              widgetId: widget.id,
             } satisfies AcaMessageElement,
           ]),
         );

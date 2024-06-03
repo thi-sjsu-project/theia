@@ -39,7 +39,7 @@ function findSpecifierTag(tagsProposed: string[], tagsMessage: string[]) {
       //we found the specified tag that links them
       //find the specifier
       tagsMessage.forEach((tagMessage) => {
-        //if the tagMessage is not the same as the link tag, and it includes the link tag
+        //if the tagMessage is  the same as the link tag, and it includes the link tag
         if (tagMessage !== tagProposed && tagMessage.includes(tagProposed)) {
           //we found the specifier
           specifier = tagMessage;
@@ -159,7 +159,6 @@ const assimilator = ({
         const action = 'updateWidget';
         widget.id = widgetIdToUpdate;
         const widgetToDeploy = widget;
-        console.log('widgetToDeploy', widgetToDeploy);
 
         widgetsToDeploy.push(widgetToDeploy);
         actionsToDeploy.push(action);
