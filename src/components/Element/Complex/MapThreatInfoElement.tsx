@@ -29,7 +29,7 @@ const mapStressToSize = (stressLevel: number) => {
     case 0:
       return 'L';
     case 1:
-      return 'L';
+      return 'M';
     case 2:
       return 'M';
     default:

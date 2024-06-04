@@ -25,6 +25,7 @@ import type {
 } from 'src/types/element';
 import { mapTargetTypeToWarningIcon } from 'src/prototype/utils/helpers';
 import {
+  EXPIRATION_INTERVAL_MS,
   LIST_WIDGET_HEIGHT,
   LIST_WIDGET_WIDTH,
 } from 'src/prototype/utils/constants';
@@ -79,8 +80,6 @@ const threatDetectedMessageMedium = (message: ThreatDetected) => {
       w: 80,
       widgetId: minimapWidgetId1,
       src: mapTargetTypeToWarningIcon(message.data.target.type),
-      expirationIntervalMs: 3000,
-      onExpiration: 'escalate',
     } satisfies IconElement,
     // {
     //   id: uuid(),
@@ -126,7 +125,7 @@ const threatDetectedMessageMedium = (message: ThreatDetected) => {
       message,
       size: 'L', // size L when stress is low
       collapsed: true, // initially, the information elemnt is not displayed
-      expirationIntervalMs: 3000,
+      expirationIntervalMs: EXPIRATION_INTERVAL_MS,
       onExpiration: 'deescalate',
       widgetId: minimapWidgetId1,
     } satisfies InformationElement,

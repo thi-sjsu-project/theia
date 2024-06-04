@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import {
   type RequestApprovalElement as RequestApprovalElementType,
   type ApproveDenyButtonElement as ApproveDenyButtonElementType,
@@ -15,6 +15,7 @@ import {
 } from 'src/redux/slices/conversationSlice';
 import { v4 as uuid } from 'uuid';
 import ApproveDenyButtonElement from './ApproveDenyButtonElement';
+import { getElementsInGaze } from 'src/redux/slices/gazeSlice';
 
 type RequestApprovalProps = {
   element: RequestApprovalElementType;
@@ -55,7 +56,7 @@ const RequestApprovalElement = ({
     getConversation(state, conversationId),
   );
 
-  const requests = conversation.messages;
+  const requests = conversation?.messages;
 
   // Transform threat level from a float number in a range of 0-1 to a string of low, medium, high
   const threatLevelString = (threatLevel: number) => {
@@ -75,6 +76,8 @@ const RequestApprovalElement = ({
   };
 
   const renderMiniMapRequestApprovalElement = () => {
+    if (!requests || requests.length === 0) return;
+
     const mainRequest = requests[0];
 
     return (
@@ -178,7 +181,7 @@ const RequestApprovalElement = ({
         return (
           <div
             className="rounded-full bg-white w-[35px] h-[35px] text-[#252526] flex 
-    items-center justify-center text-lg rounded-full"
+    items-center justify-center text-lg"
           >
             {unreadCount}
           </div>
