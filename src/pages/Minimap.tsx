@@ -33,7 +33,7 @@ const Minimap = () => {
           <Widget key={widgetId} widget={widgets[widgetId]} />
         ))}
       </div>
-      <StressLevelIndicator />
+      {/* <StressLevelIndicator /> */}
     </>
   );
 };
