@@ -75,6 +75,7 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
     if (respondToStressLevel) setDisplayState(mapStressToSize(stressLevel));
   }, [stressLevel, respondToStressLevel]);
 
+  // request video with middle mouse click
   useEffect(() => {
     if (
       gazesAndKeys.some((gk) => gk.keyPress === '1') &&
@@ -104,7 +105,7 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
 
   useEffect(() => {
     if (
-      gazesAndKeys.some((gk) => gk.keyPress === 'KeyS') &&
+      gazesAndKeys.some((gk) => gk.keyPress === 'KeyD') &&
       elementsInGaze.some((element) => element.id === informationElement.id)
     ) {
       if (displayState !== 'L') {
@@ -112,7 +113,7 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
         setRespondToStressLevel(false);
       }
     } else if (
-      gazesAndKeys.some((gk) => gk.keyPress === 'KeyW') &&
+      gazesAndKeys.some((gk) => gk.keyPress === 'KeyE') &&
       requestApprovalElement &&
       elementsInGaze.some((element) => element.id === requestApprovalElement.id)
     ) {
@@ -151,9 +152,23 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
     // @ts-ignore
     console.log(informationElement.messageId);
 
-    dispatch(
-      fulfillMessage((informationElement as InformationElement).message.id),
-    );
+    if (decision === 'approve' || decision === 'deny') {
+      dispatch(
+        fulfillMessage((informationElement as InformationElement).message.id),
+      );
+    }
+
+    if (decision === 'moreInfo') {
+      dispatch(
+        updateCommunication({
+          ...communication,
+          activeConversationId: (informationElement as InformationElement)
+            .message.conversationId,
+          videoRequestConversationId: (informationElement as InformationElement)
+            .message.conversationId,
+        }),
+      );
+    }
   };
 
   const renderElement = () => {
