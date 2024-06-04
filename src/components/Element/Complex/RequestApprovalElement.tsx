@@ -23,6 +23,7 @@ type RequestApprovalProps = {
   children?: ReactNode;
   unreadCount?: number;
   approveDenyButton?: ApproveDenyButtonElementType;
+  onApproveOrDeny?: (decision: 'approve' | 'deny' | 'moreInfo' | 'up') => void;
 };
 
 const RequestApprovalElement = ({
@@ -31,6 +32,7 @@ const RequestApprovalElement = ({
   children,
   unreadCount,
   approveDenyButton,
+  onApproveOrDeny,
 }: RequestApprovalProps) => {
   const { id, icon, messageId, conversationId } = element;
   const message = useAppSelector((state) => getMessage(state, messageId));
@@ -73,6 +75,12 @@ const RequestApprovalElement = ({
         return newAttackType.toLowerCase();
       }
     }
+  };
+
+  const handleApproveDeny = (
+    decision: 'approve' | 'deny' | 'moreInfo' | 'up',
+  ) => {
+    if (onApproveOrDeny) onApproveOrDeny(decision);
   };
 
   const renderMiniMapRequestApprovalElement = () => {
@@ -170,7 +178,10 @@ const RequestApprovalElement = ({
             </div>
           </div>
         </div>
-        <ApproveDenyButtonElement element={approveDenyButton!} />
+        <ApproveDenyButtonElement
+          element={approveDenyButton!}
+          onAction={handleApproveDeny}
+        />
       </div>
     );
   };

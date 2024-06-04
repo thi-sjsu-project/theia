@@ -12,8 +12,9 @@ import type {
   InformationElement as InformationElementType,
   RequestApprovalElement as RequestApprovalElementType,
 } from 'src/types/element';
+import MapThreatInfoElement from '../Element/Complex/MapThreatInfoElement';
 import IconElement from 'src/components/Element/Simple/IconElement';
-import MapThreatInfoElement from 'src/components/Element/Complex/MapThreatInfoElement';
+import { getMessage } from 'src/redux/slices/conversationSlice';
 
 type MapWarningWidgetProps = {
   widget: MapWarningWidgetType;
@@ -31,14 +32,20 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
     approveDenyButtonElement,
   ] = widget.elements;
 
+  const informationMessage = useAppSelector((state) =>
+    getMessage(state, (threatInfoElement as InformationElementType).message.id),
+  );
+
   const elementsInGaze = useAppSelector(getElementsInGaze);
   const dispatch = useAppDispatch();
 
   const warningIconInGaze = elementsInGaze.some(
     (element) => element.id === iconElement.id,
   );
-  const threatInfoInGaze = elementsInGaze.some(
-    (element) => element.id === threatInfoElement.id,
+  const childElemsInGaze = elementsInGaze.some(
+    (element) =>
+      element.id === threatInfoElement.id ||
+      element.id === requestApprovalElement?.id,
   );
 
   useEffect(() => {
@@ -91,7 +98,7 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
       <div className="inline-block">
         <div className="flex justify-center items-center">
           <IconElement element={iconElement as IconElementType} />
-          {!threatInfoElement.collapsed && (
+          {!threatInfoElement.collapsed && !informationMessage?.fulfilled && (
             <div
               style={{ height: 2, width: 75, border: '2px dashed white' }}
               className="inline-block align-[2.375rem]"
@@ -99,7 +106,7 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
           )}
         </div>
       </div>
-      {!threatInfoElement.collapsed && (
+      {!threatInfoElement.collapsed && !informationMessage?.fulfilled && (
         <div className="inline-block align-top mt-2">
           <MapThreatInfoElement
             elements={[
@@ -107,7 +114,7 @@ const MapWarningWidget = ({ widget }: MapWarningWidgetProps) => {
               requestApprovalElement as RequestApprovalElementType,
               approveDenyButtonElement as ApproveDenyButtonElementType,
             ]}
-            inGaze={warningIconInGaze || threatInfoInGaze}
+            inGaze={childElemsInGaze}
           />
         </div>
       )}

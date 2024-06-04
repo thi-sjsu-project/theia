@@ -9,7 +9,10 @@ import type {
 } from 'src/types/element';
 import { capitalizeFirstLetter as cfl } from 'src/utils/helpers';
 import RequestApprovalElement from 'src/components/Element/Complex/RequestApprovalElement';
-import { getConversation } from 'src/redux/slices/conversationSlice';
+import {
+  fulfillMessage,
+  getConversation,
+} from 'src/redux/slices/conversationSlice';
 import { getElementsInGaze, getGazesAndKeys } from 'src/redux/slices/gazeSlice';
 import {
   getCommunication,
@@ -141,6 +144,18 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
 
   if (collapsed) return null;
 
+  const handleApproveOrDeny = (
+    decision: 'approve' | 'deny' | 'moreInfo' | 'up',
+  ) => {
+    // setDisplayState('M');
+    // @ts-ignore
+    console.log(informationElement.messageId);
+
+    dispatch(
+      fulfillMessage((informationElement as InformationElement).message.id),
+    );
+  };
+
   const renderElement = () => {
     switch (displayState) {
       case 'L':
@@ -156,6 +171,7 @@ const MapThreatInfoElement = ({ elements, inGaze }: Props) => {
                 approveDenyButton={
                   approveDenyButtonElement as ApproveDenyButtonElementType
                 }
+                onApproveOrDeny={handleApproveOrDeny}
               />
             </div>
           );
