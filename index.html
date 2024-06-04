@@ -11,7 +11,31 @@
   </head>
   <body oncontextmenu="return false;">
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div style="width: 1920px; height: 1920px;" id="gaze-div">
+      <div class="absolute cursor-none rounded-full ring-4 ring-blue-400 bg-blue-400 bg-opacity-20" style="z-index: 2000; width: 100px; height: 100px; display: none;" id="gaze-circle"></div>
+    </div>
+    <div id="root" style="margin-top: -1920px;"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      const gazeCircle = document.getElementById("gaze-circle");
+      window.addEventListener("mousemove", function (ev) {
+        gazeCircle.style.left = `${ev.clientX - 50}px`;
+        gazeCircle.style.top = `${ev.clientY - 50}px`;
+      });
+      window.addEventListener("mouseout", function (ev) {
+        if (ev.toElement == null && ev.relatedTarget == null) {
+          gazeCircle.style.display = "none";
+        }
+      });
+      window.addEventListener("mouseover", function (ev) {
+        if (ev.toElement == null && ev.relatedTarget == null) {
+          gazeCircle.style.display = "block";
+        }
+      });
+      if (window.location.toString().indexOf("/prototype") >= 0) {
+        document.getElementById("gaze-div").style.display = "none";
+        document.getElementById("root").style.marginTop = "0px";
+      }
+    </script>
   </body>
 </html>
