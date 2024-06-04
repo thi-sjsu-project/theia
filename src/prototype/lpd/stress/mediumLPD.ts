@@ -297,16 +297,15 @@ const missileToOwnshipDetectedMessageMedium = (
 
   const minimapWidgetId1 = uuid();
   const minimapElements: Element[] = [
-    // {
-    //   id: uuid(),
-    //   modality: 'visual',
-    //   type: 'icon',
-    //   h: 128,
-    //   w: 128,
-    //   widgetId: minimapWidgetId1,
-    //   src: mapTargetTypeToWarningIcon('missile'),
-    //   onExpiration: 'escalate',
-    // } satisfies IconElement,
+    {
+      id: uuid(),
+      modality: 'visual',
+      type: 'icon',
+      h: 128,
+      w: 128,
+      widgetId: minimapWidgetId1,
+      src: mapTargetTypeToWarningIcon('missile'),
+    } satisfies IconElement,
     {
       id: uuid(),
       modality: 'visual',

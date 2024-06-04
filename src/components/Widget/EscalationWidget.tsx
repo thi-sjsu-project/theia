@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
 import type { EscalationModeWidget as EscalationModeWidgetType } from 'src/types/widget';
-import type { EscalationModeElement as EscalationModeElementType } from 'src/types/element';
+import type {
+  EscalationModeElement as EscalationModeElementType,
+  IconElement as IconElementType,
+} from 'src/types/element';
 import EscalationModeElement from 'src/components/Element/Complex/EscalationModeElement';
-import { useAppDispatch } from 'src/redux/hooks';
+import { useAppDispatch, useAppSelector } from 'src/redux/hooks';
 import { fulfillMessage } from 'src/redux/slices/conversationSlice';
+import IconElement from '../Element/Simple/IconElement';
+import { getMessage } from 'src/redux/slices/conversationSlice';
 
 type EscalationWidgetProps = {
   widget: EscalationModeWidgetType;
@@ -11,7 +16,14 @@ type EscalationWidgetProps = {
 
 const EscalationWidget = ({ widget }: EscalationWidgetProps) => {
   const { x, y, h, w, elements } = widget;
-  const [escalationModeElement] = elements;
+  const [missileIconElement, escalationModeElement] = elements;
+
+  const missileIncomingMessage = useAppSelector((state) =>
+    getMessage(
+      state,
+      (escalationModeElement as EscalationModeElementType)?.messageId,
+    ),
+  );
 
   const [initial, setInitial] = useState(true);
   const [animation, setAnimation] = useState<'approve' | 'deny' | undefined>(
@@ -38,29 +50,39 @@ const EscalationWidget = ({ widget }: EscalationWidgetProps) => {
   };
 
   return (
-    <div
-      style={{
-        top: 100,
-        left: 550,
-        width: w,
-        height: h,
-        zIndex: '1000',
-        visibility: 'hidden',
-        flexDirection: 'row',
-        gap: '0px',
-      }}
-      className={`absolute bg-[#252526] flex gap-4 py-2 ${animationClass}`}
-    >
-      <EscalationModeElement
-        key={escalationModeElement.id}
-        element={escalationModeElement as EscalationModeElementType}
-        onAction={handleAction}
-        animation={animation!}
-        animationClass={animationClass}
-        setAnimation={setAnimation}
-        setAnimationClass={setAnimationClass}
-      />
-    </div>
+    <>
+      {!missileIncomingMessage?.fulfilled && (
+        <div>
+          <IconElement
+            element={missileIconElement as IconElementType}
+            className="absolute top-[350px] left-[380px]"
+          />
+        </div>
+      )}
+      <div
+        style={{
+          top: 100,
+          left: 550,
+          width: w,
+          height: h,
+          zIndex: '1000',
+          visibility: 'hidden',
+          flexDirection: 'row',
+          gap: '0px',
+        }}
+        className={`absolute bg-[#252526] flex gap-4 py-2 ${animationClass}`}
+      >
+        <EscalationModeElement
+          key={escalationModeElement.id}
+          element={escalationModeElement as EscalationModeElementType}
+          onAction={handleAction}
+          animation={animation!}
+          animationClass={animationClass}
+          setAnimation={setAnimation}
+          setAnimationClass={setAnimationClass}
+        />
+      </div>
+    </>
   );
 };
 
