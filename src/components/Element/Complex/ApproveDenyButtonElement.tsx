@@ -561,19 +561,19 @@ const ApproveDenyButtonElement = ({
             <circle cx={w * 0.5} cy={w * SIZES.button * 0.5} r={SIZES.tinyWhiteDot * w * 0.5} fill="#FFFFFF" opacity={state.tinyDotOpacity} />
             <circle cx={w * state.smallTurquoiseCirclePositionX} cy={w * (SIZES.button * 0.5 + state.smallTurquoiseCirclePositionY)} r={w * state.smallTurquoiseCircleRadius / 2} fill="url(#turquoiseCircleGradient)" opacity={state.smallTurquoiseCircleOpacity} clipPath={state.moreInfoClip ? 'url(#moreInfoClip)' : undefined} />
 
-            <polygon fill="#FFFFFF" opacity={state.denyArrowOpacity} stroke="black" stroke-width="1.5"
+            <polygon fill="#FFFFFF" opacity={state.denyArrowOpacity} stroke="black" strokeWidth="1.5"
               points={`${w * (state.denyArrowPosition - 0.125 * SIZES.triangle)},${0.5 * w * SIZES.button} ` +
                       `${w * (state.denyArrowPosition + 0.375 * SIZES.triangle)},${0.5 * w * (SIZES.button - SIZES.triangle)} ` +
                       `${w * (state.denyArrowPosition + 0.375 * SIZES.triangle)},${0.5 * w * (SIZES.button + SIZES.triangle)}`} />
-            <polygon fill="#FFFFFF" opacity={state.approveArrowOpacity} stroke="black" stroke-width="1.5"
+            <polygon fill="#FFFFFF" opacity={state.approveArrowOpacity} stroke="black" strokeWidth="1.5"
               points={`${w * (state.approveArrowPosition + 0.125 * SIZES.triangle)},${0.5 * w * SIZES.button} ` +
                       `${w * (state.approveArrowPosition - 0.375 * SIZES.triangle)},${0.5 * w * (SIZES.button - SIZES.triangle)} ` +
                       `${w * (state.approveArrowPosition - 0.375 * SIZES.triangle)},${0.5 * w * (SIZES.button + SIZES.triangle)}`} />
-            {moreInfoButtonActive ? <polygon fill="#FFFFFF" opacity={state.downArrowOpacity} stroke="black" stroke-width="1.5"
+            {moreInfoButtonActive ? <polygon fill="#FFFFFF" opacity={state.downArrowOpacity} stroke="black" strokeWidth="1.5"
               points={`${0.5 * w * (1 - SIZES.triangle)},${0.5 * w * (SIZES.button + SIZES.smallTurquoiseCircle + state.downArrowPosition + 0.05)} ` +
                       `${0.5 * w * (1 + SIZES.triangle)},${0.5 * w * (SIZES.button + SIZES.smallTurquoiseCircle + state.downArrowPosition + 0.05)} ` +
                       `${0.5 * w},${0.5 * w * (SIZES.button + SIZES.smallTurquoiseCircle + state.downArrowPosition + 0.05 + SIZES.triangle)}`} /> : <></>}
-            {element.showUpButton ? <polygon fill="#FFFFFF" opacity={state.upArrowOpacity} stroke="black" stroke-width="1.5"
+            {element.showUpButton ? <polygon fill="#FFFFFF" opacity={state.upArrowOpacity} stroke="black" strokeWidth="1.5"
               points={`${0.5 * w * (1 - SIZES.triangle)},${0.5 * w * (SIZES.button - SIZES.smallTurquoiseCircle - state.upArrowPosition - 0.05)} ` +
                       `${0.5 * w * (1 + SIZES.triangle)},${0.5 * w * (SIZES.button - SIZES.smallTurquoiseCircle - state.upArrowPosition - 0.05)} ` +
                       `${0.5 * w},${0.5 * w * (SIZES.button - SIZES.smallTurquoiseCircle - state.upArrowPosition - 0.05 - SIZES.triangle)}`} /> : <></>}

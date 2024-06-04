@@ -105,9 +105,9 @@ const RequestApprovalElement = ({
                     x2="20"
                     y2="230"
                     stroke="#656566"
-                    stroke-width="4"
-                    stroke-dasharray="180,10,1,10,1,10,1"
-                    stroke-linecap="round"
+                    strokeWidth="4"
+                    strokeDasharray="180,10,1,10,1,10,1"
+                    strokeLinecap="round"
                   />
                 </svg>
               ) : (
@@ -118,8 +118,8 @@ const RequestApprovalElement = ({
                     x2="20"
                     y2="230"
                     stroke="#656566"
-                    stroke-width="4"
-                    stroke-linecap="round"
+                    strokeWidth="4"
+                    strokeLinecap="round"
                   />
                 </svg>
               )}

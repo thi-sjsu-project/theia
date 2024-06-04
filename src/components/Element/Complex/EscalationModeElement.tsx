@@ -59,23 +59,23 @@ const EscalationModeElement = ({
       setAnimationClass('animate-blur-away');
     }
 
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (animation !== 'deny' && e.key === 'h') {
-        // left mouse button
-        setAnimation('deny');
-        onAction?.('deny');
-      } else if (animation !== 'approve' && e.key === 'l') {
-        // right mouse button
-        setAnimation('approve');
-        onAction?.('approve');
-      }
-    };
+    //const handleKeyPress = (e: KeyboardEvent) => {
+    //  if (animation !== 'deny' && e.key === 'h') {
+    //    // left mouse button
+    //    setAnimation('deny');
+    //    onAction?.('deny');
+    //  } else if (animation !== 'approve' && e.key === 'l') {
+    //    // right mouse button
+    //    setAnimation('approve');
+    //    onAction?.('approve');
+    //  }
+    //};
 
-    window.addEventListener('keypress', handleKeyPress);
+    //window.addEventListener('keypress', handleKeyPress);
 
-    return () => {
-      window.removeEventListener('keypress', handleKeyPress);
-    };
+    //return () => {
+    //  window.removeEventListener('keypress', handleKeyPress);
+    //};
   }, [animation, onAction]);
 
   return (
@@ -203,7 +203,10 @@ const EscalationModeElement = ({
                   marginLeft: '175px',
                 }}
               >
-                <ApproveDenyButtonElement element={approveDenyButtonElement} />
+                <ApproveDenyButtonElement element={approveDenyButtonElement} onAction={(action) => {
+                  onAction?.(action as "approve" | "deny")
+                  setAnimationClass('animate-blur-away')
+                }} />
               </div>
             </div>
           </div>

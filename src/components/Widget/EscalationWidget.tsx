@@ -23,10 +23,10 @@ const EscalationWidget = ({ widget }: EscalationWidgetProps) => {
 
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const timer = setTimeout(() => setInitial(false), 10000); // remove slide-in after 10 seconds
-    return () => clearTimeout(timer);
-  }, []);
+  //useEffect(() => {
+  //  const timer = setTimeout(() => setInitial(false), 10000); // remove slide-in after 10 seconds
+  //  return () => clearTimeout(timer);
+  //}, []);
 
   const handleAction = (action: 'approve' | 'deny') => {
     // set message to fulfilled when approved or denied

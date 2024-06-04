@@ -4,7 +4,7 @@ const config = {
     extend: {
       animation: {
         "slide-in-right": 'slide-in-right 2s ease-out forwards',
-        "blur-away": 'blur-away 9s ease-out forwards',
+        "blur-away": 'blur-away 2s ease-out forwards',
       },
       keyframes: {
         "slide-in-right": {
@@ -19,9 +19,6 @@ const config = {
         },
         "blur-away": {
           '0%': {
-            opacity: 1,
-          },
-          '80%': {
             opacity: 1,
           },
           '100%': {
