@@ -17,7 +17,7 @@ const ownship: Widget = {
     lpdHelper.generateBaseWidget(
       ownshipUuid,
       'minimap',
-      400,
+      1400,
       950,
       50,
       50,
@@ -43,7 +43,7 @@ const ownship: Widget = {
     ),
     0,
     1.5,
-    0.2 * Math.PI, // 36deg
+    -0.8 * Math.PI, // -144deg
   ),
 };
 
