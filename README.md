@@ -1,27 +1,20 @@
-# vite-template-redux
+# Theia (Conversation Manager + Widget Element Flow for ownship-drone UI)
 
-Uses [Vite](https://vitejs.dev/), [Vitest](https://vitest.dev/), and [React Testing Library](https://github.com/testing-library/react-testing-library) to create a modern [React](https://react.dev/) app compatible with [Create React App](https://create-react-app.dev/)
+## What Thea is
+Theia is a suite of tools that can be used to make any multi-modal adaptive UI. It works by taking in information about the outside world and user, deciding what action is best to convey the current world status to the user, and adapting the UI to accomodate the best action. Theia aims to give developers a way to create a UI that gives the user the right information at the right place at the right time.
+
+## How to run
+Uses [Vite](https://vitejs.dev/), [Vitest](https://vitest.dev/), and [React Testing Library](https://github.com/testing-library/react-testing-library). 
+
+To run the app, use the following command in the src directory.
 
 ```sh
-npx degit reduxjs/redux-templates/packages/vite-template-redux my-app
+npm start
 ```
 
-## Goals
+For the Theia UI to receive and react to world events, you must also run the [World Simulator](/thi-sjsu-project/world-sim).
 
-- Easy migration from Create React App or Vite
-- As beginner friendly as Create React App
-- Optimized performance compared to Create React App
-- Customizable without ejecting
+## Documentation
 
-## Scripts
+To find more information on Theia, its tools, and how to make a new UI, please refer to our [documentation](google.com).
 
-- `dev`/`start` - start dev server and open browser
-- `build` - build for production
-- `preview` - locally preview production build
-- `test` - launch test runner
-
-## Inspiration
-
-- [Create React App](https://github.com/facebook/create-react-app/tree/main/packages/cra-template)
-- [Vite](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react)
-- [Vitest](https://github.com/vitest-dev/vitest/tree/main/examples/react-testing-lib)
