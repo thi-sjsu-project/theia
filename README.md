@@ -12,9 +12,9 @@ To run the app, use the following command in the src directory.
 npm start
 ```
 
-For the Theia UI to receive and react to world events, you must also run the [World Simulator](/thi-sjsu-project/world-sim).
+For the Theia UI to receive and react to world events, you must also run the [World Simulator](https://git.tjdev.de/thi-sjsu-project/world-sim) <small>([GitHub mirror](https://github.com/thi-sjsu-project/world-sim))</small>.
 
 ## Documentation
 
-To find more information on Theia, its tools, and how to make a new UI, please refer to our [documentation](/thi-sjsu-project/theia/docs).
+To find more information on Theia, its tools, and how to make a new UI, please refer to our [documentation](https://git.tjdev.de/thi-sjsu-project/theia/raw/branch/main/docs/UX%20and%20Theia%20Documentation.pdf) <small>([GitHub mirror](https://github.com/thi-sjsu-project/theia/blob/main/docs/UX%20and%20Theia%20Documentation.pdf))</small>.
 
