@@ -16,5 +16,5 @@ For the Theia UI to receive and react to world events, you must also run the [Wo
 
 ## Documentation
 
-To find more information on Theia, its tools, and how to make a new UI, please refer to our [documentation](google.com).
+To find more information on Theia, its tools, and how to make a new UI, please refer to our [documentation](/thi-sjsu-project/theia/docs).
 
