@@ -1,6 +1,6 @@
 # Theia (Conversation Manager + Widget Element Flow for ownship-drone UI)
 
-## What Thea is
+## What Theia is
 Theia is a suite of tools that can be used to make any multi-modal adaptive UI. It works by taking in information about the outside world and user, deciding what action is best to convey the current world status to the user, and adapting the UI to accomodate the best action. Theia aims to give developers a way to create a UI that gives the user the right information at the right place at the right time.
 
 ## How to run
